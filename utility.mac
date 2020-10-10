@@ -1,0 +1,13 @@
+.macro store_word value, address
+	lda #<value
+	sta address
+	lda #>value
+	sta address + 1
+.endmacro
+
+.macro memcpy destination, source, length
+	store_word destination, ptr2
+	store_word source, ptr1
+	store_word length, ptr3
+	jsr memcpy
+.endmacro
