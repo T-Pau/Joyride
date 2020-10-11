@@ -8,12 +8,16 @@ all: joytest.prg
 
 SOURCES = \
 	start.s \
+	button.s \
 	charset.s \
 	color.s \
 	colors.s \
+	copyrect.s \
+	dpad.s \
 	irq.s \
 	irq_table.s \
 	memcpy.s \
+	port_screen.s \
 	ports.s \
 	screen.s
 

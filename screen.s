@@ -30,9 +30,13 @@ main_screen:
 	scrcode "I                               J"
 	.byte $a0, $a0, $a0, $a0
 	.byte $a0, $a0, $a0, "                                 ", $a0, $a0, $a0, $a0
-	.byte $a0, $a0, $a0, "                                 ", $a0, $a0, $a0, $a0
-	.byte $a0, $a0, $a0, "                                 ", $a0, $a0, $a0, $a0
-	.byte $a0, $a0, $a0, "                                 ", $a0, $a0, $a0, $a0
+	.byte $a0, $a0, $a0
+	scrcode "           AHB           AHB     "
+	.byte $a0, $a0, $a0, $a0,  $a0, $a0, $a0
+	scrcode "           EfF           EfF     "
+	.byte $a0, $a0, $a0, $a0,  $a0, $a0, $a0
+	scrcode "           CGD           CGD     "
+	.byte $a0, $a0, $a0, $a0
 	.byte $a0, $a0, $a0, "                                 ", $a0, $a0, $a0, $a0
 	.byte $a0, $a0, $a0
 	scrcode "KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMML"

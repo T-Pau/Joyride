@@ -15,7 +15,12 @@ start:
 	memcpy charset, charset_data, $2000
 	memcpy screen, main_screen, 1000
 	memcpy color_ram, main_color, 1000
-	; TODO: set up color ram
+	ldx #0
+	ldy #1
+	jsr copy_port_screen
+	ldx #0
+	ldy #2
+	jsr copy_port_screen
 	set_vic_bank $4000
 	set_vic_text screen, charset
 
