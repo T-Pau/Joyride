@@ -1,4 +1,4 @@
-; set state of button at ptr2 to x
+; set state of button at ptr2 to A
 
 .export button
 
@@ -9,6 +9,7 @@
 .code
 
 button:
+	tax
 	ldy #0
 loop:
 	lda (ptr2),y
