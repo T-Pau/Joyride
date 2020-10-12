@@ -6,7 +6,7 @@
 
 display_routines:
 	.word display_joystick
-	.word none ; mouse
+	.word display_mouse
 	.word none ; paddle 1
 	.word none ; paddle 2
 	.word none ; koalapad

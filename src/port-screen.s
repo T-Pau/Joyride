@@ -89,15 +89,15 @@ port_screen_data:
 	scrcode "                 "
 
 	; 1: mouse
-	scrcode "AHHHHHHHB        "
-	scrcode "E       E        "
-	scrcode "E       E        "
-	scrcode "E       E        "
-	scrcode "E       E        "
-	scrcode "E       E        "
-	scrcode "E   x:  E        "
-	scrcode "E   y:  E        "
-	scrcode "CGGGGGGGD        "
+	scrcode "RHHHHHHHS        "
+	scrcode "V       W        "
+	scrcode "V       W        "
+	scrcode "V       W        "
+	scrcode "V       W        "
+	scrcode "V       W        "
+	scrcode "V   x:  W        "
+	scrcode "V   y:  W        "
+	scrcode "TXXXXXXXU        "
 
 	; 2: paddle 1
 	scrcode "                 "
@@ -122,15 +122,15 @@ port_screen_data:
 	scrcode "                 "
 
 	; 4: koalapad
-	scrcode "AHHHHHHHB        "
-	scrcode "E       E  AHBAHB"
-	scrcode "E       E  ElFErF"
-	scrcode "E       E  CGDCGD"
-	scrcode "E       E        "
-	scrcode "E       E        "
-	scrcode "E       E   x:   "
-	scrcode "E       E   y:   "
-	scrcode "CGGGGGGGD        "
+	scrcode "RHHHHHHHS        "
+	scrcode "V       W  AHBAHB"
+	scrcode "V       W  ElFErF"
+	scrcode "V       W  CGDCGD"
+	scrcode "V       W        "
+	scrcode "V       W        "
+	scrcode "V       W   x:   "
+	scrcode "V       W   y:   "
+	scrcode "TXXXXXXXU        "
 
 	; 5: raw
 	scrcode " AHBAHBAHBAHBAHB "

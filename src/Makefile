@@ -14,6 +14,7 @@ SOURCES = \
 	colors.s \
 	copyrect.s \
 	display-joystick.s \
+	display-mouse.s \
 	display-port.s \
 	display-raw.s \
 	dpad.s \
@@ -32,7 +33,7 @@ OBJECTS = ${SOURCES:.s=.o}
 
 .s.o:
 	${CC} ${CFLAGS} -c $<
-	
+
 charset.bin: charset.png
 	gfx-convert charset charset.png charset.bin
 
@@ -44,6 +45,7 @@ charset.o: charset.s charset.bin
 colors.o: colors.s joytest.inc
 copyrect.o: copyrect.s joytest.inc
 display-joystick.o: display-joystick.s joytest.inc
+display-mouse.o: display-mouse.s joytest.inc
 display-raw.o: display-raw.s joytest.inc
 dpad.o: dpad.s joytest.inc
 f-keys.o: f-keys.s joytest.inc
