@@ -33,4 +33,12 @@ l3:
 	cpy #83
 	bne loop
 
+	clc
+	lda ptr2
+	adc #3
+	sta ptr2
+	lda ptr2 + 1
+	adc #0
+	sta ptr2 + 1
+
 	rts

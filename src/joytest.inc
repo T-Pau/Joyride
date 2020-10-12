@@ -27,4 +27,5 @@ ptr1 = $fb
 ptr2 = $fd
 ptr3 = $c1
 
-
+port_types = 6
+uesr_port_types = 3

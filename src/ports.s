@@ -2,10 +2,12 @@
 
 .export handle_port1_user, handle_port2
 .export port1_type, port2_type, userport_type
+.export port_digital, port_potx, port_poty
 
 .include "joytest.inc"
 
 .bss
+
 port1_type:
 	.res 1
 port2_type:
@@ -19,17 +21,6 @@ port_potx:
 	.res 1
 port_poty:
 	.res 1
-
-tmp:
-	.res 2
-
-.rodata
-
-joy_positions:
-	.word screen + 4 * 40 + 2
-	.word screen + 4 * 40 + 22
-	.word screen + 15 * 40 + 8
-	.word screen + 15 * 40 + 22
 
 .code
 
@@ -49,10 +40,12 @@ handle_port1_user:
 	eor #$ff
 	sta port_digital
 
-	; TODO: handle keyboard
+	jsr handle_keyboard
 
 	; select POTs from port 2
-	ldx #$bf
+	lda #$c0
+	sta CIA1_DDRA
+	lda #$80
 	sta CIA1_PRA
 
 	ldx #1
@@ -62,10 +55,10 @@ handle_port1_user:
 	lda #0
 	sta port_digital
 	ldx #3
-	jsr display_port
+	jsr display_joystick
 	; TODO: read user port 2
 	ldx #4
-	jsr display_port
+	jsr display_joystick
 	rts
 
 handle_port2:
@@ -85,69 +78,12 @@ handle_port2:
 	sta port_digital
 
 	; select POTs from port 1
-    ldx #$7f
-    stx CIA1_PRB
+	lda #$c0
+	sta CIA1_DDRA
+    lda #$40
+    sta CIA1_PRA
 
 	ldx #2
 	jsr display_port
 	rts
 
-display_port:
-	dex
-	txa
-	asl
-	sta tmp
-	tax
-	lda joy_positions,x
-	sta ptr2
-	lda joy_positions + 1,x
-	sta ptr2 + 1
-	lda port_digital
-	and #$f
-	jsr dpad
-
-	; button 1
-	clc
-	ldx tmp
-	lda joy_positions,x
-	adc #46
-	sta ptr2
-	lda joy_positions + 1,x
-	adc #0
-	sta ptr2 + 1
-	lda port_digital
-	and #$10
-	jsr button
-
-	ldx tmp
-	cpx #4
-	bcs end
-
-	; button 2
-	clc
-	lda ptr2
-	adc #3
-	sta ptr2
-	lda ptr2 + 1
-	adc #0
-	sta ptr2 + 1
-	lda port_potx
-	eor #$ff
-	and #80
-	jsr button
-
-	; button 3
-	clc
-	lda ptr2
-	adc #3
-	sta ptr2
-	lda ptr2 + 1
-	adc #0
-	sta ptr2 + 1
-	lda port_poty
-	eor #$ff
-	and #80
-	jsr button
-
-end:
-	rts
