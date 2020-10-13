@@ -14,7 +14,7 @@ display_raw:
 	lda #<bit0_position
 	cpx #2
 	bne :+
-	adc #20
+	adc #19
 :	sta ptr2
 	lda #>bit0_position
 	sta ptr2 + 1

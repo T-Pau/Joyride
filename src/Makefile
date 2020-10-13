@@ -15,6 +15,8 @@ SOURCES = \
 	copyrect.s \
 	display-joystick.s \
 	display-mouse.s \
+	display-koalapad.s \
+	display-paddle.s \
 	display-port.s \
 	display-raw.s \
 	dpad.s \
@@ -45,7 +47,9 @@ charset.o: charset.s charset.bin
 colors.o: colors.s joytest.inc
 copyrect.o: copyrect.s joytest.inc
 display-joystick.o: display-joystick.s joytest.inc
+display-koalapad.o: display-koalapad.s joytest.inc
 display-mouse.o: display-mouse.s joytest.inc
+display-paddle.o: display-paddle.s joytest.inc
 display-raw.o: display-raw.s joytest.inc
 dpad.o: dpad.s joytest.inc
 f-keys.o: f-keys.s joytest.inc

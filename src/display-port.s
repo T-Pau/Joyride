@@ -7,9 +7,9 @@
 display_routines:
 	.word display_joystick
 	.word display_mouse
-	.word none ; paddle 1
-	.word none ; paddle 2
-	.word none ; koalapad
+	.word display_paddle1
+	.word display_paddle2
+	.word display_koalapad
 	.word display_raw
 
 .code
@@ -24,6 +24,3 @@ display_port:
 	sta jump + 2
 jump:
 	jmp $0000
-
-none:
-	rts

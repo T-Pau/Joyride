@@ -6,6 +6,7 @@
 
 buttons_position = screen + 40 * 2 + 11
 wheel_offset = 2
+position_offset = 40 * 2 + 6 ; negative
 .bss
 
 tmp:
@@ -31,7 +32,7 @@ display_mouse:
 	lda #<buttons_position
 	cpx #2
 	bne :+
-	adc #20
+	adc #19
 :	sta ptr2
 	lda #>buttons_position
 	adc #0
@@ -59,7 +60,37 @@ display_mouse:
 	ldy #5
 	jsr copyrect
 	
-	; TODO: position
+	sec
+	lda ptr2
+	sbc #<position_offset
+	sta ptr2
+	lda ptr2 + 1
+	sbc #>position_offset
+	sta ptr2 + 1
+	lda port_potx
+	cmp #$7f
+	bne :+
+	lda #$80
+:	lsr
+	and #$3f
+	ldx #0
+	jsr pot_number
+	
+	clc
+	lda ptr2
+	adc #40
+	sta ptr2
+	lda ptr2 + 1
+	adc #0
+	sta ptr2 + 1
+	lda port_poty
+	cmp #$7f
+	bne :+
+	lda #$80
+:	lsr
+	and #$3f
+	ldx #0
+	jsr pot_number
 	
 	rts
 
