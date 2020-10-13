@@ -3,8 +3,9 @@
 .export display_mouse
 
 .include "joytest.inc"
+.macpack utility
 
-buttons_position = screen + 40 * 2 + 11
+buttons_offset = 10
 wheel_offset = 2
 position_offset = 40 * 2 + 6 ; negative
 .bss
@@ -28,26 +29,12 @@ display_mouse:
 	sta ptr1
 	lda button_rects + 1,y
 	sta ptr1 + 1
-	clc
-	lda #<buttons_position
-	cpx #2
-	bne :+
-	adc #19
-:	sta ptr2
-	lda #>buttons_position
-	adc #0
-	sta ptr2 + 1
+	add_word ptr2, buttons_offset
 	ldx #7
 	ldy #3
 	jsr copyrect
 	
-	clc
-	lda ptr2
-	adc #<wheel_offset
-	sta ptr2
-	lda ptr2 + 1
-	adc #>wheel_offset
-	sta ptr2 + 1
+	add_word ptr2, wheel_offset
 	lda port_digital
 	and #$0c
 	lsr
@@ -60,13 +47,7 @@ display_mouse:
 	ldy #5
 	jsr copyrect
 	
-	sec
-	lda ptr2
-	sbc #<position_offset
-	sta ptr2
-	lda ptr2 + 1
-	sbc #>position_offset
-	sta ptr2 + 1
+	subtract_word ptr2, position_offset
 	lda port_potx
 	cmp #$7f
 	bne :+
@@ -76,13 +57,7 @@ display_mouse:
 	ldx #0
 	jsr pot_number
 	
-	clc
-	lda ptr2
-	adc #40
-	sta ptr2
-	lda ptr2 + 1
-	adc #0
-	sta ptr2 + 1
+	add_word ptr2, 40
 	lda port_poty
 	cmp #$7f
 	bne :+

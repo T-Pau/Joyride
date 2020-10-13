@@ -20,7 +20,12 @@ COLOR_GRAY3 = 15
 
 charset = $4000
 screen = $4800
+sprites = $4c00
 color_ram = $d800
+
+sprite_none = 0
+sprite_bar = (sprites & $3fff) / 64
+sprite_cross = sprite_bar + 1
 
 tmp1 = $02
 ptr1 = $fb

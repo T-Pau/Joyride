@@ -1,7 +1,7 @@
 ; copy screen for type X to port Y
 
 .autoimport +
-.export copy_port_screen
+.export copy_port_screen, port_x_offset
 
 .include "joytest.inc"
 
@@ -15,11 +15,21 @@ name_address = screen + 9
 type:
 	.res 1
 
+port:
+	.res 1
+	
+.rodata
+
+port_x_offset:
+	.byte 32, 32 + 20 * 8
+
 .code
 
 copy_port_screen:
+	sty port
+	
 	lda #<name_address
-	cpy #2
+	cpy #1
 	bne port1
 	clc
 	adc #20
@@ -59,9 +69,37 @@ loop:
 	sta ptr1 + 1
 	ldx #17
 	ldy #9
-	jmp copyrect
+	jsr copyrect
+	
+	; set correct sprite pointers, hide in top border
+	ldy port
+	lda type
+	lsr
+	tax
+	lda port_sprite,x
+	sta screen + $3f8,y
+	sta screen + $3f9,y
+	
+	tya
+	asl
+	asl
+	tay
+	lda #0
+	sta VIC_SPR0_Y,y
+	sta VIC_SPR1_Y,y
+	
 
+	rts
+	
 .rodata
+
+port_sprite:
+	.byte sprite_none
+	.byte sprite_cross
+	.byte sprite_bar
+	.byte sprite_bar
+	.byte sprite_cross
+	.byte sprite_bar
 
 port_names:
 	invcode "joystick        "

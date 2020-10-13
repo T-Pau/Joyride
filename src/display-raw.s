@@ -3,21 +3,15 @@
 .export display_raw
 
 .include "joytest.inc"
+.macpack utility
 
-bit0_position = screen + 40 * 2 + 2
+bit0_position = 1
 potx_offset = 40 * 4 - 12
 poty_offset = 8
 .code
 
 display_raw:
-	clc
-	lda #<bit0_position
-	cpx #2
-	bne :+
-	adc #19
-:	sta ptr2
-	lda #>bit0_position
-	sta ptr2 + 1
+	add_word ptr2, bit0_position
 	
 	lda port_digital
 	and #$01
@@ -39,24 +33,12 @@ display_raw:
 	and #$10
 	jsr button
 
-	clc
-	lda ptr2
-	adc #<potx_offset
-	sta ptr2
-	lda ptr2 + 1
-	adc #>potx_offset
-	sta ptr2 + 1
+	add_word ptr2, potx_offset
 	lda port_potx
 	ldx #1
 	jsr pot_number
 	
-	clc
-	lda ptr2
-	adc #<poty_offset
-	sta ptr2
-	lda ptr2 + 1
-	adc #>poty_offset
-	sta ptr2 + 1
+	add_word ptr2, poty_offset
 	lda port_poty
 	ldx #1
 	jsr pot_number

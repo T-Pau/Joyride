@@ -3,22 +3,18 @@
 .export display_koalapad
 
 .include "joytest.inc"
+.macpack utility
 
-buttons_position = screen + 3 * 40 + 12
+buttons_offset = 40 + 11
 position_offset = 5 * 40 - 3
+
+sprite_x_offset = 2
+sprite_y_offset = 50 + 18
 
 .code
 
 display_koalapad:
-	clc
-	lda #<buttons_position
-	cpx #2
-	bne :+
-	adc #19
-:	sta ptr2
-	lda #>buttons_position
-	adc #0
-	sta ptr2 + 1
+	add_word ptr2, buttons_offset
 
 	lda port_digital
 	and #$04
@@ -28,28 +24,42 @@ display_koalapad:
 	and #$08	
 	jsr button
 	
-	clc
-	lda ptr2
-	adc #<position_offset
-	sta ptr2
-	lda ptr2 + 1
-	adc #>position_offset
-	sta ptr2 + 1
+	add_word ptr2, position_offset
 	
 	lda port_potx
 	ldx #1
 	jsr pot_number
 	
-	clc
-	lda ptr2
-	adc #40
-	sta ptr2
-	lda ptr2 + 1
-	adc #0
-	sta ptr2 + 1
+	add_word ptr2, 40
 	
 	lda port_poty
 	ldx #1
 	jsr pot_number
+	
+	ldx port_number
 
+	lda port_poty
+	lsr
+	lsr
+	clc
+	adc #sprite_y_offset
+	sta sprite_y
+
+	lda port_potx
+	lsr
+	lsr
+	clc
+	adc #sprite_x_offset
+	adc port_x_offset,x
+	sta sprite_x
+	lda #0
+	adc #0
+	sta sprite_x + 1
+
+	txa
+	asl
+	asl
+	tax
+	jsr set_sprite	
+	
 	rts

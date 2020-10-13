@@ -2,7 +2,7 @@
 
 .export handle_port1_user, handle_port2
 .export port1_type, port2_type, userport_type
-.export port_digital, port_potx, port_poty
+.export port_number, port_digital, port_potx, port_poty
 
 .include "joytest.inc"
 
@@ -15,6 +15,8 @@ port2_type:
 userport_type:
 	.res 1
 
+port_number:
+	.res 1
 port_digital:
 	.res 1
 port_potx:
@@ -48,16 +50,16 @@ handle_port1_user:
 	lda #$80
 	sta CIA1_PRA
 
-	ldx #1
+	ldx #0
 	jsr display_port
 
 	; TOOD: read user port 1
 	lda #0
 	sta port_digital
-	ldx #3
+	ldx #2
 	jsr display_joystick
 	; TODO: read user port 2
-	ldx #4
+	ldx #3
 	jsr display_joystick
 	rts
 
@@ -83,7 +85,7 @@ handle_port2:
     lda #$40
     sta CIA1_PRA
 
-	ldx #2
+	ldx #1
 	jsr display_port
 	rts
 

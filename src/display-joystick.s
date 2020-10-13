@@ -19,7 +19,6 @@ joy_positions:
 	.word screen + 15 * 40 + 22
 
 display_joystick:
-	dex
 	txa
 	asl
 	sta tmp

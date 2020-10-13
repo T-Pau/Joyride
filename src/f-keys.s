@@ -120,7 +120,7 @@ port1_next:
 	bne :+
 	ldx #0
 :	stx port1_type
-	ldy #1
+	ldy #0
 	jmp copy_port_screen
 
 port1_previous:
@@ -129,7 +129,7 @@ port1_previous:
 	bpl :+
 	ldx #port_types - 1
 :	stx port1_type
-	ldy #1
+	ldy #0
 	jmp copy_port_screen
 
 port2_next:
@@ -139,7 +139,7 @@ port2_next:
 	bne :+
 	ldx #0
 :	stx port2_type
-	ldy #2
+	ldy #1
 	jmp copy_port_screen
 
 port2_previous:
@@ -148,7 +148,7 @@ port2_previous:
 	bpl :+
 	ldx #port_types - 1
 :	stx port2_type
-	ldy #2
+	ldy #1
 	jmp copy_port_screen
 
 userport_next:
