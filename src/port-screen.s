@@ -109,7 +109,7 @@ port_names:
 	invcode "paddle 2        "
 	invcode "koalapad        "
 	invcode "raw             "
-
+	
 port_screens:
 	.repeat 6, i
 	.word port_screen_data + i * 17 * 9

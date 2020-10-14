@@ -30,7 +30,8 @@ SOURCES = \
 	ports.s \
 	pot.s \
 	screen.s \
-	sprite.s
+	sprite.s \
+	userport.s
 
 OBJECTS = ${SOURCES:.s=.o}
 
@@ -67,3 +68,4 @@ ports.o: ports.s joytest.inc
 pot.o: pot.s joytest.inc
 screen.o: screen.s cbm_ext.mac
 start.o: start.s joytest.inc cbm_ext.mac utility.mac
+userport.o: userport.s joytest.inc cbm_ext.mac

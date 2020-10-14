@@ -53,12 +53,12 @@ handle_port1_user:
 	ldx #0
 	jsr display_port
 
-	; TOOD: read user port 1
-	lda #0
-	sta port_digital
+	jsr read_userport1
+	lda port_digital
 	ldx #2
 	jsr display_joystick
-	; TODO: read user port 2
+	jsr read_userport2
+	lda port_digital
 	ldx #3
 	jsr display_joystick
 	rts

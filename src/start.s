@@ -28,6 +28,7 @@ start:
 	ldx #0
 	ldy #2
 	jsr copy_port_screen
+	jsr copy_userport
 	set_vic_bank $4000
 	set_vic_text screen, charset
 	

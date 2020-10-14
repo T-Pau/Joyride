@@ -152,7 +152,22 @@ port2_previous:
 	jmp copy_port_screen
 
 userport_next:
+	ldx userport_type
+	inx
+	cpx #userport_types
+	bne :+
+	ldx #0
+:	stx userport_type
+	jmp copy_userport
+	
 userport_previous:
+	ldx userport_type
+	dex
+	bpl :+
+	ldx #userport_types - 1
+:	stx userport_type
+	jmp copy_userport
+
 help:
 none:
 	rts
