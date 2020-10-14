@@ -8,6 +8,9 @@
 button_offset = 40 + 7
 value_offset = 5 * 40
 
+sprite_x_offset = 4
+sprite_y_offset = 50 + 20 + 4 * 8
+
 .bss
 
 paddle:
@@ -42,7 +45,27 @@ display_paddle:
 	ldx paddle
 	beq :+
 	lda port_poty
-:	ldx #1
+:	sta sprite_x
+	ldx #1
 	jsr pot_number 
 	
+	ldx port_number
+	lda #$ff
+	sec
+	sbc sprite_x
+	lsr
+	clc
+	adc #sprite_x_offset
+	adc port_x_offset,x
+	sta sprite_x
+	lda #0
+	adc #0
+	sta sprite_x + 1
+
+	lda #sprite_y_offset
+	sta sprite_y
+
+	txa
+	asl
+	jsr set_sprite	
 	rts

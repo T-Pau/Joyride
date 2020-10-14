@@ -8,6 +8,10 @@
 bit0_position = 1
 potx_offset = 40 * 4 - 12
 poty_offset = 8
+
+sprite_x_offset = 4
+sprite0_y_offset = 50 + 20 + 5 * 8
+sprite1_y_offset = sprite0_y_offset + 16
 .code
 
 display_raw:
@@ -43,6 +47,38 @@ display_raw:
 	ldx #1
 	jsr pot_number
 
-	; TODO: pot sprites
+	ldx port_number
+	lda port_potx
+	lsr
+	clc
+	adc #sprite_x_offset
+	adc port_x_offset,x
+	sta sprite_x
+	lda #0
+	adc #0
+	sta sprite_x + 1
+	lda #sprite0_y_offset
+	sta sprite_y
+	txa
+	asl
+	jsr set_sprite
+	
+	ldx port_number
+	lda port_poty
+	lsr
+	clc
+	adc #sprite_x_offset
+	adc port_x_offset,x
+	sta sprite_x
+	lda #0
+	adc #0
+	sta sprite_x + 1
+	lda #sprite1_y_offset
+	sta sprite_y
+	txa
+	asl
+	clc
+	adc #1
+	jsr set_sprite
 	
 	rts

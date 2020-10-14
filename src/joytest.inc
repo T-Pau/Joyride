@@ -23,9 +23,9 @@ screen = $4800
 sprites = $4c00
 color_ram = $d800
 
-sprite_none = 0
-sprite_bar = (sprites & $3fff) / 64
-sprite_cross = sprite_bar + 1
+sprite_none = (sprites & $3fff) / 64
+sprite_bar = sprite_none + 1
+sprite_cross = sprite_none + 2
 
 tmp1 = $02
 ptr1 = $fb

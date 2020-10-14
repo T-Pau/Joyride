@@ -8,7 +8,7 @@
 buttons_offset = 40 + 11
 position_offset = 5 * 40 - 3
 
-sprite_x_offset = 2
+sprite_x_offset = 4
 sprite_y_offset = 50 + 18
 
 .code
@@ -58,8 +58,6 @@ display_koalapad:
 
 	txa
 	asl
-	asl
-	tax
 	jsr set_sprite	
 	
 	rts

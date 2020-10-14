@@ -1,4 +1,4 @@
-; set sprite X coordinates
+; set sprite A coordinates
 .export sprite_x, sprite_y, set_sprite
 
 .include "c64.inc"
@@ -19,8 +19,7 @@ sprite_y:
 .code
 
 set_sprite:
-	txa
-	lsr
+	asl
 	tax
 
 	lda VIC_SPR_HI_X

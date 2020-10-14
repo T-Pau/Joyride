@@ -62,7 +62,7 @@ display-raw.o: display-raw.s joytest.inc utility.mac
 dpad.o: dpad.s joytest.inc
 f-keys.o: f-keys.s joytest.inc
 memcpy.o: memcpy.s joytest.inc
-port_screen.o: port_screen.s joytest.inc cbm_ext.mac
+port-screen.o: port-screen.s joytest.inc cbm_ext.mac
 ports.o: ports.s joytest.inc
 pot.o: pot.s joytest.inc
 screen.o: screen.s cbm_ext.mac

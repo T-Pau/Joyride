@@ -8,6 +8,10 @@
 buttons_offset = 10
 wheel_offset = 2
 position_offset = 40 * 2 + 6 ; negative
+
+sprite_x_offset = 4
+sprite_y_offset = 50 + 18
+
 .bss
 
 tmp:
@@ -54,6 +58,7 @@ display_mouse:
 	lda #$80
 :	lsr
 	and #$3f
+	sta sprite_x
 	ldx #0
 	jsr pot_number
 	
@@ -64,9 +69,29 @@ display_mouse:
 	lda #$80
 :	lsr
 	and #$3f
+	eor #$3f
+	sta sprite_y
 	ldx #0
 	jsr pot_number
 	
+	ldx port_number
+	clc
+	lda sprite_x
+	adc #sprite_x_offset
+	adc port_x_offset,x
+	sta sprite_x
+	lda #0
+	adc #0
+	sta sprite_x + 1
+
+	lda sprite_y
+	adc #sprite_y_offset
+	sta sprite_y
+
+	txa
+	asl
+	jsr set_sprite
+		
 	rts
 
 .rodata

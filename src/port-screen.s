@@ -12,7 +12,7 @@ name_address = screen + 9
 
 .bss
 
-type:
+type_times_2:
 	.res 1
 
 port:
@@ -30,17 +30,17 @@ copy_port_screen:
 	
 	lda #<name_address
 	cpy #1
-	bne port1
+	bne port0
 	clc
 	adc #20
-port1:
+port0:
 	sta ptr2
 	lda #>name_address
 	sta ptr2 + 1
 
 	txa
 	asl
-	sta type
+	sta type_times_2
 	asl
 	asl
 	asl
@@ -62,7 +62,7 @@ loop:
 	lda #72
 	adc ptr2
 	sta ptr2
-	ldx type
+	ldx type_times_2
 	lda port_screens,x
 	sta ptr1
 	lda port_screens + 1,x
@@ -72,8 +72,10 @@ loop:
 	jsr copyrect
 	
 	; set correct sprite pointers, hide in top border
-	ldy port
-	lda type
+	lda port
+	asl
+	tay
+	lda type_times_2
 	lsr
 	tax
 	lda port_sprite,x
@@ -81,7 +83,6 @@ loop:
 	sta screen + $3f9,y
 	
 	tya
-	asl
 	asl
 	tay
 	lda #0

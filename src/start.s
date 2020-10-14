@@ -15,7 +15,7 @@ start:
 	memcpy charset, charset_data, $2000
 	memcpy screen, main_screen, 1000
 	memcpy color_ram, main_color, 1000
-	memcpy sprites, cursor, 128
+	memcpy sprites, cursor, 64 * 3
 	
 	ldx #0
 	stx port1_type
@@ -31,7 +31,7 @@ start:
 	set_vic_bank $4000
 	set_vic_text screen, charset
 	
-	lda #$07
+	lda #$0f
 	sta VIC_SPR_ENA
 	lda #0
 	sta VIC_SPR_BG_PRIO
