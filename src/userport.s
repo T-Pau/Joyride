@@ -27,7 +27,7 @@ userport_names:
 
 userport_name_strings:
 	invcode "protovision / cga   "
-	invcode "hitmen              "
+	invcode "digital xs / hitmen "
 	invcode "kingsoft            "
 	invcode "starbyte            "
 
@@ -39,7 +39,7 @@ copy_userport:
 	lda userport_type
 	asl
 	tax
-	
+
 	lda #<name_address
 	sta ptr2
 	lda #>name_address
@@ -56,7 +56,7 @@ loop:
 	sta (ptr2),y
 	dey
 	bpl loop
-	
+
 	rts
 
 read_userport:
@@ -71,25 +71,25 @@ jump:
 	jmp $0000
 
 
-read_protovision:	
+read_protovision:
 	lda #$80
     sta CIA2_DDRB
-    
+
     ; select joystick 3
     lda CIA2_PRB
     ora #$80
     sta CIA2_PRB
-    
+
     lda CIA2_PRB
     eor #$ff
     and #$1f
 	sta port_digital
-	
+
 	; select joystick 4
     lda CIA2_PRB
     and #$7f
     sta CIA2_PRB
-    
+
     lda CIA2_PRB
     eor #$ff
     and #$2f
@@ -116,8 +116,8 @@ read_hitmen:
 	lsr
 	lsr
 	sta port_digital + 1
-	
-	; read port 3 fire 
+
+	; read port 3 fire
 	lda CIA2_DDRA
 	and #%11111011
 	sta CIA2_DDRA
@@ -127,7 +127,7 @@ read_hitmen:
 	lda port_digital
 	ora #$10
 	sta port_digital
-:	
+:
 	; read port 4 fire
 	lda #$ff
 	sta CIA1_SDR
@@ -149,7 +149,7 @@ kingsoft_low:
 kingsoft_high:
 	; TODO
 	;      00   01   02   03   04   05   06   07   08   09   0a   0b   0c   0d   0e   0f
-	.byte $00, $10, $08, $18, $04, $14, $0c, $1c, $01, $19, $05, $1d, $03, $1b, $07, $1f
+	.byte $00, $10, $08, $18, $04, $14, $0c, $1c, $02, $12, $0a, $1a, $06, $16, $0e, $1e
 
 starbyte_low:
 	;      00   01   02   03   04   05   06   07   08   09   0a   0b   0c   0d   0e   0f
@@ -158,13 +158,13 @@ starbyte_low:
 starbyte_high:
 	; TODO
 	;      00   01   02   03   04   05   06   07   08   09   0a   0b   0c   0d   0e   0f
-	.byte $00, $08, $04, $0c, $02, $0a, $06, $0e, $01, $09, $05, $0d, $03, $0b, $07, $0f
+	.byte $00, $10, $02, $12, $08, $18, $0a, $1a, $04, $14, $06, $16, $0c, $1c, $0e, $1e
 
 .code
 
 read_kingsoft:
 	jsr read_hitmen
-	
+
 	lda port_digital
 	and #$0f
 	tax
@@ -176,7 +176,7 @@ read_kingsoft:
 	tax
 	lda kingsoft_high,x
 	sta temp
-	
+
 	lda port_digital
 	and #$10
 	beq :+
@@ -185,19 +185,21 @@ read_kingsoft:
 	sta temp
 :
 	lda port_digital + 1
-	and #$01
+	and #$10
 	beq :+
 	lda temp + 1
 	ora #$10
-	sta port_digital +1
+	sta temp + 1
 :
 	lda temp
 	sta port_digital
+	lda temp + 1
+	sta port_digital + 1
 	rts
 
 read_starbyte:
 	jsr read_hitmen
-	
+
 	lda port_digital
 	and #$0f
 	tax
@@ -209,7 +211,7 @@ read_starbyte:
 	tax
 	lda starbyte_high,x
 	sta temp + 1
-	
+
 	lda port_digital
 	and #$10
 	beq :+
@@ -218,12 +220,14 @@ read_starbyte:
 	sta temp + 1
 :
 	lda port_digital + 1
-	and #$01
+	and #$10
 	beq :+
 	lda temp
 	ora #$10
-	sta port_digital
+	sta temp
 :
+	lda temp
+	sta port_digital
 	lda temp + 1
 	sta port_digital + 1
 	rts
