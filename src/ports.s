@@ -18,7 +18,7 @@ userport_type:
 port_number:
 	.res 1
 port_digital:
-	.res 1
+	.res 2
 port_potx:
 	.res 1
 port_poty:
@@ -53,12 +53,11 @@ handle_port1_user:
 	ldx #0
 	jsr display_port
 
-	jsr read_userport1
-	lda port_digital
+	jsr read_userport
 	ldx #2
 	jsr display_joystick
-	jsr read_userport2
-	lda port_digital
+	lda port_digital + 1
+	sta port_digital
 	ldx #3
 	jsr display_joystick
 	rts

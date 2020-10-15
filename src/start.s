@@ -48,4 +48,18 @@ start:
 
 	jsr init_irq
 
+	; set up serial loopback for userport adapters
+	lda #0
+	sta CIA2_DDRB
+	lda #1
+	sta CIA1_TA
+	sta CIA2_TA
+	lda #0
+	sta CIA1_TA + 1
+	sta CIA2_TA + 1
+	lda #%00010001
+	sta CIA2_CRA
+	lda #%01010001
+	sta CIA1_CRA
+
 	jmp main_loop

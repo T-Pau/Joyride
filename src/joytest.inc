@@ -33,4 +33,4 @@ ptr2 = $fd
 ptr3 = $c1
 
 port_types = 6
-userport_types = 2
+userport_types = 4
