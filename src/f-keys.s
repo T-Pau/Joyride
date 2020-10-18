@@ -13,7 +13,7 @@ shift:
 
 fkey:
 	.byte 0
-	
+
 last_fkey:
 	.byte 0
 
@@ -29,6 +29,9 @@ function_handlers:
 	.word userport_previous
 	.word help
 	.word none
+	.word help_next
+	.word help_previous
+	.word help_exit
 
 .code
 
@@ -37,13 +40,13 @@ handle_keyboard:
 	sta CIA1_DDRA
 	lda #$00
 	sta CIA1_DDRB
-	
+
 	lda #$ff
 	sta CIA1_PRA
 	lda CIA1_PRB
 	cmp #$ff
 	bne f_end
-	
+
 	; get shift
 	lda #$40 ^ $ff
 	sta CIA1_PRA
@@ -96,7 +99,7 @@ f_none:
 	stx last_fkey
 f_end:
 	rts
-	
+
 main_loop:
 	lda fkey
 	beq main_loop
@@ -159,7 +162,7 @@ userport_next:
 	ldx #0
 :	stx userport_type
 	jmp copy_userport
-	
+
 userport_previous:
 	ldx userport_type
 	dex
@@ -168,6 +171,5 @@ userport_previous:
 :	stx userport_type
 	jmp copy_userport
 
-help:
 none:
 	rts

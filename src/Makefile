@@ -23,6 +23,8 @@ SOURCES = \
 	display-raw.s \
 	dpad.s \
 	f-keys.s \
+	help.s \
+	help-screen.s \
 	irq.s \
 	irq-table.s \
 	memcpy.s \
@@ -62,6 +64,8 @@ display-port.o: display-port.s joytest.inc
 display-raw.o: display-raw.s joytest.inc utility.mac
 dpad.o: dpad.s joytest.inc
 f-keys.o: f-keys.s joytest.inc
+help.o: help.s joytest.inc utility.mac
+help-screen.o: help-screen.s joytest.inc cbm_ext.mac
 memcpy.o: memcpy.s joytest.inc
 port-screen.o: port-screen.s joytest.inc cbm_ext.mac
 ports.o: ports.s joytest.inc

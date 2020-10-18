@@ -1,16 +1,22 @@
-.import irq_table, irq_table_length
-.export init_irq
+.export init_irq, set_irq_table
 
 .include "c64.inc"
+
+; IRQ_DEBUG = 1
+
+table = $c3
 
 .bss
 
 index:
 	.res 1
 
+table_length:
+	.res 1
+
 .code
 
-.proc init_irq
+init_irq:
 	sei
 	; disable cia 1 interrupts
 	lda #$7f
@@ -24,49 +30,62 @@ index:
 	sta $0314
 	lda #>irq_main
 	sta $0315
-	lda #0
-	sta index
-	jsr setup_next_irq
 	cli
 	rts
 
+set_irq_table:
+	stx table
+	sty table + 1
+	sta table_length
+	lda #0
+	sta index
+	jmp setup_next_irq
+
 irq_main:
+.ifdef IRQ_DEBUG
+	inc VIC_BORDERCOLOR
+.endif
+irq_jsr:
 	jsr $0000
 	jsr setup_next_irq
 	; acknowledge irq
 	lda #1
     sta VIC_IRR
+.ifdef IRQ_DEBUG
+	dec VIC_BORDERCOLOR
+.endif
     jmp $ea81
 
 
 setup_next_irq:
-	ldx index
+	ldy index
 
 	; activate next entry
-	lda irq_table,x
+	lda (table),y
 	sta VIC_HLINE
+	iny
+	lda (table),y
+	beq high0
+	lda VIC_CTRL1
+	ora #$80
+	sta VIC_CTRL1
+	bne addr
+high0:
 	lda VIC_CTRL1
 	and #$7f
-	ldy irq_table + 1,x
-	beq high0
-	ora #$80
-high0:
 	sta VIC_CTRL1
-	lda irq_table + 2,x
-	sta irq_main + 1
-	lda irq_table + 3,x
-	sta irq_main + 2
+addr:
+	iny
+	lda (table),y
+	sta irq_jsr + 1
+	iny
+	lda (table),y
+	sta irq_jsr + 2
 
-	; increase index
-	txa
-	clc
-	adc #4
-	cmp irq_table_length
-	bne next
-	lda #0
-next:
-	sta index
+	iny
+	cpy table_length
+	bne :+
+	ldy #0
+:	sty index
 	rts
-
-.endproc
 
