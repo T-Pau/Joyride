@@ -31,7 +31,7 @@ function_handlers:
 	.word none
 	.word help_next
 	.word help_previous
-	.word help_exit
+	.word display_main_screen
 
 .code
 

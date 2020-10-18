@@ -39,5 +39,6 @@ help_exit:
 	rts
 
 handle_help:
+	jsr label_background
 	; TODO: read keyboard, give commands
 	rts

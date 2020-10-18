@@ -22,11 +22,13 @@ loop:
 
 partial:
 	ldx ptr3
+	beq end
 partial_loop:
 	lda (ptr1),y
 	sta (ptr2),y
 	iny
 	dex
+end:
 	bne partial_loop
 	rts
 

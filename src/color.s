@@ -41,4 +41,4 @@ help_color:
 	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b
 	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
 	.endrep
-	.res 5*40, $c
+	.res 5 * 40, $c

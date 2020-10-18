@@ -1,4 +1,4 @@
-; copy screen for type X to port Y
+; copy screen for port Y
 
 .autoimport +
 .export copy_port_screen, port_x_offset
@@ -27,6 +27,7 @@ port_x_offset:
 
 copy_port_screen:
 	sty port
+	ldx port1_type,y
 	
 	lda #<name_address
 	cpy #1
