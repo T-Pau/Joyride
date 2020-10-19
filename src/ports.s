@@ -27,7 +27,7 @@ port_poty:
 .code
 
 handle_port1_user:
-	jsr label_background
+	jsr display_logo
 
 	; read POTx/POTy
 	lda SID_ADConv1

@@ -13,7 +13,7 @@ start:
 	sta VIC_BORDERCOLOR
 
 	memcpy charset, charset_data, $800
-	memcpy sprites, cursor, 64 * 3
+	memcpy sprites, sprite_data, (64 * 8)
 
 	ldx #0
 	stx port1_type
@@ -37,6 +37,8 @@ start:
 	sta VIC_SPR1_COLOR
 	sta VIC_SPR2_COLOR
 	sta VIC_SPR3_COLOR
+	
+	jsr setup_logo
 
 	lda #$ff
 	sta CIA1_DDRA
@@ -63,9 +65,9 @@ start:
 display_main_screen:
 	memcpy screen, main_screen, 1000
 	memcpy color_ram, main_color, 1000
-	ldy #1
+	ldy #0
 	jsr copy_port_screen
-	ldy #2
+	ldy #1
 	jsr copy_port_screen
 	jsr copy_userport
 	ldx #<main_irq_table

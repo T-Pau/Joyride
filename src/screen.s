@@ -44,7 +44,7 @@ main_screen:
 	invcode "                                        "
 	invcode "     f1/f2: port 1   f3/f4: port 2      "
 	invcode "      f5/f6: user port   f7: help       "
-	invcode "                                   t'pau"
+	invcode "                                        "
 
 
 help_screen:
@@ -62,4 +62,4 @@ help_screen:
 	invcode "         "
 	.byte $9f
 	invcode            ": return to program           "
-	invcode "                                   t'pau"
+	invcode "                                        "

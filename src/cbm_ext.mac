@@ -10,6 +10,18 @@
 	sta VIC_VIDEO_ADR
 .endmacro
 
+.macro set_vic_24_lines
+	lda VIC_CTRL1
+	and #$08 ^ $ff
+	sta VIC_CTRL1
+.endmacro
+
+.macro set_vic_25_lines
+	lda VIC_CTRL1
+	ora #$08
+	sta VIC_CTRL1
+.endmacro
+
 ; Convert characters to inverse screen codes
 
 ; Macro that converts one character.

@@ -39,7 +39,7 @@ help_exit:
 	rts
 
 handle_help:
-	jsr label_background
+	jsr display_logo
 	
 	lda #$ff
 	sta CIA1_PRA

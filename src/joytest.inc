@@ -24,8 +24,9 @@ sprites = $4c00
 color_ram = $d800
 
 sprite_none = (sprites & $3fff) / 64
-sprite_bar = sprite_none + 1
-sprite_cross = sprite_none + 2
+sprite_bar = sprite_none + 2
+sprite_cross = sprite_none + 3
+sprite_logo = sprite_none + 4
 
 tmp1 = $02
 ptr1 = $fb

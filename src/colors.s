@@ -5,6 +5,10 @@
 .code
 
 label_background:
+	nop
+	nop
+	nop
+	nop
 	lda #COLOR_BLACK
 	sta VIC_BG_COLOR0
 	rts
