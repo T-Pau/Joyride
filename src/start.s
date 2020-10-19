@@ -38,6 +38,10 @@ start:
 	sta VIC_SPR2_COLOR
 	sta VIC_SPR3_COLOR
 
+	lda #$ff
+	sta CIA1_DDRA
+	sta CIA1_DDRB
+
 	jsr init_irq
 
 	; set up serial loopback for userport adapters
@@ -57,10 +61,6 @@ start:
 	jmp main_loop
 
 display_main_screen:
-	ldx #<main_irq_table
-	ldy #>main_irq_table
-	lda main_irq_table_length
-	jsr set_irq_table
 	memcpy screen, main_screen, 1000
 	memcpy color_ram, main_color, 1000
 	ldy #1
@@ -68,4 +68,8 @@ display_main_screen:
 	ldy #2
 	jsr copy_port_screen
 	jsr copy_userport
+	ldx #<main_irq_table
+	ldy #>main_irq_table
+	lda main_irq_table_length
+	jsr set_irq_table
 	rts

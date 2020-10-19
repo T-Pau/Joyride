@@ -1,6 +1,6 @@
 .autoimport +
 
-.export handle_keyboard, main_loop
+.export handle_keyboard, main_loop, command, last_command
 
 .include "joytest.inc"
 
@@ -11,10 +11,10 @@ shift:
 
 .data
 
-fkey:
+command:
 	.byte 0
 
-last_fkey:
+last_command:
 	.byte 0
 
 .rodata
@@ -37,15 +37,16 @@ function_handlers:
 
 handle_keyboard:
 	lda #$ff
-	sta CIA1_DDRA
-	lda #$00
-	sta CIA1_DDRB
-
-	lda #$ff
 	sta CIA1_PRA
-	lda CIA1_PRB
+	sta CIA1_PRB
+	
+	lda CIA1_PRA
+	and CIA1_PRB
 	cmp #$ff
 	bne f_end
+	
+	lda #$00
+	sta CIA1_DDRB
 
 	; get shift
 	lda #$40 ^ $ff
@@ -88,20 +89,22 @@ f_got:
 	lda shift
 	beq :+
 	inx
-:	cpx last_fkey
+:	cpx last_command
 	beq f_end
-	stx last_fkey
-	stx fkey
+	stx last_command
+	stx command
 	bne f_end
 
 f_none:
 	ldx #0
-	stx last_fkey
+	stx last_command
 f_end:
+	lda #$ff
+	sta CIA1_DDRB
 	rts
 
 main_loop:
-	lda fkey
+	lda command
 	beq main_loop
 	asl
 	tax
@@ -112,7 +115,7 @@ main_loop:
 jump:
 	jsr $0000
 	lda #0
-	sta fkey
+	sta command
 	beq main_loop
 
 

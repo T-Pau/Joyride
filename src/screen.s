@@ -48,7 +48,7 @@ main_screen:
 
 
 help_screen:
-	invcode " controller tester                      "
+	invcode "                                        "
 	scrcode "I                                     J"
 	.byte $a0
 	.repeat 18, i
@@ -58,6 +58,8 @@ help_screen:
 	scrcode "KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMML"
 	.byte $a0
 	invcode "                                        "
-	invcode "     space/f1: next   f7: previous      "
-	invcode "            run/stop: return            "
+	invcode "  space/+: next page  -: previous page  "
+	invcode "         "
+	.byte $9f
+	invcode            ": return to program           "
 	invcode "                                   t'pau"

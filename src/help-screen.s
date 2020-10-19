@@ -3,9 +3,10 @@
 
 .include "joytest.inc"
 
-help_screen_start = screen + 80 + 1
+help_screen_start = screen + 1
 
-num_help_screens = (help_screens_end - help_screen) / 2
+help_screen_size = 37 * 20
+num_help_screens = 2
 
 .macpack cbm
 .macpack cbm_ext
@@ -18,13 +19,13 @@ current_help_screen:
 .rodata
 
 help_screens:
-	.repeat 1, i
-	.word help_screens_data + 37 * 18 * i
+	.repeat num_help_screens, i
+	.word help_screens_data + help_screen_size * i
 	.endrep
 
-help_screens_end:
-
 help_screens_data:
+	invcode "controller test                      "
+	scrcode "                                     "
 	scrcode "this program displays the current    " ;  1
 	scrcode "state of input devices connected to  " ;  2
 	scrcode "the control port or a user port      " ;  3
@@ -43,6 +44,27 @@ help_screens_data:
 	scrcode "- digital excess / hitmen adapter    " ; 16
 	scrcode "- kingsoft adapter                   " ; 17
 	scrcode "- starbyte adapter                   " ; 18
+
+	invcode "joystick                             "
+	scrcode "                                     "
+	scrcode "                                     " ;  1
+	scrcode "                                     " ;  2
+	scrcode "                                     " ;  3
+	scrcode "                                     " ;  4
+	scrcode "                                     " ;  5
+	scrcode "                                     " ;  6
+	scrcode "                                     " ;  7
+	scrcode "                                     " ;  8
+	scrcode "                                     " ;  9
+	scrcode "                                     " ; 10
+	scrcode "                                     " ; 11
+	scrcode "                                     " ; 12
+	scrcode "                                     " ; 13
+	scrcode "                                     " ; 14
+	scrcode "                                     " ; 15
+	scrcode "                                     " ; 16
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
 
 .code
 
@@ -69,5 +91,5 @@ ok:
 	lda #>help_screen_start
 	sta ptr2 + 1
 	ldx #37
-	ldy #18
+	ldy #20
 	jmp copyrect
