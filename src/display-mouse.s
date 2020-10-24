@@ -37,7 +37,7 @@ buttons_offset = 10
 wheel_offset = 2
 position_offset = 40 * 2 + 6 ; negative
 
-sprite_x_offset = 4
+sprite_x_offset = 2
 sprite_y_offset = 50 + 18
 
 .bss
