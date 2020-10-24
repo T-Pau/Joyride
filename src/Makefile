@@ -5,7 +5,7 @@ LD = cl65
 LDFLAGS = -t c64 -u __EXEHDR__ -C c64-asm.cfg
 # LDFLAGS += -Ln sym
 
-all: joytest.prg
+PROGRAM = joyride.prg
 
 SOURCES = \
 	start.s \
@@ -38,6 +38,12 @@ SOURCES = \
 
 OBJECTS = ${SOURCES:.s=.o}
 
+all: ${PROGRAM}
+
+clean:
+	rm -f ${OBJECTS} ${PROGRAM}
+
+
 .SUFFIXES: .s .o
 
 .s.o:
@@ -49,29 +55,29 @@ charset.bin: charset.png
 sprites.bin: sprites.png
 	gfx-convert sprites sprites.png sprites.bin
 
-joytest.prg: ${OBJECTS}
-	${LD} ${LDFLAGS} -o joytest.prg ${OBJECTS}
+${PROGRAM}: ${OBJECTS}
+	${LD} ${LDFLAGS} -o ${PROGRAM} ${OBJECTS}
 
-button.o: button.s joytest.inc
+button.o: button.s joyride.inc
 charset.o: charset.s charset.bin
-colors.o: colors.s joytest.inc
-copyrect.o: copyrect.s joytest.inc
-display-joystick.o: display-joystick.s joytest.inc
-display-koalapad.o: display-koalapad.s joytest.inc utility.mac
-display-mouse.o: display-mouse.s joytest.inc utility.mac
-display-paddle.o: display-paddle.s joytest.inc utility.mac
-display-port.o: display-port.s joytest.inc
-display-raw.o: display-raw.s joytest.inc utility.mac
-dpad.o: dpad.s joytest.inc
-f-keys.o: f-keys.s joytest.inc
-help.o: help.s joytest.inc utility.mac
-help-screen.o: help-screen.s joytest.inc cbm_ext.mac
-logo.o: logo.s joytest.inc cbm_ext.mac
-memcpy.o: memcpy.s joytest.inc
-port-screen.o: port-screen.s joytest.inc cbm_ext.mac
-ports.o: ports.s joytest.inc
-pot.o: pot.s joytest.inc
+colors.o: colors.s joyride.inc
+copyrect.o: copyrect.s joyride.inc
+display-joystick.o: display-joystick.s joyride.inc
+display-koalapad.o: display-koalapad.s joyride.inc utility.mac
+display-mouse.o: display-mouse.s joyride.inc utility.mac
+display-paddle.o: display-paddle.s joyride.inc utility.mac
+display-port.o: display-port.s joyride.inc
+display-raw.o: display-raw.s joyride.inc utility.mac
+dpad.o: dpad.s joyride.inc
+f-keys.o: f-keys.s joyride.inc
+help.o: help.s joyride.inc utility.mac
+help-screen.o: help-screen.s joyride.inc cbm_ext.mac
+logo.o: logo.s joyride.inc cbm_ext.mac
+memcpy.o: memcpy.s joyride.inc
+port-screen.o: port-screen.s joyride.inc cbm_ext.mac
+ports.o: ports.s joyride.inc
+pot.o: pot.s joyride.inc
 screen.o: screen.s cbm_ext.mac
 sprites.o: sprites.s sprites.bin
-start.o: start.s joytest.inc cbm_ext.mac utility.mac
-userport.o: userport.s joytest.inc cbm_ext.mac
+start.o: start.s joyride.inc cbm_ext.mac utility.mac
+userport.o: userport.s joyride.inc cbm_ext.mac

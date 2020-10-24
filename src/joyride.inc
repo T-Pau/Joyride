@@ -1,4 +1,4 @@
-;  irq-table.s -- Table of raster IRQ handlers.
+;  joyride.inc -- Global definitions for Joyride.
 ;  Copyright (C) 2020 Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
@@ -26,28 +26,44 @@
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-.autoimport +
-.export main_irq_table, main_irq_table_length, help_irq_table, help_irq_table_length
+.include "c64.inc"
 
-top = 50 ; first raster line of screen
+COLOR_BLACK = 0
+COLOR_WHITE = 1
+COLOR_RED = 2
+COLOR_CYAN = 3
+COLOR_VIOLET = 4
+COLOR_PURPLE = COLOR_VIOLET
+COLOR_GREEN = 5
+COLOR_BLUE = 6
+COLOR_YELLOW = 7
+COLOR_ORANGE = 8
+COLOR_BROWN = 9
+COLOR_LIGHTRED = 10
+COLOR_GRAY1 = 11
+COLOR_GRAY2 = 12
+COLOR_LIGHTGREEN = 13
+COLOR_LIGHTBLUE = 14
+COLOR_GRAY3 = 15
 
-.data
+charset = $5000
+screen = $5800
+sprites = $5c00
+color_ram = $d800
 
-main_irq_table:
-	.word top, label_background
-	.word top + 8 - 1, content_background
-	.word top + 13 * 8, label_background
-	.word top + 14 * 8 - 1, handle_port2
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_port1_user
-main_irq_table_length:
-	.byte * - main_irq_table
+sprite_none = (sprites & $3fff) / 64
+sprite_bar = sprite_none + 2
+sprite_cross = sprite_none + 3
+sprite_logo = sprite_none + 4
 
+tmp1 = $02
+ptr1 = $fb
+ptr2 = $fd
+ptr3 = $c1
 
-help_irq_table:
-	.word top, label_background
-	.word top + 8 - 1, content_background
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_help
-help_irq_table_length:
-	.byte * - help_irq_table
+port_types = 6
+userport_types = 4
+
+COMMAND_HELP_NEXT = 9
+COMMAND_HELP_PREVIOUS = 10
+COMMAND_HELP_EXIT = 11

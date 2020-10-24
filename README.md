@@ -10,17 +10,17 @@ Supported are:
 - Koalapad
 - Userport Joystick Adapter
 
-For digital inputs, the button or direction is inverted when pressed. Analog inputs are displayed as numbers and by positioning a pointer.
+For digital inputs, the button or direction is inverted when pressed. Analog inputs are displayed as numbers and by positioning a cursor.
 
 
 ## Joystick
 
-Joysticks contain a stick or d-pad with switches for the 4 cardinal directions and up to 3 buttons.
+Joysticks contain a stick or d-pad with switches for the 4 cardinal directions and up to three buttons.
 
 
 ## Mouse
 
-Supported are 1351 compatible mice. They give the position modulo 64 and support up to 3 buttons and a scroll wheel.
+Supported are 1351 compatible mice. They give the position modulo 64 and support up to three buttons and a scroll wheel.
 
 
 ## Paddle
@@ -37,7 +37,7 @@ This is a touch tablet that gives the position in X and Y as values from ca. 6 t
 
 ## Raw Data
 
-This displays the 5 digital input lines and the 2 analog potentiometers as values from 0 to 255.
+This displays the 5 digital input lines and the two analog potentiometers as values from 0 to 255.
 
 
 ## Userport Joystick Adapter
