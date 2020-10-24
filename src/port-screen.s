@@ -100,36 +100,27 @@ loop:
 	ldy #9
 	jsr copyrect
 	
-	; set correct sprite pointers, hide in top border
+	; set correct sprite pointers
 	lda port
 	asl
 	tay
-	lda type_times_2
-	lsr
-	tax
+	ldx type_times_2
 	lda port_sprite,x
 	sta screen + $3f8,y
+	lda port_sprite + 1,x
 	sta screen + $3f9,y
 	
-	tya
-	asl
-	tay
-	lda #0
-	sta VIC_SPR0_Y,y
-	sta VIC_SPR1_Y,y
-	
-
 	rts
 	
 .rodata
 
 port_sprite:
-	.byte sprite_none
-	.byte sprite_cross
-	.byte sprite_bar
-	.byte sprite_bar
-	.byte sprite_cross
-	.byte sprite_bar
+	.byte sprite_none, sprite_none
+	.byte sprite_cross, sprite_none
+	.byte sprite_bar, sprite_none
+	.byte sprite_bar, sprite_none
+	.byte sprite_cross, sprite_none
+	.byte sprite_bar, sprite_bar
 
 port_names:
 	invcode "joystick        "
