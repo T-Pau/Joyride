@@ -6,7 +6,7 @@
 help_screen_start = screen + 1
 
 help_screen_size = 37 * 20
-num_help_screens = 2
+num_help_screens = 7
 
 .macpack cbm
 .macpack cbm_ext
@@ -24,38 +24,143 @@ help_screens:
 	.endrep
 
 help_screens_data:
-	invcode "controller test                      "
+	invcode "joyride                              "
 	scrcode "                                     "
-	scrcode "this program displays the current    " ;  1
-	scrcode "state of input devices connected to  " ;  2
-	scrcode "the control port or a user port      " ;  3
-	scrcode "joystick adapter. each supported     " ;  4
-	scrcode "device type has its own layout. you  " ;  5
-	scrcode "can switch between them with the     " ;  6
-	scrcode "function keys. you can also display  " ;  7
-	scrcode "the raw data directly.               " ;  8
-	scrcode "supported devices:                   " ;  9
-	scrcode "- joystick with up to three buttons  " ; 10
-	scrcode "- 1531 compatible mouse with up to   " ; 11
-	scrcode "  three buttons and scroll wheel     " ; 12
-	scrcode "- paddles                            " ; 13
-	scrcode "- koalapad                           " ; 14
-	scrcode "- protovision / cga 4 player adapter " ; 15
-	scrcode "- digital excess / hitmen adapter    " ; 16
-	scrcode "- kingsoft adapter                   " ; 17
-	scrcode "- starbyte adapter                   " ; 18
+	scrcode "this program monitors the controllers" ;  1
+	scrcode "connected to your c64 and displays   " ;  2
+	scrcode "relevant information depending on    " ;  3
+	scrcode "their types. you can use the function" ;  4
+	scrcode "keys to select the correct type or to" ;  5
+	scrcode "display raw data.                    " ;  6
+	scrcode "                                     " ;  7
+	scrcode "supported are:                       " ;  8
+	scrcode "- joystick                           " ;  9
+	scrcode "- mouse                              " ; 10
+	scrcode "- paddle                             " ; 11
+	scrcode "- koalapad                           " ; 12
+	scrcode "- userport joystick adapter          " ; 13
+	scrcode "                                     " ; 14
+	scrcode "for digital inputs, the button or    " ; 15
+	scrcode "direction is inverted when pressed.  " ; 16
+	scrcode "analog inputs are displayed as       " ; 17
+	scrcode "numbers and by positioning a pointer." ; 18
 
 	invcode "joystick                             "
 	scrcode "                                     "
-	scrcode "                                     " ;  1
-	scrcode "                                     " ;  2
-	scrcode "                                     " ;  3
+	scrcode "joysticks contain a stick or d-pad   " ;  1
+	scrcode "with switches for the four cardinal  " ;  2
+	scrcode "directions and up to three buttons.  " ;  3
 	scrcode "                                     " ;  4
 	scrcode "                                     " ;  5
 	scrcode "                                     " ;  6
 	scrcode "                                     " ;  7
 	scrcode "                                     " ;  8
 	scrcode "                                     " ;  9
+	scrcode "                                     " ; 10
+	scrcode "                                     " ; 11
+	scrcode "                                     " ; 12
+	scrcode "                                     " ; 13
+	scrcode "                                     " ; 14
+	scrcode "                                     " ; 15
+	scrcode "                                     " ; 16
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
+
+	invcode "mouse                                "
+	scrcode "                                     "
+	scrcode "supported are 1351 compatible mice.  " ;  1
+	scrcode "they give the position modulo 64 and " ;  2
+	scrcode "support up to thre buttons and a     " ;  3
+	scrcode "scroll wheel.                        " ;  4
+	scrcode "                                     " ;  5
+	scrcode "                                     " ;  6
+	scrcode "                                     " ;  7
+	scrcode "                                     " ;  8
+	scrcode "                                     " ;  9
+	scrcode "                                     " ; 10
+	scrcode "                                     " ; 11
+	scrcode "                                     " ; 12
+	scrcode "                                     " ; 13
+	scrcode "                                     " ; 14
+	scrcode "                                     " ; 15
+	scrcode "                                     " ; 16
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
+
+	invcode "paddle                               "
+	scrcode "                                     "
+	scrcode "a paddle gives the rotational        " ;  1
+	scrcode "position of its knob as a value from " ;  2
+	scrcode " 0 to 255. it also contains a button." ;  3
+	scrcode "                                     " ;  4
+	scrcode "two paddles can be connected to one  " ;  5
+	scrcode "port at the same time.               " ;  6
+	scrcode "                                     " ;  7
+	scrcode "                                     " ;  8
+	scrcode "                                     " ;  9
+	scrcode "                                     " ; 10
+	scrcode "                                     " ; 11
+	scrcode "                                     " ; 12
+	scrcode "                                     " ; 13
+	scrcode "                                     " ; 14
+	scrcode "                                     " ; 15
+	scrcode "                                     " ; 16
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
+	
+	invcode "koalapad                             "
+	scrcode "                                     "
+	scrcode "this is a touch tablet that gives the" ;  1
+	scrcode "position in x and y as values from   " ;  2
+	scrcode "ca. 6 to 251. it also contains two   " ;  3
+	scrcode "buttons.                             " ;  4
+	scrcode "                                     " ;  5
+	scrcode "                                     " ;  6
+	scrcode "                                     " ;  7
+	scrcode "                                     " ;  8
+	scrcode "                                     " ;  9
+	scrcode "                                     " ; 10
+	scrcode "                                     " ; 11
+	scrcode "                                     " ; 12
+	scrcode "                                     " ; 13
+	scrcode "                                     " ; 14
+	scrcode "                                     " ; 15
+	scrcode "                                     " ; 16
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
+	
+	invcode "raw                                  "
+	scrcode "                                     "
+	scrcode "this displays the five digital input " ;  1
+	scrcode "lines and the two analog             " ;  2
+	scrcode "potentiometers as values from 0 to   " ;  3
+	scrcode "255.                                 " ;  4
+	scrcode "                                     " ;  5
+	scrcode "                                     " ;  6
+	scrcode "                                     " ;  7
+	scrcode "                                     " ;  8
+	scrcode "                                     " ;  9
+	scrcode "                                     " ; 10
+	scrcode "                                     " ; 11
+	scrcode "                                     " ; 12
+	scrcode "                                     " ; 13
+	scrcode "                                     " ; 14
+	scrcode "                                     " ; 15
+	scrcode "                                     " ; 16
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
+
+	invcode "userport joystick adapter            "
+	scrcode "                                     "
+	scrcode "these adapters support two aditional " ;  1
+	scrcode "joysticks with four directional      " ;  2
+	scrcode "switches one button each.            " ;  3
+	scrcode "                                     " ;  4
+	scrcode "supported are the following variants:" ;  5
+	scrcode "- protovision / common game adapter  " ;  6
+	scrcode "- digital excess / hitmen            " ;  7
+	scrcode "- starbyte                           " ;  8
+	scrcode "- kingsoft                           " ;  9
 	scrcode "                                     " ; 10
 	scrcode "                                     " ; 11
 	scrcode "                                     " ; 12

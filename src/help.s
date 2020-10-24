@@ -18,6 +18,9 @@ help:
 :	sta VIC_SPR0_X,y
 	dey
 	bpl :-
+	lda VIC_SPR_HI_X
+	and #$f0
+	sta VIC_SPR_HI_X
 
 	memcpy screen, help_screen, 1000
 	memcpy color_ram, help_color, 1000

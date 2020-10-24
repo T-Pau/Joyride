@@ -6,7 +6,7 @@
 .endmacro
 
 .macro set_vic_text screen, charset
-	lda #(((screen & $3c00) >> 6) | ((charset & $3f00) >> 12))
+	lda #(((screen & $3c00) >> 6) | ((charset & $3800) >> 10))
 	sta VIC_VIDEO_ADR
 .endmacro
 
