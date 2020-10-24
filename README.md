@@ -42,11 +42,11 @@ This displays the 5 digital input lines and the two analog potentiometers as val
 
 ## Userport Joystick Adapter
 
-These adapters support two aditional joysticks with four directional switches one button each.
+These adapters support two aditional joysticks with four directional switches and one button each.
 
 Supported are the following variants:
 
-- Protovision / Common Game Adapter
+- Protovision / Classic Game Adapter
 - Digital Excess / Hitmen
-- Starbyte
 - Kingsoft
+- Starbyte Tie Break Adapter

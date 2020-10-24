@@ -119,7 +119,7 @@ help_screens_data:
 	scrcode "                                     "
 	scrcode "a paddle gives the rotational        " ;  1
 	scrcode "position of its knob as a value from " ;  2
-	scrcode " 0 to 255. it also contains a button." ;  3
+	scrcode "0 to 255. it also contains a button. " ;  3
 	scrcode "                                     " ;  4
 	scrcode "two paddles can be connected to one  " ;  5
 	scrcode "port at the same time.               " ;  6
@@ -182,13 +182,13 @@ help_screens_data:
 	scrcode "                                     "
 	scrcode "these adapters support two aditional " ;  1
 	scrcode "joysticks with four directional      " ;  2
-	scrcode "switches one button each.            " ;  3
+	scrcode "switches and one button each.        " ;  3
 	scrcode "                                     " ;  4
 	scrcode "supported are the following variants:" ;  5
-	scrcode "- protovision / common game adapter  " ;  6
+	scrcode "- protovision / classic game adapter " ;  6
 	scrcode "- digital excess / hitmen            " ;  7
-	scrcode "- starbyte                           " ;  8
-	scrcode "- kingsoft                           " ;  9
+	scrcode "- kingsoft                           " ;  8
+	scrcode "- starbyte tie break adapter         " ;  9
 	scrcode "                                     " ; 10
 	scrcode "                                     " ; 11
 	scrcode "                                     " ; 12
