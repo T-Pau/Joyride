@@ -64,17 +64,17 @@ function_handlers:
 .code
 
 handle_keyboard:
-	lda #$ff
-	sta CIA1_PRA
-	sta CIA1_PRB
+	lda #$00
+	sta CIA1_DDRA
+	sta CIA1_DDRB
 	
 	lda CIA1_PRA
 	and CIA1_PRB
 	cmp #$ff
 	bne f_end
 	
-	lda #$00
-	sta CIA1_DDRB
+	lda #$ff
+	sta CIA1_DDRA
 
 	; get shift
 	lda #$40 ^ $ff

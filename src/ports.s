@@ -63,16 +63,19 @@ handle_port1_user:
 	sta port_poty
 
 	; read digital input
+	lda #$00
+	sta CIA1_DDRA
+	sta CIA1_DDRB
 	lda #$ff
 	sta CIA1_PRA
-	sta CIA1_PRB
-	lda CIA1_PRB
-	eor #$ff
+	eor CIA1_PRB
 	sta port_digital
 
 	jsr handle_keyboard
 
 	; select POTs from port 2
+	lda #$c0
+	sta CIA1_DDRA
 	lda #$80
 	sta CIA1_PRA
 
@@ -98,14 +101,17 @@ handle_port2:
 	sta port_poty
 
 	; read control port 2
+	lda #$00
+	sta CIA1_DDRA
+	sta CIA1_DDRB
 	lda #$ff
-	sta CIA1_PRA
 	sta CIA1_PRB
-	lda CIA1_PRA
-	eor #$ff
+	eor CIA1_PRA
 	sta port_digital
 
 	; select POTs from port 1
+	lda #$c0
+	sta CIA1_DDRA
     lda #$40
     sta CIA1_PRA
 

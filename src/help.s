@@ -72,17 +72,17 @@ help_exit:
 handle_help:
 	jsr display_logo
 	
-	lda #$ff
-	sta CIA1_PRA
-	sta CIA1_PRB
+	lda #$00
+	sta CIA1_DDRA
+	sta CIA1_DDRB
 	
 	lda CIA1_PRA
 	and CIA1_PRB
 	cmp #$ff
 	bne end
 	
-	lda #$00
-	sta CIA1_DDRB
+	lda #$ff
+	sta CIA1_DDRA
 	
 	lda #$80 ^ $ff
 	sta CIA1_PRA
