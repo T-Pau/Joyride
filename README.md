@@ -1,5 +1,7 @@
 # Joyride
 
+![Screenshot](screenshot.png)
+
 This program monitors the controllers connected to your C64 and displays relevant information depending on their types. You can use the function keys to select the correct type or to display raw data.
 
 Supported are:
