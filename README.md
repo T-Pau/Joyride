@@ -10,6 +10,7 @@ Supported are:
 - Mouse
 - Paddle
 - Koalapad
+- Lightpen
 - Userport Joystick Adapter
 
 For digital inputs, the button or direction is inverted when pressed. Analog inputs are displayed as numbers and by positioning a cursor.

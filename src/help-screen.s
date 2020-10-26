@@ -56,16 +56,16 @@ help_screens_data:
 	scrcode "                                     "
 	scrcode "this program monitors the controllers" ;  1
 	scrcode "connected to your c64 and displays   " ;  2
-	scrcode "relevant information depending on    " ;  3
-	scrcode "their types. you can use the function" ;  4
-	scrcode "keys to select the correct type or to" ;  5
-	scrcode "display raw data.                    " ;  6
-	scrcode "                                     " ;  7
-	scrcode "supported are:                       " ;  8
-	scrcode "- joystick                           " ;  9
-	scrcode "- mouse                              " ; 10
-	scrcode "- paddle                             " ; 11
-	scrcode "- koalapad                           " ; 12
+	scrcode "relevant information. you can use the" ;  3
+	scrcode "function keys to select the correct  " ;  4
+	scrcode "type or to display raw data.         " ;  5
+	scrcode "                                     " ;  6
+	scrcode "supported are:                       " ;  7
+	scrcode "- joystick                           " ;  8
+	scrcode "- mouse                              " ;  9
+	scrcode "- paddle                             " ; 10
+	scrcode "- koalapad                           " ; 11
+	scrcode "- lightpen                           " ; 12
 	scrcode "- userport joystick adapter          " ; 13
 	scrcode "                                     " ; 14
 	scrcode "for digital inputs, the button or    " ; 15
