@@ -34,7 +34,7 @@
 help_screen_start = screen + 1
 
 help_screen_size = 37 * 20
-num_help_screens = 7
+num_help_screens = 8
 
 .macpack cbm
 .macpack cbm_ext
@@ -135,7 +135,7 @@ help_screens_data:
 	scrcode "                                     " ; 16
 	scrcode "                                     " ; 17
 	scrcode "                                     " ; 18
-	
+
 	invcode "koalapad                             "
 	scrcode "                                     "
 	scrcode "this is a touch tablet that gives the" ;  1
@@ -156,7 +156,28 @@ help_screens_data:
 	scrcode "                                     " ; 16
 	scrcode "                                     " ; 17
 	scrcode "                                     " ; 18
-	
+
+	invcode "lightpen                             "
+	scrcode "                                     "
+	scrcode "light pens and light guns only work  " ;  1
+	scrcode "in controller port 1.                " ;  2
+	scrcode "                                     " ;  3
+	scrcode "they point directly at a position on " ;  4
+	scrcode "screen. this is indicated by a big   " ;  5
+	scrcode "cross hair on screen, even if it's   " ;  6
+	scrcode "outside the display area of the port," ;  7
+	scrcode "and also on a smaller representation " ;  8
+	scrcode "of the screen.                       " ;  9
+	scrcode "                                     " ; 10
+	scrcode "they can have up to two buttons.     " ; 11
+	scrcode "                                     " ; 12
+	scrcode "                                     " ; 13
+	scrcode "                                     " ; 14
+	scrcode "                                     " ; 15
+	scrcode "                                     " ; 16
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
+
 	invcode "raw                                  "
 	scrcode "                                     "
 	scrcode "this displays the five digital input " ;  1
@@ -164,8 +185,8 @@ help_screens_data:
 	scrcode "potentiometers as values from 0 to   " ;  3
 	scrcode "255.                                 " ;  4
 	scrcode "                                     " ;  5
-	scrcode "                                     " ;  6
-	scrcode "                                     " ;  7
+	scrcode "for port 1, it also displays the     " ;  6
+	scrcode "light pen coordinates                " ;  7
 	scrcode "                                     " ;  8
 	scrcode "                                     " ;  9
 	scrcode "                                     " ; 10

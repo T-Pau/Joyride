@@ -67,12 +67,12 @@ handle_keyboard:
 	lda #$00
 	sta CIA1_DDRA
 	sta CIA1_DDRB
-	
+
 	lda CIA1_PRA
 	and CIA1_PRB
 	cmp #$ff
 	bne f_end
-	
+
 	lda #$ff
 	sta CIA1_DDRA
 
@@ -169,7 +169,10 @@ port1_previous:
 port2_next:
 	ldx port2_type
 	inx
-	cpx #port_types
+	cpx #TYPE_LIGHTPEN
+	bne :+
+	inx
+:	cpx #port_types
 	bne :+
 	ldx #0
 :	stx port2_type
@@ -179,7 +182,11 @@ port2_next:
 port2_previous:
 	ldx port2_type
 	dex
-	bpl :+
+	cpx #TYPE_LIGHTPEN
+	bne :+
+	dex
+:	cpx #$FF
+	bne :+
 	ldx #port_types - 1
 :	stx port2_type
 	ldy #1

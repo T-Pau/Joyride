@@ -27,9 +27,9 @@
 
 .autoimport +
 
-.export handle_port1_user, handle_port2
+.export handle_port1, handle_port2, handle_top, handle_user
 .export port1_type, port2_type, userport_type
-.export port_number, port_digital, port_potx, port_poty
+.export port_number, port_digital, port_pot1, port_pot2, pen_x, pen_y
 
 .include "joyride.inc"
 
@@ -46,21 +46,71 @@ port_number:
 	.res 1
 port_digital:
 	.res 2
-port_potx:
+port_pot1:
 	.res 1
-port_poty:
+port_pot2:
+	.res 1
+pen_x:
+	.res 1
+pen_y:
+	.res 2
+
+pen_x_new:
+	.res 1
+
+pen_y_new:
 	.res 1
 
 .code
 
-handle_port1_user:
+handle_top:
+	lda #0
+	ldx VIC_LPEN_X
+	ldy VIC_LPEN_Y
+	bmi :+
+	lda #1
+:	cpx pen_x
+	bne top_change
+	cpy pen_y
+	beq top_no_change
+top_change:
+	stx pen_x
+	sty pen_y
+	sta pen_y + 1
+top_no_change:
+	lda port1_type
+	cmp #TYPE_LIGHTPEN
+	bne :+
+	jsr lightpen_sprite_top
+:	rts
+
+handle_user:
+	jsr content_background
+	lda command
+	bne user_end
+	jsr read_userport
+	ldx #2
+	jsr display_joystick
+	lda port_digital + 1
+	sta port_digital
+	ldx #3
+	jsr display_joystick
+user_end:
+	rts
+
+handle_port1:
+	lda VIC_LPEN_X
+	sta pen_x_new
+	lda VIC_LPEN_Y
+	sta pen_y_new
+
 	jsr display_logo
 
-	; read POTx/POTy
+	; read POT1/POT2
 	lda SID_ADConv1
-	sta port_potx
+	sta port_pot1
 	lda SID_ADConv2
-	sta port_poty
+	sta port_pot2
 
 	; read digital input
 	lda #$00
@@ -71,6 +121,20 @@ handle_port1_user:
 	eor CIA1_PRB
 	sta port_digital
 
+	; handle lightpen
+	ldx pen_x_new
+	ldy pen_y_new
+	cpx pen_x
+	bne bottom_change
+	cpy pen_y
+	beq bottom_no_change
+bottom_change:
+	stx pen_x
+	sty pen_y
+	lda #0
+	sta pen_y + 1
+bottom_no_change:
+
 	jsr handle_keyboard
 
 	; select POTs from port 2
@@ -79,26 +143,21 @@ handle_port1_user:
 	lda #$80
 	sta CIA1_PRA
 
+	lda command
+	bne end_port1
 	ldx #0
 	jsr display_port
-
-	jsr read_userport
-	ldx #2
-	jsr display_joystick
-	lda port_digital + 1
-	sta port_digital
-	ldx #3
-	jsr display_joystick
+end_port1:
 	rts
 
 handle_port2:
 	jsr content_background
 
-	; read POTx/POTy
+	; read POT1/POT2
 	lda SID_ADConv1
-	sta port_potx
+	sta port_pot1
 	lda SID_ADConv2
-	sta port_poty
+	sta port_pot2
 
 	; read control port 2
 	lda #$00
@@ -115,7 +174,16 @@ handle_port2:
     lda #$40
     sta CIA1_PRA
 
+	lda port1_type
+	cmp #TYPE_LIGHTPEN
+	bne :+
+	jsr lightpen_sprite_bottom
+:
+
+	lda command
+	bne end_port2
 	ldx #1
 	jsr display_port
+end_port2:
 	rts
 

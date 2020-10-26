@@ -34,21 +34,24 @@
 .macpack utility
 
 bit0_position = 1
-potx_offset = 40 * 4 - 12
-poty_offset = 8
+pot1_offset = 40 * 7 - 11
+pot2_offset = 9
+penx_offset = 40 - 9
+peny_offset = pot2_offset
 
 sprite_x_offset = 4
-sprite0_y_offset = 50 + 20 + 5 * 8
+sprite0_y_offset = 50 + 20 + 3 * 8
 sprite1_y_offset = sprite0_y_offset + 16
+
 .code
 
 display_raw:
 	add_word ptr2, bit0_position
-	
+
 	lda port_digital
 	and #$01
 	jsr button
-	
+
 	lda port_digital
 	and #$02
 	jsr button
@@ -65,18 +68,33 @@ display_raw:
 	and #$10
 	jsr button
 
-	add_word ptr2, potx_offset
-	lda port_potx
-	ldx #1
-	jsr pot_number
-	
-	add_word ptr2, poty_offset
-	lda port_poty
+	add_word ptr2, pot1_offset
+	lda port_pot1
+	ldy #0
 	ldx #1
 	jsr pot_number
 
-	ldx port_number
-	lda port_potx
+	add_word ptr2, pot2_offset
+	lda port_pot2
+	ldy #0
+	ldx #1
+	jsr pot_number
+
+	lda port_number
+	bne :+
+	add_word ptr2, penx_offset
+	lda pen_x
+	ldy #0
+	ldx #1
+	jsr pot_number
+	add_word ptr2, peny_offset
+	lda pen_y
+	ldy pen_y + 1
+	ldx #1
+	jsr pot_number
+
+:	ldx port_number
+	lda port_pot1
 	lsr
 	clc
 	adc #sprite_x_offset
@@ -90,9 +108,9 @@ display_raw:
 	txa
 	asl
 	jsr set_sprite
-	
+
 	ldx port_number
-	lda port_poty
+	lda port_pot2
 	lsr
 	clc
 	adc #sprite_x_offset
@@ -108,5 +126,7 @@ display_raw:
 	clc
 	adc #1
 	jsr set_sprite
-	
+
+	; TODO: light pen
+
 	rts

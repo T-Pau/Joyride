@@ -3,7 +3,7 @@ CFLAGS = -t c64
 
 LD = cl65
 LDFLAGS = -t c64 -u __EXEHDR__ -C c64-asm.cfg
-# LDFLAGS += -Ln sym
+ LDFLAGS += -Ln sym
 
 PROGRAM = joyride.prg
 
@@ -15,8 +15,9 @@ SOURCES = \
 	colors.s \
 	copyrect.s \
 	display-joystick.s \
-	display-mouse.s \
 	display-koalapad.s \
+	display-lightpen.s \
+	display-mouse.s \
 	display-paddle.s \
 	display-port.s \
 	display-raw.s \
@@ -64,6 +65,7 @@ colors.o: colors.s joyride.inc
 copyrect.o: copyrect.s joyride.inc
 display-joystick.o: display-joystick.s joyride.inc
 display-koalapad.o: display-koalapad.s joyride.inc utility.mac
+display-lightpen.o: display-lightpen.s joyride.inc utility.mac
 display-mouse.o: display-mouse.s joyride.inc utility.mac
 display-paddle.o: display-paddle.s joyride.inc utility.mac
 display-port.o: display-port.s joyride.inc
@@ -74,7 +76,7 @@ help.o: help.s joyride.inc utility.mac
 help-screen.o: help-screen.s joyride.inc cbm_ext.mac
 logo.o: logo.s joyride.inc cbm_ext.mac
 memcpy.o: memcpy.s joyride.inc
-port-screen.o: port-screen.s joyride.inc cbm_ext.mac
+port-screen.o: port-screen.s joyride.inc cbm_ext.mac utility.mac
 ports.o: ports.s joyride.inc
 pot.o: pot.s joyride.inc
 screen.o: screen.s cbm_ext.mac

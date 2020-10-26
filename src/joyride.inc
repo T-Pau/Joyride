@@ -46,12 +46,13 @@ COLOR_LIGHTGREEN = 13
 COLOR_LIGHTBLUE = 14
 COLOR_GRAY3 = 15
 
-charset = $5000
-screen = $5800
-sprites = $5c00
+charset = $6000
+screen = charset + $800
+sprites = screen + $400
 color_ram = $d800
 
 sprite_none = (sprites & $3fff) / 64
+sprite_lightpen = sprite_none + 1
 sprite_bar = sprite_none + 2
 sprite_cross = sprite_none + 3
 sprite_logo = sprite_none + 4
@@ -61,7 +62,8 @@ ptr1 = $fb
 ptr2 = $fd
 ptr3 = $c1
 
-port_types = 6
+TYPE_LIGHTPEN = 5
+port_types = 7
 userport_types = 4
 
 COMMAND_HELP_NEXT = 9

@@ -34,12 +34,13 @@ top = 50 ; first raster line of screen
 .data
 
 main_irq_table:
+	.word 0, handle_top
 	.word top, label_background
-	.word top + 8 - 1, content_background
+	.word top + 8 - 1, handle_user
 	.word top + 13 * 8, label_background
 	.word top + 14 * 8 - 1, handle_port2
 	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_port1_user
+	.word top + 24 * 8 + 6, handle_port1
 main_irq_table_length:
 	.byte * - main_irq_table
 

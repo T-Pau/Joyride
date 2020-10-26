@@ -47,33 +47,35 @@ display_koalapad:
 	lda port_digital
 	and #$04
 	jsr button
-	
+
 	lda port_digital
-	and #$08	
+	and #$08
 	jsr button
-	
+
 	add_word ptr2, position_offset
-	
-	lda port_potx
+
+	lda port_pot1
+	ldy #0
 	ldx #1
 	jsr pot_number
-	
+
 	add_word ptr2, 40
-	
-	lda port_poty
+
+	lda port_pot2
+	ldy #0
 	ldx #1
 	jsr pot_number
-	
+
 	ldx port_number
 
-	lda port_poty
+	lda port_pot2
 	lsr
 	lsr
 	clc
 	adc #sprite_y_offset
 	sta sprite_y
 
-	lda port_potx
+	lda port_pot1
 	lsr
 	lsr
 	clc
@@ -86,6 +88,6 @@ display_koalapad:
 
 	txa
 	asl
-	jsr set_sprite	
-	
+	jsr set_sprite
+
 	rts

@@ -44,7 +44,7 @@ sprite_y_offset = 50 + 18
 
 tmp:
 	.res 1
-	
+
 .code
 
 display_mouse:
@@ -65,7 +65,7 @@ display_mouse:
 	ldx #7
 	ldy #3
 	jsr copyrect
-	
+
 	add_word ptr2, wheel_offset
 	lda port_digital
 	and #$0c
@@ -78,9 +78,9 @@ display_mouse:
 	ldx #3
 	ldy #5
 	jsr copyrect
-	
+
 	subtract_word ptr2, position_offset
-	lda port_potx
+	lda port_pot1
 	cmp #$7f
 	bne :+
 	lda #$80
@@ -88,10 +88,11 @@ display_mouse:
 	and #$3f
 	sta sprite_x
 	ldx #0
+	ldy #0
 	jsr pot_number
-	
+
 	add_word ptr2, 40
-	lda port_poty
+	lda port_pot2
 	cmp #$7f
 	bne :+
 	lda #$80
@@ -99,9 +100,10 @@ display_mouse:
 	and #$3f
 	eor #$3f
 	sta sprite_y
+	ldy #0
 	ldx #0
 	jsr pot_number
-	
+
 	ldx port_number
 	clc
 	lda sprite_x
@@ -119,7 +121,7 @@ display_mouse:
 	txa
 	asl
 	jsr set_sprite
-		
+
 	rts
 
 .rodata
@@ -144,32 +146,32 @@ buttons_data:
 	.byte $41, $48, $74, $48, $fb, $c8, $c2
 	.byte $45, $0c, $56, $0d, $f4, $92, $c6
  	.byte $43, $47, $75, $47, $fa, $c7, $c4
-	
+
 	; 2: middle
 	.byte $41, $48, $7c, $c8, $fd, $48, $42
 	.byte $45, $0c, $c5, $8d, $c6, $12, $46
  	.byte $43, $47, $7e, $c7, $fc, $47, $44
-	
+
 	; 3: middle right
 	.byte $41, $48, $7c, $c8, $c8, $c8, $c2
 	.byte $45, $0c, $c5, $8d, $a0, $92, $c6
  	.byte $43, $47, $7e, $c7, $c7, $c7, $c4
-	
+
 	; 4: left
 	.byte $c1, $c8, $7b, $48, $79, $48, $42
 	.byte $c5, $8c, $f9, $0d, $57, $12, $46
  	.byte $c3, $c7, $7d, $47, $7a, $47, $44
-	
+
 	; 5: left right
 	.byte $c1, $c8, $7b, $48, $fb, $c8, $c2
 	.byte $c5, $8c, $f9, $0d, $f4, $92, $c6
  	.byte $c3, $c7, $7d, $47, $fa, $c7, $c4
-	
+
 	; 6: left middle
 	.byte $c1, $c8, $c8, $c8, $fd, $48, $42
 	.byte $c5, $8c, $a0, $8d, $c6, $12, $46
  	.byte $c3, $c7, $c7, $c7, $fc, $47, $44
- 		
+
 	; 7: left middle right
 	.byte $c1, $c8, $c8, $c8, $c8, $c8, $c2
 	.byte $c5, $8c, $a0, $8d, $a0, $92, $c6
@@ -182,21 +184,21 @@ wheel_data:
 	.byte $76, $47, $f6
 	.byte $45, $d0, $46
 	.byte $43, $47, $44
-	
+
 	; 1: up
 	.byte $c1, $c8, $c2
 	.byte $c5, $cf, $c6
 	.byte $77, $c7, $78
 	.byte $45, $d0, $46
 	.byte $43, $47, $44
-	
+
 	; 2: down
 	.byte $41, $48, $42
 	.byte $56, $ce, $57
 	.byte $f7, $c8, $f8
 	.byte $c5, $d1, $c6
 	.byte $c3, $c7, $c4
-	
+
 	; 3: up down
 	.byte $c1, $c8, $c2
 	.byte $c5, $cf, $c6

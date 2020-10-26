@@ -66,16 +66,17 @@ display_paddle:
 	lsr
 :	and #1
 	jsr button
-	
+
 	add_word ptr2, value_offset
-	lda port_potx
+	lda port_pot1
 	ldx paddle
 	beq :+
-	lda port_poty
+	lda port_pot2
 :	sta sprite_x
+	ldy #0
 	ldx #1
-	jsr pot_number 
-	
+	jsr pot_number
+
 	ldx port_number
 	lda #$ff
 	sec
@@ -94,5 +95,5 @@ display_paddle:
 
 	txa
 	asl
-	jsr set_sprite	
+	jsr set_sprite
 	rts

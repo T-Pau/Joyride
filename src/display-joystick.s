@@ -79,13 +79,13 @@ display_joystick:
 	bcs end
 
 	; button 2
-	lda port_potx
+	lda port_pot1
 	eor #$ff
 	and #80
 	jsr button
 
 	; button 3
-	lda port_poty
+	lda port_pot2
 	eor #$ff
 	and #80
 	jsr button

@@ -42,6 +42,7 @@ display_routines:
 	.word display_paddle1
 	.word display_paddle2
 	.word display_koalapad
+	.word display_lightpen
 	.word display_raw
 
 .code
@@ -56,7 +57,7 @@ display_port:
 :	sta ptr2
 	lda #>display_position
 	sta ptr2 + 1
-	
+
 	lda port1_type, x
 	asl
 	tay

@@ -35,6 +35,7 @@
 
 .macpack cbm
 .macpack cbm_ext
+.macpack utility
 
 name_address = screen + 9
 
@@ -45,7 +46,7 @@ type_times_2:
 
 port:
 	.res 1
-	
+
 .rodata
 
 port_x_offset:
@@ -56,7 +57,7 @@ port_x_offset:
 copy_port_screen:
 	sty port
 	ldx port1_type,y
-	
+
 	lda #<name_address
 	cpy #1
 	bne port0
@@ -99,7 +100,21 @@ loop:
 	ldx #17
 	ldy #9
 	jsr copyrect
-	
+
+	lda port
+	beq next
+	lda type_times_2
+	cmp #(port_types - 1) * 2
+	bne next
+
+	subtract_word ptr2, 40
+	ldy #16
+	lda #$20
+:	sta (ptr2),y
+	dey
+	bpl :-
+
+next:
 	; set correct sprite pointers
 	lda port
 	asl
@@ -109,9 +124,9 @@ loop:
 	sta screen + $3f8,y
 	lda port_sprite + 1,x
 	sta screen + $3f9,y
-	
+
 	rts
-	
+
 .rodata
 
 port_sprite:
@@ -120,6 +135,7 @@ port_sprite:
 	.byte sprite_bar, sprite_none
 	.byte sprite_bar, sprite_none
 	.byte sprite_cross, sprite_none
+	.byte sprite_cross, sprite_lightpen
 	.byte sprite_bar, sprite_bar
 
 port_names:
@@ -128,10 +144,11 @@ port_names:
 	invcode "paddle 1        "
 	invcode "paddle 2        "
 	invcode "koalapad        "
+	invcode "lightpen        "
 	invcode "raw             "
-	
+
 port_screens:
-	.repeat 6, i
+	.repeat port_types, i
 	.word port_screen_data + i * 17 * 9
 	.endrep
 
@@ -191,13 +208,26 @@ port_screen_data:
 	scrcode "V       W   y:   "
 	scrcode "TXXXXXXXU        "
 
-	; 5: raw
+	; 5: lightpen
+	.byte $d4, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $d5, "     "
+	.byte $d4, $d2, $d2, $d2, $d2, $d2, $d2, $d2, $d2, $d2, $d2, $d5, "     "
+	.byte $d4, "          ", $d5, "     "
+	.byte $d4, "          ", $d5, "     "
+	.byte $d4, "          ", $d5, "     "
+	.byte $d4, "          ", $d5
+	scrcode "x:   "
+	.byte $d4, "          ", $d5
+	scrcode "y:   "
+	.byte $d4, $d3, $d3, $d3, $d3, $d3, $d3, $d3, $d3, $d3, $d3, $d5, "     "
+	.byte $d4, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $d5, "     "
+
+	; 6: raw
 	scrcode " AHBAHBAHBAHBAHB "
 	scrcode " E0FE1FE2FE3FE4F "
 	scrcode " CGDCGDCGDCGDCGD "
-	scrcode "                 "
-	scrcode "  x:      y:     "
 	scrcode "RNNNONNNONNNONNNS"
 	scrcode "TPPPQPPPQPPPQPPPU"
 	scrcode "RNNNONNNONNNONNNS"
 	scrcode "TPPPQPPPQPPPQPPPU"
+	scrcode "pot1:    pot2:   "
+	scrcode "penx:    peny:   "

@@ -37,9 +37,20 @@ Two paddles can be connected to one port at the same time.
 This is a touch tablet that gives the position in X and Y as values from ca. 6 to 251. It also contains two buttons.
 
 
+## Lightpen
+
+Light pens and light guns only work in controller port 1.
+
+They point directly at a position on screen. This is indicated by a big cross hair on screen, even if it's outside the display area of the port, and also on a smaller representation of the screen.
+
+They can have up to two buttons.
+
+
 ## Raw Data
 
 This displays the 5 digital input lines and the two analog potentiometers as values from 0 to 255.
+
+For port 1, it also displays the light pen coordinates.
 
 
 ## Userport Joystick Adapter
