@@ -98,7 +98,7 @@ help_screens_data:
 	scrcode "                                     "
 	scrcode "supported are 1351 compatible mice.  " ;  1
 	scrcode "they give the position modulo 64 and " ;  2
-	scrcode "support up to thre buttons and a     " ;  3
+	scrcode "support up to three buttons and a     " ;  3
 	scrcode "scroll wheel.                        " ;  4
 	scrcode "                                     " ;  5
 	scrcode "                                     " ;  6
@@ -171,8 +171,8 @@ help_screens_data:
 	scrcode "                                     " ; 10
 	scrcode "they can have up to two buttons.     " ; 11
 	scrcode "                                     " ; 12
-	scrcode "                                     " ; 13
-	scrcode "                                     " ; 14
+	scrcode "note: light pen support has not been " ; 13
+	scrcode "tested on real hardware yet.         " ; 14
 	scrcode "                                     " ; 15
 	scrcode "                                     " ; 16
 	scrcode "                                     " ; 17
@@ -186,7 +186,7 @@ help_screens_data:
 	scrcode "255.                                 " ;  4
 	scrcode "                                     " ;  5
 	scrcode "for port 1, it also displays the     " ;  6
-	scrcode "light pen coordinates                " ;  7
+	scrcode "lightpen coordinates.                " ;  7
 	scrcode "                                     " ;  8
 	scrcode "                                     " ;  9
 	scrcode "                                     " ; 10
@@ -201,7 +201,7 @@ help_screens_data:
 
 	invcode "userport joystick adapter            "
 	scrcode "                                     "
-	scrcode "these adapters support two aditional " ;  1
+	scrcode "these adapters support two additional" ;  1
 	scrcode "joysticks with four directional      " ;  2
 	scrcode "switches and one button each.        " ;  3
 	scrcode "                                     " ;  4

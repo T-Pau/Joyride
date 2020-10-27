@@ -46,17 +46,19 @@ They point directly at a position on screen. This is indicated by a big cross ha
 
 They can have up to two buttons.
 
+Note: Lightpen support has not been tested on real hardware yet.
+
 
 ## Raw Data
 
 This displays the 5 digital input lines and the two analog potentiometers as values from 0 to 255.
 
-For port 1, it also displays the light pen coordinates.
+For port 1, it also displays the lightpen coordinates.
 
 
 ## Userport Joystick Adapter
 
-These adapters support two aditional joysticks with four directional switches and one button each.
+These adapters support two additional joysticks with four directional switches and one button each.
 
 Supported are the following variants:
 

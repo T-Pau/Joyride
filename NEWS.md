@@ -1,4 +1,4 @@
-# Version 1.1
+# Version 1.1 (2020-10-26)
 
 - Add support for lightpen.
 

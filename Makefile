@@ -1,6 +1,6 @@
 SUBDIRS = src
 
-VERSION = 1.0
+VERSION = 1.1
 
 FILES = README.md NEWS.md screenshot.png src/joyride.prg
 
