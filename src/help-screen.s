@@ -98,7 +98,7 @@ help_screens_data:
 	scrcode "                                     "
 	scrcode "supported are 1351 compatible mice.  " ;  1
 	scrcode "they give the position modulo 64 and " ;  2
-	scrcode "support up to three buttons and a     " ;  3
+	scrcode "support up to three buttons and a    " ;  3
 	scrcode "scroll wheel.                        " ;  4
 	scrcode "                                     " ;  5
 	scrcode "                                     " ;  6
