@@ -46,8 +46,6 @@ They point directly at a position on screen. This is indicated by a big cross ha
 
 They can have up to two buttons.
 
-Note: Lightpen support has not been tested on real hardware yet.
-
 
 ## Raw Data
 

@@ -171,8 +171,8 @@ help_screens_data:
 	scrcode "                                     " ; 10
 	scrcode "they can have up to two buttons.     " ; 11
 	scrcode "                                     " ; 12
-	scrcode "note: light pen support has not been " ; 13
-	scrcode "tested on real hardware yet.         " ; 14
+	scrcode "                                     " ; 13
+	scrcode "                                     " ; 14
 	scrcode "                                     " ; 15
 	scrcode "                                     " ; 16
 	scrcode "                                     " ; 17
