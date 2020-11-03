@@ -28,7 +28,7 @@
 
 .autoimport +
 
-.export handle_keyboard, main_loop, command, last_command
+.export handle_keyboard, main_loop, command, last_command, get_f_key
 
 .include "joyride.inc"
 
@@ -55,15 +55,19 @@ function_handlers:
 	.word port2_previous
 	.word userport_next
 	.word userport_previous
-	.word none ; eight_player
+	.word eight_player
 	.word help
 	.word help_next
 	.word help_previous
 	.word display_main_screen
+	.word eight_player_next_type
+	.word eight_player_previous_type
+	.word eight_player_next_page
+	.word eight_player_previous_page
 
 .code
 
-handle_keyboard:
+get_f_key:
 	lda #$00
 	sta CIA1_DDRA
 	sta CIA1_DDRB
@@ -71,7 +75,7 @@ handle_keyboard:
 	lda CIA1_PRA
 	and CIA1_PRB
 	cmp #$ff
-	bne f_end
+	bne f_none
 
 	lda #$ff
 	sta CIA1_DDRA
@@ -115,20 +119,26 @@ not_f1:
 	ldx #7
 f_got:
 	lda shift
-	beq :+
-	inx
-:	cpx last_command
 	beq f_end
-	stx last_command
-	stx command
+	inx
 	bne f_end
-
 f_none:
 	ldx #0
-	stx last_command
 f_end:
 	lda #$ff
 	sta CIA1_DDRB
+	cpx #0
+	rts
+
+handle_keyboard:
+	jsr get_f_key
+	beq none
+	lda last_command
+	bne end
+	stx command
+none:
+	stx last_command
+end:
 	rts
 
 main_loop:
@@ -208,6 +218,3 @@ userport_previous:
 	ldx #userport_types - 1
 :	stx userport_type
 	jmp copy_userport
-
-none:
-	rts

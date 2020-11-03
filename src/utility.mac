@@ -26,29 +26,29 @@
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 .macro store_word value, address
-	lda #<value
+	lda #<(value)
 	sta address
-	lda #>value
+	lda #>(value)
 	sta address + 1
 .endmacro
 
 .macro add_word address, value
 	clc
 	lda address
-	adc #<value
+	adc #<(value)
 	sta address
 	lda address + 1
-	adc #>value
+	adc #>(value)
 	sta address + 1
 .endmacro
 
 .macro subtract_word address, value
 	sec
 	lda address
-	sbc #<value
+	sbc #<(value)
 	sta address
 	lda address + 1
-	sbc #>value
+	sbc #>(value)
 	sta address + 1
 .endmacro
 

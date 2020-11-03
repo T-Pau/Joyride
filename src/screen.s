@@ -92,5 +92,6 @@ help_screen:
 	invcode "                                        "
 
 eight_player_legend:
-	invcode " f1/f2: adapter type   f3/f4: sub page  "
-	invcode "f7: controller & user ports    f8: help "
+	invcode "   f1/f2: adapter type   f3/f4: page    "
+	invcode "      f7: controller & user ports       "
+	invcode "               f8: help                 "

@@ -33,6 +33,8 @@
 .include "joyride.inc"
 .macpack utility
 
+eight_player_screen_start = screen + 40 * 2 + 1
+
 .bss
 
 eight_player_type:
@@ -60,8 +62,8 @@ eight_player:
 
 	memcpy screen, help_screen, 1000
 	memcpy color_ram, help_color, 1000
-	memcpy screen + 40 * 22, eight_player_legend, 80
-	; TODO: display current page
+	memcpy screen + 40 * 22, eight_player_legend, 120
+	jsr copy_eight_player_screen
 	rts
 
 eight_player_next_type:
@@ -79,55 +81,50 @@ eight_player_next_page:
 eight_player_previous_page:
 	; TODO
 	rts
+	
+copy_eight_player_screen:
+	lda eight_player_type
+	asl
+	tax
+	lda eight_player_screen,x
+	sta ptr1
+	lda eight_player_screen + 1,x
+	sta ptr1 + 1
+	store_word eight_player_screen_start, ptr2
+	ldx #37
+	ldy #18
+	jsr copyrect
+	; TODO: copy title
+	rts
 
 handle_eight_player:
 	jsr display_logo
 	
-	lda #$00
-	sta CIA1_DDRA
-	sta CIA1_DDRB
-	
-	lda CIA1_PRA
-	and CIA1_PRB
-	cmp #$ff
+	jsr get_f_key
+	beq none
+	lda last_command
 	bne end
-	
-	lda #$ff
-	sta CIA1_DDRA
-	
-	lda #$80 ^ $ff
-	sta CIA1_PRA
-	lda CIA1_PRB
+	lda f_key_commands,x
 	tax
-	and #$02
-	bne :+
-	lda #COMMAND_HELP_EXIT
-	bne got_key
-:	txa
-	and #$10
-	bne :+
-	lda #COMMAND_HELP_NEXT
-	bne got_key
-:	lda #$20 ^ $ff
-	sta CIA1_PRA
-	lda CIA1_PRB
-	and #$01
-	bne :+
-	lda #COMMAND_HELP_NEXT
-	bne got_key
-:	lda CIA1_PRB
-	and #$08
-	beq :+
-	lda #0
-	sta last_command
-	beq end	
-:	lda #COMMAND_HELP_PREVIOUS	
-got_key:
-	cmp last_command
-	beq end
-	sta last_command
-	sta command
+	stx command
+none:
+	stx last_command
 end:
-	lda #$ff
-	sta CIA1_DDRB
 	rts
+
+	
+.rodata
+
+f_key_commands:
+	.byte 0
+	.byte COMMAND_EIGHT_PLAYER_NEXT_TYPE, COMMAND_EIGHT_PLAYER_PREVIOUS_TYPE
+	.byte COMMAND_EIGHT_PLAYER_NEXT_PAGE, COMMAND_EIGHT_PLAYER_PREVIOUS_PAGE
+	.byte 0, 0
+	.byte COMMAND_HELP_EXIT, COMMAND_HELP
+
+eight_player_screen:
+	.word eight_player_screen_data
+	.word eight_player_screen_data
+
+eight_player_screen_data:
+	.incbin "superpad.bin"

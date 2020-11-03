@@ -92,7 +92,7 @@ display-mouse.o: display-mouse.s joyride.inc utility.mac mouse-buttons.bin scrol
 display-paddle.o: display-paddle.s joyride.inc utility.mac
 display-port.o: display-port.s joyride.inc
 display-raw.o: display-raw.s joyride.inc utility.mac
-eight_player.o: eight_player.s joyride.inc utility.mac
+eight-player.o: eight-player.s joyride.inc utility.mac superpad.bin
 f-keys.o: f-keys.s joyride.inc
 help.o: help.s joyride.inc utility.mac
 help-screen.o: help-screen.s joyride.inc cbm_ext.mac
