@@ -28,7 +28,7 @@
 
 .autoimport +
 
-.export help, help_next, help_previous, help_exit, handle_help
+.export help, help_next, help_previous, handle_help
 
 .include "joyride.inc"
 .macpack utility
@@ -64,10 +64,6 @@ help_next:
 help_previous:
 	dec current_help_screen
 	jmp display_help_screen
-
-help_exit:
-	; TODO
-	rts
 
 handle_help:
 	jsr display_logo

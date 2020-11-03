@@ -148,86 +148,13 @@ port_names:
 	invcode "raw             "
 
 port_screens:
-	.repeat port_types, i
-	.word port_screen_data + i * 17 * 9
-	.endrep
+	.word port_screen_data
+	.word port_screen_data + 17 * 9
+	.word port_screen_data + 17 * 9 * 2
+	.word port_screen_data + 17 * 9 * 2
+	.word port_screen_data + 17 * 9 * 3
+	.word port_screen_data + 17 * 9 * 4
+	.word port_screen_data + 17 * 9 * 5
 
 port_screen_data:
-	; 0: joystick
-	scrcode "                 "
-	scrcode "                 "
-	scrcode "                 "
-	scrcode "       AHBAHBAHB "
-	scrcode "       E1FE2FE3F "
-	scrcode "       CGDCGDCGD "
-	scrcode "                 "
-	scrcode "                 "
-	scrcode "                 "
-
-	; 1: mouse
-	scrcode "RHHHHHHHS        "
-	scrcode "V       W        "
-	scrcode "V       W        "
-	scrcode "V       W        "
-	scrcode "V       W        "
-	scrcode "V       W        "
-	scrcode "V   x:  W        "
-	scrcode "V   y:  W        "
-	scrcode "TXXXXXXXU        "
-
-	; 2: paddle 1
-	scrcode "                 "
-	scrcode "       AHB       "
-	scrcode "       EfF       "
-	scrcode "       CGD       "
-	scrcode "RNNNONNNONNNONNNS"
-	scrcode "TPPPQPPPQPPPQPPPU"
-	scrcode "   value:        "
-	scrcode "                 "
-	scrcode "                 "
-
-	; 3: paddle 2
-	scrcode "                 "
-	scrcode "       AHB       "
-	scrcode "       EfF       "
-	scrcode "       CGD       "
-	scrcode "RNNNONNNONNNONNNS"
-	scrcode "TPPPQPPPQPPPQPPPU"
-	scrcode "   value:        "
-	scrcode "                 "
-	scrcode "                 "
-
-	; 4: koalapad
-	scrcode "RHHHHHHHS        "
-	scrcode "V       W  AHBAHB"
-	scrcode "V       W  ElFErF"
-	scrcode "V       W  CGDCGD"
-	scrcode "V       W        "
-	scrcode "V       W        "
-	scrcode "V       W   x:   "
-	scrcode "V       W   y:   "
-	scrcode "TXXXXXXXU        "
-
-	; 5: lightpen
-	.byte $d4, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $d5, "     "
-	.byte $d4, $d2, $d2, $d2, $d2, $d2, $d2, $d2, $d2, $d2, $d2, $d5, "     "
-	.byte $d4, "          ", $d5, "     "
-	.byte $d4, "          ", $d5, "     "
-	.byte $d4, "          ", $d5, "     "
-	.byte $d4, "          ", $d5
-	scrcode "x:   "
-	.byte $d4, "          ", $d5
-	scrcode "y:   "
-	.byte $d4, $d3, $d3, $d3, $d3, $d3, $d3, $d3, $d3, $d3, $d3, $d5, "     "
-	.byte $d4, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $a0, $d5, "     "
-
-	; 6: raw
-	scrcode " AHBAHBAHBAHBAHB "
-	scrcode " E0FE1FE2FE3FE4F "
-	scrcode " CGDCGDCGDCGDCGD "
-	scrcode "RNNNONNNONNNONNNS"
-	scrcode "TPPPQPPPQPPPQPPPU"
-	scrcode "RNNNONNNONNNONNNS"
-	scrcode "TPPPQPPPQPPPQPPPU"
-	scrcode "pot1:    pot2:   "
-	scrcode "penx:    peny:   "
+	.incbin "port-screens.bin"

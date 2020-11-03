@@ -1,4 +1,4 @@
-;  display-mouse.s -- Display state of mouse.
+;  eight_player.s -- Display and handle keyboard input for 8 player adapters.
 ;  Copyright (C) 2020 Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
@@ -28,116 +28,106 @@
 
 .autoimport +
 
-.export display_mouse
+.export eight_player, eight_player_next_type, eight_player_previous_type, eight_player_next_page, eight_player_previous_page, handle_eight_player
 
 .include "joyride.inc"
 .macpack utility
 
-buttons_offset = 10
-wheel_offset = 2
-position_offset = 40 + 6 ; negative
-
-sprite_x_offset = 2
-sprite_y_offset = 50 + 18
-
 .bss
 
-tmp:
+eight_player_type:
+	.res 1
+
+eight_player_page:
 	.res 1
 
 .code
 
-display_mouse:
-	lda port_digital
-	and #$03
-	asl
-	sta tmp
-	lda port_digital
-	and #$10
-	lsr
-	ora tmp
-	tay
-	lda button_rects,y
-	sta ptr1
-	lda button_rects + 1,y
-	sta ptr1 + 1
-	add_word ptr2, buttons_offset
-	ldx #7
-	ldy #3
-	jsr copyrect
+eight_player:
+	ldx #<eight_player_irq_table
+	ldy #>eight_player_irq_table
+	lda eight_player_irq_table_length
+	jsr set_irq_table
 
-	add_word ptr2, wheel_offset
-	lda port_digital
-	and #$0c
-	lsr
-	tay
-	lda wheel_rects,y
-	sta ptr1
-	lda wheel_rects + 1,y
-	sta ptr1 + 1
-	ldx #3
-	ldy #4
-	jsr copyrect
-
-	subtract_word ptr2, position_offset
-	lda port_pot1
-	cmp #$7f
-	bne :+
-	lda #$80
-:	lsr
-	and #$3f
-	sta sprite_x
-	ldx #0
-	ldy #0
-	jsr pot_number
-
-	add_word ptr2, 40
-	lda port_pot2
-	cmp #$7f
-	bne :+
-	lda #$80
-:	lsr
-	and #$3f
-	eor #$3f
-	sta sprite_y
-	ldy #0
-	ldx #0
-	jsr pot_number
-
-	ldx port_number
-	clc
-	lda sprite_x
-	adc #sprite_x_offset
-	adc port_x_offset,x
-	sta sprite_x
 	lda #0
-	adc #0
-	sta sprite_x + 1
+	ldy #7
+:	sta VIC_SPR0_X,y
+	dey
+	bpl :-
+	lda VIC_SPR_HI_X
+	and #$f0
+	sta VIC_SPR_HI_X
 
-	lda sprite_y
-	adc #sprite_y_offset
-	sta sprite_y
-
-	txa
-	asl
-	jsr set_sprite
-
+	memcpy screen, help_screen, 1000
+	memcpy color_ram, help_color, 1000
+	memcpy screen + 40 * 22, eight_player_legend, 80
+	; TODO: display current page
 	rts
 
-.rodata
+eight_player_next_type:
+	; TODO
+	rts
 
-button_rects:
-	.repeat 8, i
-	.word buttons_data + i * 21
-	.endrep
+eight_player_previous_type:
+	; TODO
+	rts
 
-wheel_rects:
-	.repeat 8, i
-	.word wheel_data + i * 12
-	.endrep
+eight_player_next_page:
+	; TODO
+	rts
 
-buttons_data:
-	.incbin "mouse-buttons.bin"
+eight_player_previous_page:
+	; TODO
+	rts
 
-wheel_data:
-	.incbin "scroll-wheel.bin"
+handle_eight_player:
+	jsr display_logo
+	
+	lda #$00
+	sta CIA1_DDRA
+	sta CIA1_DDRB
+	
+	lda CIA1_PRA
+	and CIA1_PRB
+	cmp #$ff
+	bne end
+	
+	lda #$ff
+	sta CIA1_DDRA
+	
+	lda #$80 ^ $ff
+	sta CIA1_PRA
+	lda CIA1_PRB
+	tax
+	and #$02
+	bne :+
+	lda #COMMAND_HELP_EXIT
+	bne got_key
+:	txa
+	and #$10
+	bne :+
+	lda #COMMAND_HELP_NEXT
+	bne got_key
+:	lda #$20 ^ $ff
+	sta CIA1_PRA
+	lda CIA1_PRB
+	and #$01
+	bne :+
+	lda #COMMAND_HELP_NEXT
+	bne got_key
+:	lda CIA1_PRB
+	and #$08
+	beq :+
+	lda #0
+	sta last_command
+	beq end	
+:	lda #COMMAND_HELP_PREVIOUS	
+got_key:
+	cmp last_command
+	beq end
+	sta last_command
+	sta command
+end:
+	lda #$ff
+	sta CIA1_DDRB
+	rts

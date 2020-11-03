@@ -26,7 +26,7 @@
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-.export main_screen, help_screen
+.export main_screen, help_screen, eight_player_legend
 
 .macpack cbm
 .macpack cbm_ext
@@ -71,9 +71,8 @@ main_screen:
 	.byte $a0, $a0, $a0, $a0
 	invcode "                                        "
 	invcode "     f1/f2: port 1   f3/f4: port 2      "
-	invcode "      f5/f6: user port   f7: help       "
-	invcode "                                        "
-
+	invcode "f5/f6: user port   f7: 8 player adapter "
+	invcode "               f8: help                 "
 
 help_screen:
 	invcode "                                        "
@@ -89,5 +88,9 @@ help_screen:
 	invcode "  space/+: next page  -: previous page  "
 	invcode "         "
 	.byte $9f
-	invcode            ": return to program           "
+	invcode            ": return to program          "
 	invcode "                                        "
+
+eight_player_legend:
+	invcode " f1/f2: adapter type   f3/f4: sub page  "
+	invcode "f7: controller & user ports    f8: help "

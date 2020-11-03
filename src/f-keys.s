@@ -55,8 +55,8 @@ function_handlers:
 	.word port2_previous
 	.word userport_next
 	.word userport_previous
+	.word none ; eight_player
 	.word help
-	.word none
 	.word help_next
 	.word help_previous
 	.word display_main_screen

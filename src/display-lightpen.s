@@ -165,22 +165,4 @@ button_rects:
 	.endrep
 
 buttons_data:
-	; 0: none
-	.byte $41, $48, $74, $48, $42
-	.byte $45, $31, $56, $32, $46
- 	.byte $43, $47, $75, $47, $44
-
-	; 1: left
-	.byte $c1, $c8, $7b, $48, $42
-	.byte $c5, $b1, $f9, $32, $46
- 	.byte $c3, $c7, $7d, $47, $44
-
-	; 2: right
-	.byte $41, $48, $7c, $c8, $c2
-	.byte $45, $31, $c5, $b2, $c6
- 	.byte $43, $47, $7e, $c7, $c4
-
-	; 3: left right
-	.byte $c1, $c8, $c8, $c8, $c2
-	.byte $c5, $b1, $a0, $b2, $c6
- 	.byte $c3, $c7, $c7, $c7, $c4
+	.incbin "lightpen-buttons.bin"
