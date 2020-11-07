@@ -32,6 +32,7 @@
 
 .include "joyride.inc"
 .macpack utility
+.macpack cbm_ext
 
 eight_player_screen_start = screen + 40 * 2 + 1
 
@@ -70,6 +71,7 @@ eight_player_next_page:
 	ldy #0
 :	sty eight_player_page
 	; jsr copy_eight_player_screen ; currently not needed
+	jsr copy_eight_player_page_title
 	rts
 
 eight_player_previous_page:
@@ -81,6 +83,7 @@ eight_player_previous_page:
 	dey
 :	sty eight_player_page
 	; jsr copy_eight_player_screen ; currently not needed
+	jsr copy_eight_player_page_title
 	rts
 
 copy_eight_player_screen:
@@ -95,7 +98,53 @@ copy_eight_player_screen:
 	ldx #37
 	ldy #18
 	jsr copyrect
-	; TODO: copy title
+
+	store_word screen + 1, ptr2
+	lda eight_player_type
+	asl
+	tax
+	lda eight_player_type_name,x
+	sta ptr1
+	lda eight_player_type_name + 1,x
+	sta ptr1 + 1
+	ldy #19
+:	lda (ptr1),y
+	sta (ptr2),y
+	dey
+	bpl :-
+
+	store_word screen + 1, ptr2
+	lda eight_player_type
+	asl
+	tax
+	lda eight_player_type_name,x
+	sta ptr1
+	lda eight_player_type_name + 1,x
+	sta ptr1 + 1
+	ldy #19
+:	lda (ptr1),y
+	sta (ptr2),y
+	dey
+	bpl :-
+
+	jsr copy_eight_player_page_title
+
+	rts
+
+copy_eight_player_page_title:
+	store_word screen + 35, ptr2
+	lda eight_player_page
+	asl
+	tax
+	lda eight_player_page_name,x
+	sta ptr1
+	lda eight_player_page_name + 1,x
+	sta ptr1 + 1
+	ldy #2
+:	lda (ptr1),y
+	sta (ptr2),y
+	dey
+	bpl :-
 	rts
 
 eight_player_read:
@@ -157,6 +206,25 @@ f_key_commands:
 
 eight_player_num_pages:
 	.byte 2, 2
+
+eight_player_type_name:
+	.repeat EIGHT_PLAYER_NUM_TYPES, i
+	.word eight_player_type_name_data + i * 20
+	.endrep
+
+eight_player_type_name_data:
+	;        12345678901234567890
+	invcode "superpad 64         "
+	invcode "ninja snes pad      "
+
+eight_player_page_name:
+	.repeat 2, i
+	.word eight_player_page_name_data + i * 3
+	.endrep
+
+eight_player_page_name_data:
+	invcode "1-4"
+	invcode "5-8"
 
 eight_player_screen:
 	.word eight_player_screen_data
