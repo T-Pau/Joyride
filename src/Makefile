@@ -74,7 +74,8 @@ mouse-buttons.bin: mouse-buttons.png charset.bin
 	gfx-convert screen mouse-buttons.png charset.bin mouse-buttons.bin
 
 port-screens.bin: port-screens.png charset.bin
-	gfx-convert screen port-screens.png charset.bin port-screens.bin
+	gfx-convert screen port-screens.png charset.bin port-screens.bin \
+		&& ./fixup-buttons port-screens.bin
 
 scroll-wheel.bin: scroll-wheel.png charset.bin
 	gfx-convert screen scroll-wheel.png charset.bin scroll-wheel.bin
