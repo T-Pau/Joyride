@@ -73,6 +73,13 @@ l3:
 small_button:
 	tax
 	ldy #1
+	lda (ptr2),y
+	and #$7f
+	cpx #0
+	beq :+
+	ora #$80
+:	sta (ptr2),y
+	ldy #40
 small_loop:
 	lda (ptr2),y
 	and #$7f
@@ -81,21 +88,20 @@ small_loop:
 	ora #$80
 :	sta (ptr2),y
 	iny
-	cpy #2
-	bne :+
-	ldy #40
+	cpy #43
 	bne small_loop
-:	cpy #43
-	bne :+
 	ldy #81
-	bne small_loop
-:	cpy #82
-	bne small_loop
+	lda (ptr2),y
+	and #$7f
+	cpx #0
+	beq :+
+	ora #$80
+:	sta (ptr2),y
 	rts
 
 tiny_button:
 	tax
-	ldy #0
+	ldy #1
 tiny_loop:
 	lda (ptr2),y
 	and #$7f
@@ -103,7 +109,6 @@ tiny_loop:
 	beq :+
 	ora #$80
 :	sta (ptr2),y
-	iny
-	cpy #2
-	bne tiny_loop
+	dey
+	bpl tiny_loop
 	rts

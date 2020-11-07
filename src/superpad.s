@@ -31,6 +31,11 @@
 
 .include "joyride.inc"
 
+OFFSET_FIRST = 40 * 3 + 2
+OFFSET_DOWN = 40 * 3 - 27
+OFFSET_RIGHT = 40 * 6 - 11 ; negative
+OFFSET_FOURTH = OFFSET_FIRST + 40 * 9 + 19
+
 .macpack utility
 
 .bss
@@ -38,9 +43,30 @@
 snes_buttons:
 	.res 16
 
+index:
+	.res 1
+
 .code
 
 superpad_read:
+	lda command
+	beq :+
+	rts
+:
+
+	; display 4th pad (not enough time in border)
+	store_word screen + OFFSET_FOURTH, ptr2
+	lda eight_player_page
+	asl
+	asl
+	asl
+	tay
+	lda snes_buttons + 6,y
+	ldx snes_buttons + 7,y
+	jsr display_snes
+
+	; read new values
+
 	; port B as input, port a line 2 as output (latch)
 	lda CIA2_DDRA
 	ora #$04
@@ -60,6 +86,7 @@ superpad_read:
 bits:
 	lda CIA2_PRB
 	eor #$ff
+;	lda #$A5; DEBUG
 	ldx #0
 pad:
 	lsr
@@ -78,9 +105,25 @@ superpad_display:
 	beq :+
 	rts
 :
-	store_word screen + 40 * 3 + 2, ptr2
-	lda snes_buttons
-	ldx snes_buttons + 1
+	store_word screen + OFFSET_FIRST, ptr2
+	lda eight_player_page
+	asl
+	asl
+	asl
+	sta index
+	tay
+	lda snes_buttons,y
+	ldx snes_buttons + 1,y
 	jsr display_snes
-	; TODO other pads, handle page
-	rts
+
+	subtract_word ptr2, OFFSET_RIGHT
+	ldy index
+	lda snes_buttons + 2,y
+	ldx snes_buttons + 3,y
+	jsr display_snes
+
+	add_word ptr2, OFFSET_DOWN
+	ldy index
+	lda snes_buttons + 4,y
+	ldx snes_buttons + 5,y
+	jmp display_snes

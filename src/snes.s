@@ -99,6 +99,4 @@ display_snes:
 	add_word ptr2, OFFSET_START
 	lda buttons + 1
 	and #$80
-	jsr tiny_button
-
-	rts
+	jmp tiny_button
