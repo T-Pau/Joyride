@@ -1,0 +1,114 @@
+-------------------------------------------------------------------------------
+Starbyte 4-Player Adapter Specs v0.1                   last changes: 14.03.2012
+-------------------------------------------------------------------------------
+
+Released by Starbyte Software in 1990 for use with their game 
+"Adidas Championship Tie Break." 
+
+At the time sold separately under the name "Tie Break Adaptor".
+
+Note: although the adapter uses the same idea as the Kingsoft and DXS/HIT 
+      adapters, it is NOT compatible with them!
+
+Schematics:
+-----------
+
+GND     1 ---------------+--- 8  JOY 3  GND
+CNT1    4 ->-+           +--- 8  JOY 4  GND
+CNT2    6 -<-+
+SP2     7 ----------<-------- 6  JOY 3  BUTTON
+PB0     C ----------<-------- 2  JOY 3  A1
+PB1     D ----------<-------- 4  JOY 3  A3
+PB2     E ----------<-------- 3  JOY 3  A2
+PB3     F ----------<-------- 1  JOY 3  A0
+PB4     H ----------<-------- 6  JOY 4  BUTTON
+PB5     J ----------<-------- 2  JOY 4  A1
+PB6     K ----------<-------- 4  JOY 4  A3
+PB7     L ----------<-------- 3  JOY 4  A2
+PA2     M ----------<-------- 1  JOY 4  A0
+
+note: all GND pins at the userport (1, 12, A, N) should be connected to each
+      other.
+
+Example code (from "Tie Break"):
+--------------------------------
+
+; port 3
+.C:abcc  AD 01 DD    LDA $DD01
+.C:abcf  85 CE       STA $CE
+
+; get bit 1 from cia2 port b bit 0
+.C:abd1  A9 00       LDA #$00
+.C:abd3  46 CE       LSR $CE
+.C:abd5  B0 02       BCS $ABD9
+.C:abd7  09 02       ORA #$02
+
+; get bit 3 from cia2 port b bit 1
+.C:abd9  46 CE       LSR $CE
+.C:abdb  B0 02       BCS $ABDF
+.C:abdd  09 08       ORA #$08
+
+; get bit 2 from cia2 port b bit 2
+.C:abdf  46 CE       LSR $CE
+.C:abe1  B0 02       BCS $ABE5
+.C:abe3  09 04       ORA #$04
+
+; get bit 0 from cia2 port b bit 3
+.C:abe5  46 CE       LSR $CE
+.C:abe7  B0 02       BCS $ABEB
+.C:abe9  09 01       ORA #$01
+
+.C:abeb  85 CE       STA $CE
+
+; get fire from cia2 synchronous serial (SP2)
+.C:abed  AD 0C DD    LDA $DD0C
+.C:abf0  C9 FF       CMP #$FF
+.C:abf2  F0 06       BEQ $ABFA
+
+.C:abf4  A5 CE       LDA $CE
+.C:abf6  09 10       ORA #$10
+.C:abf8  85 CE       STA $CE
+.C:abfa
+
+; port 4
+.C:ac00  AD 01 DD    LDA $DD01
+.C:ac03  85 CE       STA $CE
+
+; get bit 2 from cia2 port b bit 7
+.C:ac05  A9 00       LDA #$00
+.C:ac07  06 CE       ASL $CE
+.C:ac09  B0 02       BCS $AC0D
+.C:ac0b  09 04       ORA #$04
+
+; get bit 3 from cia2 port b bit 6
+.C:ac0d  06 CE       ASL $CE
+.C:ac0f  B0 02       BCS $AC13
+.C:ac11  09 08       ORA #$08
+
+; get bit 1 from cia2 port b bit 5
+.C:ac13  06 CE       ASL $CE
+.C:ac15  B0 02       BCS $AC19
+.C:ac17  09 02       ORA #$02
+
+; get bit 5 from cia2 port b bit 4
+.C:ac19  06 CE       ASL $CE
+.C:ac1b  B0 02       BCS $AC1F
+.C:ac1d  09 10       ORA #$10
+
+.C:ac1f  85 CE       STA $CE
+
+; get bit 0 from cia2 port a bit 2
+.C:ac21  AD 00 DD    LDA $DD00
+.C:ac24  29 04       AND #$04
+.C:ac26  D0 06       BNE $AC2E
+.C:ac28  A5 CE       LDA $CE
+.C:ac2a  09 01       ORA #$01
+.C:ac2c  85 CE       STA $CE
+.C:ac2e
+
+;------------------------------------------------------------------------------
+
+credits:
+--------
+
+reverse enginering, this document :            Groepaz/Hitmen (groepaz@gmx.net)

@@ -1,0 +1,452 @@
+-------------------------------------------------------------------------------
+      ***   The Digital Excess & Hitmen 4-Player Joystick adapter  ***
+
+   or "4 Players with ease - how smart programming can substitute Hardware"
+
+                                                       last changes: 14.03.2012
+-------------------------------------------------------------------------------
+
+Contents:
+---------
+
+- changes log
+- prelude
+- how it works
+- parts list
+- shematics
+- sample code
+- known problems
+- last words
+- credits
+- contact adress
+
+
+changes:
+--------
+
+v1.3:       - added note on GND pins
+            - added note on Kingsoft/Starbyte adapter compatibility
+
+v1.2:       - sample code cleanup
+
+v1.1:       - sample code updated
+            - added flow-of-data to the shematics for those who are interisted
+            - added comment on known problems
+
+v1.2 prelude
+------------
+
+cleaned up the sample code, fixing a minor bug.
+
+v1.1 prelude
+------------
+
+howdy! cheers for the comments and suggestions i got in mail. This is what
+actually made me putting out this update - the additional info could be
+interisting for you aswell.
+
+v1.0 prelude
+------------
+
+At Mekka Symposium 99 we took a look at the 4-player adapter that is supported
+by the game "Bomb Mania". Thomas and Bjoern had started working on their
+project "Detonators 2" a while ago and the multi-player ability was put on the
+"must have" list. However, after we cracked up the thing we noticed that this
+particular adapter needed some electronic components to work and because of
+that it was not really suitable for the average scener to built on his own. We
+almost forgot about the idea of creating a 4 players thingy, until we met again
+at the end of November 99. Having no decent documentation except some scanned
+c64 shematics and some IO-map it was quite a hazzle to knock it up since we had
+to discover a few (probably well known) things ourselves, but we finally worked
+it out. Here it is, easy to built for everyone - and documented aswell.
+
+Take this as our christmas present for you - since it is christmas anyway,
+spend your time on something useful and do some christmassy handicraft work.
+
+How it works
+------------
+
+To interface 2 additional Joysticks we had to find 10 additional input-lines
+on the C64. Since we wanted to create something that is both cheap and could
+be built by people with very little (if not none) soldering experience, we
+limited ourselves to just using plugs and wires. We looked at the user-port
+and found 8 lines at the first glance - Port B of CIA 2 - which were used to
+connect the 4 directional lines of each joystick. Finding 2 more lines for
+the buttons was a little more tricky. If you look closer at the user-port,
+you will notice that Bit 2 of CIA 2 Port A is connected to it aswell, so
+there is just one other line left to find - which turned out to be the most
+challenging part of it all. What we did is abusing the synchronous serial
+data register of CIA 2, which is also available at the user-port. To make
+this work we had to let CIA 1 output a counter-signal at the corresponding
+user-port pin and we fed that signal back into CIA 2 serial-counter. Now by
+using the maximum counter-speed possible, we could use the synchronous
+serial register of CIA 2 as another 'digital' input line and BINGO - there
+we are....
+
+Note: although the adapter uses the same idea as the Kingsoft and Starbyte 
+      adapters, it is NOT compatible with them!
+
+Parts List
+----------
+
+amount  what?                  we found it at              costs
+
+   1    User Port Plug         (Conrad Electronic 742201)  3.95 DM
+   2    Sub-D 9pin Plug, male  (Conrad Electronic 742066)  0.85 DM each
+        some wires             rip off somewhere             ?
+        case (optional)        old Cartridge                 ?
+
+                                              total costs: 5.65 DM
+
+anyone should be able to assemble everything in less than an hour.
+
+The Shematics:
+--------------
+
+DON'T PANIC! :P the -->-- /  --<-- symbols do JUST mark the direction the data
+is flowing! =)
+
+User Port                     Joysticks
+---------                     ---------
+
+GND     1 ---------------+--- 8  JOY 3  GND
+CNT1    4 ->-+           +--- 8  JOY 4  GND
+CNT2    6 -<-+
+SP2     7 ----------<-------- 6  JOY 4  BUTTON
+PB0     C ----------<-------- 1  JOY 3  A0
+PB1     D ----------<-------- 2  JOY 3  A1
+PB2     E ----------<-------- 3  JOY 3  A2
+PB3     F ----------<-------- 4  JOY 3  A3
+PB4     H ----------<-------- 1  JOY 4  A0
+PB5     J ----------<-------- 2  JOY 4  A1
+PB6     K ----------<-------- 3  JOY 4  A2
+PB7     L ----------<-------- 4  JOY 4  A3
+PA2     M ----------<-------- 6  JOY 3  BUTTON
+
+Note: GND is connected to BOTH JOY3/JOY4 GND - aswell CNT1 and CNT2 are bridged
+      (shame there are no decent gfx characters in ascii :P)
+
+Note: all GND pins at the userport (1, 12, A, N) should be connected to each
+      other.
+
+User Port Plug (back view - soldering side)
+-------------------------------------------
+
+                           (TOP)
++----+-----------------------------------------------+----+
+|    | 1   2   3   4   5   6   7   8   9  10  11  12 |    |
+| ++ |                                               | ++ |
+| ++ |                                               | ++ |
+|    | A   B   C   D   E   F   H   J   K   L   M   N |    |
++----+-----------------------------------------------+----+
+                          (BOTTOM)
+
+Joystick Port Plug (back view - soldering side)
+-----------------------------------------------
+
+              (TOP)
+ ---\-----------------------/---
+ |   \  5   4   3   2   1  /   |
+ | *  \                   /  * |
+ |     \  9   8   7   6  /     |
+ -------\---------------/-------
+             (BOTTOM)
+
+sample code in Turbo-Ass syntax (skip this if you can't code *GRIN*)
+--------------------------------------------------------------------
+
+;---------------------------------------
+;4 player adapter sample code by gpz/hit
+;---------------------------------------
+
+joy3reg  = $02  ; example joy-regs
+joy4reg  = $03
+
+btemp    = $04  ; temp for display
+
+;---------------------------------------
+; main
+;---------------------------------------
+
+         *= $1000
+
+         ;
+         ; usual irq setup
+         ;
+
+         sei
+         lda #>irq
+         sta $0315
+         lda #<irq
+         sta $0314
+         lda #$1b
+         sta $d011
+         lda #$7f
+         sta $dc0d
+         lda #$ff
+         sta $d012
+         lda #$01
+         sta $d01a
+
+         ;
+         ; print info
+         ;
+
+         ldx #$00
+loop     .var *
+         lda screen,x
+         jsr $ffd2
+         inx
+         cpx #22
+         bne loop
+
+         jsr setup    ; cia setup for adapter
+
+         cli
+
+         jmp *
+
+;---------------------------------------
+; interupt calls other routines
+;---------------------------------------
+irq
+
+         inc $d020
+
+         jsr read   ; read adapter (takes about 2 rasterlines)
+
+         inc $d020
+
+         ldx #(40*1)+4
+         lda $dc00
+         jsr displaybits
+
+         ldx #(40*2)+4
+         lda $dc01
+         jsr displaybits
+
+         ldx #(40*3)+4
+         lda joy3reg
+         jsr displaybits
+
+         ldx #(40*4)+4
+         lda joy4reg
+         jsr displaybits
+
+         lda #$00
+         sta $d020
+
+         inc $d019
+         jmp $febc
+
+;---------------------------------------
+; displays 5 lowest bits of joystick-reg
+;---------------------------------------
+displaybits
+
+         rol a
+         rol a
+         rol a
+
+         sta btemp
+
+         ldy #$00
+loop     .var *
+
+         rol btemp
+         bcc skip1
+
+         lda #"-"
+         jmp skip2
+skip1
+         lda #"*"
+skip2
+         sta $0400,x
+
+         inx
+         iny
+         cpy #$05
+         bne loop
+
+         rts
+
+;---------------------------------------
+screen
+         .text "{clr/home}joy brldu{return}"
+         .text " 1{return}"
+         .text " 2{return}"
+         .text " 3{return}"
+         .text " 4{return}"
+
+;---------------------------------------
+
+;---------------------------------------
+read
+;---------------------------------------
+; reads adapter and composes the
+; additional virtual joystick-registers
+;---------------------------------------
+;this code demonstrates how to read the
+;additional 2 joysticks and how to com-
+;pose 2 'virtual' joystick-registers
+;that can be processed exactly like the
+;usual ($dc00/$dc01) ones.
+;---------------------------------------
+         ;
+         ; save cia 2 registers
+         ;
+
+         lda $dd00
+         sta ciasave1+1
+         lda $dd02
+         sta ciasave2+1
+
+         ;
+         ; read directions joy 3+joy 4
+         ;
+
+         lda $dd01 ;read cia 2 port b
+         sta temp+1
+
+         and #$0f
+         sta joy3reg
+
+temp     lda #$00
+         lsr a
+         lsr a
+         lsr a
+         lsr a
+         sta joy4reg
+
+         ;
+         ; read button joy 3
+         ;
+
+         lda $dd02      ;cia 2 port a
+         and #%11111011 ;data direction
+         sta $dd02      ;=> bit 2 input
+
+         lda $dd00      ;read cia 2 port A
+         and #%00000100 ;check bit 2
+         asl a
+         asl a
+         ora joy3reg
+         sta joy3reg
+
+         ;
+         ; read button joy 4
+         ;
+
+         lda #$ff ;serial data register
+         sta $dc0c;=> writing $ff causes
+                  ;cia to output some
+                  ;count signals at cnt1
+
+         lda $dd0c ;read cia 2 serial in
+         beq fire  ;button press if zero
+
+         lda joy4reg
+         ora #%00010000
+         sta joy4reg
+
+fire
+
+         ;
+         ; restore cia 2 registers
+         ;
+
+ciasave1 lda #$00
+         sta $dd00
+ciasave2 lda #$00
+         sta $dd02
+
+         rts
+
+;---------------------------------------
+setup
+;---------------------------------------
+;warning: do not mess around with this
+;         unless you really know what
+;         you are doing! wrong cia setup
+;         may toast your cia's !
+;---------------------------------------
+
+         ;
+         ; cia 2 setup
+         ;
+
+         lda #$00  ; port b direction
+         sta $dd03 ; => input
+
+         lda #$01
+         sta $dd04 ; timer a lowbyte
+         lda #$00
+         sta $dd05 ; timer a highbyte
+
+         lda #%00010001
+         sta $dd0e ; control register a
+                   ; timer: start
+                   ;        continous
+                   ;        forced load
+                   ; serial port: input
+
+         ;
+         ; cia 1 setup
+         ;
+
+         lda #$01
+         sta $dc04 ; timer a lowbyte
+         lda #$00
+         sta $dc05 ; timer a highbyte
+
+         lda #%01010001
+         sta $dc0e ; control register a
+                   ; timer: start
+                   ;        continous
+                   ;        forced load
+                   ; serial port: output
+
+         lda #$ff ;serial data register
+         sta $dc0c;=> writing $ff causes
+                  ;cia to output some
+                  ;count signals at cnt1
+         rts
+
+
+;------------------------------------------------------------------------------
+
+known problems:
+---------------
+
+There is, however, some minor problem with programming a game that supports the
+adapter. It is, that if the adapter is NOT connected to the c64, the code as
+shown here will always report fire on joy4 PRESSED. So if you want your game to
+work without the adapter aswell, you need a user-interactive option to switch
+the adapter-reading code off. (or ignore what it reports respectivly. Also,
+you shouldnt use fire on joy 4 in menus or such things like 'start game' if
+there isnt a way to switch the adapter off before (the game would be unuseable
+without the adapter).
+
+last words:
+-----------
+
+With this thing we hope to motivate some more people to develop multi-player
+capable games for our beloved machine. Several game concepts do just CRY for
+an expansion like this! It's up to you now... May it be patching existing
+games (like all those round-based sport games for example) or creating
+astonishing new ones from scratch.
+
+              "Imagination is more important than knowledge." (Albert Einstein)
+
+credits:
+--------
+
+Groepaz/Hitmen                 : Hardware spanking, this document
+Thomas Koncina/Digital Excess  : Coding, mental support
+Bjoern Odendahl/Digital Excess : Test Application Graphics, release packaging
+
+contact:
+--------
+
+Groepaz/Hitmen                 : groepaz@gmx.net
+Bjoern Odendahl/Digital Excess : seven@crypt.ruhr.de

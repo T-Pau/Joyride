@@ -1,0 +1,325 @@
+-------------------------------------------------------------------------------
+Classical Games 4-Player Adapter Specs v0.4            last changes: 14.03.2012
+-------------------------------------------------------------------------------
+
+contents
+--------
+
+- changes log
+- prelude
+- 74LS257 Pinout
+- schematics
+- sample code
+- credits
+
+changes:
+--------
+
+v0.4:       - fixed minor error in schematics (thanks to fierman)
+            - added note on ground pins
+
+v0.3:       - sample code fixed and cleaned up
+
+v0.2:       - schematics updated
+            - 74LS257 info added
+
+v0.3 prelude
+------------
+
+aloha! Ninja/The Dreams tried the example code with the adapter and noticed
+some little mistakes which are corrected now... i also removed the delays from
+the code since they proved to be unnecessary.
+
+v0.2 prelude
+------------
+
+aloha! the classical games dudes seemed to have decided to make their adapter
+public, so i quickly updated this small file with the missing information such
+as the IC to use....
+
+v0.1 prelude
+------------
+
+In Bombmania this adapter is (or was, since it seems its no more available)
+more used as a dongle than for its original purpose - and not only for this
+reason it had to be documented by someone ;=P However, since i dont even have
+the thing (yet), a whole lot of this is here is still guesswork... hope to be
+able to take a look at the adapter some time.
+
+Parts List
+----------
+
+amount  what?                  we found it at              costs
+
+   1    User Port Plug         (Conrad Electronic 742201)  3.95 DM
+   2    Sub-D 9pin Plug, male  (Conrad Electronic 742066)  0.85 DM each
+   1    IC 74LS257
+   1    small prototype-board
+        some wires             rip off somewhere             ?
+
+   optional:
+
+   1    16-Pin IC Socket
+        case (optional)        old Cartridge                 ?
+
+74LS257 Pinout
+--------------
+
+                                   +--*--+
+                          SWITCH --|1  16|-- +5V
+                            IN1a --|2  15|-- CS    Chip Select (low active)
+                            IN1b --|3  14|-- IN4a
+                            OUT1 --|4  13|-- IN4b
+                            IN2a --|5  12|-- OUT4
+                            IN2b --|6  11|-- IN3a
+                            OUT2 --|7  10|-- IN3b
+                             GND --|8   9|-- OUT3
+                                   +-----+
+
+schematics
+---------
+
+DON'T PANIC! :P the -->-- /  --<-- symbols do JUST mark the direction the data
+is flowing! =)
+
+
+User Port                         74LS257      Joysticks
+---------                         -------      ---------
+
+GND     1 ---------------+------------------ 8  JOY 3  GND
+                         +------------------ 8  JOY 4  GND
+                         |
+                         |
+                         |
+                         |        +------+
+                         +--------|15    |
+                         +--------|8     |
+                                  |      |
+5VDC    2 ------------------------|16    |
+                                  |     2+-- 1  JOY 3  A0
+PB0     C ---------<-----JOY-A0---|4    5+-- 2  JOY 3  A1
+                                  |    11+-- 3  JOY 3  A2
+PB1     D ---------<-----JOY-A1---|7   14+-- 4  JOY 3  A3
+                                  |      |
+PB2     E ---------<-----JOY-A2---|9    3+-- 1  JOY 4  A0
+                                  |     6+-- 2  JOY 4  A1
+PB3     F ---------<-----JOY-A3---|12  10+-- 3  JOY 4  A2
+                                  |    13+---4  JOY 4  A3
+PB7     L --------->-----SWITCH---|1     |
+                                  +------+
+
+PB5     J ---------<------------------------ 6  JOY 3  BUTTON
+PB4     H ---------<------------------------ 6  JOY 4  BUTTON
+
+note: all GND pins at the userport (1, 12, A, N) should be connected to each
+      other.
+
+User Port Plug (back view - soldering side)
+-------------------------------------------
+
+                           (TOP)
++----+-----------------------------------------------+----+
+|    | 1   2   3   4   5   6   7   8   9  10  11  12 |    |
+| ++ |                                               | ++ |
+| ++ |                                               | ++ |
+|    | A   B   C   D   E   F   H   J   K   L   M   N |    |
++----+-----------------------------------------------+----+
+                          (BOTTOM)
+
+Joystick Port Plug (back view - soldering side)
+-----------------------------------------------
+
+              (TOP)
+ ---\-----------------------/---
+ |   \  5   4   3   2   1  /   |
+ | *  \                   /  * |
+ |     \  9   8   7   6  /     |
+ -------\---------------/-------
+             (BOTTOM)
+
+
+sample code in Turbo-Ass syntax (skip this if you can't code *GRIN*)
+--------------------------------------------------------------------
+
+note: since i dont have the actual adapter i couldnt really test this, but i am
+      pretty sure it will work though 8=) let me know if you have the adapter
+      and got any problems with this code.
+
+;---------------------------------------
+;4 player adapter sample code by gpz/hit
+;---------------------------------------
+
+joy3reg  = $02  ; example joy-regs
+joy4reg  = $03
+
+btemp    = $04  ; temp for display
+
+;---------------------------------------
+; main
+;---------------------------------------
+
+         *= $1000
+
+         ;
+         ; usual irq setup
+         ;
+
+         sei
+         lda #>irq
+         sta $0315
+         lda #<irq
+         sta $0314
+         lda #$1b
+         sta $d011
+         lda #$7f
+         sta $dc0d
+         lda #$ff
+         sta $d012
+         lda #$01
+         sta $d01a
+
+         ;
+         ; print info
+         ;
+
+         ldx #$00
+loop     .var *
+         lda screen,x
+         jsr $ffd2
+         inx
+         cpx #22
+         bne loop
+
+         jsr setup    ; cia setup for adapter
+
+         cli
+
+         jmp *
+
+;---------------------------------------
+; interupt calls other routines
+;---------------------------------------
+irq
+
+         inc $d020
+
+         jsr read   ; read adapter
+
+         inc $d020
+
+         ldx #(40*1)+4
+         lda $dc00
+         jsr displaybits
+
+         ldx #(40*2)+4
+         lda $dc01
+         jsr displaybits
+
+         ldx #(40*3)+4
+         lda joy3reg
+         jsr displaybits
+
+         ldx #(40*4)+4
+         lda joy4reg
+         jsr displaybits
+
+         lda #$00
+         sta $d020
+
+         inc $d019
+         jmp $febc
+
+;---------------------------------------
+; displays 5 lowest bits of joystick-reg
+;---------------------------------------
+displaybits
+
+         rol a
+         rol a
+         rol a
+
+         sta btemp
+
+         ldy #$00
+loop     .var *
+
+         rol btemp
+         bcc skip1
+
+         lda #"-"
+         jmp skip2
+skip1
+         lda #"*"
+skip2
+         sta $0400,x
+
+         inx
+         iny
+         cpy #$05
+         bne loop
+
+         rts
+
+;---------------------------------------
+screen
+         .text "{clr/home}joy brldu{return}"
+         .text " 1{return}"
+         .text " 2{return}"
+         .text " 3{return}"
+         .text " 4{return}"
+
+;---------------------------------------
+
+;---------------------------------------
+read
+;---------------------------------------
+; reads adapter and composes the
+; additional virtual joystick-registers
+;---------------------------------------
+;this code demonstrates how to read the
+;additional 2 joysticks and how to com-
+;pose 2 'virtual' joystick-registers
+;that can be processed exactly like the
+;usual ($dc00/$dc01) ones.
+;---------------------------------------
+
+        lda #$80        ; cia 2 port B read/write
+        sta $dd01       ; (output one at PB7)
+        lda $dd01       ; cia 2 port B read/write
+        and #$1f        ; get bit 4-0 (PB4-PB0)
+        sta joy3reg     ; joy 3 complete
+        lda #$00        ; cia 2 port B read/write
+        sta $dd01       ; (output zero at PB7)
+        lda $dd01       ; cia 2 port B read/write
+        and #$0f        ; get bit 3-0 (PB3-PB0)
+        sta joy4reg     ; joy 4 directions
+        lda $dd01       ; cia 2 port B read/write
+        and #%00100000  ; get bit 5 (PB5)
+        lsr
+        ora joy4reg
+        sta joy4reg     ; joy 4 button
+        rts
+
+;---------------------------------------
+setup
+;---------------------------------------
+;warning: do not mess around with this
+;         unless you really know what
+;         you are doing! wrong cia setup
+;         may toast your cia's !
+;---------------------------------------
+
+        lda #%10000000  ; cia 2 port B Data-Direction
+        sta $dd03       ; bit 7: out    bit 6-0: in
+        lda $dd01       ; cia 2 port B read/write
+        sta $dd01       ; (output zero at PB7 ?)
+        rts
+
+;------------------------------------------------------------------------------
+
+credits:
+--------
+
+reverse enginering, this document :            Groepaz/Hitmen (groepaz@gmx.net)
+
+the original adapter was developed+sold by Classical games

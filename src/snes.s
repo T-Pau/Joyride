@@ -1,4 +1,4 @@
-;  irq-table.s -- Table of raster IRQ handlers.
+;  snes.s -- Display SNES controller.
 ;  Copyright (C) 2020 Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
@@ -25,38 +25,80 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.export display_snes
 
 .autoimport +
-.export main_irq_table, main_irq_table_length, help_irq_table, help_irq_table_length, eight_player_irq_table, eight_player_irq_table_length
 
-top = 50 ; first raster line of screen
+.include "joyride.inc"
 
-.data
+.macpack utility
 
-main_irq_table:
-	.word 0, handle_top
-	.word top, label_background
-	.word top + 8 - 1, handle_user
-	.word top + 13 * 8, label_background
-	.word top + 14 * 8 - 1, handle_port2
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_port1
-main_irq_table_length:
-	.byte * - main_irq_table
+OFFSET_X = 10
+OFFSET_R = 4
+OFFSET_DPAD = 40 - 12
+OFFSET_Y = 40 * 4- 6 ; negative
+OFFSET_B = 4
+OFFSET_A = 40 * 2- 2
+OFFSET_SELECT = 40 * 2 - 5
+OFFSET_START = 3
 
+.bss
 
-help_irq_table:
-	.word top, label_background
-	.word top + 8 - 1, content_background
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_help
-help_irq_table_length:
-	.byte * - help_irq_table
+buttons:
+	; 0,  1,    2,    3,      4, 5, 6,   7
+	; 01  02    04    08      10 20 40   80
+	; up, down, left, right,  A, X, L,   R
+	;                         B, Y, sel, start
+	.res 2
 
-eight_player_irq_table:
-	.word top, label_background
-	.word top + 8 - 1, eight_player_read
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_eight_player
-eight_player_irq_table_length:
-	.byte * - eight_player_irq_table
+.code
+
+display_snes:
+	sta buttons
+	stx buttons + 1
+
+	; L
+	and #$40
+	jsr tiny_button
+
+	add_word ptr2, OFFSET_X
+	lda buttons
+	and #$20
+	jsr small_button
+
+	add_word ptr2, OFFSET_R
+	lda buttons
+	and #$80
+	jsr tiny_button
+
+	add_word ptr2, OFFSET_DPAD
+	lda buttons
+	and #$0f
+	jsr dpad
+
+	subtract_word ptr2, OFFSET_Y
+	lda buttons + 1
+	and #$20
+	jsr small_button
+
+	add_word ptr2, OFFSET_B
+	lda buttons + 1
+	and #$10
+	jsr small_button
+
+	add_word ptr2, OFFSET_A
+	lda buttons
+	and #$10
+	jsr small_button
+
+	add_word ptr2, OFFSET_SELECT
+	lda buttons + 1
+	and #$40
+	jsr tiny_button
+
+	add_word ptr2, OFFSET_START
+	lda buttons + 1
+	and #$80
+	jsr tiny_button
+
+	rts

@@ -28,60 +28,61 @@
 
 .autoimport +
 
-.export eight_player, eight_player_next_type, eight_player_previous_type, eight_player_next_page, eight_player_previous_page, handle_eight_player
+.export eight_player_next_type, eight_player_previous_type, eight_player_next_page, eight_player_previous_page, handle_eight_player, eight_player_read, copy_eight_player_screen
 
 .include "joyride.inc"
 .macpack utility
 
 eight_player_screen_start = screen + 40 * 2 + 1
 
-.bss
-
-eight_player_type:
-	.res 1
-
-eight_player_page:
-	.res 1
-
 .code
 
-eight_player:
-	ldx #<eight_player_irq_table
-	ldy #>eight_player_irq_table
-	lda eight_player_irq_table_length
-	jsr set_irq_table
-
-	lda #0
-	ldy #7
-:	sta VIC_SPR0_X,y
-	dey
-	bpl :-
-	lda VIC_SPR_HI_X
-	and #$f0
-	sta VIC_SPR_HI_X
-
-	memcpy screen, help_screen, 1000
-	memcpy color_ram, help_color, 1000
-	memcpy screen + 40 * 22, eight_player_legend, 120
+eight_player_next_type:
+	ldx eight_player_type
+	inx
+	cpx #EIGHT_PLAYER_NUM_TYPES
+	bne :+
+	ldx #0
+:	stx eight_player_type
+	ldx #0
+	stx eight_player_page
 	jsr copy_eight_player_screen
 	rts
 
-eight_player_next_type:
-	; TODO
-	rts
-
 eight_player_previous_type:
-	; TODO
+	ldx eight_player_type
+	dex
+	bpl :+
+	ldx #(EIGHT_PLAYER_NUM_TYPES - 1)
+:	stx eight_player_type
+	ldx #0
+	stx eight_player_page
+	jsr copy_eight_player_screen
 	rts
 
 eight_player_next_page:
-	; TODO
+	ldx eight_player_type
+	ldy eight_player_page
+	iny
+	tya
+	cmp eight_player_num_pages,x
+	bne :+
+	ldy #0
+:	sty eight_player_page
+	; jsr copy_eight_player_screen ; currently not needed
 	rts
 
 eight_player_previous_page:
-	; TODO
+	ldy eight_player_page
+	dey
+	bpl :+
+	ldx eight_player_type
+	ldy eight_player_num_pages,x
+	dey
+:	sty eight_player_page
+	; jsr copy_eight_player_screen ; currently not needed
 	rts
-	
+
 copy_eight_player_screen:
 	lda eight_player_type
 	asl
@@ -97,12 +98,36 @@ copy_eight_player_screen:
 	; TODO: copy title
 	rts
 
+eight_player_read:
+	jsr content_background
+
+	lda eight_player_type
+	asl
+	tax
+	lda read_handler,x
+	sta read_jmp + 1
+	lda read_handler + 1,x
+	sta read_jmp + 2
+read_jmp:
+	jmp $0000
+
 handle_eight_player:
 	jsr display_logo
-	
+
+	lda eight_player_type
+	asl
+	tax
+	lda display_handler,x
+	sta display_jmp + 1
+	lda display_handler + 1,x
+	sta display_jmp + 2
+display_jmp:
+	jsr $0000
+
 	jsr get_f_key
 	beq none
 	lda last_command
+	ora command
 	bne end
 	lda f_key_commands,x
 	tax
@@ -112,15 +137,26 @@ none:
 end:
 	rts
 
-	
+
 .rodata
+
+read_handler:
+	.word superpad_read
+	;.word snespad_read
+
+display_handler:
+	.word superpad_display
+	;.word snespad_display
 
 f_key_commands:
 	.byte 0
 	.byte COMMAND_EIGHT_PLAYER_NEXT_TYPE, COMMAND_EIGHT_PLAYER_PREVIOUS_TYPE
 	.byte COMMAND_EIGHT_PLAYER_NEXT_PAGE, COMMAND_EIGHT_PLAYER_PREVIOUS_PAGE
 	.byte 0, 0
-	.byte COMMAND_HELP_EXIT, COMMAND_HELP
+	.byte COMMAND_MAIN, COMMAND_HELP
+
+eight_player_num_pages:
+	.byte 2, 2
 
 eight_player_screen:
 	.word eight_player_screen_data

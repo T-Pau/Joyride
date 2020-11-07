@@ -27,7 +27,7 @@
 
 
 .autoimport +
-.export display_help_screen, current_help_screen
+.export display_help_page, current_help_page
 
 .include "joyride.inc"
 
@@ -41,7 +41,7 @@ num_help_screens = 8
 
 .bss
 
-current_help_screen:
+current_help_page:
 	.res 1
 
 .rodata
@@ -222,8 +222,8 @@ help_screens_data:
 
 .code
 
-display_help_screen:
-	lda current_help_screen
+display_help_page:
+	lda current_help_page
 	bmi negative
 	cmp #<num_help_screens
 	bne ok
@@ -232,7 +232,7 @@ display_help_screen:
 negative:
 	lda #<(num_help_screens - 1)
 ok:
-	sta current_help_screen
+	sta current_help_page
 	asl
 	tax
 

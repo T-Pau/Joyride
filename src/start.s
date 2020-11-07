@@ -27,7 +27,7 @@
 
 
 .autoimport +
-.export start, display_main_screen
+.export start
 
 .include "joyride.inc"
 
@@ -43,15 +43,12 @@ start:
 	memcpy charset, charset_data, $800
 	memcpy sprites, sprite_data, (64 * 8)
 
-	ldx #0
-	stx port1_type
-	stx port2_type
-	stx userport_type
+	jsr init_state
 	jsr display_main_screen
 
 	set_vic_bank $4000
 	set_vic_text screen, charset
-		
+
 	lda #$0f
 	sta VIC_SPR_ENA
 	lda #0
@@ -59,13 +56,13 @@ start:
 	sta VIC_SPR_EXP_X
 	sta VIC_SPR_EXP_Y
 	sta VIC_SPR_MCOLOR
-	
+
 	lda #COLOR_WHITE
 	sta VIC_SPR0_COLOR
 	sta VIC_SPR1_COLOR
 	sta VIC_SPR2_COLOR
 	sta VIC_SPR3_COLOR
-	
+
 	jsr setup_logo
 
 	lda #$ff
@@ -89,17 +86,3 @@ start:
 	sta CIA1_CRA
 
 	jmp main_loop
-
-display_main_screen:
-	memcpy screen, main_screen, 1000
-	memcpy color_ram, main_color, 1000
-	ldy #0
-	jsr copy_port_screen
-	ldy #1
-	jsr copy_port_screen
-	jsr copy_userport
-	ldx #<main_irq_table
-	ldy #>main_irq_table
-	lda main_irq_table_length
-	jsr set_irq_table
-	rts

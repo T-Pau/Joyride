@@ -1,0 +1,148 @@
+-------------------------------------------------------------------------------
+Kingsoft 4-Player Adapter Specs v0.1                   last changes: 14.03.2012
+-------------------------------------------------------------------------------
+
+Supports 2 additional joysticks at the userport. 
+
+Introduced with the game Bug Bomber by Kingsoft in 1992, the game came with 
+instructions to build your own 4-player adapter.
+
+Note: although the adapter uses the same idea as the Starbyte and DXS/HIT 
+      adapters, it is NOT compatible with them!
+
+################################################################################
+WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING 
+################################################################################
+
+The "schematics" shown in the bug bomber manual is wrong
+(http://www.synnes.org/c64/images/kingsoft_4_player_adapter_schematics.png)
+
+################################################################################
+WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING 
+################################################################################
+
+Schematics:
+-----------
+
+GND     1 ---------------+--- 8  JOY 3  GND
+CNT1    4 ->-+           +--- 8  JOY 4  GND
+CNT2    6 -<-+
+SP2     7 ----------<-------- 6  JOY 4  BUTTON
+PB0     C ----------<-------- 4  JOY 4  A3
+PB1     D ----------<-------- 3  JOY 4  A2
+PB2     E ----------<-------- 2  JOY 4  A1
+PB3     F ----------<-------- 1  JOY 4  A0
+
+PB4     H ----------<-------- 6  JOY 3  BUTTON
+PB5     J ----------<-------- 4  JOY 3  A3
+PB6     K ----------<-------- 3  JOY 3  A2
+PB7     L ----------<-------- 2  JOY 3  A1
+PA2     M ----------<-------- 1  JOY 3  A0
+
+note: all GND pins at the userport (1, 12, A, N) should be connected to each
+      other.
+
+Example code (from "Bug Bomber"):
+--------------------------------
+
+; joystick 3
+
+; set port A bit 2
+.C:933d  78          SEI
+.C:933e  AD 00 DD    LDA $DD00
+.C:9341  09 04       ORA #$04
+.C:9343  8D 00 DD    STA $DD00
+.C:9346  58          CLI
+
+; check port A bit 2
+.C:9347  AD 00 DD    LDA $DD00
+.C:934a  29 04       AND #$04
+.C:934c  D0 06       BNE $9354
+; clear joy bit 0
+.C:934e  A5 43       LDA $43
+.C:9350  29 FE       AND #$FE
+.C:9352  85 43       STA $43
+
+; check port B bit 7
+.C:9354  AD 01 DD    LDA $DD01
+.C:9357  29 80       AND #$80
+.C:9359  D0 06       BNE $9361
+; clear joy bit 1
+.C:935b  A5 43       LDA $43
+.C:935d  29 FD       AND #$FD
+.C:935f  85 43       STA $43
+
+; check port B bit 6
+.C:9361  AD 01 DD    LDA $DD01
+.C:9364  29 40       AND #$40
+.C:9366  D0 06       BNE $936E
+; clear joy bit 2
+.C:9368  A5 43       LDA $43
+.C:936a  29 FB       AND #$FB
+.C:936c  85 43       STA $43
+
+; check port B bit 5
+.C:936e  AD 01 DD    LDA $DD01
+.C:9371  29 20       AND #$20
+.C:9373  D0 06       BNE $937B
+; clear joy bit 3
+.C:9375  A5 43       LDA $43
+.C:9377  29 F7       AND #$F7
+.C:9379  85 43       STA $43
+
+; check port B bit 4
+.C:937b  AD 01 DD    LDA $DD01
+.C:937e  29 10       AND #$10
+.C:9380  D0 44       BNE $93C6
+; clear joy bit 4
+.C:9382  A5 43       LDA $43
+.C:9384  29 EF       AND #$EF
+.C:9386  85 43       STA $43
+.C:9388  60          RTS
+
+; joystick 4
+
+; get 4 lower bits from port B
+; to joy bits 0..3 in reverse order
+.C:9389  AD 01 DD    LDA $DD01
+.C:938c  4A          LSR A
+.C:938d  26 44       ROL $44
+.C:938f  4A          LSR A
+.C:9390  26 44       ROL $44
+.C:9392  4A          LSR A
+.C:9393  26 44       ROL $44
+.C:9395  4A          LSR A
+.C:9396  26 44       ROL $44
+
+.C:9398  A9 3F       LDA #$3F
+.C:939a  8D 02 DD    STA $DD02
+.C:939d  A9 00       LDA #$00
+.C:939f  8D 03 DD    STA $DD03
+
+.C:93a2  AD 0E DC    LDA $DC0E
+.C:93a5  29 F7       AND #$F7
+.C:93a7  09 40       ORA #$40
+.C:93a9  8D 0E DC    STA $DC0E
+
+.C:93ac  AD 0E DD    LDA $DD0E
+.C:93af  29 BF       AND #$BF
+.C:93b1  8D 0E DD    STA $DD0E
+.C:93b4  A9 00       LDA #$00
+.C:93b6  8D 0C DC    STA $DC0C
+
+; get fire from cia2 synchronous serial (SP2)
+.C:93b9  AD 0C DD    LDA $DD0C
+.C:93bc  C9 FF       CMP #$FF
+.C:93be  F0 06       BEQ $93C6
+; clear joy bit 4 (button)
+.C:93c0  A5 44       LDA $44
+.C:93c2  29 EF       AND #$EF
+.C:93c4  85 44       STA $44
+.C:93c6  60          RTS
+
+;------------------------------------------------------------------------------
+
+credits:
+--------
+
+reverse enginering, this document :            Groepaz/Hitmen (groepaz@gmx.net)

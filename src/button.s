@@ -25,7 +25,7 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export button
+.export button, small_button, tiny_button
 
 .autoimport +
 
@@ -68,4 +68,42 @@ l3:
 	adc #0
 	sta ptr2 + 1
 
+	rts
+
+small_button:
+	tax
+	ldy #1
+small_loop:
+	lda (ptr2),y
+	and #$7f
+	cpx #0
+	beq :+
+	ora #$80
+:	sta (ptr2),y
+	iny
+	cpy #2
+	bne :+
+	ldy #40
+	bne small_loop
+:	cpy #43
+	bne :+
+	ldy #81
+	bne small_loop
+:	cpy #82
+	bne small_loop
+	rts
+
+tiny_button:
+	tax
+	ldy #0
+tiny_loop:
+	lda (ptr2),y
+	and #$7f
+	cpx #0
+	beq :+
+	ora #$80
+:	sta (ptr2),y
+	iny
+	cpy #2
+	bne tiny_loop
 	rts

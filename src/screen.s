@@ -25,11 +25,15 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.export display_main_screen, display_help_screen, display_eight_player_screen, display_current_screen
 
-.export main_screen, help_screen, eight_player_legend
+.autoimport +
+
+.include "joyride.inc"
 
 .macpack cbm
 .macpack cbm_ext
+.macpack utility
 
 .rodata
 
@@ -95,3 +99,75 @@ eight_player_legend:
 	invcode "   f1/f2: adapter type   f3/f4: page    "
 	invcode "      f7: controller & user ports       "
 	invcode "               f8: help                 "
+
+
+.code
+
+display_main_screen:
+	lda #MODE_MAIN
+	sta mode
+
+	memcpy screen, main_screen, 1000
+	memcpy color_ram, main_color, 1000
+	ldy #0
+	jsr copy_port_screen
+	ldy #1
+	jsr copy_port_screen
+	jsr copy_userport
+	ldx #<main_irq_table
+	ldy #>main_irq_table
+	lda main_irq_table_length
+	jsr set_irq_table
+	rts
+
+display_eight_player_screen:
+	lda #MODE_EIGHT_PLAYER
+	sta mode
+
+	ldx #<eight_player_irq_table
+	ldy #>eight_player_irq_table
+	lda eight_player_irq_table_length
+	jsr set_irq_table
+
+	lda #0
+	ldy #7
+:	sta VIC_SPR0_X,y
+	dey
+	bpl :-
+	lda VIC_SPR_HI_X
+	and #$f0
+	sta VIC_SPR_HI_X
+
+	memcpy screen, help_screen, 1000
+	memcpy color_ram, help_color, 1000
+	memcpy screen + 40 * 22, eight_player_legend, 120
+	jsr copy_eight_player_screen
+	rts
+
+display_help_screen:
+	ldx #<help_irq_table
+	ldy #>help_irq_table
+	lda help_irq_table_length
+	jsr set_irq_table
+
+	lda #0
+	ldy #7
+:	sta VIC_SPR0_X,y
+	dey
+	bpl :-
+	lda VIC_SPR_HI_X
+	and #$f0
+	sta VIC_SPR_HI_X
+
+	memcpy screen, help_screen, 1000
+	memcpy color_ram, help_color, 1000
+	ldx #0
+	stx current_help_page
+	jsr display_help_page
+	rts
+
+display_current_screen:
+	lda mode
+	bne :+
+	jmp display_main_screen
+:	jmp display_eight_player_screen

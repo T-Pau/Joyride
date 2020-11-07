@@ -1,0 +1,60 @@
+diff --git a/src/eight-player.s b/src/eight-player.s
+index 7298242..5734abc 100644
+--- a/src/eight-player.s
++++ b/src/eight-player.s
+@@ -28,7 +28,7 @@
+ 
+ .autoimport +
+ 
+-.export eight_player, eight_player_next_type, eight_player_previous_type, eight_player_next_page, eight_player_previous_page, handle_eight_player
++.export eight_player, eight_player_next_type, eight_player_previous_type, eight_player_next_page, eight_player_previous_page, handle_eight_player, eight_player_read
+ 
+ .include "joyride.inc"
+ .macpack utility
+@@ -96,13 +96,21 @@ copy_eight_player_screen:
+ 	jsr copyrect
+ 	; TODO: copy title
+ 	rts
++	
++eight_player_read:
++	jsr content_background
++	; TODO: read adapter
++	rts
+ 
+ handle_eight_player:
+ 	jsr display_logo
+ 	
++	; TODO: display adapter
++
+ 	jsr get_f_key
+ 	beq none
+ 	lda last_command
++	ora command
+ 	bne end
+ 	lda f_key_commands,x
+ 	tax
+diff --git a/src/f-keys.s b/src/f-keys.s
+index 3348c7c..ae7407f 100644
+--- a/src/f-keys.s
++++ b/src/f-keys.s
+@@ -134,6 +134,7 @@ handle_keyboard:
+ 	jsr get_f_key
+ 	beq none
+ 	lda last_command
++	ora command
+ 	bne end
+ 	stx command
+ none:
+diff --git a/src/irq-table.s b/src/irq-table.s
+index b9d9f45..4242c7e 100644
+--- a/src/irq-table.s
++++ b/src/irq-table.s
+@@ -55,7 +55,7 @@ help_irq_table_length:
+ 
+ eight_player_irq_table:
+ 	.word top, label_background
+-	.word top + 8 - 1, content_background
++	.word top + 8 - 1, eight_player_read
+ 	.word top + 21 * 8, label_background
+ 	.word top + 24 * 8 + 6, handle_eight_player
+ eight_player_irq_table_length:

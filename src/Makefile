@@ -13,6 +13,7 @@ SOURCES = \
 	charset.s \
 	color.s \
 	colors.s \
+	commands.s \
 	copyrect.s \
 	display-joystick.s \
 	display-koalapad.s \
@@ -29,13 +30,18 @@ SOURCES = \
 	irq.s \
 	irq-table.s \
 	logo.s \
+	main-loop.s \
 	memcpy.s \
 	port-screen.s \
 	ports.s \
 	pot.s \
 	screen.s \
+	snes.s \
+	snespad.s \
 	sprite.s \
 	sprites.s \
+	state.s \
+	superpad.s \
 	userport.s
 
 OBJECTS = ${SOURCES:.s=.o}
@@ -57,7 +63,7 @@ charset.bin: charset.png
 
 sprites.bin: sprites.png
 	gfx-convert sprites sprites.png sprites.bin
-	
+
 dpad.bin: dpad.png charset.bin
 	gfx-convert screen dpad.png charset.bin dpad.bin
 
@@ -101,7 +107,10 @@ memcpy.o: memcpy.s joyride.inc
 port-screen.o: port-screen.s joyride.inc cbm_ext.mac utility.mac port-screens.bin
 ports.o: ports.s joyride.inc
 pot.o: pot.s joyride.inc
-screen.o: screen.s cbm_ext.mac
+screen.o: screen.s joyride.inc cbm_ext.mac utility.mac
+snespad.o: snespad.s joyride.inc
 sprites.o: sprites.s sprites.bin
 start.o: start.s joyride.inc cbm_ext.mac utility.mac
+state.o: state.s joyride.inc
+superpad.o: superpad.s joyride.inc
 userport.o: userport.s joyride.inc cbm_ext.mac

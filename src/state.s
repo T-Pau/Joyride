@@ -1,4 +1,4 @@
-;  irq-table.s -- Table of raster IRQ handlers.
+;  state.s -- Current program state.
 ;  Copyright (C) 2020 Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
@@ -25,38 +25,35 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.export mode, port1_type, port2_type, userport_type, eight_player_type, eight_player_page, init_state
 
-.autoimport +
-.export main_irq_table, main_irq_table_length, help_irq_table, help_irq_table_length, eight_player_irq_table, eight_player_irq_table_length
+.include "joyride.inc"
 
-top = 50 ; first raster line of screen
+.bss
 
-.data
+mode: ;
+	.res 1
 
-main_irq_table:
-	.word 0, handle_top
-	.word top, label_background
-	.word top + 8 - 1, handle_user
-	.word top + 13 * 8, label_background
-	.word top + 14 * 8 - 1, handle_port2
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_port1
-main_irq_table_length:
-	.byte * - main_irq_table
+port1_type:
+	.res 1
+port2_type:
+	.res 1
+userport_type:
+	.res 1
 
+eight_player_type:
+	.res 1
+eight_player_page:
+	.res 1
 
-help_irq_table:
-	.word top, label_background
-	.word top + 8 - 1, content_background
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_help
-help_irq_table_length:
-	.byte * - help_irq_table
+.code
 
-eight_player_irq_table:
-	.word top, label_background
-	.word top + 8 - 1, eight_player_read
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_eight_player
-eight_player_irq_table_length:
-	.byte * - eight_player_irq_table
+init_state:
+	lda #0
+	sta mode
+	sta port1_type
+	sta port2_type
+	sta userport_type
+	sta eight_player_type
+	sta eight_player_page
+	rts

@@ -28,7 +28,8 @@
 
 .autoimport +
 
-.export handle_keyboard, main_loop, command, last_command, get_f_key
+.export handle_keyboard, get_f_key
+.export port1_next, port1_previous, port2_next, port2_previous, userport_next, userport_previous
 
 .include "joyride.inc"
 
@@ -37,33 +38,9 @@
 shift:
 	.res 1
 
-.data
-
-command:
-	.byte 0
-
-last_command:
-	.byte 0
-
 .rodata
 
 function_handlers:
-	.word 0
-	.word port1_next
-	.word port1_previous
-	.word port2_next
-	.word port2_previous
-	.word userport_next
-	.word userport_previous
-	.word eight_player
-	.word help
-	.word help_next
-	.word help_previous
-	.word display_main_screen
-	.word eight_player_next_type
-	.word eight_player_previous_type
-	.word eight_player_next_page
-	.word eight_player_previous_page
 
 .code
 
@@ -134,27 +111,13 @@ handle_keyboard:
 	jsr get_f_key
 	beq none
 	lda last_command
+	ora command
 	bne end
 	stx command
 none:
 	stx last_command
 end:
 	rts
-
-main_loop:
-	lda command
-	beq main_loop
-	asl
-	tax
-	lda function_handlers,x
-	sta jump + 1
-	lda function_handlers + 1,x
-	sta jump  +2
-jump:
-	jsr $0000
-	lda #0
-	sta command
-	beq main_loop
 
 
 port1_next:

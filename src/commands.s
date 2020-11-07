@@ -1,4 +1,4 @@
-;  irq-table.s -- Table of raster IRQ handlers.
+;  commands.s -- Command handler table
 ;  Copyright (C) 2020 Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
@@ -25,38 +25,27 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.export command_handlers
 
 .autoimport +
-.export main_irq_table, main_irq_table_length, help_irq_table, help_irq_table_length, eight_player_irq_table, eight_player_irq_table_length
 
-top = 50 ; first raster line of screen
+.rodata
 
-.data
-
-main_irq_table:
-	.word 0, handle_top
-	.word top, label_background
-	.word top + 8 - 1, handle_user
-	.word top + 13 * 8, label_background
-	.word top + 14 * 8 - 1, handle_port2
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_port1
-main_irq_table_length:
-	.byte * - main_irq_table
-
-
-help_irq_table:
-	.word top, label_background
-	.word top + 8 - 1, content_background
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_help
-help_irq_table_length:
-	.byte * - help_irq_table
-
-eight_player_irq_table:
-	.word top, label_background
-	.word top + 8 - 1, eight_player_read
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_eight_player
-eight_player_irq_table_length:
-	.byte * - eight_player_irq_table
+command_handlers:
+	.word 0
+	.word port1_next
+	.word port1_previous
+	.word port2_next
+	.word port2_previous
+	.word userport_next
+	.word userport_previous
+	.word display_eight_player_screen
+	.word display_help_screen
+	.word help_next
+	.word help_previous
+	.word display_current_screen
+	.word eight_player_next_type
+	.word eight_player_previous_type
+	.word eight_player_next_page
+	.word eight_player_previous_page
+	.word display_main_screen

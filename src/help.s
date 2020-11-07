@@ -28,58 +28,36 @@
 
 .autoimport +
 
-.export help, help_next, help_previous, handle_help
+.export help_next, help_previous, handle_help
 
 .include "joyride.inc"
 .macpack utility
 
 .code
 
-help:
-	ldx #<help_irq_table
-	ldy #>help_irq_table
-	lda help_irq_table_length
-	jsr set_irq_table
-
-	lda #0
-	ldy #7
-:	sta VIC_SPR0_X,y
-	dey
-	bpl :-
-	lda VIC_SPR_HI_X
-	and #$f0
-	sta VIC_SPR_HI_X
-
-	memcpy screen, help_screen, 1000
-	memcpy color_ram, help_color, 1000
-	ldx #0
-	stx current_help_screen
-	jsr display_help_screen
-	rts
-
 help_next:
-	inc current_help_screen
-	jmp display_help_screen
+	inc current_help_page
+	jmp display_help_page
 
 help_previous:
-	dec current_help_screen
-	jmp display_help_screen
+	dec current_help_page
+	jmp display_help_page
 
 handle_help:
 	jsr display_logo
-	
+
 	lda #$00
 	sta CIA1_DDRA
 	sta CIA1_DDRB
-	
+
 	lda CIA1_PRA
 	and CIA1_PRB
 	cmp #$ff
 	bne end
-	
+
 	lda #$ff
 	sta CIA1_DDRA
-	
+
 	lda #$80 ^ $ff
 	sta CIA1_PRA
 	lda CIA1_PRB
@@ -105,8 +83,8 @@ handle_help:
 	beq :+
 	lda #0
 	sta last_command
-	beq end	
-:	lda #COMMAND_HELP_PREVIOUS	
+	beq end
+:	lda #COMMAND_HELP_PREVIOUS
 got_key:
 	cmp last_command
 	beq end

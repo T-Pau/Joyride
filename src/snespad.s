@@ -1,4 +1,4 @@
-;  irq-table.s -- Table of raster IRQ handlers.
+;  snespad.s -- Support routines for Ninja SNES PAD
 ;  Copyright (C) 2020 Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
@@ -25,38 +25,21 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.export snespad_read, snespad_display
 
 .autoimport +
-.export main_irq_table, main_irq_table_length, help_irq_table, help_irq_table_length, eight_player_irq_table, eight_player_irq_table_length
 
-top = 50 ; first raster line of screen
+.bss
 
-.data
+snes:
+	.res 16
 
-main_irq_table:
-	.word 0, handle_top
-	.word top, label_background
-	.word top + 8 - 1, handle_user
-	.word top + 13 * 8, label_background
-	.word top + 14 * 8 - 1, handle_port2
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_port1
-main_irq_table_length:
-	.byte * - main_irq_table
+.code
 
+snespad_read:
+	; TODO
+	rts
 
-help_irq_table:
-	.word top, label_background
-	.word top + 8 - 1, content_background
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_help
-help_irq_table_length:
-	.byte * - help_irq_table
-
-eight_player_irq_table:
-	.word top, label_background
-	.word top + 8 - 1, eight_player_read
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_eight_player
-eight_player_irq_table_length:
-	.byte * - eight_player_irq_table
+snespad_display:
+	; TODO
+	rts

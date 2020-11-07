@@ -28,19 +28,13 @@
 .autoimport +
 
 .export handle_port1, handle_port2, handle_top, handle_user
-.export port1_type, port2_type, userport_type
 .export port_number, port_digital, port_pot1, port_pot2, pen_x, pen_y
 
 .include "joyride.inc"
 
 .bss
 
-port1_type:
-	.res 1
-port2_type:
-	.res 1
-userport_type:
-	.res 1
+
 
 port_number:
 	.res 1

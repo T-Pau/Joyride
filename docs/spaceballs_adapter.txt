@@ -1,0 +1,26 @@
+-------------------------------------------------------------------------------
+Luigi Pantarotto's 8-Player Adapter Specs v0.1         last changes: 14.03.2012
+-------------------------------------------------------------------------------
+
+Supports 8 joysticks, all connected to the user port and one joyport. 
+
+Designed by Luigi Pantarotto and released with the game Space Balls (1998) for 
+2-8 players.
+
+Building instructions (plugs and wires only) appears in the start screen:
+
+----------------------------------------
+
+multiplayer hardware schematics:
+.8 joysticks
+.1 joystick female connector
+.8 joystick male connectors
+.1 user port connector
+wire in parallel joys pin 1-2-3-4-6
+pin 8 (gnd) of each joy has to be
+connected to a pin of user port (pin c
+for joy1, pin d ... , pin l for joy8)
+
+----------------------------------------
+
+
