@@ -187,7 +187,7 @@ help_screens_data:
 	scrcode "screen. this is indicated by a big   " ;  5
 	scrcode "cross hair on screen, even if it's   " ;  6
 	scrcode "outside the display area of the port." ;  7
-	scrcode "it is also show on a smaller         " ;  8
+	scrcode "it is also shown on a smaller        " ;  8
 	scrcode "representation of the screen.        " ;  9
 	scrcode "                                     " ; 10
 	scrcode "they can have up to two buttons. some" ; 11
