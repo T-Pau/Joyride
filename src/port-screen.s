@@ -144,7 +144,7 @@ port_names:
 	invcode "paddle 1        "
 	invcode "paddle 2        "
 	invcode "koalapad        "
-	invcode "lightpen        "
+	invcode "light pen       "
 	invcode "raw             "
 
 port_screens:

@@ -81,7 +81,7 @@ help_screens_data:
 	scrcode "- mouse                              " ;  4
 	scrcode "- paddle                             " ;  5
 	scrcode "- koalapad                           " ;  6
-	scrcode "- lightpen (only in port 1)          " ;  7
+	scrcode "- light pen (only in port 1)         " ;  7
 	scrcode "                                     " ;  8
 	scrcode "userport:                            " ;  9
 	scrcode "- protovision / classic game adapter " ; 10
@@ -178,7 +178,7 @@ help_screens_data:
 	scrcode "                                     " ; 17
 	scrcode "                                     " ; 18
 
-	invcode "lightpen                             "
+	invcode "light pen                            "
 	scrcode "                                     "
 	scrcode "light pens and light guns only work  " ;  1
 	scrcode "in controller port 1.                " ;  2
@@ -186,9 +186,9 @@ help_screens_data:
 	scrcode "they point directly at a position on " ;  4
 	scrcode "screen. this is indicated by a big   " ;  5
 	scrcode "cross hair on screen, even if it's   " ;  6
-	scrcode "outside the display area of the port," ;  7
-	scrcode "and also on a smaller representation " ;  8
-	scrcode "of the screen.                       " ;  9
+	scrcode "outside the display area of the port." ;  7
+	scrcode "it is also show on a smaller         " ;  8
+	scrcode "representation of the screen.        " ;  9
 	scrcode "                                     " ; 10
 	scrcode "they can have up to two buttons. some" ; 11
 	scrcode "pens require a button to be pressed  " ; 12
@@ -207,7 +207,7 @@ help_screens_data:
 	scrcode "255.                                 " ;  4
 	scrcode "                                     " ;  5
 	scrcode "for port 1, it also displays the     " ;  6
-	scrcode "lightpen coordinates.                " ;  7
+	scrcode "light pen coordinates.               " ;  7
 	scrcode "                                     " ;  8
 	scrcode "                                     " ;  9
 	scrcode "                                     " ; 10
