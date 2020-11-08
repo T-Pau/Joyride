@@ -37,8 +37,8 @@ OFFSET_X = 10
 OFFSET_R = 4
 OFFSET_DPAD = 40 - 12
 OFFSET_Y = 40 * 4- 6 ; negative
-OFFSET_B = 4
-OFFSET_A = 40 * 2- 2
+OFFSET_A = 4
+OFFSET_B = 40 * 2- 2
 OFFSET_SELECT = 40 * 2 - 5
 OFFSET_START = 3
 
@@ -81,13 +81,13 @@ display_snes:
 	and #$20
 	jsr small_button
 
-	add_word ptr2, OFFSET_B
-	lda buttons + 1
+	add_word ptr2, OFFSET_A
+	lda buttons
 	and #$10
 	jsr small_button
 
-	add_word ptr2, OFFSET_A
-	lda buttons
+	add_word ptr2, OFFSET_B
+	lda buttons + 1
 	and #$10
 	jsr small_button
 

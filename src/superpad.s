@@ -90,8 +90,8 @@ bits:
 	ldx #0
 pad:
 	lsr
-	ror snes_buttons + 1,x
 	ror snes_buttons,x
+	ror snes_buttons + 1,x
 	inx
 	inx
 	cpx #16
