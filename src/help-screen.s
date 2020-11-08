@@ -34,7 +34,7 @@
 help_screen_start = screen + 1
 
 help_screen_size = 37 * 20
-num_help_screens = 8
+num_help_screens = 10
 
 .macpack cbm
 .macpack cbm_ext
@@ -60,18 +60,39 @@ help_screens_data:
 	scrcode "function keys to select the correct  " ;  4
 	scrcode "type or to display raw data.         " ;  5
 	scrcode "                                     " ;  6
-	scrcode "supported are:                       " ;  7
-	scrcode "- joystick                           " ;  8
-	scrcode "- mouse                              " ;  9
-	scrcode "- paddle                             " ; 10
-	scrcode "- koalapad                           " ; 11
-	scrcode "- lightpen                           " ; 12
-	scrcode "- userport joystick adapter          " ; 13
-	scrcode "                                     " ; 14
-	scrcode "for digital inputs, the button or    " ; 15
-	scrcode "direction is inverted when pressed.  " ; 16
-	scrcode "analog inputs are displayed as       " ; 17
-	scrcode "numbers and by positioning a cursor. " ; 18
+	scrcode "adapters that support more than two  " ;  7
+	scrcode "controllers don't fit in the main    " ;  8
+	scrcode "screen. f7 switches to a layout that " ;  9
+	scrcode "supports four controllers per page.  " ; 10
+	scrcode "                                     " ; 11
+	scrcode "for digital inputs, the button or    " ; 12
+	scrcode "direction is inverted when pressed.  " ; 13
+	scrcode "analog inputs are displayed as       " ; 14
+	scrcode "numbers and by positioning a cursor. " ; 15
+	scrcode "                                     " ; 16
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
+
+	invcode "supported devices                    "
+	scrcode "                                     "
+	scrcode "the following devices are supported: " ;  1
+	scrcode "controller port:                     " ;  2
+	scrcode "- joystick                           " ;  3
+	scrcode "- mouse                              " ;  4
+	scrcode "- paddle                             " ;  5
+	scrcode "- koalapad                           " ;  6
+	scrcode "- lightpen (only in port 1)          " ;  7
+	scrcode "                                     " ;  8
+	scrcode "userport:                            " ;  9
+	scrcode "- protovision / classic game adapter " ; 10
+	scrcode "- digital excess / hitmen            " ; 11
+	scrcode "- kingsoft                           " ; 12
+	scrcode "- starbyte tie break adapter         " ; 13
+	scrcode "- superpad 64                        "	; 14
+	scrcode "                                     " ; 15
+	scrcode "                                     " ; 16
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
 
 	invcode "joystick                             "
 	scrcode "                                     "
@@ -97,9 +118,9 @@ help_screens_data:
 	invcode "mouse                                "
 	scrcode "                                     "
 	scrcode "supported are 1351 compatible mice.  " ;  1
-	scrcode "they give the position modulo 64 and " ;  2
-	scrcode "support up to three buttons and a    " ;  3
-	scrcode "scroll wheel.                        " ;  4
+	scrcode "they give the position in x and y    " ;  2
+	scrcode "modulo 64 and support up to three    " ;  3
+	scrcode "buttons and a scroll wheel.          " ;  4
 	scrcode "                                     " ;  5
 	scrcode "                                     " ;  6
 	scrcode "                                     " ;  7
@@ -169,9 +190,9 @@ help_screens_data:
 	scrcode "and also on a smaller representation " ;  8
 	scrcode "of the screen.                       " ;  9
 	scrcode "                                     " ; 10
-	scrcode "they can have up to two buttons.     " ; 11
-	scrcode "                                     " ; 12
-	scrcode "                                     " ; 13
+	scrcode "they can have up to two buttons. some" ; 11
+	scrcode "pens require a button to be pressed  " ; 12
+	scrcode "for the position to register.        " ; 13
 	scrcode "                                     " ; 14
 	scrcode "                                     " ; 15
 	scrcode "                                     " ; 16
@@ -181,7 +202,7 @@ help_screens_data:
 	invcode "raw                                  "
 	scrcode "                                     "
 	scrcode "this displays the five digital input " ;  1
-	scrcode "lines and the two analog             " ;  2
+	scrcode "lines, and the two analog            " ;  2
 	scrcode "potentiometers as values from 0 to   " ;  3
 	scrcode "255.                                 " ;  4
 	scrcode "                                     " ;  5
@@ -211,6 +232,27 @@ help_screens_data:
 	scrcode "- kingsoft                           " ;  8
 	scrcode "- starbyte tie break adapter         " ;  9
 	scrcode "                                     " ; 10
+	scrcode "                                     " ; 11
+	scrcode "                                     " ; 12
+	scrcode "                                     " ; 13
+	scrcode "                                     " ; 14
+	scrcode "                                     " ; 15
+	scrcode "                                     " ; 16
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
+
+	invcode "superpad 64                          "
+	scrcode "                                     "
+	scrcode "this userport adapter supports eight " ;  1
+	scrcode "nintendo supernes controllers. all   " ;  2
+	scrcode "inputs are supported:                " ;  3 
+	scrcode "- dpad                               " ;  4
+	scrcode "- four buttons (a, b, x, y)          " ;  5
+	scrcode "- two shoulder buttons (l, r)        " ;  6
+	scrcode "- select, start                      " ;  7
+	scrcode "                                     " ;  8
+	scrcode "four controllers are displayed per   " ;  9
+	scrcode "page.                                " ; 10
 	scrcode "                                     " ; 11
 	scrcode "                                     " ; 12
 	scrcode "                                     " ; 13
