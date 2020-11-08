@@ -80,7 +80,7 @@ Supported are the following variants:
 - Starbyte Tie Break Adapter
 
 
-# SuperPad64
+## SuperPad64
 
 This userport adapter supports eight Nintendo SuperNES controllers. All inputs are supported:                
 
@@ -90,3 +90,10 @@ This userport adapter supports eight Nintendo SuperNES controllers. All inputs a
 - Select, Start
 
 Four controllers are displayed per page.
+
+# Building Joyride
+
+Joyride is written in CC65 assembler. To build it, you need [cc65](https://cc65.github.io) and `make`.
+
+The graphics are drawn in [Affinity Photo](https://affinity.serif.com/en-gb/photo/) and converted with a custom, as yet unreleased, program and a [Python](https://www.python.org/) script. If you want to work on them, please contact me.
+
