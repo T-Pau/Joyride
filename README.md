@@ -58,7 +58,7 @@ Light pens and light guns only work in controller port 1.
 
 They point directly at a position on screen. This is indicated by a big cross hair on screen, even if it's outside the display area of the port. It is also shown on a smaller representation of the screen.
 
-They can have up to two buttons. Some pens require a button to be pressed for the position to register.     
+They can have up to two buttons. Some pens require a button to be pressed for the position to register.
 
 
 ## Raw Data
@@ -80,9 +80,13 @@ Supported are the following variants:
 - Starbyte Tie Break Adapter
 
 
-## SuperPad64
+## SuperPad64 / Ninja SNES Pad
 
-This userport adapter supports eight Nintendo SuperNES controllers. All inputs are supported:                
+These adapters support eight Nintendo SuperNES controllers.
+
+SuperPad64 connects to the userport. Ninja SNES Pad connects to both controller ports.
+
+All inputs are supported:
 
 - dpad
 - four buttons (A, B, X, Y)

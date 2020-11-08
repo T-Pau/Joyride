@@ -28,7 +28,7 @@
 
 .autoimport +
 
-.export eight_player_next_type, eight_player_previous_type, eight_player_next_page, eight_player_previous_page, handle_eight_player, eight_player_read, copy_eight_player_screen
+.export eight_player_next_type, eight_player_previous_type, eight_player_next_page, eight_player_previous_page, eight_player_bottom, eight_player_top, copy_eight_player_screen
 
 .include "joyride.inc"
 .macpack utility
@@ -147,30 +147,30 @@ copy_eight_player_page_title:
 	bpl :-
 	rts
 
-eight_player_read:
+eight_player_top:
 	jsr content_background
 
 	lda eight_player_type
 	asl
 	tax
-	lda read_handler,x
-	sta read_jmp + 1
-	lda read_handler + 1,x
-	sta read_jmp + 2
-read_jmp:
+	lda top_handler,x
+	sta top_jmp + 1
+	lda top_handler + 1,x
+	sta top_jmp + 2
+top_jmp:
 	jmp $0000
 
-handle_eight_player:
+eight_player_bottom:
 	jsr display_logo
 
 	lda eight_player_type
 	asl
 	tax
-	lda display_handler,x
-	sta display_jmp + 1
-	lda display_handler + 1,x
-	sta display_jmp + 2
-display_jmp:
+	lda bottom_handler,x
+	sta bottom_jmp + 1
+	lda bottom_handler + 1,x
+	sta bottom_jmp + 2
+bottom_jmp:
 	jsr $0000
 
 	jsr get_f_key
@@ -189,13 +189,13 @@ end:
 
 .rodata
 
-read_handler:
-	.word superpad_read
-	;.word snespad_read
+top_handler:
+	.word superpad_top
+	.word superpad_top
 
-display_handler:
-	.word superpad_display
-	;.word snespad_display
+bottom_handler:
+	.word superpad_bottom
+	.word superpad_bottom
 
 f_key_commands:
 	.byte 0

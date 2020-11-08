@@ -55,8 +55,8 @@ help_irq_table_length:
 
 eight_player_irq_table:
 	.word top, label_background
-	.word top + 8 - 1, eight_player_read
+	.word top + 8 - 1, eight_player_top
 	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_eight_player
+	.word top + 24 * 8 + 6, eight_player_bottom
 eight_player_irq_table_length:
 	.byte * - eight_player_irq_table

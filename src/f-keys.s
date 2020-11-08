@@ -48,12 +48,14 @@ get_f_key:
 	lda #$00
 	sta CIA1_DDRA
 	sta CIA1_DDRB
+	lda #$ff
+	sta CIA1_PRA
+	sta CIA1_PRB
 
 	lda CIA1_PRA
 	and CIA1_PRB
 	cmp #$ff
 	bne f_none
-
 	lda #$ff
 	sta CIA1_DDRA
 

@@ -241,23 +241,23 @@ help_screens_data:
 	scrcode "                                     " ; 17
 	scrcode "                                     " ; 18
 
-	invcode "superpad 64                          "
+	invcode "superpad 64 / ninja snes pad         "
 	scrcode "                                     "
-	scrcode "this userport adapter supports eight " ;  1
-	scrcode "nintendo supernes controllers. all   " ;  2
-	scrcode "inputs are supported:                " ;  3 
-	scrcode "- dpad                               " ;  4
-	scrcode "- four buttons (a, b, x, y)          " ;  5
-	scrcode "- two shoulder buttons (l, r)        " ;  6
-	scrcode "- select, start                      " ;  7
-	scrcode "                                     " ;  8
-	scrcode "four controllers are displayed per   " ;  9
-	scrcode "page.                                " ; 10
-	scrcode "                                     " ; 11
-	scrcode "                                     " ; 12
+	scrcode "these adapters support eight         " ;  1
+	scrcode "nintendo supernes controllers.       " ;  2
+	scrcode "                                     " ;  3
+	scrcode "superpad 64 connects to the userport." ;  4
+	scrcode "ninja snes pad connects to both      " ;  5
+	scrcode "controller ports.                    " ;  6
+	scrcode "                                     " ;  7
+	scrcode "all inputs are supported:            " ;  8
+	scrcode "- dpad                               " ;  9
+	scrcode "- four buttons (a, b, x, y)          " ; 10
+	scrcode "- two shoulder buttons (l, r)        " ; 11
+	scrcode "- select, start                      " ; 12
 	scrcode "                                     " ; 13
-	scrcode "                                     " ; 14
-	scrcode "                                     " ; 15
+	scrcode "four controllers are displayed per   " ; 14
+	scrcode "page.                                " ; 15
 	scrcode "                                     " ; 16
 	scrcode "                                     " ; 17
 	scrcode "                                     " ; 18

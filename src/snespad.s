@@ -25,21 +25,63 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export snespad_read, snespad_display
+.export snespad_read
+
+.include "c64.inc"
 
 .autoimport +
-
-.bss
-
-snes:
-	.res 16
 
 .code
 
 snespad_read:
-	; TODO
-	rts
+	; port b 3 & 4 as output, rest as input
+	lda #$00
+	sta CIA1_DDRA
+	lda #$18
+	sta CIA1_DDRB
 
-snespad_display:
-	; TODO
+	; pulse latch
+	lda #$f7
+	sta CIA1_PRB
+	lda #$e7
+	sta CIA1_PRB
+
+	ldy #12
+
+bits:
+	lda CIA1_PRB
+	eor #$07
+;	lda #$A5; DEBUG
+	ldx #0
+pad1:
+	lsr
+	ror snes_buttons,x
+	ror snes_buttons + 1,x
+	inx
+	inx
+	cpx #6
+	bne pad1
+	lda CIA1_PRA
+	eor #$1f
+pad2:
+	lsr
+	ror snes_buttons,x
+	ror snes_buttons + 1,x
+	inx
+	inx
+	cpx #16
+	bne pad2
+	; pulse clock
+	lda #$ef
+	sta CIA1_PRB
+	lda #$e7
+	sta CIA1_PRB
+	dey
+	bne bits
+
+	; latch again to reset input lines
+	lda #$f7
+	sta CIA1_PRB
+	lda #$e7
+	sta CIA1_PRB
 	rts

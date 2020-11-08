@@ -25,7 +25,7 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export superpad_read, superpad_display, snes_buttons
+.export superpad_top, superpad_bottom, snes_buttons
 
 .autoimport +
 
@@ -48,12 +48,11 @@ index:
 
 .code
 
-superpad_read:
+superpad_top:
 	lda command
 	beq :+
 	rts
 :
-
 	; display 4th pad (not enough time in border)
 	store_word screen + OFFSET_FOURTH, ptr2
 	lda eight_player_page
@@ -67,6 +66,11 @@ superpad_read:
 
 	; read new values
 
+	lda eight_player_type
+	beq :+
+	jmp snespad_read
+
+:
 	; port B as input, port a line 2 as output (latch)
 	lda CIA2_DDRA
 	ora #$04
@@ -100,7 +104,7 @@ pad:
 	bne bits
 	rts
 
-superpad_display:
+superpad_bottom:
 	lda command
 	beq :+
 	rts
