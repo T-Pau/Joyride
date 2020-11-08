@@ -1,0 +1,487 @@
+Communication interface
+-----------------------
+This document describes the communication with Inception itself.
+
+There exists 3 communication speeds:
+
+    1. slow
+    2. normal
+    3. warp
+
+Slow communication speed interfaces 2 way sync, and transfers 1 bit per cycle. It is the most
+robust and the slowest communication. It is used in the boot loader. There is no reason to use this
+communication out of low level tools (e.g. firmware updating).
+
+Boot loader can be entered:
+
+    - by issuing proper command
+    - during power on - holding joy G and H FIRE
+    - when boot loader doesn't found valid firmware image (broken, invalid CRC, ...)
+
+For more details see inception.txt.
+
+Normal communication speed doesn't require sync on C64 side, it can be run with IRQ ON and
+it is not sensitive to bad lines etc. It is the default speed.
+
+Warp speed requires exact C64 timing, like with drive speeders. It is sensitive on bad
+lines and interrupts. It is useful for saving communication time.
+
+Controlling POTX/POPTY occurs just from Inception side and it is not a part of 'communication'
+itself (it is not used). They become important only for MOUSE emulation.
+
+The whole firmware of Inception is written to keep C64 side 'simple' as possible.
+
+Connections
+-----------
+Any JOY port can be used for communication with Inception. By default control port #2 is used.
+From POV of communication, 5 bidirectional open collector lines are used. Line function
+depends on the speed type.
+
+    CTRL PORT name / pin    bit @ CIA   warp+normal         slow
+    -------------------------------------------------------------------------
+    LEFT              1      0          data                C64->INC sync II
+    RIGHT             2      1          data                INC->INC data
+    UP                3      2          data                INC->INC sync
+    DOWN              4      3          data                C64->INC data
+    FIRE              6      4          C64->INC SYNC       C64->INC sync
+
+Cable between C64 and Inception is just 1:1, no crossing over requirements.
+
+
+Keyboard disturb
+----------------
+When standard ROM routine (or same behavior) is used to read keyboard, Inception could be inserted
+and will detect false 'transfer' and will not disturb keyboard reading. Using nonstandard key reading
+may cause improper keyboard functionality and Inception need to be disconnected from C64.
+
+Inception take care of following 'false' starts (see $EA90 ROM):
+
+
+    lda #$00
+    sta $dc00
+    lda $dc01
+    cmp #$ff
+    beq no_key_pressed
+
+    scan:
+
+    #11111110 to DIR
+    #11111101 to DIR
+    #11111011 to DIR
+    ....
+
+C64 ROM scans all keys at once to see if a key is pressed. This is detected as 'start'
+but there is missing '10000' fire (see 'Begin II' state)
+
+So Inception see on port while 'Begin II' phase:
+
+    #11111  C64 reads matrix, no key pressed, since C64 keep key bits IDDLE
+    #11110  C64 starts reading matrix - store #11111110
+    #10000  Inception Xfer secondary mark
+
+This will probably works in absolute majority. But still not 100% :)
+
+
+
+Quick CIA theory
+----------------
+CIA ports are active only when 'zero'. There is no logic '1' (high) signal. Two CIA's are placed
+in C64. Simplified description follows. Pull-ups to +5V rail is used to take line 'high'.
+
+CIA1    @ $dc00 - keyboard + CTRL PORTs
+CIA2    @ $dd00 - serial bus, user port, and some misc. things (e.g. VIC addressing).
+
+Because we use only CTRL ports, we are related just to CIA1. Remaining part of this document will
+refer 'DATA' and 'DIR' registers. It means:
+
+    CTRL PORT 2 used:
+
+        DATA = $dc00
+        DIR  = $dc02
+
+    CTRL PORT 1 used:
+
+        DATA = $dc01
+        DIR  = $dc03
+
+When the corresponding bit in DIR register is '0' then proper bit is INPUT. In this case, proper DATA 
+represents physical value on port.
+
+Function table (valid for each bit independently)
+
+    DATA    DIR     physical PIN voltage
+    ----------------------------------------------------------------------------------------------
+     0      0       LOW     some other device puts line LOW
+     1      0       HIGH    pull ups takes line HIGH (no device pulls line down) usually IDDLE
+     0      1       LOW     CIA pulls line down active
+     1      1       HIGH    if no other 'device' pull line LOW
+     1      1       LOW     when other 'device' pull line LOW
+
+When more 'devices' connects open-collector PINs together (CIA + Inception for ex.) it represents
+logical AND. When ONE device pulls shared connection LOW, all devices see LOW.
+
+
+Clocking and speeds
+-------------------
+Inception and C64 runs at different clock domains. It means they are unsynced. Both sides includes crystal,
+which gives us enough precision.
+
+    Device              Clock [MHz]     cycle time [nS]     Ratio
+    ------------------------------------------------------------------
+    C64 PAL             0.985           1046.025            20.8399
+    C64 NTSC            1.023            977.5171           19.475
+    Inception (BUS)     19.922            50.1934           -
+
+At Inception side, IRQ is used to check 'sync'. HCS08 core works similarly as 6510, so, processing could be
+delayed from 0 to 9 cycles (in case processing RTI instruction). Rounded -0 / +0.5 C64 cycle.
+
+Because Inception executes its mouse signal scan also in IRQ, special care must be taken about reaction delay
+for C64 SYNC signal. HCS08 doesn't support native interrupt nesting, so, it must be done as software layer.
+Playing with stack and registers cost some time. In case of conflicting interrupts, Inception requires 100
+additional cycles to begin execute SYNC handler.
+
+So, in total, slowest reaction on SYNC at Inception side takes ~4 C64 cycles. Real 'data out' takes another
+time of course.
+
+
+
+Normal/Warp speed
+-----------------
+These 2 speeds use the same behavior handshake. The only difference is 'sync' (clock). For normal speeds,
+C64 'clocks' whole connection while warp is clocked from Inception and sync occurs every 8 bytes.
+
+Normally the C64 CTRL ports are used for joysticks or the keyboard. Default CTRL2 is used as column selection.
+So there shouldn't be accident 'fire'. CTRL1 is shared with 'data' from keyboard. So pressing 2 proper keys
+(at least) may initiate false startup. That's why CTRL2 port is used by default.
+
+Data bytes can be transferred bidirectional. When just read is required, no data are send from C64
+to Inception. This is called 'read packet'. When data is sent from C64 to Inception, 'write packet'
+is required to be send.
+
+When reading data from Inception, read can be unfinished. It means, when Inception sends 16 bytes, C64
+can read only 6. When using normal speeds, there is timeout about 3000 C64 cycles. So when C64 stops
+reading (SYNC is idle) Inception resets the sending state. It means the next Xfer round can't start before
+3500 cycles (~55 raster lines) after stopping reading. When all data are read, next round can start
+immediately. For warp speed, 8 bytes are always send as timed output. Then same timeout as normal speed
+is processed. Rule of thumb: if you don't read ALL bytes wait 3500 cycles before next xfer. If you 
+read 1 time per screen (same way "jsr $1003") you can ignore this paragraph, since much more cycles
+will be between calls :) Just note: if you will try to read keyboard within timeout, read will fail, since
+Inception may hold 'data' which will corrupt keyboard data or column selection (depends on used port).
+
+Timeouts are important, when Inception is used as communication HUB between more C64's. Then you should
+always read teh complete packet. When timeout occurs while a packet is read, it is lost.
+
+Timing tables:
+
+    - when '+' denotes in wait cycles, delay could be longer than specified.
+
+    - Xfer is always initiated by C64.
+
+
+                            Xfer initation
+   ----------------+---------------+---------------+------------------------------------------------------
+                   |      C64      |   Inception   |
+    Phase name     | DIR   | DATA  | DIR   | DATA  | Desc
+                   | 43210 | 43210 | 43210 | 43210 |
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+    Idle           | OOOOO | 11111 | IIIII | ----- | Idle state
+                   |       |       |       |       | Inception waits for "0???0" in DATA
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+    Begin          | OOOOO | 0SWT0 | IIIII | ----- | Xfer request begin
+                   |       |       |       |       |     S: warp speed
+                   |       |       |       |       |         0=normal speed
+                   |       |       |       |       |         1=warp
+                   |       |       |       |       |     W: write packet
+                   |       |       |       |       |          0=just packet read
+                   |       |       |       |       |          1=write packet  (T must be 0 !)
+                   |       |       |       |       |     T: packet type (unused when E=1)
+                   |       |       |       |       |          0=read joys
+                   |       |       |       |       |          1=read info text
+                   |       |       |       |       | Wait 8+
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+    Begin II       | OOOOO | 1---- | IOOOO | ----- | Secondary begin - fire 0000 to prevent false starts
+                   |       |       |       |       | Wait 4+
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+    Begin ACK      | OOOOO | 1---- | IOOOO | -0000 | Inception ACKed Xfer (doesn't need to be checked)
+                   |       |       |       |       | process: normal speed      
+                   |       |       |       |       |          warp speed
+                   |       |       |       |       |          write packet
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+                   |                               |
+                   |                               |
+                   |       read normal speed       |
+   ----------------+---------------+---------------+------------------------------------------------------
+                   |      C64      |   Inception   |
+    Phase name     | DIR   | DATA  | DIR   | DATA  | Desc
+                   | 43210 | 43210 | 43210 | 43210 |
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+    HI nibble SYNC | OIIII | 1???? | IOOOO | -???? |
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+                   |       |       |       |       | Wait 16+
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+    HI nibble READ | OIIII | 1**** | IOOOO | -7654 | 7654: upper nibble of current data byte
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+    LO nibble SYNC | OIIII | 0???? | IOOOO | -???? |
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+                   |       |       |       |       | Wait 16+
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+    LO nibble READ | OIIII | 0**** | IOOOO | -3210 | 3210: upper nibble of current data byte
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+                   |       |       |       |       | "loop: HI nibble SYNC" or "jmp: QUIT"
+   ----------------+-------+-------+-------+-------+-------------------------------------------------------
+                   |                               |
+                   |                               |
+                   |      write both speeds        |
+   ----------------+---------------+---------------+------------------------------------------------------
+                   |      C64      |   Inception   |
+    Phase name     | DIR   | DATA  | DIR   | DATA  | Desc
+                   | 43210 | 43210 | 43210 | 43210 |
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+    READ HI nibble | OOOOO | 17654 | IIIII | ----- | 7654: upper nibble of current data byte
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+                   |       |       |       |       | Wait 8+
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+    READ LO nibble | OIIII | 03210 | IIIII | ----- | 3210: upper nibble of current data byte
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+                   |       |       |       |       | Wait 8+
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+                   |       |       |       |       | "loop packet bytes: READ HI nibble" then "jmp: QUIT"
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+                   |                               |
+                   |                               |
+                   |        read warp speed        |
+   ----------------+---------------+---------------+------------------------------------------------------
+                   |      C64      |   Inception   |
+    Phase name     | DIR   | DATA  | DIR   | DATA  | Desc
+                   | 43210 | 43210 | 43210 | 43210 |
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+    CLK SYNC       | OIIII | 1**** | IOOOO | -0000 | SYNC clock (could be delayed up to timeout)
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+                   |       |       |       |       | Wait 8+
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+    READ HI nibble | OIIII | 0**** | IOOOO | -7654 | 7654: upper nibble of current data byte
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+                   |       |       |       |       | Wait *exactly* 12
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+    READ LO nibble | OIIII | 0**** | IOOOO | -3210 | 3210: upper nibble of current data byte
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+                   |       |       |       |       | Wait *exactly* 12
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+                   |       |       |       |       | "loop 8 bytes: READ HI nibble" or "jmp: QUIT"
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+                   |       |       |       |       | "loop: READ HI nibble" or "jmp: QUIT"
+   ----------------+-------+-------+-------+-------+------------------------------------------------------
+                   |                               |
+                   |                               |
+                   |            common             |
+   ----------------+---------------+---------------+------------------------------------------------------
+                   |      C64      |   Inception   |
+    Phase name     | DIR   | DATA  | DIR   | DATA  | Desc
+                   | 43210 | 43210 | 43210 | 43210 |
+   ----------------+-------+-------+-------+-------+-------------------------------------------------------
+    QUIT           | OOOOO | 11111 | IIIII | ----- | exit routine (be aware of Inception Xfer timeout !)
+   ----------------+-------+-------+-------+-------+-------------------------------------------------------
+
+
+    Legend:                       
+
+        O   output
+        I   input
+        -   no change / input
+        ?   undefined
+        *   'runtime' value
+
+
+
+Slow speed
+----------
+Two way sync is used for boot loader (BL) purposes. It's because BL doesn't access any periphery inside IRQ. 
+It causes variable processing time. C64 is always 'master' and Inception works as 'slave'. Inception doesn't 
+send any data on its own. When C64 read data, it have to send 'dummy' bytes. This is simplest way, not to
+xfer across 2 different CLK domains while keeping it simple (no ACK, ...).
+
+Two way synced communication sends bit per bit. Each packet must begin with SYNC II line equals FALSE.
+
+Any active xfer will be canceled while SYNC II issued during transfer.
+
+
+    C64->INC sync signal        ______           _________           ____...............
+                                      |         |         |         | 
+                                      |_________|         |_________| 
+                                      A         B         A         B
+
+    C64->INC sync signal        ________             _____________      ____...............
+    (example)                           |           |             |    | 
+                                        |___________|             |____| 
+                                        1           2             1    2
+
+
+Timing of 1 bit cycle:
+
+    A   C64 sets 'data out' and pulls SYNC to LOW
+    1   INC see SYNC, reads DATA, WRITE sending data to OUTPUT and pulls SYNC LOW
+    B   C64 see INC accepted data, READ 'data in', pulls SYNC to IDDLE (high)
+    2   INC see C64 goes to IDDLE, puts own SYNC to IDDLE
+
+    C64 have to wait for '2' (INC SYNC goes IDDLE)
+
+
+Reaction times could be different on both sides. There is no timeout at INC side. Executing commands at INC
+can take same time (e.g. erasing). When there is 'nothing to send' INC sends:
+
+    FF  idle state (no error)
+    FE  error state
+    
+When a packet is processed, INC doesn't react - it will hang up connection for execution time, the it is
+continued normally.
+
+When SYNC II is sent from C64, INC always 'reset' anything. If the action is started there is no way to stop it
+before it will end. Except for power cycle :)
+
+
+
+Read packet
+-----------
+Packet read could have 3 contents:
+
+    1. plain JOY/MICE state
+    2. plain info
+    3. result of write packet
+
+
+
+Read packet: State
+------------------
+16 bytes are send as a packet. 8 bytes per joy state and 8 bytes per mouse state.
+
+JOY state byte (order compatible with standard C64 port)
+
+    #7: mouse RIGHT button    0: idle 1:pressed
+    #6: mouse Y movement dir  0: positive 1:negative
+    #5: mouse X movement dir  0: positive 1:negative
+    #4: FIRE (mouse button)   0: idle 1:pressed
+    #3: DOWN                  0: idle 1:pressed  
+    #2: UP                    0: idle 1:pressed
+    #1: RIGHT                 0: idle 1:pressed
+    #0: LEFT                  0: idle 1:pressed
+
+MOUSE state byte:
+
+    #7-4:   Y movement 0-15
+    #3-0:   X movement 0-15
+
+When no mouse move detected, 'positive zero' is sent.
+
+
+If pure compatibility is needed use AND #$1f + EOR #$ff. This is because when mice are
+connected, it would be confusing using 'inverse'.
+
+For proper mouse functionality, you need to read MOUSE data at 25FPS at least.
+
+
+
+Read packet: Info
+------------------
+64 bytes are send as a packet. It consists of a 'fixed' and a 'variable' part.
+
+0000000000000000111111111111111122222222222222223333333333333333  <- HEX offset
+0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+
+Inception rX.Y fwX.YY : message from the middle of nowhere.blem!  <- example string
+
+            fixed <---  | ---> variable
+
+X/Y denotes HW revision and firmware version. Variable part could be changed without notice (o:
+
+
+
+Read packet: reply of write packet
+----------------------------------
+The format of packet is exactly same as 'Write packet'. The inner reply structure depends on service.
+
+
+
+Write packet
+------------
+When writing a general packet to Inception it has the following format:
+
+    byte        meaning
+    ----------------------------------------------------------------------
+    0           total length
+    1           service ID
+    2 ... len   data
+    CRC         inet SUM (UDP/TCP checksum)
+
+The inner data structure depends on the service.
+
+
+
+Boot loader interface
+---------------------
+To keep it simple for both sides the boot loader (BL) communication is a bit different. No sync is required. 
+Also we don't need high speed. As mentioned above, BL xfer data only when the C64 transfers. If there is nothing
+to transfer, Inception sends '00'. When C64 sends '00' it is ignored by Inception. Inception starts
+sending reply when a command is executed. First databyte of packed is always $ff or $fe. Check communication
+for details. Then follow data bytes of the reply. If no reply sent, $ff $00 is sent. This may be taken as an ACK.
+
+
+Commands
+--------
+
+    Common header
+    -------------
+    offset $00 length 1 : 01 opcode
+    offset $01 length 1 : total packet length (bytes)
+
+
+    Read Memory - 01
+    ----------------
+    offset $02 length 2 : base address
+    offset $04 length 1 : bytes to read
+
+    Reply: readed data
+
+    Flash Memory - 02
+    -----------------
+    offset $02 length 2 : base address
+    offset $04 length 1 : bytes to write
+    offset $05 length ? : data to write
+
+    Reply: no data
+    
+    Erase Memory - 03
+    -----------------
+    offset $02 length 2 : base address
+    offset $04 length 1 : _pages_ to erase (1 page = 512 bytes)
+
+    Reply: no data
+    
+    Compute CRC - 04
+    ----------------
+    offset $02 length 2 : base address
+    offset $04 length 2 : bytes to add to CRC
+
+    Reply: 2 CRC bytes
+    
+    Set LED states - 05
+    -------------------
+    offset $02 length 1 : LED stats for JOY (#0 = A, #1 = B, ...)
+
+    Reply: no data
+
+    Exit boot loader - 06
+    ---------------------
+    no additional data
+
+    Reply: no data
+
+    After sending 'FF' Inception reboots - it means, C64 have to send additional '00' to get ACK
+    and then no communication.
+
+    Execute code - 07
+    -----------------
+    offset $02 length 2 : address to execute (executed as call)
+
+    Reply: no data
+
+

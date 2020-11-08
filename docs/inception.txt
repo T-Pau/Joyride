@@ -1,0 +1,26 @@
+Inception HW and firmware info
+------------------------------
+
+WTF ?
+-----
+Inception is based on a 8-bit HCS08 family microcontroller unit (MCU) 
+from Freescale, namely MC9S08LG32CLK. It features:
+
+    - 40 MHz core
+    - 1.9 kB RAM
+    - 32 kB internal flash
+    - similar instruction set to 6510 CPU
+
+
+Schematics
+----------
+Inception is a simple piece of HW, basically all IO's are connected directly to the CPU with external
+pull'up resistors. On board a 32.768 crystal is used for precision timing. Each JOY fire has a LED 
+diode connected, which can be triggered by the CPU or by pressing FIRE on a proper joystick. From 
+the C64 side an electrostatic discharge (ESD) and voltage rail protection is placed. That's 
+basically all :)
+
+
+Firmware
+--------
+

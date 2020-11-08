@@ -1,0 +1,19 @@
+The SNES controller port has 7 pins, laid out something like this:
+
+   _________________ ____________
+  |                 |            \
+  | (1) (2) (3) (4) | (5) (6) (7) |
+  |_________________|____________/
+
+The pins are:
+1: +5v (power)
+2: Clock
+3: Latch
+4: Data1
+5: Data2
+6: IOBit
+7: Ground
+
+The SNES reads the port in a serial manner. First, Latch is toggled 1 then 0, which signals the device to latch state in preparation for output. Then Clock is set active, Data1 and Data2 are sampled, and Clock is set inactive. The SNES may repeat this read cycle as many times as it likes before latching again, and there may be an arbitrary delay in between each read cycle.
+
+The mouse outputs 32 bits of data on Data1, if more reads are attempted then the mouse presumably outputs 1 bits until the next latch. The bits are "00000000 rlss0001 YyyyyyyyXxxxxxxx". 'r' and 'l' are the left and right mouse buttons. 'Yyyyyyyy' and 'Xxxxxxxx' are the movement deltas since the last latch, in sign-magnitude format (Y/X set is up/left). 'ss' are known as "speed bits", but what this signifies is unknown. The value is initially 0, and is incremented mod 3 if a read cycle is attempted while Latch is 1. If these speed bits are not emulated, the game will likely report an electronics error in the mouse.

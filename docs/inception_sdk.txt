@@ -1,0 +1,73 @@
+Inception software development kit (SDK) how-to
+-----------------------------------------------
+This document explains how to 'work' with inception and do not fall into details. 
+See 'inception_iface.txt'for more details about communication.
+
+
+Normal speed
+------------
+
+                lda     #init_opcode
+                sta     $dc00
+                lda     #$1f
+                sta     $dc02
+                lda     #$10
+                sta     $dc00
+                sta     $dc02
+                ldx     #0
+loop            lda     $dc00
+                asl     a
+                asl     a
+                asl     a
+                asl     a
+                ldy     #0
+                sty     $dc00
+                sta     rcv+1              ; if you dislike self-mod code, use RAM or somethign like that (:
+                lda     $dc00
+                ldy     #$10
+                sty     $dc00
+                and     #$0f
+rcv             ora     #$00
+                eor     #$1f               ; use only when JOY are required negated (like direct read)
+                sta     data_buffer,x
+                inx     
+                cpx     #data_length
+                bne     loop
+
+                ; set port to default (keyboard works again)
+                lda     #$7f
+                sta     $dc00
+                lda     #$ff
+                sta     $dc02
+                
+                rts
+
+data_buffer     .byte   0,0,0,0,0,0,0,0
+
+
+Reading joys
+------------
+Just execute 'Normal speed' code with:
+
+    init_opcode=$00
+    data_length=$08
+
+
+    ; quick test if INC connected (will not work if mices used)
+    ldy #$00
+    lda data_buffer,y
+    and #$e0
+    beq inc_connected
+
+    ; inception not connected or not working
+
+
+Reading info and versions
+-------------------------
+Just execute 'Normal speed' code with:
+
+    init_opcode=$02
+    data_length=$40 (or less)
+
+    If INC connected, you'll receive:  Inception rX.Y fwX.YY : ........................................
+
