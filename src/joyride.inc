@@ -62,6 +62,8 @@ ptr1 = $fb
 ptr2 = $fd
 ptr3 = $c1
 
+top = 50 ; first raster line of screen
+
 MODE_MAIN = 0
 MODE_EIGHT_PLAYER = 1
 

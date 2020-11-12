@@ -103,6 +103,7 @@ eight-player.o: eight-player.s joyride.inc utility.mac superpad.bin
 f-keys.o: f-keys.s joyride.inc
 help.o: help.s joyride.inc utility.mac
 help-screen.o: help-screen.s joyride.inc cbm_ext.mac
+irq-table.o: irq-table.s joyride.inc
 logo.o: logo.s joyride.inc cbm_ext.mac
 memcpy.o: memcpy.s joyride.inc
 port-screen.o: port-screen.s joyride.inc cbm_ext.mac utility.mac port-screens.bin

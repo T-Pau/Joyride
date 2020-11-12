@@ -26,11 +26,19 @@
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-.export label_background, content_background, logo_background
+.export label_background, content_background, logo_background, top_label
 
 .include "joyride.inc"
 
 .code
+
+top_label:
+	lda #COLOR_BLACK
+:	ldx VIC_HLINE
+	cpx #top + 1
+	bne :-
+	sta VIC_BG_COLOR0
+	rts
 
 label_background:
 	nop

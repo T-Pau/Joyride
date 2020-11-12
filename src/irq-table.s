@@ -29,34 +29,34 @@
 .autoimport +
 .export main_irq_table, main_irq_table_length, help_irq_table, help_irq_table_length, eight_player_irq_table, eight_player_irq_table_length
 
-top = 50 ; first raster line of screen
+.include "joyride.inc"
 
 .data
 
 main_irq_table:
 	.word 0, handle_top
-	.word top, label_background
+	.word top - 1, top_label
 	.word top + 8 - 1, handle_user
 	.word top + 13 * 8, label_background
 	.word top + 14 * 8 - 1, handle_port2
 	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_port1
+	.word top + 24 * 8 + 7, handle_port1
 main_irq_table_length:
 	.byte * - main_irq_table
 
 
 help_irq_table:
-	.word top, label_background
+	.word top - 1, top_label
 	.word top + 8 - 1, content_background
 	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, handle_help
+	.word top + 24 * 8 + 7, handle_help
 help_irq_table_length:
 	.byte * - help_irq_table
 
 eight_player_irq_table:
-	.word top, label_background
+	.word top - 1, top_label
 	.word top + 8 - 1, eight_player_top
 	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 6, eight_player_bottom
+	.word top + 24 * 8 + 7, eight_player_bottom
 eight_player_irq_table_length:
 	.byte * - eight_player_irq_table
