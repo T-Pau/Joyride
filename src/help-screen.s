@@ -82,14 +82,14 @@ help_screens_data:
 	scrcode "- paddle                             " ;  5
 	scrcode "- koalapad                           " ;  6
 	scrcode "- light pen (only in port 1)         " ;  7
-	scrcode "                                     " ;  8
-	scrcode "userport:                            " ;  9
-	scrcode "- protovision / classic game adapter " ; 10
-	scrcode "- digital excess / hitmen            " ; 11
-	scrcode "- kingsoft                           " ; 12
-	scrcode "- starbyte tie break adapter         " ; 13
-	scrcode "- superpad 64                        "	; 14
-	scrcode "                                     " ; 15
+	scrcode "- ninja snes pad / trap them         " ;  8
+	scrcode "                                     " ;  9
+	scrcode "userport:                            " ; 10
+	scrcode "- protovision / classic game adapter " ; 11
+	scrcode "- digital excess / hitmen            " ; 12
+	scrcode "- kingsoft                           " ; 13
+	scrcode "- starbyte tie break adapter         " ; 14
+	scrcode "- superpad 64                        "	; 15
 	scrcode "                                     " ; 16
 	scrcode "                                     " ; 17
 	scrcode "                                     " ; 18
@@ -259,8 +259,8 @@ help_screens_data:
 	scrcode "four controllers are displayed per   " ; 14
 	scrcode "page.                                " ; 15
 	scrcode "                                     " ; 16
-	scrcode "                                     " ; 17
-	scrcode "                                     " ; 18
+	scrcode "a trap them controller in port 1 is  " ; 17
+	scrcode "compatible with the snes pad.        " ; 18
 
 .code
 

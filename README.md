@@ -20,6 +20,7 @@ Controller port:
 - Paddle
 - Koalapad
 - Light Pen (only in port 1)
+- Ninja SNES Pad / Trap Them
 
 Userport:
 
@@ -94,6 +95,9 @@ All inputs are supported:
 - Select, Start
 
 Four controllers are displayed per page.
+
+A Trap Them controller in port 1 is compatible with the SNES Pad.
+
 
 # Building Joyride
 
