@@ -34,6 +34,11 @@
 .code
 
 snespad_read:
+	lda #<snes_buttons
+	sta rot + 1
+	lda #>snes_buttons
+	sta rot + 2
+	
 	; port b 3 & 4 as output, rest as input
 	lda #$00
 	sta CIA1_DDRA
@@ -46,38 +51,42 @@ snespad_read:
 	lda #$e7
 	sta CIA1_PRB
 
-	ldy #12
+bytes:
+	ldy #7
 
 bits:
 	lda CIA1_PRB
 	eor #$07
-;	lda #$A5; DEBUG
 	ldx #0
-pad1:
+pad:
 	lsr
-	ror snes_buttons,x
-	ror snes_buttons + 1,x
+rot:
+	rol $1000,x
 	inx
-	inx
-	cpx #6
-	bne pad1
+	cpx #8
+	beq next_bit
+	cpx #3
+	bne pad
 	lda CIA1_PRA
 	eor #$1f
-pad2:
-	lsr
-	ror snes_buttons,x
-	ror snes_buttons + 1,x
-	inx
-	inx
-	cpx #16
-	bne pad2
+	jmp pad
+next_bit:
 	; pulse clock
 	lda #$ef
 	sta CIA1_PRB
 	lda #$e7
 	sta CIA1_PRB
 	dey
-	bne bits
+	bpl bits
+	
+	clc
+	lda rot + 1
+	adc #8
+	sta rot + 1
+	bcc :+
+	inc rot + 2
+:	cmp #<snes_buttons_end
+	bne bytes
 
 	; latch again to reset input lines
 	lda #$f7

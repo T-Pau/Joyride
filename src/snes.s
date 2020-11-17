@@ -47,9 +47,16 @@ OFFSET_START = 3
 buttons:
 	; 0,  1,    2,    3,      4, 5, 6,   7
 	; 01  02    04    08      10 20 40   80
-	; up, down, left, right,  A, X, L,   R
-	;                         B, Y, sel, start
+	; right, left, down, up,  start, select, Y, B
+	;                         R, L, X, A
+
 	.res 2
+
+.rodata
+
+dpad_mirror:
+	;      0   1   2   3   4   5   6   7   8   9   a   b   c   d   e   f
+	.byte $0, $8, $4, $c, $2, $a, $6, $e, $1, $9, $5, $d, $3, $b, $7, $f
 
 .code
 
@@ -58,45 +65,48 @@ display_snes:
 	stx buttons + 1
 
 	; L
-	and #$40
+	txa
+	and #$20
 	jsr tiny_button
 
 	add_word ptr2, OFFSET_X
-	lda buttons
-	and #$20
+	lda buttons + 1
+	and #$40
 	jsr small_button
 
 	add_word ptr2, OFFSET_R
-	lda buttons
-	and #$80
+	lda buttons + 1
+	and #$10
 	jsr tiny_button
 
 	add_word ptr2, OFFSET_DPAD
 	lda buttons
 	and #$0f
+	tax
+	lda dpad_mirror,x
 	jsr dpad
 
 	subtract_word ptr2, OFFSET_Y
-	lda buttons + 1
-	and #$20
+	lda buttons
+	and #$40
 	jsr small_button
 
 	add_word ptr2, OFFSET_A
-	lda buttons
-	and #$10
+	lda buttons + 1
+	and #$80
 	jsr small_button
 
 	add_word ptr2, OFFSET_B
-	lda buttons + 1
-	and #$10
+	lda buttons
+	and #$80
 	jsr small_button
 
 	add_word ptr2, OFFSET_SELECT
-	lda buttons + 1
-	and #$40
+	lda buttons
+	and #$20
 	jsr tiny_button
 
 	add_word ptr2, OFFSET_START
-	lda buttons + 1
-	and #$80
+	lda buttons
+	and #$10
 	jmp tiny_button

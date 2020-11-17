@@ -25,7 +25,7 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export superpad_top, superpad_bottom, snes_buttons
+.export superpad_top, superpad_bottom, snes_buttons, snes_buttons1, snes_buttons2, snes_buttons3, snes_buttons_end
 
 .autoimport +
 
@@ -41,7 +41,12 @@ OFFSET_FOURTH = OFFSET_FIRST + 40 * 9 + 19
 .bss
 
 snes_buttons:
-	.res 16
+	.res 8 * 4
+
+snes_buttons1 = snes_buttons + 8
+snes_buttons2 = snes_buttons + 8 * 2
+snes_buttons3 = snes_buttons + 8 * 3
+snes_buttons_end = snes_buttons + 8 * 4
 
 index:
 	.res 1
@@ -58,10 +63,9 @@ superpad_top:
 	lda eight_player_page
 	asl
 	asl
-	asl
 	tay
-	lda snes_buttons + 6,y
-	ldx snes_buttons + 7,y
+	lda snes_buttons + 3,y
+	ldx snes_buttons1 + 3,y
 	jsr display_snes
 
 	; read new values
@@ -71,6 +75,11 @@ superpad_top:
 	jmp snespad_read
 
 :
+	lda #<snes_buttons
+	sta rot + 1
+	lda #>snes_buttons
+	sta rot + 2
+	
 	; port B as input, port a line 2 as output (latch)
 	lda CIA2_DDRA
 	ora #$04
@@ -85,23 +94,30 @@ superpad_top:
 	and #($04 ^ $ff)
 	sta CIA2_PRA
 
-	ldy #12
-
+bytes:
+	ldy #7
+	
 bits:
 	lda CIA2_PRB
 	eor #$ff
-;	lda #$A5; DEBUG
-	ldx #0
+	ldx #7
 pad:
-	lsr
-	ror snes_buttons,x
-	ror snes_buttons + 1,x
-	inx
-	inx
-	cpx #16
-	bne pad
+	asl
+rot:
+	rol $1000,x
+	dex
+	bpl pad
 	dey
-	bne bits
+	bpl bits
+	
+	clc
+	lda rot + 1
+	adc #8
+	sta rot + 1
+	bcc :+
+	inc rot + 2
+:	cmp #<snes_buttons_end
+	bne bytes
 	rts
 
 superpad_bottom:
@@ -113,21 +129,20 @@ superpad_bottom:
 	lda eight_player_page
 	asl
 	asl
-	asl
 	sta index
 	tay
 	lda snes_buttons,y
-	ldx snes_buttons + 1,y
+	ldx snes_buttons1,y
 	jsr display_snes
 
 	subtract_word ptr2, OFFSET_RIGHT
 	ldy index
-	lda snes_buttons + 2,y
-	ldx snes_buttons + 3,y
+	lda snes_buttons + 1,y
+	ldx snes_buttons1 + 1,y
 	jsr display_snes
 
 	add_word ptr2, OFFSET_DOWN
 	ldy index
-	lda snes_buttons + 4,y
-	ldx snes_buttons + 5,y
+	lda snes_buttons + 2,y
+	ldx snes_buttons1 + 2,y
 	jmp display_snes
