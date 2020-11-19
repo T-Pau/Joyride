@@ -35,6 +35,7 @@ Userport:
 
 Joysticks contain a stick or d-pad with switches for the 4 cardinal directions and up to three buttons.
 
+Buttons 2 and 3 bring an analog potentiometer to a low value by connecting its pin to +5V.
 
 ## Mouse
 

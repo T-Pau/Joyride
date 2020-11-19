@@ -2,7 +2,7 @@ SUBDIRS = src
 
 VERSION = 1.2
 
-FILES = README.md NEWS.md screenshot.png src/joyride.prg
+FILES = README.md NEWS.md Joyride\ User\ Manual.pdf screenshot.png src/joyride.prg
 
 DISTFILE = Joyride-${VERSION}.zip
 
