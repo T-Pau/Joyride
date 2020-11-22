@@ -3,7 +3,7 @@ CFLAGS = -t c64
 
 LD = cl65
 LDFLAGS = -t c64 -u __EXEHDR__ -C c64-asm.cfg
-LDFLAGS += -Ln sym
+# LDFLAGS += -Ln sym
 
 PROGRAM = joyride.prg
 

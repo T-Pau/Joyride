@@ -30,7 +30,7 @@
 
 .include "c64.inc"
 
- IRQ_DEBUG = 1
+; IRQ_DEBUG = 1
 
 table = $c3
 
