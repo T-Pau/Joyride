@@ -28,13 +28,18 @@
 
 .autoimport +
 
-.export eight_player_next_type, eight_player_previous_type, eight_player_next_page, eight_player_previous_page, eight_player_bottom, eight_player_top, copy_eight_player_screen
+.export eight_player_next_type, eight_player_previous_type, eight_player_next_page, eight_player_previous_page, eight_player_bottom, eight_player_top, eight_player_update_views, copy_eight_player_type_name
 
 .include "joyride.inc"
 .macpack utility
 .macpack cbm_ext
 
 eight_player_screen_start = screen + 40 * 2 + 1
+
+.bss
+
+index:
+	.res 2
 
 .code
 
@@ -47,7 +52,7 @@ eight_player_next_type:
 :	stx eight_player_type
 	ldx #0
 	stx eight_player_page
-	jsr copy_eight_player_screen
+	jsr copy_eight_player_type_name
 	rts
 
 eight_player_previous_type:
@@ -58,7 +63,7 @@ eight_player_previous_type:
 :	stx eight_player_type
 	ldx #0
 	stx eight_player_page
-	jsr copy_eight_player_screen
+	jsr copy_eight_player_type_name
 	rts
 
 eight_player_next_page:
@@ -70,7 +75,7 @@ eight_player_next_page:
 	bne :+
 	ldy #0
 :	sty eight_player_page
-	; jsr copy_eight_player_screen ; currently not needed
+	jsr eight_player_update_views
 	jsr copy_eight_player_page_title
 	rts
 
@@ -82,55 +87,64 @@ eight_player_previous_page:
 	ldy eight_player_num_pages,x
 	dey
 :	sty eight_player_page
-	; jsr copy_eight_player_screen ; currently not needed
+	jsr eight_player_update_views
 	jsr copy_eight_player_page_title
 	rts
 
-copy_eight_player_screen:
-	lda eight_player_type
+eight_player_update_views:
+	lda eight_player_page
+	asl
 	asl
 	tax
-	lda eight_player_screen,x
+	stx index
+	ldy #0
+	sty index + 1
+view_loop:
+	lda eight_player_views,x
+	cmp eight_player_current_views,y
+	beq same_view
+	asl
+	tax
+	lda eight_player_view,x
 	sta ptr1
-	lda eight_player_screen + 1,x
+	lda eight_player_view + 1,x
 	sta ptr1 + 1
-	store_word eight_player_screen_start, ptr2
-	ldx #37
-	ldy #18
+	tya
+	asl
+	tay
+	lda view_start,y
+	sta ptr2
+	lda view_start + 1,y
+	sta ptr2 + 1
+	ldx #18
+	ldy #9
 	jsr copyrect
-
-	store_word screen + 1, ptr2
-	lda eight_player_type
-	asl
-	tax
-	lda eight_player_type_name,x
-	sta ptr1
-	lda eight_player_type_name + 1,x
-	sta ptr1 + 1
-	ldy #19
-:	lda (ptr1),y
-	sta (ptr2),y
-	dey
-	bpl :-
-
-	store_word screen + 1, ptr2
-	lda eight_player_type
-	asl
-	tax
-	lda eight_player_type_name,x
-	sta ptr1
-	lda eight_player_type_name + 1,x
-	sta ptr1 + 1
-	ldy #19
-:	lda (ptr1),y
-	sta (ptr2),y
-	dey
-	bpl :-
-
-	jsr copy_eight_player_page_title
-
+same_view:
+	ldx index
+	inx
+	stx index
+	ldy index + 1
+	iny
+	sty index + 1
+	cpy #4
+	bne view_loop
 	rts
 
+copy_eight_player_type_name:
+	store_word screen + 1, ptr2
+	lda eight_player_type
+	asl
+	tax
+	lda eight_player_type_name,x
+	sta ptr1
+	lda eight_player_type_name + 1,x
+	sta ptr1 + 1
+	ldy #19
+:	lda (ptr1),y
+	sta (ptr2),y
+	dey
+	bpl :-
+	; fallthrough
 copy_eight_player_page_title:
 	store_word screen + 35, ptr2
 	lda eight_player_page
@@ -189,6 +203,12 @@ end:
 
 .rodata
 
+view_start:
+	.word screen + EIGHT_PLAYER_OFFSET_FIRST
+	.word screen + EIGHT_PLAYER_OFFSET_SECOND
+	.word screen + EIGHT_PLAYER_OFFSET_THIRD
+	.word screen + EIGHT_PLAYER_OFFSET_FOURTH
+
 top_handler:
 	.word superpad_top
 	.word superpad_top
@@ -226,9 +246,10 @@ eight_player_page_name_data:
 	invcode "1-4"
 	invcode "5-8"
 
-eight_player_screen:
-	.word eight_player_screen_data
-	.word eight_player_screen_data
+eight_player_view:
+	.repeat EIGHT_PLYAER_NUM_VIEWS, i
+	.word eight_player_view_data + i * 18 * 9
+	.endrep
 
-eight_player_screen_data:
-	.incbin "superpad.bin"
+eight_player_view_data:
+	.incbin "eight-player.bin"

@@ -27,14 +27,13 @@
 
 .export superpad_top, superpad_bottom, snes_buttons, snes_buttons1, snes_buttons2, snes_buttons3, snes_buttons_end
 
+.export detect_connected ; DEBUG
+
 .autoimport +
 
 .include "joyride.inc"
 
-OFFSET_FIRST = 40 * 3 + 2
-OFFSET_DOWN = 40 * 3 - 27
-OFFSET_RIGHT = 40 * 6 - 11 ; negative
-OFFSET_FOURTH = OFFSET_FIRST + 40 * 9 + 19
+CONTROLELR_OFFSET = 40 + 1
 
 .macpack utility
 
@@ -59,27 +58,32 @@ superpad_top:
 	rts
 :
 	; display 4th pad (not enough time in border)
-	store_word screen + OFFSET_FOURTH, ptr2
+	store_word screen + EIGHT_PLAYER_OFFSET_FOURTH + CONTROLELR_OFFSET, ptr2
 	lda eight_player_page
 	asl
 	asl
 	tay
+	lda eight_player_views + 3,y
+	cmp #EIGHT_PLAYER_VIEW_SNES
+	bne read
 	lda snes_buttons + 3,y
 	ldx snes_buttons1 + 3,y
 	jsr display_snes
 
+read:
 	; read new values
 
 	lda eight_player_type
 	beq :+
-	jmp snespad_read
+	jsr snespad_read
+	jmp detect_connected
 
 :
 	lda #<snes_buttons
 	sta rot + 1
 	lda #>snes_buttons
 	sta rot + 2
-	
+
 	; port B as input, port a line 2 as output (latch)
 	lda CIA2_DDRA
 	ora #$04
@@ -96,7 +100,7 @@ superpad_top:
 
 bytes:
 	ldy #7
-	
+
 bits:
 	lda CIA2_PRB
 	eor #$ff
@@ -109,7 +113,7 @@ rot:
 	bpl pad
 	dey
 	bpl bits
-	
+
 	clc
 	lda rot + 1
 	adc #8
@@ -118,31 +122,79 @@ rot:
 	inc rot + 2
 :	cmp #<snes_buttons_end
 	bne bytes
-	rts
+
+detect_connected:
+	; nothing: 00 00 00 00
+	; joypad:  xx x0 ff ff
+	; mouse:   00 x1 xx xx
+
+	ldy #0
+	ldx #7
+detect:
+	lda snes_buttons1,x
+	and #$0f
+	cmp #$01
+	bne :+
+	lda #EIGHT_PLAYER_VIEW_MOUSE
+	bne detected
+:
+	lda snes_buttons2,x
+	bne :+
+	lda #EIGHT_PLAYER_VIEW_NONE
+	bne detected
+:
+	lda #EIGHT_PLAYER_VIEW_SNES
+detected:
+	cmp eight_player_views,x
+	beq :+
+	iny
+:	sta eight_player_views,x
+	dex
+	bpl detect
+	cpy #0
+	beq :+
+	lda #COMMAND_EIGHT_PLAYER_UPDATE_VIEWS
+	sta command
+:	rts
 
 superpad_bottom:
 	lda command
 	beq :+
 	rts
 :
-	store_word screen + OFFSET_FIRST, ptr2
+
 	lda eight_player_page
 	asl
 	asl
 	sta index
 	tay
+	lda eight_player_views,y
+	cmp #EIGHT_PLAYER_VIEW_SNES
+	bne second
+	store_word screen + EIGHT_PLAYER_OFFSET_FIRST + CONTROLELR_OFFSET, ptr2
+	lda eight_player_page
 	lda snes_buttons,y
 	ldx snes_buttons1,y
 	jsr display_snes
 
-	subtract_word ptr2, OFFSET_RIGHT
+second:
+	store_word screen + EIGHT_PLAYER_OFFSET_SECOND + CONTROLELR_OFFSET, ptr2
 	ldy index
+	lda eight_player_views + 1,y
+	cmp #EIGHT_PLAYER_VIEW_SNES
+	bne third
 	lda snes_buttons + 1,y
 	ldx snes_buttons1 + 1,y
 	jsr display_snes
 
-	add_word ptr2, OFFSET_DOWN
+third:
+	store_word screen + EIGHT_PLAYER_OFFSET_THIRD + CONTROLELR_OFFSET, ptr2
 	ldy index
+	lda eight_player_views + 2,y
+	cmp #EIGHT_PLAYER_VIEW_SNES
+	bne fourth
 	lda snes_buttons + 2,y
 	ldx snes_buttons1 + 2,y
 	jmp display_snes
+fourth:
+	rts

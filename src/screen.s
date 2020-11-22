@@ -138,10 +138,20 @@ display_eight_player_screen:
 	and #$f0
 	sta VIC_SPR_HI_X
 
+	ldx #7
+	lda EIGHT_PLAYER_VIEW_NONE
+:	sta eight_player_views,x
+	dex
+	bpl :-
+	ldx #3
+:	sta eight_player_current_views,x
+	dex
+	bpl :-
+
 	memcpy screen, help_screen, 1000
 	memcpy color_ram, help_color, 1000
 	memcpy screen + 40 * 22, eight_player_legend, 120
-	jsr copy_eight_player_screen
+	jsr copy_eight_player_type_name
 	rts
 
 display_help_screen:

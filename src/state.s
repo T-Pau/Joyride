@@ -25,7 +25,7 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export mode, port1_type, port2_type, userport_type, eight_player_type, eight_player_page, init_state
+.export mode, port1_type, port2_type, userport_type, eight_player_type, eight_player_page, eight_player_views, eight_player_current_views, init_state
 
 .include "joyride.inc"
 
@@ -45,6 +45,10 @@ eight_player_type:
 	.res 1
 eight_player_page:
 	.res 1
+eight_player_current_views:
+	.res 4
+eight_player_views:
+	.res 8
 
 .code
 

@@ -3,7 +3,7 @@ CFLAGS = -t c64
 
 LD = cl65
 LDFLAGS = -t c64 -u __EXEHDR__ -C c64-asm.cfg
-# LDFLAGS += -Ln sym
+LDFLAGS += -Ln sym
 
 PROGRAM = joyride.prg
 
@@ -80,8 +80,8 @@ port-screens.bin: port-screens.png charset.bin
 scroll-wheel.bin: scroll-wheel.png charset.bin
 	gfx-convert screen scroll-wheel.png charset.bin scroll-wheel.bin
 
-superpad.bin: superpad.png charset.bin
-	gfx-convert screen superpad.png charset.bin superpad.bin
+eight-player.bin: eight-player.png charset.bin
+	gfx-convert screen eight-player.png charset.bin eight-player.bin
 
 
 ${PROGRAM}: ${OBJECTS}
@@ -99,7 +99,7 @@ display-mouse.o: display-mouse.s joyride.inc utility.mac mouse-buttons.bin scrol
 display-paddle.o: display-paddle.s joyride.inc utility.mac
 display-port.o: display-port.s joyride.inc
 display-raw.o: display-raw.s joyride.inc utility.mac
-eight-player.o: eight-player.s joyride.inc utility.mac superpad.bin
+eight-player.o: eight-player.s joyride.inc utility.mac eight-player.bin
 f-keys.o: f-keys.s joyride.inc
 help.o: help.s joyride.inc utility.mac
 help-screen.o: help-screen.s joyride.inc cbm_ext.mac

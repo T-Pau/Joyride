@@ -49,3 +49,4 @@ command_handlers:
 	.word eight_player_next_page
 	.word eight_player_previous_page
 	.word display_main_screen
+	.word eight_player_update_views
