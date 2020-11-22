@@ -133,17 +133,19 @@ detect_connected:
 detect:
 	lda snes_buttons1,x
 	and #$0f
+	cmp #$0f
+	beq none
 	cmp #$01
 	bne :+
 	lda #EIGHT_PLAYER_VIEW_MOUSE
 	bne detected
 :
 	lda snes_buttons2,x
-	bne :+
-	lda #EIGHT_PLAYER_VIEW_NONE
-	bne detected
-:
+	beq none
 	lda #EIGHT_PLAYER_VIEW_SNES
+	bne detected
+none:
+	lda #EIGHT_PLAYER_VIEW_NONE
 detected:
 	cmp eight_player_views,x
 	beq :+
