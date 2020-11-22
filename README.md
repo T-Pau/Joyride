@@ -82,22 +82,32 @@ Supported are the following variants:
 - Starbyte Tie Break Adapter
 
 
+## Eight Player Adapter
+
+These adapters support eight input devices. The type of devices depends on the adapter.                      
+
+Four controllers are displayed per page. Use `F3`/`F4` to switch pages.
+
+Supported are the following variants:
+
+- SuperPad64 (eight SuperNES controllers, connects to user port)
+- Ninja SNES Pad (eight SuperNES controllers, connects to both controller ports)
+
+
 ## SuperPad64 / Ninja SNES Pad
 
-These adapters support eight Nintendo SuperNES controllers.
+These adapters support eight Nintendo SuperNES controllers or mice.
 
-SuperPad64 connects to the userport. Ninja SNES Pad connects to both controller ports.
-
-All inputs are supported:
+Controllers have the these inputs:
 
 - dpad
 - four buttons (A, B, X, Y)
 - two shoulder buttons (L, R)
 - Select, Start
 
-Four controllers are displayed per page.
+Mice display x/y coordinates and two buttons.
 
-A Trap Them controller in port 1 is compatible with the SNES Pad.
+A Trap Them controller in port 1 is compatible with the Ninja SNES Pad.
 
 
 # Building Joyride

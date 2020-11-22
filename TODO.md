@@ -6,4 +6,3 @@
 
 - Trap Them controller
 - Inception
-- SNES Mouse, detect SNES controller
