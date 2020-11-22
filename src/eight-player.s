@@ -103,6 +103,10 @@ view_loop:
 	lda eight_player_views,x
 	cmp eight_player_current_views,y
 	beq same_view
+	tax
+	lda view_sprite,x
+	sta screen + $3f8,y
+	txa
 	asl
 	tax
 	lda eight_player_view,x
@@ -112,6 +116,9 @@ view_loop:
 	tya
 	asl
 	tay
+	lda #0
+	sta VIC_SPR0_X,y
+	sta VIC_SPR0_Y,y
 	lda view_start,y
 	sta ptr2
 	lda view_start + 1,y
@@ -209,6 +216,12 @@ view_start:
 	.word screen + EIGHT_PLAYER_OFFSET_THIRD
 	.word screen + EIGHT_PLAYER_OFFSET_FOURTH
 
+view_sprite:
+	.byte sprite_none
+	.byte sprite_none
+	.byte sprite_none
+	.byte sprite_cross
+	
 top_handler:
 	.word superpad_top
 	.word superpad_top

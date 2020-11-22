@@ -34,7 +34,7 @@
 help_screen_start = screen + 1
 
 help_screen_size = 37 * 20
-num_help_screens = 10
+num_help_screens = 11
 
 .macpack cbm
 .macpack cbm_ext
@@ -241,26 +241,47 @@ help_screens_data:
 	scrcode "                                     " ; 17
 	scrcode "                                     " ; 18
 
+	invcode "eight player adapter                 "
+	scrcode "                                     "
+	scrcode "these adapters support eight input   " ;  1
+	scrcode "devices. the type of devices depends " ;  2
+	scrcode "on the adapter.                      " ;  3
+	scrcode "                                     " ;  4
+	scrcode "four controllers are displayed per   " ;  5
+	scrcode "page. use f3/f4 to switch pages.     " ;  6
+	scrcode "                                     " ;  7
+	scrcode "supported are the following variants:" ;  8
+	scrcode "- superpad 64 (eight supernes        " ;  9
+	scrcode "  controllers, connects to user port)" ; 10
+	scrcode "- ninja snes pad (eight supernes     " ; 11
+	scrcode "  controllers, connects to both      " ; 12
+	scrcode "  controller ports)                  " ; 13
+	scrcode "                                     " ; 14
+	scrcode "                                     " ; 15
+	scrcode "                                     " ; 16
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
+
 	invcode "superpad 64 / ninja snes pad         "
 	scrcode "                                     "
-	scrcode "these adapters support eight         " ;  1
-	scrcode "nintendo supernes controllers.       " ;  2
+	scrcode "these adapters support 8 nintendo    " ;  1
+	scrcode "supernes controllers or mice.        " ;  2
 	scrcode "                                     " ;  3
-	scrcode "superpad 64 connects to the userport." ;  4
-	scrcode "ninja snes pad connects to both      " ;  5
-	scrcode "controller ports.                    " ;  6
-	scrcode "                                     " ;  7
-	scrcode "all inputs are supported:            " ;  8
-	scrcode "- dpad                               " ;  9
-	scrcode "- four buttons (a, b, x, y)          " ; 10
-	scrcode "- two shoulder buttons (l, r)        " ; 11
-	scrcode "- select, start                      " ; 12
-	scrcode "                                     " ; 13
-	scrcode "four controllers are displayed per   " ; 14
-	scrcode "page.                                " ; 15
+	scrcode "controllers have the these inputs:   " ;  4
+	scrcode "- dpad                               " ;  5
+	scrcode "- four buttons (a, b, x, y)          " ;  6
+	scrcode "- two shoulder buttons (l, r)        " ;  7
+	scrcode "- select, start                      " ;  8
+	scrcode "                                     " ;  9
+	scrcode "mice display x/y coordinates and two " ; 10
+	scrcode "buttons.                             " ; 11
+	scrcode "                                     " ; 12
+	scrcode "a trap them controller in port 1 is  " ; 13
+	scrcode "compatible with the ninja snes pad.  " ; 14
+	scrcode "                                     " ; 15
 	scrcode "                                     " ; 16
-	scrcode "a trap them controller in port 1 is  " ; 17
-	scrcode "compatible with the snes pad.        " ; 18
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
 
 .code
 

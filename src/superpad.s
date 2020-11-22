@@ -34,6 +34,11 @@
 .include "joyride.inc"
 
 CONTROLELR_OFFSET = 40 + 1
+MOUSE_OFFSET = 40 + 11
+
+MOUSE_R_OFFSET = 3
+MOUSE_X_OFFSET = 40 * 5 - 1
+MOUSE_Y_OFFSET = 40
 
 .macpack utility
 
@@ -47,7 +52,15 @@ snes_buttons2 = snes_buttons + 8 * 2
 snes_buttons3 = snes_buttons + 8 * 3
 snes_buttons_end = snes_buttons + 8 * 4
 
+snes_x:
+	.res 8
+snes_y:
+	.res 8
+
 index:
+	.res 1
+	
+tmp:
 	.res 1
 
 .code
@@ -58,16 +71,25 @@ superpad_top:
 	rts
 :
 	; display 4th pad (not enough time in border)
-	store_word screen + EIGHT_PLAYER_OFFSET_FOURTH + CONTROLELR_OFFSET, ptr2
 	lda eight_player_page
 	asl
 	asl
 	tay
-	lda eight_player_views + 3,y
+	iny
+	iny
+	iny
+	sty index
+	lda eight_player_views,y
 	cmp #EIGHT_PLAYER_VIEW_SNES
+	beq :+
+	cmp #EIGHT_PLAYER_VIEW_MOUSE
 	bne read
-	lda snes_buttons + 3,y
-	ldx snes_buttons1 + 3,y
+	store_word screen + EIGHT_PLAYER_OFFSET_FOURTH + MOUSE_OFFSET, ptr2
+	jsr display_snes_mouse
+	jmp read
+:	store_word screen + EIGHT_PLAYER_OFFSET_FOURTH + CONTROLELR_OFFSET, ptr2
+	lda snes_buttons,y
+	ldx snes_buttons1,y
 	jsr display_snes
 
 read:
@@ -172,31 +194,150 @@ superpad_bottom:
 	tay
 	lda eight_player_views,y
 	cmp #EIGHT_PLAYER_VIEW_SNES
+	beq :+
+	cmp #EIGHT_PLAYER_VIEW_MOUSE
 	bne second
-	store_word screen + EIGHT_PLAYER_OFFSET_FIRST + CONTROLELR_OFFSET, ptr2
-	lda eight_player_page
+	store_word screen + EIGHT_PLAYER_OFFSET_FIRST + MOUSE_OFFSET, ptr2
+	jsr display_snes_mouse
+	jmp second
+:	store_word screen + EIGHT_PLAYER_OFFSET_FIRST + CONTROLELR_OFFSET, ptr2
 	lda snes_buttons,y
 	ldx snes_buttons1,y
 	jsr display_snes
 
 second:
-	store_word screen + EIGHT_PLAYER_OFFSET_SECOND + CONTROLELR_OFFSET, ptr2
 	ldy index
-	lda eight_player_views + 1,y
+	iny
+	sty index
+	lda eight_player_views,y
 	cmp #EIGHT_PLAYER_VIEW_SNES
+	beq :+
+	cmp #EIGHT_PLAYER_VIEW_MOUSE
 	bne third
-	lda snes_buttons + 1,y
-	ldx snes_buttons1 + 1,y
+	store_word screen + EIGHT_PLAYER_OFFSET_SECOND + MOUSE_OFFSET, ptr2
+	jsr display_snes_mouse
+	jmp third
+:	store_word screen + EIGHT_PLAYER_OFFSET_SECOND + CONTROLELR_OFFSET, ptr2
+	lda snes_buttons,y
+	ldx snes_buttons1,y
 	jsr display_snes
 
 third:
-	store_word screen + EIGHT_PLAYER_OFFSET_THIRD + CONTROLELR_OFFSET, ptr2
 	ldy index
-	lda eight_player_views + 2,y
+	iny
+	sty index
+	lda eight_player_views,y
 	cmp #EIGHT_PLAYER_VIEW_SNES
+	beq :+
+	cmp #EIGHT_PLAYER_VIEW_MOUSE
 	bne fourth
-	lda snes_buttons + 2,y
-	ldx snes_buttons1 + 2,y
+	store_word screen + EIGHT_PLAYER_OFFSET_THIRD + MOUSE_OFFSET, ptr2
+	jsr display_snes_mouse
+	jmp fourth
+:	store_word screen + EIGHT_PLAYER_OFFSET_THIRD + CONTROLELR_OFFSET, ptr2
+	lda snes_buttons,y
+	ldx snes_buttons1,y
 	jmp display_snes
 fourth:
 	rts
+
+display_snes_mouse:
+	lda snes_buttons3,y
+	bmi minus_x
+	clc
+	adc snes_x,y
+	bcc :+
+	lda #$ff
+:	sta snes_x,y
+	jmp compute_y
+minus_x:
+	and #$7f
+	sta tmp
+	lda snes_x,y
+	sec
+	sbc tmp
+	bcs :+
+	lda #$00
+:	sta snes_x,y
+compute_y:
+	lda snes_buttons2,y
+	bmi minus_y
+	clc
+	adc snes_y,y
+	bcc :+
+	lda #$ff
+:	sta snes_y,y
+	jmp mouse_display
+minus_y:
+	and #$7f
+	sta tmp
+	lda snes_y,y
+	sec
+	sbc tmp
+	bcs :+
+	lda #$00
+:	sta snes_y,y
+
+mouse_display:
+	lda snes_buttons1,y
+	and #$40
+	jsr small_button
+	add_word ptr2, MOUSE_R_OFFSET
+	ldy index
+	lda snes_buttons1,y
+	and #$80
+	jsr small_button
+	add_word ptr2, MOUSE_X_OFFSET
+	ldy index
+	lda snes_x,y
+	ldy #0
+	ldx #1
+	jsr pot_number
+	add_word ptr2, MOUSE_Y_OFFSET
+	ldy index
+	lda snes_y,y
+	ldy #0
+	ldx #1
+	jsr pot_number
+	
+	ldy index
+	tya
+	and #$3
+	asl
+	tax
+	lda sprite_x_offset + 1,x
+	sta sprite_x + 1 
+	lda snes_x,y
+	lsr
+	lsr
+	clc
+	adc sprite_x_offset,x
+	sta sprite_x
+	bcc :+
+	inc sprite_x + 1
+:
+	lda snes_y,y
+	lsr
+	lsr
+	clc
+	adc sprite_y_offset,x
+	sta sprite_y
+	txa
+	lsr
+	jsr set_sprite	
+	rts
+	
+
+.rodata
+
+sprite_x_offset:
+	.word 24 + 18
+	.word 24 + 18 + 19 * 8
+	.word 24 + 18
+	.word 24 + 18 + 19 * 8
+	
+sprite_y_offset:
+	.word top + 18
+	.word top + 18
+	.word top + 18 + 9 * 8
+	.word top + 18 + 9 * 8

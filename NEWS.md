@@ -1,3 +1,8 @@
+# Version 1.3 (2020-11-28)
+
+- Add support for SNES mouse.
+
+
 # Version 1.2 (2020-11-15)
 
 - Add support for SuperPad64 and Ninja SNES Pad.
