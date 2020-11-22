@@ -267,7 +267,7 @@ help_screens_data:
 	scrcode "these adapters support 8 nintendo    " ;  1
 	scrcode "supernes controllers or mice.        " ;  2
 	scrcode "                                     " ;  3
-	scrcode "controllers have the these inputs:   " ;  4
+	scrcode "controllers have these inputs:       " ;  4
 	scrcode "- dpad                               " ;  5
 	scrcode "- four buttons (a, b, x, y)          " ;  6
 	scrcode "- two shoulder buttons (l, r)        " ;  7

@@ -98,7 +98,7 @@ Supported are the following variants:
 
 These adapters support eight Nintendo SuperNES controllers or mice.
 
-Controllers have the these inputs:
+Controllers have these inputs:
 
 - dpad
 - four buttons (A, B, X, Y)
