@@ -6,3 +6,9 @@
 
 - Trap Them controller
 - Inception
+
+
+## Upcoming Hardware
+
+- Protopad
+- controller for Attack of the PETSCII Robots
