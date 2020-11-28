@@ -6,7 +6,7 @@
 
 - Trap Them controller
 - Inception
-
+- Luigi Pantarotto's Spaceballs 8-Player Adapter
 
 ## Upcoming Hardware
 
