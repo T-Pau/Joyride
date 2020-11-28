@@ -3,3 +3,4 @@
 *.prg
 Joyride-*.zip
 src/sym
+/src/.dep
