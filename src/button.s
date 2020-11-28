@@ -31,84 +31,129 @@
 
 .include "joyride.inc"
 
+.bss
+
+state:
+	.res 1
+
 .code
 
 ; set state of button at ptr2 to A
 
 button:
-	tax
+	cmp #0
+	beq :+
+	lda #$80
+:	sta state
+
 	ldy #0
-loop:
 	lda (ptr2),y
 	and #$7f
-	cpx #0
-	beq clear
-	ora #$80
-clear:
+	ora state
 	sta (ptr2),y
 	iny
-	cpy #3
-	bne l2
+	lda (ptr2),y
+	and #$7f
+	ora state
+	sta (ptr2),y
+	iny
+	lda (ptr2),y
+	and #$7f
+	ora state
+	sta (ptr2),y
+	
 	ldy #40
-	bne loop
-l2:
-	cpy #43
-	bne l3
+	lda (ptr2),y
+	and #$7f
+	ora state
+	sta (ptr2),y
+	iny
+	lda (ptr2),y
+	and #$7f
+	ora state
+	sta (ptr2),y
+	iny
+	lda (ptr2),y
+	and #$7f
+	ora state
+	sta (ptr2),y
+	
 	ldy #80
-	bne loop
-l3:
-	cpy #83
-	bne loop
+	lda (ptr2),y
+	and #$7f
+	ora state
+	sta (ptr2),y
+	iny
+	lda (ptr2),y
+	and #$7f
+	ora state
+	sta (ptr2),y
+	iny
+	lda (ptr2),y
+	and #$7f
+	ora state
+	sta (ptr2),y
 
 	clc
 	lda ptr2
 	adc #3
 	sta ptr2
-	lda ptr2 + 1
-	adc #0
-	sta ptr2 + 1
-
+	bcc :+
+	inc ptr2 + 1
+:
 	rts
 
 small_button:
-	tax
+	cmp #0
+	beq :+
+	lda #$80
+:	sta state
+
 	ldy #1
 	lda (ptr2),y
 	and #$7f
-	cpx #0
-	beq :+
-	ora #$80
-:	sta (ptr2),y
+	ora state
+	sta (ptr2),y
+
 	ldy #40
-small_loop:
 	lda (ptr2),y
 	and #$7f
-	cpx #0
-	beq :+
-	ora #$80
-:	sta (ptr2),y
+	ora state
+	sta (ptr2),y
 	iny
-	cpy #43
-	bne small_loop
+	lda (ptr2),y
+	and #$7f
+	ora state
+	sta (ptr2),y
+	iny
+	lda (ptr2),y
+	and #$7f
+	ora state
+	sta (ptr2),y
+
 	ldy #81
 	lda (ptr2),y
 	and #$7f
-	cpx #0
-	beq :+
-	ora #$80
-:	sta (ptr2),y
+	ora state
+	sta (ptr2),y
+
 	rts
 
 tiny_button:
-	tax
-	ldy #1
-tiny_loop:
+	cmp #0
+	beq :+
+	lda #$80
+:	sta state
+
+	ldy #0
 	lda (ptr2),y
 	and #$7f
-	cpx #0
-	beq :+
-	ora #$80
-:	sta (ptr2),y
-	dey
-	bpl tiny_loop
+	ora state
+	sta (ptr2),y
+	iny
+	lda (ptr2),y
+	and #$7f
+	ora state
+	sta (ptr2),y
+
 	rts

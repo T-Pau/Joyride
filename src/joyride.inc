@@ -46,7 +46,7 @@ COLOR_LIGHTGREEN = 13
 COLOR_LIGHTBLUE = 14
 COLOR_GRAY3 = 15
 
-charset = $6000
+charset = $7000
 screen = charset + $800
 sprites = screen + $400
 color_ram = $d800

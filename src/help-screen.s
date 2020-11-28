@@ -102,7 +102,7 @@ help_screens_data:
 	scrcode "                                     " ;  4
 	scrcode "buttons 2 and 3 bring an analog      " ;  5
 	scrcode "potentiometer to a low value by      " ;  6
-	scrcode "connecting its pin to +5V.           " ;  7
+	scrcode "connecting its pin to +5v.           " ;  7
 	scrcode "                                     " ;  8
 	scrcode "                                     " ;  9
 	scrcode "                                     " ; 10
