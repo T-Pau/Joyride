@@ -127,6 +127,4 @@ display_raw:
 	adc #1
 	jsr set_sprite
 
-	; TODO: light pen
-
 	rts

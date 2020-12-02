@@ -34,7 +34,7 @@
 help_screen_start = screen + 1
 
 help_screen_size = 37 * 20
-num_help_screens = 11
+num_help_screens = 12
 
 .macpack cbm
 .macpack cbm_ext
@@ -82,15 +82,15 @@ help_screens_data:
 	scrcode "- paddle                             " ;  5
 	scrcode "- koalapad                           " ;  6
 	scrcode "- light pen (only in port 1)         " ;  7
-	scrcode "- ninja snes pad / trap them         " ;  8
-	scrcode "                                     " ;  9
-	scrcode "userport:                            " ; 10
-	scrcode "- protovision / classic game adapter " ; 11
-	scrcode "- digital excess / hitmen            " ; 12
-	scrcode "- kingsoft                           " ; 13
-	scrcode "- starbyte tie break adapter         " ; 14
-	scrcode "- superpad 64                        "	; 15
-	scrcode "                                     " ; 16
+	scrcode "- trap them controller               " ;  8
+	scrcode "- ninja snes pad                     " ;  9
+	scrcode "                                     " ; 10
+	scrcode "userport:                            " ; 11
+	scrcode "- protovision / classic game adapter " ; 12
+	scrcode "- digital excess / hitmen            " ; 13
+	scrcode "- kingsoft                           " ; 14
+	scrcode "- starbyte tie break adapter         " ; 15
+	scrcode "- superpad 64                        "	; 16
 	scrcode "                                     " ; 17
 	scrcode "                                     " ; 18
 
@@ -199,6 +199,27 @@ help_screens_data:
 	scrcode "                                     " ; 17
 	scrcode "                                     " ; 18
 
+	invcode "trap them controller                 "
+	scrcode "                                     "
+	scrcode "this supernes style controller       " ;  1
+	scrcode "connects to either controller port.  " ;  2
+	scrcode "                                     " ;  3
+	scrcode "it has these inputs:                 " ;  4
+	scrcode "- dpad                               " ;  5
+	scrcode "- four face buttons (1, 2, 3, 4)     " ;  6
+	scrcode "- two shoulder buttons (l, r)        " ;  7
+	scrcode "- select, start                      " ;  8
+	scrcode "                                     " ;  9
+	scrcode "                                     " ; 10
+	scrcode "                                     " ; 11
+	scrcode "                                     " ; 12
+	scrcode "                                     " ; 13
+	scrcode "                                     " ; 14
+	scrcode "                                     " ; 15
+	scrcode "                                     " ; 16
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
+
 	invcode "raw                                  "
 	scrcode "                                     "
 	scrcode "this displays the five digital input " ;  1
@@ -269,15 +290,15 @@ help_screens_data:
 	scrcode "                                     " ;  3
 	scrcode "controllers have these inputs:       " ;  4
 	scrcode "- dpad                               " ;  5
-	scrcode "- four buttons (a, b, x, y)          " ;  6
+	scrcode "- four face buttons (a, b, x, y)     " ;  6
 	scrcode "- two shoulder buttons (l, r)        " ;  7
 	scrcode "- select, start                      " ;  8
 	scrcode "                                     " ;  9
 	scrcode "mice display x/y coordinates and two " ; 10
 	scrcode "buttons.                             " ; 11
 	scrcode "                                     " ; 12
-	scrcode "a trap them controller in port 1 is  " ; 13
-	scrcode "compatible with the ninja snes pad.  " ; 14
+	scrcode "                                     " ; 13
+	scrcode "                                     " ; 14
 	scrcode "                                     " ; 15
 	scrcode "                                     " ; 16
 	scrcode "                                     " ; 17

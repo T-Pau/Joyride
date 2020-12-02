@@ -63,6 +63,18 @@ They point directly at a position on screen. This is indicated by a big cross ha
 They can have up to two buttons. Some pens require a button to be pressed for the position to register.
 
 
+## Trap Them Controller
+
+This SuperNES style controller connects to either controller port.
+
+It has these inputs:
+
+- dpad
+- four face buttons (1, 2, 3, 4)
+- two shoulder buttons (L, R)
+- Select, Start
+
+
 ## Raw Data
 
 This displays the 5 digital input lines, and the two analog potentiometers as values from 0 to 255.
@@ -101,13 +113,11 @@ These adapters support eight Nintendo SuperNES controllers or mice.
 Controllers have these inputs:
 
 - dpad
-- four buttons (A, B, X, Y)
+- four face buttons (A, B, X, Y)
 - two shoulder buttons (L, R)
 - Select, Start
 
 Mice display x/y coordinates and two buttons.
-
-A Trap Them controller in port 1 is compatible with the Ninja SNES Pad.
 
 
 # Building Joyride

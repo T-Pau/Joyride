@@ -59,7 +59,7 @@ snes_y:
 
 index:
 	.res 1
-	
+
 tmp:
 	.res 1
 
@@ -90,6 +90,7 @@ superpad_top:
 :	store_word screen + EIGHT_PLAYER_OFFSET_FOURTH + CONTROLELR_OFFSET, ptr2
 	lda snes_buttons,y
 	ldx snes_buttons1,y
+	ldy #0
 	jsr display_snes
 
 read:
@@ -203,6 +204,7 @@ superpad_bottom:
 :	store_word screen + EIGHT_PLAYER_OFFSET_FIRST + CONTROLELR_OFFSET, ptr2
 	lda snes_buttons,y
 	ldx snes_buttons1,y
+	ldy #0
 	jsr display_snes
 
 second:
@@ -220,6 +222,7 @@ second:
 :	store_word screen + EIGHT_PLAYER_OFFSET_SECOND + CONTROLELR_OFFSET, ptr2
 	lda snes_buttons,y
 	ldx snes_buttons1,y
+	ldy #0
 	jsr display_snes
 
 third:
@@ -237,6 +240,7 @@ third:
 :	store_word screen + EIGHT_PLAYER_OFFSET_THIRD + CONTROLELR_OFFSET, ptr2
 	lda snes_buttons,y
 	ldx snes_buttons1,y
+	ldy #0
 	jmp display_snes
 fourth:
 	rts
@@ -299,14 +303,14 @@ mouse_display:
 	ldy #0
 	ldx #1
 	jsr pot_number
-	
+
 	ldy index
 	tya
 	and #$3
 	asl
 	tax
 	lda sprite_x_offset + 1,x
-	sta sprite_x + 1 
+	sta sprite_x + 1
 	lda snes_x,y
 	lsr
 	lsr
@@ -324,9 +328,9 @@ mouse_display:
 	sta sprite_y
 	txa
 	lsr
-	jsr set_sprite	
+	jsr set_sprite
 	rts
-	
+
 
 .rodata
 
@@ -335,7 +339,7 @@ sprite_x_offset:
 	.word 24 + 18 + 19 * 8
 	.word 24 + 18
 	.word 24 + 18 + 19 * 8
-	
+
 sprite_y_offset:
 	.word top + 18
 	.word top + 18

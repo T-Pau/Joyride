@@ -24,6 +24,7 @@ SOURCES = \
 	display-paddle.s \
 	display-port.s \
 	display-raw.s \
+	display-trapthem.s \
 	dpad.s \
 	eight-player.s \
 	f-keys.s \

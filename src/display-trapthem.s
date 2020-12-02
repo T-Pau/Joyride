@@ -1,4 +1,4 @@
-;  snes.s -- Display SNES controller.
+;  display-trapthem.s -- Display Trap Them controller.
 ;  Copyright (C) 2020 Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
@@ -25,111 +25,81 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export display_snes
 
 .autoimport +
 
+.export display_trapthem
+
 .include "joyride.inc"
-
 .macpack utility
-
-OFFSET_X = 9
-OFFSET_R = 4
-OFFSET_DPAD = 40 - 12
-OFFSET_Y = 40 * 4- 6 ; negative
-OFFSET_A = 4
-OFFSET_B = 40 * 2- 2
-OFFSET_SELECT = 40 * 2 - 5
-OFFSET_START = 3
-OFFSET_L_FIX = 40 * 5 + 6 ; negative
 
 .bss
 
-buttons:
-	; 0,  1,    2,    3,      4, 5, 6,   7
-	; 01  02    04    08      10 20 40   80
-	; right, left, down, up,  start, select, Y, B
-	;                         R, L, X, A
-
+pad:
 	.res 2
-
-compact:
-	.res 1
-
-.rodata
-
-dpad_mirror:
-	;      0   1   2   3   4   5   6   7   8   9   a   b   c   d   e   f
-	.byte $0, $8, $4, $c, $2, $a, $6, $e, $1, $9, $5, $d, $3, $b, $7, $f
 
 .code
 
-display_snes:
-	sty compact
-	sta buttons
-	stx buttons + 1
+display_trapthem:
+	dex
+	beq :+
+	ldx #1
+:
+    lda #$18
+    sta CIA1_DDRA,x
+    lda #$10
+    sta CIA1_PRA,x
+    lda #$00
+    sta CIA1_PRA,x
 
-	; L
-	txa
-	and #$20
-	jsr tiny_button
+	lda #<pad
+	sta rotate + 1
+	ldy #12
+loop:
+    lda CIA1_PRA,x
+    ror
+    ror
+    ror
+rotate:
+    rol pad
+
+    lda #$08
+    sta CIA1_PRA,x
+    lda #$00
+    sta CIA1_PRA,x
+
+	dey
+	cpy #4
+	bne :+
+	inc rotate + 1
+:	cpy #0
+	bne loop
+
+	lda #$10
+	sta CIA1_PRA,x
+	lda #0
+	sta CIA1_PRA,x
+
+	lda pad + 1
+	asl
+	asl
+	asl
+	asl
+	sta pad + 1
 
 	clc
-	ldy compact
-	bne :+
-	sec
-:	lda ptr2
-	adc #OFFSET_X
+	lda ptr2
+	adc #41
 	sta ptr2
 	bcc :+
 	inc ptr2 + 1
-:	lda buttons + 1
-	and #$40
-	jsr small_button
-
-	add_word ptr2, OFFSET_R
-	lda buttons + 1
-	and #$10
-	jsr tiny_button
-
-	add_word ptr2, OFFSET_DPAD
-	lda buttons
-	and #$0f
+:
+	lda pad + 1
+	eor #$ff
 	tax
-	lda dpad_mirror,x
-	jsr dpad
+	lda pad
+	eor #$ff
+	ldy #1
+	jsr display_snes
 
-	subtract_word ptr2, OFFSET_Y
-	lda buttons
-	and #$40
-	jsr small_button
-
-	add_word ptr2, OFFSET_A
-	lda buttons + 1
-	and #$80
-	jsr small_button
-
-	add_word ptr2, OFFSET_B
-	lda buttons
-	and #$80
-	jsr small_button
-
-	add_word ptr2, OFFSET_SELECT
-	lda buttons
-	and #$20
-	jsr tiny_button
-
-	add_word ptr2, OFFSET_START
-	lda buttons
-	and #$10
-	jsr tiny_button
-
-	lda compact
-	beq end
-	subtract_word ptr2, OFFSET_L_FIX
-	ldy #0
-	lda #$ec
-	sta (ptr2),y
-
-end:
 	rts
