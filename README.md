@@ -20,7 +20,8 @@ Controller port:
 - Paddle
 - Koalapad
 - Light Pen (only in port 1)
-- Ninja SNES Pad / Trap Them
+- Trap Them
+- Ninja SNES Pad
 
 Userport:
 
@@ -96,7 +97,7 @@ Supported are the following variants:
 
 ## Eight Player Adapter
 
-These adapters support eight input devices. The type of devices depends on the adapter.                      
+These adapters support eight input devices. The type of devices depends on the adapter.
 
 Four controllers are displayed per page. Use `F3`/`F4` to switch pages.
 

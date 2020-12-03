@@ -1,3 +1,8 @@
+# Version 1.4 (2020-12-05)
+
+- Add support for Trap Them controller.
+
+
 # Version 1.3 (2020-11-28)
 
 - Add support for SNES mouse.
