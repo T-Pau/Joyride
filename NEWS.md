@@ -1,6 +1,7 @@
 # Version 1.4 (2020-12-05)
 
 - Add support for Trap Them controller.
+- Add support for Luigi Pantarotto's Spaceballs adapter.
 
 
 # Version 1.3 (2020-11-28)

@@ -73,7 +73,7 @@ top_change:
 	sta pen_y + 1
 top_no_change:
 	lda port1_type
-	cmp #TYPE_LIGHTPEN
+	cmp #CONTROLLER_TYPE_LIGHTPEN
 	bne :+
 	jsr lightpen_sprite_top
 :	rts
@@ -169,7 +169,7 @@ handle_port2:
     sta CIA1_PRA
 
 	lda port1_type
-	cmp #TYPE_LIGHTPEN
+	cmp #CONTROLLER_TYPE_LIGHTPEN
 	bne :+
 	jsr lightpen_sprite_bottom
 :

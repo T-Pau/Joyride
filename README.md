@@ -30,6 +30,7 @@ Userport:
 - Kingsoft
 - Starbyte Tie Break Adapter
 - SuperPad64
+- Luigi Pantarotto's Spaceballs Adapter
 
 
 ## Joystick
@@ -105,11 +106,12 @@ Supported are the following variants:
 
 - SuperPad64 (eight SuperNES controllers, connects to user port)
 - Ninja SNES Pad (eight SuperNES controllers, connects to both controller ports)
+- Luigi Pantarotto's Spaceballs adapter (eight joysticks, connects to user port and one controller port)
 
 
 ## SuperPad64 / Ninja SNES Pad
 
-These adapters support eight Nintendo SuperNES controllers or mice.
+These adapters support eight Nintendo SuperNES controllers or mice. The types of connected devices are detected automatically.
 
 Controllers have these inputs:
 
@@ -119,6 +121,15 @@ Controllers have these inputs:
 - Select, Start
 
 Mice display x/y coordinates and two buttons.
+
+
+## Luigi Pantarotto's Spaceballs Adapter
+
+This adapters support eight joysticks with one button each.
+
+It connects to the user port and one controller port.
+
+**Note: Support for this adapter has not been tested with real hardware.**
 
 
 # Building Joyride

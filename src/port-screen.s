@@ -104,7 +104,7 @@ loop:
 	lda port
 	beq next
 	lda type_times_2
-	cmp #(port_types - 1) * 2
+	cmp #(CONTROLLER_NUM_TYPES - 1) * 2
 	bne next
 
 	subtract_word ptr2, 40

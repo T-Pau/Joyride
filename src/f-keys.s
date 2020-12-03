@@ -125,7 +125,7 @@ end:
 port1_next:
 	ldx port1_type
 	inx
-	cpx #port_types
+	cpx #CONTROLLER_NUM_TYPES
 	bne :+
 	ldx #0
 :	stx port1_type
@@ -136,7 +136,7 @@ port1_previous:
 	ldx port1_type
 	dex
 	bpl :+
-	ldx #port_types - 1
+	ldx #CONTROLLER_NUM_TYPES - 1
 :	stx port1_type
 	ldy #0
 	jmp copy_port_screen
@@ -144,10 +144,10 @@ port1_previous:
 port2_next:
 	ldx port2_type
 	inx
-	cpx #TYPE_LIGHTPEN
+	cpx #CONTROLLER_TYPE_LIGHTPEN
 	bne :+
 	inx
-:	cpx #port_types
+:	cpx #CONTROLLER_NUM_TYPES
 	bne :+
 	ldx #0
 :	stx port2_type
@@ -157,12 +157,12 @@ port2_next:
 port2_previous:
 	ldx port2_type
 	dex
-	cpx #TYPE_LIGHTPEN
+	cpx #CONTROLLER_TYPE_LIGHTPEN
 	bne :+
 	dex
 :	cpx #$FF
 	bne :+
-	ldx #port_types - 1
+	ldx #CONTROLLER_NUM_TYPES - 1
 :	stx port2_type
 	ldy #1
 	jmp copy_port_screen
@@ -170,7 +170,7 @@ port2_previous:
 userport_next:
 	ldx userport_type
 	inx
-	cpx #userport_types
+	cpx #USER_NUM_TYPES
 	bne :+
 	ldx #0
 :	stx userport_type
@@ -180,6 +180,6 @@ userport_previous:
 	ldx userport_type
 	dex
 	bpl :+
-	ldx #userport_types - 1
+	ldx #USER_NUM_TYPES - 1
 :	stx userport_type
 	jmp copy_userport

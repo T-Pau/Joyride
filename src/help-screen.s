@@ -34,7 +34,7 @@
 help_screen_start = screen + 1
 
 help_screen_size = 37 * 20
-num_help_screens = 12
+num_help_screens = 13
 
 .macpack cbm
 .macpack cbm_ext
@@ -91,7 +91,7 @@ help_screens_data:
 	scrcode "- kingsoft                           " ; 14
 	scrcode "- starbyte tie break adapter         " ; 15
 	scrcode "- superpad 64                        "	; 16
-	scrcode "                                     " ; 17
+	scrcode "- luigi pantarotto's spaceballs      " ; 17
 	scrcode "                                     " ; 18
 
 	invcode "joystick                             "
@@ -277,25 +277,46 @@ help_screens_data:
 	scrcode "- ninja snes pad (eight supernes     " ; 11
 	scrcode "  controllers, connects to both      " ; 12
 	scrcode "  controller ports)                  " ; 13
-	scrcode "                                     " ; 14
-	scrcode "                                     " ; 15
-	scrcode "                                     " ; 16
+	scrcode "- luigi pantarotto's spaceballs      " ; 14
+	scrcode "  (eight joysticks, connects to user " ; 15
+	scrcode "  port and one controller port)      " ; 16
 	scrcode "                                     " ; 17
 	scrcode "                                     " ; 18
 
 	invcode "superpad 64 / ninja snes pad         "
 	scrcode "                                     "
 	scrcode "these adapters support 8 nintendo    " ;  1
-	scrcode "supernes controllers or mice.        " ;  2
+	scrcode "supernes controllers or mice.  the   " ;  2
+	scrcode "types of connected devices are       " ;  3
+	scrcode "detected automatically.              " ;  4
+	scrcode "                                     " ;  5
+	scrcode "controllers have these inputs:       " ;  6
+	scrcode "- dpad                               " ;  7
+	scrcode "- four face buttons (a, b, x, y)     " ;  8
+	scrcode "- two shoulder buttons (l, r)        " ;  9
+	scrcode "- select, start                      " ; 10
+	scrcode "                                     " ; 11
+	scrcode "mice display x/y coordinates and two " ; 12
+	scrcode "buttons.                             " ; 13
+	scrcode "                                     " ; 14
+	scrcode "                                     " ; 15
+	scrcode "                                     " ; 16
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
+
+	invcode "luigi pantarotto's spaceballs        " ;
+	scrcode "                                     "
+	scrcode "this adapters support eight joysticks" ;  1
+	scrcode "with one button each.                " ;  2
 	scrcode "                                     " ;  3
-	scrcode "controllers have these inputs:       " ;  4
-	scrcode "- dpad                               " ;  5
-	scrcode "- four face buttons (a, b, x, y)     " ;  6
-	scrcode "- two shoulder buttons (l, r)        " ;  7
-	scrcode "- select, start                      " ;  8
+	scrcode "it connects to the user port and one " ;  4
+	scrcode "controller port.                     " ;  5
+	scrcode "                                     " ;  6
+	scrcode "note: support for this adapter has   " ;  7
+	scrcode "not been tested with real hardware.  " ;  8
 	scrcode "                                     " ;  9
-	scrcode "mice display x/y coordinates and two " ; 10
-	scrcode "buttons.                             " ; 11
+	scrcode "                                     " ; 10
+	scrcode "                                     " ; 11
 	scrcode "                                     " ; 12
 	scrcode "                                     " ; 13
 	scrcode "                                     " ; 14

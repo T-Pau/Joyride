@@ -41,6 +41,7 @@ SOURCES = \
 	screen.s \
 	snes.s \
 	snespad.s \
+	spaceballs.s \
 	sprite.s \
 	sprites.s \
 	state.s \
@@ -89,7 +90,8 @@ scroll-wheel.bin: scroll-wheel.png charset.bin
 	gfx-convert screen scroll-wheel.png charset.bin scroll-wheel.bin
 
 eight-player.bin: eight-player.png charset.bin
-	gfx-convert screen eight-player.png charset.bin eight-player.bin
+	gfx-convert screen eight-player.png charset.bin eight-player.bin \
+		&& ./fixup-buttons eight-player.bin
 
 
 ${PROGRAM}: ${OBJECTS}

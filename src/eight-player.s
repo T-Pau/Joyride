@@ -225,10 +225,14 @@ view_sprite:
 top_handler:
 	.word superpad_top
 	.word superpad_top
+	.word spaceballs_top
+	.word spaceballs_top
 
 bottom_handler:
 	.word superpad_bottom
 	.word superpad_bottom
+	.word spaceballs_bottom
+	.word spaceballs_bottom
 
 f_key_commands:
 	.byte 0
@@ -249,6 +253,8 @@ eight_player_type_name_data:
 	;        12345678901234567890
 	invcode "superpad 64         "
 	invcode "ninja snes pad      "
+	invcode "spaceballs port 1   "
+	invcode "spaceballs port 2   "
 
 eight_player_page_name:
 	.repeat 2, i
