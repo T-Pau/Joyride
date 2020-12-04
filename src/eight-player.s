@@ -28,7 +28,7 @@
 
 .autoimport +
 
-.export eight_player_next_type, eight_player_previous_type, eight_player_next_page, eight_player_previous_page, eight_player_bottom, eight_player_top, eight_player_update_views, copy_eight_player_type_name
+.export eight_player_next_type, eight_player_previous_type, eight_player_next_page, eight_player_previous_page, eight_player_bottom, eight_player_top, eight_player_update_views, copy_eight_player_type_name, eight_player_set_all_views
 
 .include "joyride.inc"
 .macpack utility
@@ -90,6 +90,24 @@ eight_player_previous_page:
 	jsr eight_player_update_views
 	jsr copy_eight_player_page_title
 	rts
+	
+eight_player_set_all_views:
+.scope
+	ldy #0
+	ldx #7
+loop:
+	cmp eight_player_views,x
+	beq :+
+	iny
+	sta eight_player_views,x
+:	dex
+	bpl loop
+	cpy #0
+	beq :+
+	lda #COMMAND_EIGHT_PLAYER_UPDATE_VIEWS
+	sta command
+:	rts
+.endscope
 
 eight_player_update_views:
 	lda eight_player_page
@@ -103,6 +121,7 @@ view_loop:
 	lda eight_player_views,x
 	cmp eight_player_current_views,y
 	beq same_view
+	sta eight_player_current_views,y
 	tax
 	lda view_sprite,x
 	sta screen + $3f8,y
@@ -227,12 +246,16 @@ top_handler:
 	.word superpad_top
 	.word spaceballs_top
 	.word spaceballs_top
+	.word inception_top
+	.word inception_top
 
 bottom_handler:
 	.word superpad_bottom
 	.word superpad_bottom
 	.word spaceballs_bottom
 	.word spaceballs_bottom
+	.word inception_bottom
+	.word inception_bottom
 
 f_key_commands:
 	.byte 0
@@ -255,6 +278,8 @@ eight_player_type_name_data:
 	invcode "ninja snes pad      "
 	invcode "spaceballs port 1   "
 	invcode "spaceballs port 2   "
+	invcode "inception port 1    "
+	invcode "inception port 2    "
 
 eight_player_page_name:
 	.repeat 2, i
