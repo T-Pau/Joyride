@@ -31,7 +31,11 @@
 
 .macpack utility
 
-; DEBUG = 1
+DEBUG = 1
+
+OPCODE_JOYSTICKS = $00
+OPCODE_IDENTIFY = $02
+
 
 .ifdef DEBUG
 .macpack cbm
@@ -43,6 +47,8 @@
 
 temp:
 	.res 1
+length:
+	.res 11
 
 .code
 
@@ -57,15 +63,63 @@ inception_top:
 	beq :+
 	dex
 :
-    lda #$00
+	store_word snes_buttons1, ptr1
+	lda #OPCODE_IDENTIFY
+	ldy #8
+	jsr inception_read
+
+	store_word snes_buttons, ptr1
+	lda #OPCODE_JOYSTICKS
+	ldy #8
+	jsr inception_read
+
+	lda #EIGHT_PLAYER_VIEW_JOYSTICK
+	jsr eight_player_set_all_views
+	rts
+
+inception_bottom:
+	lda command
+	beq :+
+	rts
+:
+.ifdef DEBUG
+	store_word screen + 82, ptr1
+	ldx #0
+:	stx temp
+	lda snes_buttons,x
+	jsr display_hex
+	ldx temp
+	inx
+	cpx #8
+	bne :-
+	store_word screen + 122, ptr1
+	ldx #0
+:	stx temp
+	lda snes_buttons1,x
+	jsr display_hex
+	ldx temp
+	inx
+	cpx #8
+	bne :-
+.endif
+
+	lda eight_player_views
+	cmp #EIGHT_PLAYER_VIEW_JOYSTICK
+	bne :+
+	jmp spaceballs_bottom
+:	rts
+
+
+inception_read:
+.scope
+	sty length
     sta CIA1_PRA,x
-	sta CIA1_DDRA,x
 	lda #$1f
 	sta CIA1_DDRA,x
 	lda #$10
 	sta CIA1_PRA,x
 	sta CIA1_DDRA,x
-	
+
 	ldy #0
 loop:
 	nop
@@ -94,50 +148,14 @@ loop:
 	nop
 	lda CIA1_PRA,x
 	ora temp
-	sta snes_buttons,y
+	sta (ptr1),y
 	lda #$10
 	sta CIA1_PRA,x
 	iny
-	cpy #8
+	cpy length
 	bne loop
-	
-	ldx #7
-	lda #$ff
-	ldy #EIGHT_PLAYER_VIEW_NONE
-:	and snes_buttons,x
-	dex
-	bpl :-
-	and #$e0
-	bne :+
-	ldy #EIGHT_PLAYER_VIEW_JOYSTICK
-:	tya
-	jsr eight_player_set_all_views
 	rts
-
-inception_bottom:
-	lda command
-	beq :+
-	rts
-:
-.ifdef DEBUG
-	store_word screen + 82, ptr2
-	ldx #0
-:	stx temp
-	lda snes_buttons,x
-	jsr display_hex
-	ldx temp
-	inx
-	cpx #8
-	bne :-
-	subtract_word ptr2, 3 * 8
-.endif
-	
-	lda eight_player_views
-	cmp #EIGHT_PLAYER_VIEW_JOYSTICK
-	bne :+
-	jmp spaceballs_bottom
-:	rts
-
+.endscope
 
 .ifdef DEBUG
 display_hex:
@@ -150,14 +168,14 @@ display_hex:
 	lsr
 	tax
 	lda hex_digits,x
-	sta (ptr2),y
+	sta (ptr1),y
 	iny
 	lda temp2
 	and #$0f
 	tax
 	lda hex_digits,x
-	sta (ptr2),y
-	add_word ptr2, 3
+	sta (ptr1),y
+	add_word ptr1, 3
 	rts
 
 .bss
