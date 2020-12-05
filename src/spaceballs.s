@@ -96,10 +96,10 @@ loop:
 	ldx index
 	cpx end_index
 	beq end
+	txa
 	inx
 	stx index
 	
-	txa
 	and #3
 	asl
 	tay

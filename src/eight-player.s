@@ -173,7 +173,10 @@ copy_eight_player_type_name:
 	; fallthrough
 copy_eight_player_page_title:
 	store_word screen + 35, ptr2
-	lda eight_player_page
+	ldx eight_player_type
+	lda eight_player_page_name_index,x
+	clc
+	adc eight_player_page
 	asl
 	tax
 	lda eight_player_page_name,x
@@ -265,7 +268,7 @@ f_key_commands:
 	.byte COMMAND_MAIN, COMMAND_HELP
 
 eight_player_num_pages:
-	.byte 2, 2
+	.byte 2, 2, 2, 2, 2, 2
 
 eight_player_type_name:
 	.repeat EIGHT_PLAYER_NUM_TYPES, i
@@ -281,14 +284,21 @@ eight_player_type_name_data:
 	invcode "inception port 1    "
 	invcode "inception port 2    "
 
+; index into eight_player_page_name by type
+eight_player_page_name_index:
+	.byte 0, 0, 0, 0
+	.byte 2, 2
+
 eight_player_page_name:
-	.repeat 2, i
+	.repeat 4, i
 	.word eight_player_page_name_data + i * 3
 	.endrep
 
 eight_player_page_name_data:
 	invcode "1-4"
 	invcode "5-8"
+	invcode "a-d"
+	invcode "e-h"
 
 eight_player_view:
 	.repeat EIGHT_PLYAER_NUM_VIEWS, i

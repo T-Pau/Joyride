@@ -31,6 +31,12 @@
 
 .macpack utility
 
+; DEBUG = 1
+
+.ifdef DEBUG
+.macpack cbm
+.endif
+
 .autoimport +
 
 .bss
@@ -96,9 +102,9 @@ loop:
 	bne loop
 	
 	ldx #7
-	lda #0
+	lda #$ff
 	ldy #EIGHT_PLAYER_VIEW_NONE
-:	ora snes_buttons,x
+:	and snes_buttons,x
 	dex
 	bpl :-
 	and #$e0
@@ -109,8 +115,58 @@ loop:
 	rts
 
 inception_bottom:
+	lda command
+	beq :+
+	rts
+:
+.ifdef DEBUG
+	store_word screen + 82, ptr2
+	ldx #0
+:	stx temp
+	lda snes_buttons,x
+	jsr display_hex
+	ldx temp
+	inx
+	cpx #8
+	bne :-
+	subtract_word ptr2, 3 * 8
+.endif
+	
 	lda eight_player_views
 	cmp #EIGHT_PLAYER_VIEW_JOYSTICK
 	bne :+
 	jmp spaceballs_bottom
 :	rts
+
+
+.ifdef DEBUG
+display_hex:
+	ldy #0
+	sta temp2
+	and #$f0
+	lsr
+	lsr
+	lsr
+	lsr
+	tax
+	lda hex_digits,x
+	sta (ptr2),y
+	iny
+	lda temp2
+	and #$0f
+	tax
+	lda hex_digits,x
+	sta (ptr2),y
+	add_word ptr2, 3
+	rts
+
+.bss
+
+temp2:
+	.res 1
+
+.rodata
+
+hex_digits:
+	scrcode "0123456789abcdef"
+.endif
