@@ -8,6 +8,8 @@ Adapters that support more than two controllers don't fit in the main screen. `F
 
 For digital inputs, the button or direction is inverted when pressed. Analog inputs are displayed as numbers and by positioning a cursor.
 
+To test the keyboard, please use the companion program [Anykey](https://github.com/T-Pau/Anykey).
+
 
 ## Supported Devices
 

@@ -70,8 +70,8 @@ help_screens_data:
 	scrcode "analog inputs are displayed as       " ; 14
 	scrcode "numbers and by positioning a cursor. " ; 15
 	scrcode "                                     " ; 16
-	scrcode "                                     " ; 17
-	scrcode "                                     " ; 18
+	scrcode "to test the keyboard, use anykey:    " ; 17
+	scrcode "  https://github.com/t-pau/anykey    " ; 18
 
 	invcode "supported devices                    "
 	scrcode "                                     "
