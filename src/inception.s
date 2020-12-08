@@ -63,13 +63,13 @@ inception_top:
 	beq :+
 	dex
 :
-	store_word snes_buttons1, ptr1
-	lda #OPCODE_IDENTIFY
+	store_word snes_buttons, ptr1
+	lda #OPCODE_JOYSTICKS
 	ldy #8
 	jsr inception_read
 
-	store_word snes_buttons, ptr1
-	lda #OPCODE_JOYSTICKS
+	store_word snes_buttons1, ptr1
+	lda #OPCODE_IDENTIFY
 	ldy #8
 	jsr inception_read
 
@@ -122,6 +122,7 @@ inception_read:
 
 	ldy #0
 loop:
+	sta CIA1_PRA,x
 	nop
 	nop
 	nop
@@ -150,7 +151,6 @@ loop:
 	ora temp
 	sta (ptr1),y
 	lda #$10
-	sta CIA1_PRA,x
 	iny
 	cpy length
 	bne loop
