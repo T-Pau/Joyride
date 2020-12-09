@@ -25,9 +25,12 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.include "joyride.inc"
+
+.ifdef ENABLE_INCEPTION
+
 .export inception_top, inception_bottom
 
-.include "joyride.inc"
 
 .macpack utility
 
@@ -187,4 +190,6 @@ temp2:
 
 hex_digits:
 	scrcode "0123456789abcdef"
+.endif
+
 .endif
