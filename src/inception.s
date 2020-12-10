@@ -71,10 +71,6 @@ inception_top:
 	ldy #8
 	jsr inception_read
 
-	store_word snes_buttons1, ptr1
-	lda #OPCODE_IDENTIFY
-	ldy #8
-	jsr inception_read
 
 	lda #EIGHT_PLAYER_VIEW_JOYSTICK
 	jsr eight_player_set_all_views
@@ -85,6 +81,23 @@ inception_bottom:
 	beq :+
 	rts
 :
+
+	lda #$ff
+	sta CIA1_PRA
+	sta CIA1_PRB
+	sta CIA1_DDRA
+	sta CIA1_DDRB
+
+	ldx #1
+	lda eight_player_type
+	cmp #EIGHT_PLAYER_TYPE_INCEPTION_1
+	beq :+
+	dex
+:	store_word snes_buttons1, ptr1
+	lda #OPCODE_IDENTIFY
+	ldy #4
+	jsr inception_read
+
 .ifdef DEBUG
 	store_word screen + 82, ptr1
 	ldx #0
@@ -102,7 +115,7 @@ inception_bottom:
 	jsr display_hex
 	ldx temp
 	inx
-	cpx #8
+	cpx #4
 	bne :-
 .endif
 
