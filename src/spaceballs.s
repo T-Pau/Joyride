@@ -51,8 +51,6 @@ spaceballs_top:
 	beq :+
 	rts
 :
-	lda #EIGHT_PLAYER_VIEW_JOYSTICK
-	jsr eight_player_set_all_views
 
 	ldx #1
 	lda eight_player_type

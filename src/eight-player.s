@@ -157,6 +157,13 @@ same_view:
 	rts
 
 copy_eight_player_type_name:
+	ldx eight_player_type
+	lda eight_player_default_view,x
+	ldx #7
+:	sta eight_player_views,x
+	dex
+	bpl :-
+	jsr eight_player_update_views
 	store_word screen + 1, ptr2
 	lda eight_player_type
 	asl
@@ -273,6 +280,14 @@ f_key_commands:
 
 eight_player_num_pages:
 	.byte 2, 2, 2, 2, 2, 2
+
+eight_player_default_view:
+	.byte EIGHT_PLAYER_VIEW_NONE
+	.byte EIGHT_PLAYER_VIEW_NONE
+	.byte EIGHT_PLAYER_VIEW_JOYSTICK
+	.byte EIGHT_PLAYER_VIEW_JOYSTICK
+	.byte EIGHT_PLAYER_VIEW_JOYSTICK
+	.byte EIGHT_PLAYER_VIEW_JOYSTICK
 
 eight_player_type_name:
 	.repeat EIGHT_PLAYER_NUM_TYPES, i

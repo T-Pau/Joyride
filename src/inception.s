@@ -51,11 +51,15 @@ OPCODE_IDENTIFY = $02
 temp:
 	.res 1
 length:
-	.res 11
+	.res 1
+	
+frame:
+	.res 1
 
 .code
 
 inception_top:
+.scope
 	lda command
 	beq :+
 	rts
@@ -66,37 +70,34 @@ inception_top:
 	beq :+
 	dex
 :
+	ldy frame
+	iny
+	sty frame
+	tya
+	and #3
+	beq detect
 	store_word snes_buttons, ptr1
 	lda #OPCODE_JOYSTICKS
 	ldy #8
+	bne read
+detect:
+	store_word snes_buttons1, ptr1
+	lda #OPCODE_IDENTIFY
+read:
+	ldy #8
 	jsr inception_read
 
-
+end:
 	lda #EIGHT_PLAYER_VIEW_JOYSTICK
 	jsr eight_player_set_all_views
 	rts
+.endscope
 
 inception_bottom:
 	lda command
 	beq :+
 	rts
 :
-
-	lda #$ff
-	sta CIA1_PRA
-	sta CIA1_PRB
-	sta CIA1_DDRA
-	sta CIA1_DDRB
-
-	ldx #1
-	lda eight_player_type
-	cmp #EIGHT_PLAYER_TYPE_INCEPTION_1
-	beq :+
-	dex
-:	store_word snes_buttons1, ptr1
-	lda #OPCODE_IDENTIFY
-	ldy #4
-	jsr inception_read
 
 .ifdef DEBUG
 	store_word screen + 82, ptr1
@@ -115,7 +116,7 @@ inception_bottom:
 	jsr display_hex
 	ldx temp
 	inx
-	cpx #4
+	cpx #8
 	bne :-
 .endif
 
@@ -164,6 +165,7 @@ loop:
 	nop
 	nop
 	lda CIA1_PRA,x
+	and #$0f
 	ora temp
 	sta (ptr1),y
 	lda #$10
