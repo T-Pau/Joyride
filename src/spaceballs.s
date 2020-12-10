@@ -53,7 +53,7 @@ spaceballs_top:
 :
 	lda #EIGHT_PLAYER_VIEW_JOYSTICK
 	jsr eight_player_set_all_views
-	
+
 	ldx #1
 	lda eight_player_type
 	cmp #EIGHT_PLAYER_TYPE_SPACEBALLS_1
@@ -91,15 +91,13 @@ spaceballs_bottom:
 	clc
 	adc #4
 	sta end_index
-	
+
 loop:
 	ldx index
 	cpx end_index
 	beq end
 	txa
-	inx
-	stx index
-	
+
 	and #3
 	asl
 	tay
@@ -107,8 +105,10 @@ loop:
 	sta ptr2
 	lda display_start + 1,y
 	sta ptr2 + 1
-	
+
 	lda snes_buttons,x
+	inx
+	stx index
 	and #$f
 	jsr dpad
 
@@ -118,8 +118,8 @@ loop:
 	and #$10
 	jsr button
 	jmp loop
-	
-end:	
+
+end:
 	rts
 
 .rodata
