@@ -2,6 +2,7 @@
 
 - Add support for Trap Them controller.
 - Add support for Luigi Pantarotto's Spaceballs adapter.
+- Add support for Inception adapter.
 
 
 # Version 1.3 (2020-11-28)

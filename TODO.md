@@ -2,9 +2,6 @@
 
 - fix on NTSC
 
-## Additional Hardware Support
-
-- Inception
 
 ## Upcoming Hardware
 
