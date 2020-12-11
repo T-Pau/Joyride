@@ -128,7 +128,7 @@ Mice display x/y coordinates and two buttons.
 
 ## Luigi Pantarotto's Spaceballs Adapter
 
-This adapters support eight joysticks with one button each.
+This adapter supports eight joysticks with one button each.
 
 It connects to the user port and one controller port.
 
@@ -137,7 +137,7 @@ It connects to the user port and one controller port.
 
 ## Inception
 
-This adapters support eight joysticks with one button each.
+This adapter supports eight joysticks with one button each.
 
 It connects to either controller port.
 

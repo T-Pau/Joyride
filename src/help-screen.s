@@ -306,7 +306,7 @@ help_screens_data:
 
 	invcode "luigi pantarotto's spaceballs        "
 	scrcode "                                     "
-	scrcode "this adapters support eight joysticks" ;  1
+	scrcode "this adapter supports eight joysticks" ;  1
 	scrcode "with one button each.                " ;  2
 	scrcode "                                     " ;  3
 	scrcode "it connects to the user port and one " ;  4
@@ -327,7 +327,7 @@ help_screens_data:
 
 	invcode "inception                            "
 	scrcode "                                     "
-	scrcode "this adapters support eight joysticks" ;  1
+	scrcode "this adapter supports eight joysticks" ;  1
 	scrcode "with one button each.                " ;  2
 	scrcode "                                     " ;  3
 	scrcode "it connects to either controller     " ;  4
