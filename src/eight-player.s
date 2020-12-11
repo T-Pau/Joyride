@@ -90,7 +90,7 @@ eight_player_previous_page:
 	jsr eight_player_update_views
 	jsr copy_eight_player_page_title
 	rts
-	
+
 eight_player_set_all_views:
 .scope
 	ldy #0
@@ -250,26 +250,22 @@ view_sprite:
 	.byte sprite_none
 	.byte sprite_none
 	.byte sprite_cross
-	
+
 top_handler:
 	.word superpad_top
 	.word superpad_top
 	.word spaceballs_top
 	.word spaceballs_top
-.ifdef ENABLE_INCEPTION
 	.word inception_top
 	.word inception_top
-.endif
 
 bottom_handler:
 	.word superpad_bottom
 	.word superpad_bottom
 	.word spaceballs_bottom
 	.word spaceballs_bottom
-.ifdef ENABLE_INCEPTION
 	.word inception_bottom
 	.word inception_bottom
-.endif
 
 f_key_commands:
 	.byte 0
@@ -300,17 +296,13 @@ eight_player_type_name_data:
 	invcode "ninja snes pad      "
 	invcode "spaceballs port 1   "
 	invcode "spaceballs port 2   "
-.ifdef ENABLE_INCEPTION
 	invcode "inception port 1    "
 	invcode "inception port 2    "
-.endif
 
 ; index into eight_player_page_name by type
 eight_player_page_name_index:
 	.byte 0, 0, 0, 0
-.ifdef ENABLE_INCEPTION
 	.byte 2, 2
-.endif
 
 eight_player_page_name:
 	.repeat 4, i
@@ -320,10 +312,8 @@ eight_player_page_name:
 eight_player_page_name_data:
 	invcode "1-4"
 	invcode "5-8"
-.ifdef ENABLE_INCEPTION
 	invcode "a-d"
 	invcode "e-h"
-.endif
 
 eight_player_view:
 	.repeat EIGHT_PLYAER_NUM_VIEWS, i

@@ -25,35 +25,23 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.include "joyride.inc"
-
-.ifdef ENABLE_INCEPTION
-
 .export inception_top, inception_bottom
 
+.autoimport +
+
+.include "joyride.inc"
 
 .macpack utility
 
-DEBUG = 1
-
 OPCODE_JOYSTICKS = $00
 OPCODE_IDENTIFY = $02
-
-
-.ifdef DEBUG
-.macpack cbm
-.endif
-
-.autoimport +
 
 .bss
 
 temp:
 	.res 1
+
 length:
-	.res 1
-	
-frame:
 	.res 1
 
 .code
@@ -70,26 +58,11 @@ inception_top:
 	beq :+
 	dex
 :
-	ldy frame
-	iny
-	sty frame
-	tya
-	and #3
-	beq detect
 	store_word snes_buttons, ptr1
 	lda #OPCODE_JOYSTICKS
-	ldy #8
-	bne read
-detect:
-	store_word snes_buttons1, ptr1
-	lda #OPCODE_IDENTIFY
-read:
+;	lda #OPCODE_IDENTIFY
 	ldy #8
 	jsr inception_read
-
-end:
-	lda #EIGHT_PLAYER_VIEW_JOYSTICK
-	jsr eight_player_set_all_views
 	rts
 .endscope
 
@@ -98,27 +71,6 @@ inception_bottom:
 	beq :+
 	rts
 :
-
-.ifdef DEBUG
-	store_word screen + 82, ptr1
-	ldx #0
-:	stx temp
-	lda snes_buttons,x
-	jsr display_hex
-	ldx temp
-	inx
-	cpx #8
-	bne :-
-	store_word screen + 122, ptr1
-	ldx #0
-:	stx temp
-	lda snes_buttons1,x
-	jsr display_hex
-	ldx temp
-	inx
-	cpx #8
-	bne :-
-.endif
 
 	lda eight_player_views
 	cmp #EIGHT_PLAYER_VIEW_JOYSTICK
@@ -174,37 +126,3 @@ loop:
 	bne loop
 	rts
 .endscope
-
-.ifdef DEBUG
-display_hex:
-	ldy #0
-	sta temp2
-	and #$f0
-	lsr
-	lsr
-	lsr
-	lsr
-	tax
-	lda hex_digits,x
-	sta (ptr1),y
-	iny
-	lda temp2
-	and #$0f
-	tax
-	lda hex_digits,x
-	sta (ptr1),y
-	add_word ptr1, 3
-	rts
-
-.bss
-
-temp2:
-	.res 1
-
-.rodata
-
-hex_digits:
-	scrcode "0123456789abcdef"
-.endif
-
-.endif

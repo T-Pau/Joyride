@@ -105,14 +105,14 @@ loop:
 	sta ptr2 + 1
 
 	lda snes_buttons,x
-	inx
-	stx index
 	and #$f
 	jsr dpad
 
 	subtract_word ptr2, BUTTON_OFFSET
 	ldx index
 	lda snes_buttons,x
+	inx
+	stx index
 	and #$10
 	jsr button
 	jmp loop

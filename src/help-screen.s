@@ -34,7 +34,7 @@
 help_screen_start = screen + 1
 
 help_screen_size = 37 * 20
-num_help_screens = 13
+num_help_screens = 14
 
 .macpack cbm
 .macpack cbm_ext
@@ -84,15 +84,15 @@ help_screens_data:
 	scrcode "- light pen (only in port 1)         " ;  7
 	scrcode "- trap them controller               " ;  8
 	scrcode "- ninja snes pad                     " ;  9
-	scrcode "                                     " ; 10
-	scrcode "userport:                            " ; 11
-	scrcode "- protovision / classic game adapter " ; 12
-	scrcode "- digital excess / hitmen            " ; 13
-	scrcode "- kingsoft                           " ; 14
-	scrcode "- starbyte tie break adapter         " ; 15
-	scrcode "- superpad 64                        "	; 16
-	scrcode "- luigi pantarotto's spaceballs      " ; 17
-	scrcode "                                     " ; 18
+	scrcode "- inception                          " ; 10
+	scrcode "                                     " ; 11
+	scrcode "userport:                            " ; 12
+	scrcode "- protovision / classic game adapter " ; 13
+	scrcode "- digital excess / hitmen            " ; 14
+	scrcode "- kingsoft                           " ; 15
+	scrcode "- starbyte tie break adapter         " ; 16
+	scrcode "- superpad 64                        "	; 17
+	scrcode "- luigi pantarotto's spaceballs      " ; 18
 
 	invcode "joystick                             "
 	scrcode "                                     "
@@ -280,8 +280,8 @@ help_screens_data:
 	scrcode "- luigi pantarotto's spaceballs      " ; 14
 	scrcode "  (eight joysticks, connects to user " ; 15
 	scrcode "  port and one controller port)      " ; 16
-	scrcode "                                     " ; 17
-	scrcode "                                     " ; 18
+	scrcode "- inception (eight joysticks,        " ; 17
+	scrcode "  connects to controller port)       " ; 18
 
 	invcode "superpad 64 / ninja snes pad         "
 	scrcode "                                     "
@@ -304,7 +304,7 @@ help_screens_data:
 	scrcode "                                     " ; 17
 	scrcode "                                     " ; 18
 
-	invcode "luigi pantarotto's spaceballs        " ;
+	invcode "luigi pantarotto's spaceballs        "
 	scrcode "                                     "
 	scrcode "this adapters support eight joysticks" ;  1
 	scrcode "with one button each.                " ;  2
@@ -314,6 +314,27 @@ help_screens_data:
 	scrcode "                                     " ;  6
 	scrcode "note: support for this adapter has   " ;  7
 	scrcode "not been tested with real hardware.  " ;  8
+	scrcode "                                     " ;  9
+	scrcode "                                     " ; 10
+	scrcode "                                     " ; 11
+	scrcode "                                     " ; 12
+	scrcode "                                     " ; 13
+	scrcode "                                     " ; 14
+	scrcode "                                     " ; 15
+	scrcode "                                     " ; 16
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
+
+	invcode "inception                            "
+	scrcode "                                     "
+	scrcode "this adapters support eight joysticks" ;  1
+	scrcode "with one button each.                " ;  2
+	scrcode "                                     " ;  3
+	scrcode "it connects to either controller     " ;  4
+	scrcode "port.                                " ;  5
+	scrcode "                                     " ;  6
+	scrcode "ps/2 mice and auto-detection are not " ;  7
+	scrcode "supported yet.                       " ;  8
 	scrcode "                                     " ;  9
 	scrcode "                                     " ; 10
 	scrcode "                                     " ; 11

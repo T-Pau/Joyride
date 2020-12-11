@@ -24,6 +24,7 @@ Controller port:
 - Light Pen (only in port 1)
 - Trap Them
 - Ninja SNES Pad
+- Inception
 
 Userport:
 
@@ -109,7 +110,7 @@ Supported are the following variants:
 - SuperPad64 (eight SuperNES controllers, connects to user port)
 - Ninja SNES Pad (eight SuperNES controllers, connects to both controller ports)
 - Luigi Pantarotto's Spaceballs adapter (eight joysticks, connects to user port and one controller port)
-
+- Inception (eight joysticks, connects to controller port)
 
 ## SuperPad64 / Ninja SNES Pad
 
@@ -132,6 +133,15 @@ This adapters support eight joysticks with one button each.
 It connects to the user port and one controller port.
 
 **Note: Support for this adapter has not been tested with real hardware.**
+
+
+## Inception
+
+This adapters support eight joysticks with one button each.
+
+It connects to either controller port.
+
+PS/2 mice and auto-detection are not supported yet.
 
 
 # Building Joyride
