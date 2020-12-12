@@ -1,6 +1,6 @@
 SUBDIRS = src
 
-VERSION = 1.3
+VERSION = 1.4
 
 FILES = README.md NEWS.md Joyride\ User\ Manual.pdf screenshot.png src/joyride.prg
 
