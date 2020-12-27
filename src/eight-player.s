@@ -94,7 +94,7 @@ eight_player_previous_page:
 eight_player_set_all_views:
 .scope
 	ldy #0
-	ldx #7
+	ldx #11
 loop:
 	cmp eight_player_views,x
 	beq :+
@@ -157,11 +157,17 @@ same_view:
 	rts
 
 copy_eight_player_type_name:
-	ldx eight_player_type
+	lda eight_player_type
+	asl
+	tax
 	lda eight_player_default_view,x
-	ldx #7
-:	sta eight_player_views,x
-	dex
+	sta ptr1
+	lda eight_player_default_view + 1,x
+	sta ptr1 + 1
+	ldy #11
+:	lda (ptr1),y
+	sta eight_player_views,y
+	dey
 	bpl :-
 	jsr eight_player_update_views
 	store_word screen + 1, ptr2
@@ -275,15 +281,32 @@ f_key_commands:
 	.byte COMMAND_MAIN, COMMAND_HELP
 
 eight_player_num_pages:
-	.byte 2, 2, 2, 2, 2, 2
+	.byte 3, 3, 2, 2, 3, 3
 
 eight_player_default_view:
+	.word eight_player_default_view_superpad
+	.word eight_player_default_view_superpad
+	.word eight_player_default_view_joystick
+	.word eight_player_default_view_joystick
+	.word eight_player_default_view_joystick
+	.word eight_player_default_view_joystick
+
+eight_player_default_view_superpad:
+	.repeat 8, i
 	.byte EIGHT_PLAYER_VIEW_NONE
-	.byte EIGHT_PLAYER_VIEW_NONE
+	.endrepeat
+	.repeat 4, i
+	.byte EIGHT_PLAYER_VIEW_EMPTY
+	.endrepeat
+
+eight_player_default_view_joystick:
+	.repeat 8, i
 	.byte EIGHT_PLAYER_VIEW_JOYSTICK
-	.byte EIGHT_PLAYER_VIEW_JOYSTICK
-	.byte EIGHT_PLAYER_VIEW_JOYSTICK
-	.byte EIGHT_PLAYER_VIEW_JOYSTICK
+	.endrepeat
+	.repeat 4, i
+	.byte EIGHT_PLAYER_VIEW_EMPTY
+	.endrepeat
+
 
 eight_player_type_name:
 	.repeat EIGHT_PLAYER_NUM_TYPES, i
@@ -302,18 +325,20 @@ eight_player_type_name_data:
 ; index into eight_player_page_name by type
 eight_player_page_name_index:
 	.byte 0, 0, 0, 0
-	.byte 2, 2
+	.byte 3, 3
 
 eight_player_page_name:
-	.repeat 4, i
+	.repeat 6, i
 	.word eight_player_page_name_data + i * 3
 	.endrep
 
 eight_player_page_name_data:
 	invcode "1-4"
 	invcode "5-8"
+	invcode "raw"
 	invcode "a-d"
 	invcode "e-h"
+	invcode "raw"
 
 eight_player_view:
 	.repeat EIGHT_PLYAER_NUM_VIEWS, i

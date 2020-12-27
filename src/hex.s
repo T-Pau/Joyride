@@ -1,4 +1,4 @@
-;  state.s -- Current program state.
+;  hex.s -- Display byte as hex digits.
 ;  Copyright (C) 2020 Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
@@ -25,39 +25,41 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export mode, port1_type, port2_type, userport_type, eight_player_type, eight_player_page, eight_player_views, eight_player_current_views, init_state
+
+.autoimport +
+
+.export hex
 
 .include "joyride.inc"
 
+.macpack utility
+
 .bss
 
-mode: ;
+tmp:
 	.res 1
-
-port1_type:
-	.res 1
-port2_type:
-	.res 1
-userport_type:
-	.res 1
-
-eight_player_type:
-	.res 1
-eight_player_page:
-	.res 1
-eight_player_current_views:
-	.res 4
-eight_player_views:
-	.res 12
 
 .code
 
-init_state:
-	lda #0
-	sta mode
-	sta port1_type
-	sta port2_type
-	sta userport_type
-	sta eight_player_type
-	sta eight_player_page
+hex:
+	sta tmp
+	lsr
+	lsr
+	lsr
+	lsr
+	tax
+	lda hex_digits,x
+	sta (ptr2),y
+	iny
+	lda tmp
+	and #$0f
+	tax
+	lda hex_digits,x
+	sta (ptr2),y
+	iny
 	rts
+
+.rodata
+
+hex_digits:
+	.byte "0123456789", $1, $2, $3, $4, $5

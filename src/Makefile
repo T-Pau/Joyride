@@ -30,6 +30,7 @@ SOURCES = \
 	f-keys.s \
 	help.s \
 	help-screen.s \
+	hex.s \
 	inception.s \
 	irq.s \
 	irq-table.s \

@@ -33,12 +33,16 @@
 
 .macpack utility
 
+RAW_OFFSET_1 = 40 * 2 + 6
+RAW_OFFSET_NEXT = 40 * 4
+RAW_OFFSET_5 = 40 * 11 + 23 ; negative
+
 OPCODE_JOYSTICKS = $00
 OPCODE_IDENTIFY = $02
 
 .bss
 
-temp:
+tmp:
 	.res 1
 
 length:
@@ -61,7 +65,7 @@ inception_top:
 	store_word snes_buttons, ptr1
 	lda #OPCODE_JOYSTICKS
 ;	lda #OPCODE_IDENTIFY
-	ldy #8
+	ldy #16
 	jsr inception_read
 	rts
 .endscope
@@ -72,7 +76,11 @@ inception_bottom:
 	rts
 :
 
-	lda eight_player_views
+	lda eight_player_page
+	cmp #2
+	bne :+
+	jmp display_raw
+:	lda eight_player_views
 	cmp #EIGHT_PLAYER_VIEW_JOYSTICK
 	bne :+
 	jmp spaceballs_bottom
@@ -105,7 +113,7 @@ loop:
 	asl
 	asl
 	asl
-	sta temp
+	sta tmp
 	lda #0
 	sta CIA1_PRA,x
 	nop
@@ -118,7 +126,7 @@ loop:
 	nop
 	lda CIA1_PRA,x
 	and #$0f
-	ora temp
+	ora tmp
 	sta (ptr1),y
 	lda #$10
 	iny
@@ -126,3 +134,49 @@ loop:
 	bne loop
 	rts
 .endscope
+
+display_raw:
+	store_word screen + EIGHT_PLAYER_OFFSET_FIRST + RAW_OFFSET_1, ptr2
+	ldx #0
+	jsr display_raw_one
+	add_word ptr2, RAW_OFFSET_NEXT
+	ldx #1
+	jsr display_raw_one
+	add_word ptr2, RAW_OFFSET_NEXT
+	ldx #2
+	jsr display_raw_one
+	add_word ptr2, RAW_OFFSET_NEXT
+	ldx #3
+	jsr display_raw_one
+
+	subtract_word ptr2, RAW_OFFSET_5
+	ldx #4
+	jsr display_raw_one
+	add_word ptr2, RAW_OFFSET_NEXT
+	ldx #5
+	jsr display_raw_one
+	add_word ptr2, RAW_OFFSET_NEXT
+	ldx #6
+	jsr display_raw_one
+	add_word ptr2, RAW_OFFSET_NEXT
+	ldx #7
+	jmp display_raw_one
+
+display_raw_one:
+	ldy #0
+	txa
+	clc
+	adc #$01
+	sta (ptr2),y
+	iny
+	lda #$3a
+	sta (ptr2),y
+	iny
+	iny
+	lda snes_buttons,x
+	stx tmp
+	jsr hex
+	iny
+	ldx tmp
+	lda snes_buttons1,x
+	jmp hex

@@ -40,6 +40,10 @@ MOUSE_R_OFFSET = 3
 MOUSE_X_OFFSET = 40 * 5 - 1
 MOUSE_Y_OFFSET = 40
 
+RAW_OFFSET_1 = 40 * 2 + 2
+RAW_OFFSET_NEXT = 40 * 4
+RAW_OFFSET_5 = 40 * 11 + 21 ; negative
+
 .macpack utility
 
 .bss
@@ -70,8 +74,10 @@ superpad_top:
 	beq :+
 	rts
 :
-	; display 4th pad (not enough time in border)
 	lda eight_player_page
+	cmp #2
+	beq read
+	; display 4th pad (not enough time in border)
 	asl
 	asl
 	tay
@@ -189,6 +195,10 @@ superpad_bottom:
 :
 
 	lda eight_player_page
+	cmp #2
+	bne :+
+	jmp display_raw
+:
 	asl
 	asl
 	sta index
@@ -331,6 +341,59 @@ mouse_display:
 	jsr set_sprite
 	rts
 
+display_raw:
+	store_word screen + EIGHT_PLAYER_OFFSET_FIRST + RAW_OFFSET_1, ptr2
+	ldx #0
+	jsr display_raw_one
+	add_word ptr2, RAW_OFFSET_NEXT
+	ldx #1
+	jsr display_raw_one
+	add_word ptr2, RAW_OFFSET_NEXT
+	ldx #2
+	jsr display_raw_one
+	add_word ptr2, RAW_OFFSET_NEXT
+	ldx #3
+	jsr display_raw_one
+
+	subtract_word ptr2, RAW_OFFSET_5
+	ldx #4
+	jsr display_raw_one
+	add_word ptr2, RAW_OFFSET_NEXT
+	ldx #5
+	jsr display_raw_one
+	add_word ptr2, RAW_OFFSET_NEXT
+	ldx #6
+	jsr display_raw_one
+	add_word ptr2, RAW_OFFSET_NEXT
+	ldx #7
+	jmp display_raw_one
+
+display_raw_one:
+	ldy #0
+	txa
+	clc
+	adc #$31
+	sta (ptr2),y
+	iny
+	lda #$3a
+	sta (ptr2),y
+	iny
+	iny
+	lda snes_buttons,x
+	stx tmp
+	jsr hex
+	iny
+	ldx tmp
+	lda snes_buttons1,x
+	jsr hex
+	iny
+	ldx tmp
+	lda snes_buttons2,x
+	jsr hex
+	iny
+	ldx tmp
+	lda snes_buttons3,x
+	jmp hex
 
 .rodata
 
