@@ -299,8 +299,8 @@ help_screens_data:
 	scrcode "mice display x/y coordinates and two " ; 12
 	scrcode "buttons.                             " ; 13
 	scrcode "                                     " ; 14
-	scrcode "                                     " ; 15
-	scrcode "                                     " ; 16
+	scrcode "the third page shows the raw data    " ; 15
+	scrcode "read from each controller.           " ; 16
 	scrcode "                                     " ; 17
 	scrcode "                                     " ; 18
 
@@ -336,8 +336,8 @@ help_screens_data:
 	scrcode "ps/2 mice and auto-detection are not " ;  7
 	scrcode "supported yet.                       " ;  8
 	scrcode "                                     " ;  9
-	scrcode "                                     " ; 10
-	scrcode "                                     " ; 11
+	scrcode "the third page shows the raw data    " ; 10
+	scrcode "read from the adapter.               " ; 11
 	scrcode "                                     " ; 12
 	scrcode "                                     " ; 13
 	scrcode "                                     " ; 14

@@ -125,6 +125,8 @@ Controllers have these inputs:
 
 Mice display x/y coordinates and two buttons.
 
+The third page shows the raw data read from each controller.
+
 
 ## Luigi Pantarotto's Spaceballs Adapter
 
@@ -142,6 +144,8 @@ This adapter supports eight joysticks with one button each.
 It connects to either controller port.
 
 PS/2 mice and auto-detection are not supported yet.
+
+The third page shows the raw data read from the adapter.
 
 
 # Building Joyride

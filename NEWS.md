@@ -1,3 +1,7 @@
+# Version 1.5 ()
+
+- Add raw view to SuperPad64, Ninja SNES Pad, and Inception.
+
 # Version 1.4 (2020-12-12)
 
 - Add support for Trap Them controller.
