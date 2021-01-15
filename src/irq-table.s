@@ -36,7 +36,7 @@
 main_irq_table:
 	.word 0, handle_top
 	.word top - 1, top_label
-	.word top + 8 - 1, handle_user
+	.word top + 8 - 1, handle_userport
 	.word top + 13 * 8, label_background
 	.word top + 14 * 8 - 1, handle_port2
 	.word top + 21 * 8, label_background

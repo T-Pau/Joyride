@@ -37,6 +37,7 @@ SOURCES = \
 	logo.s \
 	main-loop.s \
 	memcpy.s \
+	petscii.s \
 	port-screen.s \
 	ports.s \
 	pot.s \
@@ -87,6 +88,10 @@ mouse-buttons.bin: mouse-buttons.png charset.bin
 port-screens.bin: port-screens.png charset.bin
 	gfx-convert screen port-screens.png charset.bin port-screens.bin \
 		&& ./fixup-buttons port-screens.bin
+
+userport-screens.bin: userport-screens.png charset.bin
+	gfx-convert screen userport-screens.png charset.bin userport-screens.bin \
+		&& ./fixup-buttons userport-screens.bin
 
 scroll-wheel.bin: scroll-wheel.png charset.bin
 	gfx-convert screen scroll-wheel.png charset.bin scroll-wheel.bin

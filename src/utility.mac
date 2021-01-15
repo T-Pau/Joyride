@@ -37,7 +37,7 @@
 	lda address
 	adc #<(value)
 	sta address
-.if value < 256
+.if (value) < 256
 .scope
 	bcc end_add_word
 	inc address + 1

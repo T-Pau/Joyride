@@ -27,7 +27,7 @@
 
 .autoimport +
 
-.export handle_port1, handle_port2, handle_top, handle_user
+.export handle_port1, handle_port2, handle_top
 .export port_number, port_digital, port_pot1, port_pot2, pen_x, pen_y
 
 .include "joyride.inc"
@@ -77,20 +77,6 @@ top_no_change:
 	bne :+
 	jsr lightpen_sprite_top
 :	rts
-
-handle_user:
-	jsr content_background
-	lda command
-	bne user_end
-	jsr read_userport
-	ldx #2
-	jsr display_joystick
-	lda port_digital + 1
-	sta port_digital
-	ldx #3
-	jsr display_joystick
-user_end:
-	rts
 
 handle_port1:
 	lda VIC_LPEN_X

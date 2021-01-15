@@ -27,10 +27,11 @@
 
 .autoimport +
 
-.export copy_userport, read_userport
+.export copy_userport, handle_userport
 
 .include "joyride.inc"
 .macpack cbm_ext
+.macpack utility
 
 name_address = screen + 13 * 40 + 15
 
@@ -42,13 +43,21 @@ temp:
 .rodata
 
 read_routines:
-	.word read_protovision
-	.word read_hitmen
-	.word read_kingsoft
-	.word read_starbyte
+	.word handle_protovision
+	.word handle_hitmen
+	.word handle_kingsoft
+	.word handle_starbyte
+	.word handle_petscii
+
+userport_views:
+	.byte USER_VIEW_JOYSTICK
+	.byte USER_VIEW_JOYSTICK
+	.byte USER_VIEW_JOYSTICK
+	.byte USER_VIEW_JOYSTICK
+	.byte USER_VIEW_SNES
 
 userport_names:
-	.repeat 4, i
+	.repeat USER_NUM_TYPES, i
 	.word userport_name_strings + 20 * i
 	.endrep
 
@@ -57,6 +66,15 @@ userport_name_strings:
 	invcode "digital xs / hitmen "
 	invcode "kingsoft            "
 	invcode "starbyte            "
+	invcode "petscii robots      "
+
+userport_view:
+	.repeat USER_NUM_VIEWS, i
+	.word userport_view_data + i * 31 * 5
+	.endrep
+
+userport_view_data:
+	.incbin "userport-screens.bin"
 
 .code
 
@@ -84,10 +102,27 @@ loop:
 	dey
 	bpl loop
 
+	ldx userport_type
+	lda userport_views,x
+	asl
+	tax
+	lda userport_view,x
+	sta ptr1
+	lda userport_view + 1,x
+	sta ptr1 + 1
+	store_word USERPORT_VIEW_START, ptr2
+	ldx #31
+	ldy #5
+	jsr copyrect
 	rts
 
-read_userport:
-	lda userport_type
+handle_userport:
+.scope
+	jsr content_background
+	lda command
+	beq :+
+	rts
+:	lda userport_type
 	asl
 	tay
 	lda read_routines,y
@@ -96,9 +131,18 @@ read_userport:
 	sta jump + 2
 jump:
 	jmp $0000
+.endscope
 
+display_userport_joysticks:
+	ldx #2
+	jsr display_joystick
+	lda port_digital + 1
+	sta port_digital
+	ldx #3
+	jsr display_joystick
+	rts
 
-read_protovision:
+handle_protovision:
 	lda #$80
     sta CIA2_DDRB
 
@@ -125,7 +169,7 @@ read_protovision:
     ora #$10
 :   and #$1f
 	sta port_digital + 1
-	rts
+	jmp display_userport_joysticks
 
 
 read_hitmen:
@@ -167,6 +211,10 @@ read_hitmen:
 :
 	rts
 
+handle_hitmen:
+	jsr read_hitmen
+	jmp display_userport_joysticks
+
 .rodata
 
 kingsoft_low:
@@ -189,7 +237,7 @@ starbyte_high:
 
 .code
 
-read_kingsoft:
+handle_kingsoft:
 	jsr read_hitmen
 
 	lda port_digital
@@ -222,9 +270,9 @@ read_kingsoft:
 	sta port_digital
 	lda temp + 1
 	sta port_digital + 1
-	rts
+	jmp display_userport_joysticks
 
-read_starbyte:
+handle_starbyte:
 	jsr read_hitmen
 
 	lda port_digital
@@ -257,4 +305,4 @@ read_starbyte:
 	sta port_digital
 	lda temp + 1
 	sta port_digital + 1
-	rts
+	jmp display_userport_joysticks
