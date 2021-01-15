@@ -46,7 +46,7 @@ start:
 	jsr init_state
 	jsr display_main_screen
 
-	set_vic_bank $4000
+	set_vic_bank $c000
 	set_vic_text screen, charset
 
 	lda #$0f

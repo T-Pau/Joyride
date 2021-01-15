@@ -32,6 +32,7 @@ Userport:
 - Digital Excess / Hitmen
 - Kingsoft
 - Starbyte Tie Break Adapter
+- PETSCII Robots Adapter
 - SuperPad64
 - Luigi Pantarotto's Spaceballs Adapter
 
@@ -97,6 +98,18 @@ Supported are the following variants:
 - Digital Excess / Hitmen
 - Kingsoft
 - Starbyte Tie Break Adapter
+
+
+## 	PETSCII Robots Adapter
+
+This adapter is included with the game Attack of the PETSCII Robots and allows connecting one SuperNES controller to the Userport.
+
+It has these inputs:
+
+- dpad
+- four face buttons (A, B, X, Y)
+- two shoulder buttons (L, L)
+- Select, Start
 
 
 ## Eight Player Adapter

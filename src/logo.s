@@ -66,7 +66,7 @@ loop:
 
 setup_logo:
 	lda #00
-	sta $7fff
+	sta $ffff
 	lda #<LOGO_X
 	sta VIC_SPR4_X
 	sta VIC_SPR5_X

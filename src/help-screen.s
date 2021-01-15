@@ -34,7 +34,7 @@
 help_screen_start = screen + 1
 
 help_screen_size = 37 * 20
-num_help_screens = 14
+num_help_screens = 15
 
 .macpack cbm
 .macpack cbm_ext
@@ -75,22 +75,22 @@ help_screens_data:
 
 	invcode "supported devices                    "
 	scrcode "                                     "
-	scrcode "the following devices are supported: " ;  1
-	scrcode "controller port:                     " ;  2
-	scrcode "- joystick                           " ;  3
-	scrcode "- mouse                              " ;  4
-	scrcode "- paddle                             " ;  5
-	scrcode "- koalapad                           " ;  6
-	scrcode "- light pen (only in port 1)         " ;  7
-	scrcode "- trap them controller               " ;  8
-	scrcode "- ninja snes pad                     " ;  9
-	scrcode "- inception                          " ; 10
-	scrcode "                                     " ; 11
-	scrcode "userport:                            " ; 12
-	scrcode "- protovision / classic game adapter " ; 13
-	scrcode "- digital excess / hitmen            " ; 14
-	scrcode "- kingsoft                           " ; 15
-	scrcode "- starbyte tie break adapter         " ; 16
+	scrcode "controller port:                     " ;  1
+	scrcode "- joystick                           " ;  2
+	scrcode "- mouse                              " ;  3
+	scrcode "- paddle                             " ;  4
+	scrcode "- koalapad                           " ;  5
+	scrcode "- light pen (only in port 1)         " ;  6
+	scrcode "- trap them controller               " ;  7
+	scrcode "- ninja snes pad                     " ;  8
+	scrcode "- inception                          " ;  9
+	scrcode "                                     " ; 10
+	scrcode "userport:                            " ; 11
+	scrcode "- protovision / classic game adapter " ; 12
+	scrcode "- digital excess / hitmen            " ; 13
+	scrcode "- kingsoft                           " ; 14
+	scrcode "- starbyte tie break adapter         " ; 15
+	scrcode "- petscii robots adapter             " ; 16
 	scrcode "- superpad 64                        "	; 17
 	scrcode "- luigi pantarotto's spaceballs      " ; 18
 
@@ -253,6 +253,27 @@ help_screens_data:
 	scrcode "- kingsoft                           " ;  8
 	scrcode "- starbyte tie break adapter         " ;  9
 	scrcode "                                     " ; 10
+	scrcode "                                     " ; 11
+	scrcode "                                     " ; 12
+	scrcode "                                     " ; 13
+	scrcode "                                     " ; 14
+	scrcode "                                     " ; 15
+	scrcode "                                     " ; 16
+	scrcode "                                     " ; 17
+	scrcode "                                     " ; 18
+
+	invcode "petscii robots adapter               "
+	scrcode "                                     "
+	scrcode "this adapter is included with the    " ;  1
+	scrcode "game attack of the petcsii robots and" ;  2
+	scrcode "allows connecting one supernes       " ;  3
+	scrcode "controller to the userport.          " ;  4
+	scrcode "                                     " ;  5
+	scrcode "it has these inputs:                 " ;  6
+	scrcode "- dpad                               " ;  7
+	scrcode "- four face buttons (a, b, x, y)     " ;  8
+	scrcode "- two shoulder buttons (l, r)        " ;  9
+	scrcode "- select, start                      " ; 10
 	scrcode "                                     " ; 11
 	scrcode "                                     " ; 12
 	scrcode "                                     " ; 13
