@@ -307,7 +307,7 @@ help_screens_data:
 	invcode "superpad 64 / ninja snes pad         "
 	scrcode "                                     "
 	scrcode "these adapters support 8 nintendo    " ;  1
-	scrcode "supernes controllers or mice.  the   " ;  2
+	scrcode "supernes controllers or mice. the    " ;  2
 	scrcode "types of connected devices are       " ;  3
 	scrcode "detected automatically.              " ;  4
 	scrcode "                                     " ;  5

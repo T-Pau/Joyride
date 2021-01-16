@@ -125,6 +125,7 @@ Supported are the following variants:
 - Luigi Pantarotto's Spaceballs adapter (eight joysticks, connects to user port and one controller port)
 - Inception (eight joysticks, connects to controller port)
 
+
 ## SuperPad64 / Ninja SNES Pad
 
 These adapters support eight Nintendo SuperNES controllers or mice. The types of connected devices are detected automatically.
