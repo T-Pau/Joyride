@@ -1,8 +1,8 @@
 SUBDIRS = src
 
-VERSION = 1.5
+VERSION = 1.5.1
 
-FILES = README.md NEWS.md Joyride\ User\ Manual.pdf screenshot.png src/joyride.prg
+FILES = README.md NEWS.md Joyride\ User\ Manual.pdf screenshot.png src/joyride.prg src/joyride.d64 src/joyride.d81
 
 DISTFILE = Joyride-${VERSION}.zip
 

@@ -79,6 +79,7 @@ top_no_change:
 :	rts
 
 handle_port1:
+.scope
 	lda VIC_LPEN_X
 	sta pen_x_new
 	lda VIC_LPEN_Y
@@ -87,11 +88,20 @@ handle_port1:
 	jsr display_logo
 
 	; read POT1/POT2
+	lda machine_type
+	bpl sid
+	lda $d620
+	sta port_pot1
+	lda $d621
+	sta port_pot2
+	jmp end_pot
+sid:
 	lda SID_ADConv1
 	sta port_pot1
 	lda SID_ADConv2
 	sta port_pot2
 
+end_pot:
 	; read digital input
 	lda #$00
 	sta CIA1_DDRA
@@ -129,15 +139,26 @@ bottom_no_change:
 	jsr display_port
 end_port1:
 	rts
+.endscope
 
 handle_port2:
 	jsr content_background
 
 	; read POT1/POT2
+	lda machine_type
+	bpl sid
+	lda $d622
+	sta port_pot1
+	lda $d623
+	sta port_pot2
+	jmp end_pot
+sid:
 	lda SID_ADConv1
 	sta port_pot1
 	lda SID_ADConv2
 	sta port_pot2
+
+end_pot:
 
 	; read control port 2
 	lda #$00
@@ -166,4 +187,3 @@ handle_port2:
 	jsr display_port
 end_port2:
 	rts
-

@@ -7,6 +7,11 @@ LD = cl65
 LDFLAGS = -t c64 -u __EXEHDR__ -C c64-asm.cfg
 # LDFLAGS += -Ln sym
 
+DISK = joyride.d64
+DISK_D81 = joyride.d81
+
+DISKS = ${DISK} ${DISK_D81}
+
 PROGRAM = joyride.prg
 
 SOURCES = \
@@ -53,10 +58,10 @@ SOURCES = \
 
 OBJECTS = ${SOURCES:.s=.o}
 
-all: ${PROGRAM}
+all: ${PROGRAM} ${DISKS}
 
 clean:
-	rm -f ${OBJECTS} ${PROGRAM}
+	rm -f ${OBJECTS} ${PROGRAM} ${DISKS}
 
 
 %.o : %.s ${DEPDIR}/%.d | ${DEPDIR}
@@ -69,6 +74,19 @@ ${DEPFILES}:
 
 include $(wildcard ${DEPFILES})
 
+${DISK}: ${PROGRAM}
+	disk=${DISK}.$$$$; \
+	(set -e; \
+	c1541 -silent -format "joyride,tp" d64 $$disk; \
+	c1541 $$disk -silent -write "joyride.prg" "joyride"; \
+	mv $$disk ${DISK})
+
+${DISK_D81}: ${PROGRAM}
+	disk=${DISK_D81}.$$$$; \
+	(set -e; \
+	c1541 -silent -format "joyride,tp" d81 $$disk; \
+	c1541 $$disk -silent -write "joyride.prg" "joyride"; \
+	mv $$disk ${DISK_D81})
 
 charset.bin: charset.png
 	gfx-convert -b 255 charset charset.png charset.bin

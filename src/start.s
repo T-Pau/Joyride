@@ -27,9 +27,10 @@
 
 
 .autoimport +
-.export start
+.export start, machine_type
 
 .include "joyride.inc"
+.include "mega65.inc"
 
 .macpack cbm_ext
 .macpack utility
@@ -37,7 +38,28 @@
 .code
 
 start:
-	lda #12; COLOR_GREY2
+.scope
+    lda #1
+    sta VIC_SPR0_X
+    lda #VIC_KNOCK_IV_1
+    sta VIC_KEY
+    lda #VIC_KNOCK_IV_2
+    sta VIC_KEY
+    lda #0
+    sta VIC_PALETTE_RED
+    lda VIC_SPR0_X
+    beq not_m65
+    ;; Enable fast CPU for quick depack
+    lda #65
+    sta 0
+    lda #$ff
+    bne both
+not_m65:
+    lda #0
+both:
+    sta machine_type
+
+    lda #12; COLOR_GREY2
 	sta VIC_BORDERCOLOR
 
 	memcpy charset, charset_data, $800
@@ -86,3 +108,9 @@ start:
 	sta CIA1_CRA
 
 	jmp main_loop
+.endscope
+
+.bss
+
+machine_type:
+    .res 1
