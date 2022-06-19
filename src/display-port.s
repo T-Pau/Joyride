@@ -43,6 +43,7 @@ display_routines:
 	.word display_paddle2
 	.word display_koalapad
 	.word display_lightpen
+    .word display_protopad
 	.word display_trapthem
 	.word display_raw
 

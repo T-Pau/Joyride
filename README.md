@@ -22,6 +22,7 @@ Controller port:
 - Paddle
 - Koalapad
 - Light Pen (only in port 1)
+- Protovision Protopad
 - Trap Them
 - Ninja SNES Pad
 - Inception

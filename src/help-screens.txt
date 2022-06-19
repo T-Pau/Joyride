@@ -1,0 +1,210 @@
+;  help-screen.s -- Text for help screens.
+;  Copyright (C) 2020 Dieter Baron
+;
+;  This file is part of Joyride, a controller test program for C64.
+;  The authors can be contacted at <joyride@tpau.group>.
+;
+;  Redistribution and use in source and binary forms, with or without
+;  modification, are permitted provided that the following conditions
+;  are met:
+;  1. Redistributions of source code must retain the above copyright
+;     notice, this list of conditions and the following disclaimer.
+;  2. The names of the authors may not be used to endorse or promote
+;     products derived from this software without specific prior
+;     written permission.
+;
+;  THIS SOFTWARE IS PROVIDED BY THE AUTHORS ``AS IS'' AND ANY EXPRESS
+;  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+;  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+;  ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
+;  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+;  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+;  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+;  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+;  IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+name help_screens
+
+map $40-$5a $00
+map $61-$7a $01
+map $20-$3f $20
+
+line_length 37
+lines 18
+line_skip 3
+title_length 37
+title_xor 128
+assembler cc65
+word_wrap 1
+
+---
+Joyride
+
+This program monitors the controllers connected to your c64 and displays relevant information. It supports a wide variety of controllers and adapters.
+
+This is Joyride ${VERSION}. The newest version and further information can be found at
+   https://github.com/T-Pau/Joyride
+
+To test the keyboard, use the companion program Anykey:
+  https://github.com/T-Pau/Anykey
+
+---
+Joyride
+
+You can use the function keys to select the correct controller type or to display raw data.
+
+Adapters that support more than two controllers don't fit in the main screen. F7 switches to a layout that supports four controllers per page.
+
+For digital inputs, the button or direction is inverted when pressed. Analog inputs are displayed as numbers and by positioning a cursor.
+---
+Supported Devices
+
+Controller Port:
+ - Joystick
+ - Mouse
+ - Paddle
+ - Koalapad
+ - Light Pen (only in port 1)
+ - Protovision Protopad
+ - Trap Them Controller
+ - Ninja SNES Pad
+ - Inception
+Userport:
+ - Protovision / Classic Game Adapter
+ - Digital Excess / Hitmen
+ - Kingsoft
+ - Starbyte Tie Break Adapter
+ - PETSCII Robots Adapter
+ - SuperPAD 64
+ - Luigi Pantarotto's Spaceballs
+---
+Joystick
+
+Joysticks contain a stick or d-pad with switches for the four cardinal directions and up to three buttons.
+
+Buttons 2 and 3 bring an analog potentiometer to a low value by connecting its pin to +5v.
+
+These potentiometers are also used by paddles and the 1351 mouse; if such a device is connected, the buttons may read as pressed.
+---
+Mouse
+
+Supported are 1351 compatible mice. They give the position in x and y modulo 64 and support up to three buttons and a scroll wheel.
+---
+Paddle
+
+A paddle gives the rotational position of its knob as a value from 0 to 255. It also contains a button.
+
+Two paddles can be connected to one port at the same time.
+---
+Koalapad
+
+This is a touch tablet that gives the position in x and y as values from ca. 6 to 251. It also contains two buttons.
+---
+Light Pen
+
+Light Pens and light guns only work in controller port 1.
+
+They point directly at a position on screen. This is indicated by a big cross hair on screen, even if it's outside the display area of the port. It is also shown on a smaller representation of the screen.
+
+They can have up to two buttons. Some pens require a button to be pressed for the position to register.
+
+They only work with CRT displays.
+---
+Protopad
+
+This SuperNES style controller connects to either controller port.
+
+It has these inputs:
+- dpad
+- four face buttons (A, B, X, Y)
+- two shoulder buttons (l, r)
+- select, start
+---
+Trap Them Controller
+
+this supernes style controller
+connects to either controller port.
+
+it has these inputs:
+- dpad
+- four face buttons (1, 2, 3, 4)
+- two shoulder buttons (l, r)
+- select, start
+---
+Raw
+
+This displays the five digital input lines, and the two analog potentiometers as values from 0 to 255.
+
+For port 1, it also displays the light pen coordinates.
+---
+Userport Joystick Adapter
+
+These adapters support two additional joysticks with four directional switches and one button each.
+
+Supported are the following variants:
+- Protovision / Classic Game Adapter
+- Digital Excess / Hitmen
+- Kingsoft
+- Starbyte Tie Break Adapter
+---
+PETSCII Robots Adapter
+
+This adapter is included with the game Attack of the PETSCII Robots and allows connecting one SuperNES controller to the userport.
+
+It has these inputs:
+- dpad
+- four face buttons (a, b, x, y)
+- two shoulder buttons (l, r)
+- select, start
+---
+Eight Player Adapter
+
+These adapters support eight input devices. The type of devices depends on the adapter.
+
+Four controllers are displayed per page. Use F3/F4 to switch pages.
+
+Supported are the following variants:
+- SuperPAD 64 (eight supernes
+  controllers, connects to user port)
+- ninja snes pad (eight supernes
+  controllers, connects to both
+  controller ports)
+- luigi pantarotto's spaceballs
+  (eight joysticks, connects to user
+  port and one controller port)
+- inception (eight joysticks,
+  connects to controller port)
+---
+superpad 64 / ninja snes pad
+
+these adapters support 8 nintendo supernes controllers or mice. the types of connected devices are detected automatically.
+
+controllers have these inputs:
+- dpad
+- four face buttons (a, b, x, y)
+- two shoulder buttons (l, r)
+- select, start
+
+mice display x/y coordinates and two buttons.
+
+the third page shows the raw data read from each controller.
+---
+luigi pantarotto's spaceballs
+
+this adapter supports eight joysticks with one button each.
+
+it connects to the user port and one controller port.
+
+note: support for this adapter has not been tested with real hardware.
+---
+inception
+
+this adapter supports eight joysticks with one button each.
+
+it connects to either controller port.
+
+ps/2 mice and auto-detection are not supported yet.
+
+the third page shows the raw data read from the adapter.

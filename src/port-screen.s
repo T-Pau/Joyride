@@ -137,6 +137,7 @@ port_sprite:
 	.byte sprite_cross, sprite_none
 	.byte sprite_cross, sprite_lightpen
 	.byte sprite_none, sprite_none
+	.byte sprite_none, sprite_none
 	.byte sprite_bar, sprite_bar
 
 port_names:
@@ -146,6 +147,7 @@ port_names:
 	invcode "paddle 2        "
 	invcode "koalapad        "
 	invcode "light pen       "
+	invcode "protopad        "
 	invcode "trap them       "
 	invcode "raw             "
 
@@ -158,6 +160,7 @@ port_screens:
 	.word port_screen_data + 17 * 9 * 4
 	.word port_screen_data + 17 * 9 * 5
 	.word port_screen_data + 17 * 9 * 6
+	.word port_screen_data + 17 * 9 * 7
 
 port_screen_data:
 	.incbin "port-screens.bin"

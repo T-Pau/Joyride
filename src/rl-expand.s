@@ -1,8 +1,8 @@
-;  help-screen.s -- Text for help screens.
-;  Copyright (C) 2020 Dieter Baron
+;  expand.s -- expand run length encoded data.
+;  Copyright (C) 2021 Dieter Baron
 ;
-;  This file is part of Joyride, a controller test program for C64.
-;  The authors can be contacted at <joyride@tpau.group>.
+;  This file is part of Anykey, a keyboard test program for C64.
+;  The authors can be contacted at <anykey@tpau.group>.
 ;
 ;  Redistribution and use in source and binary forms, with or without
 ;  modification, are permitted provided that the following conditions
@@ -25,50 +25,54 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.export rl_expand
 
 .autoimport +
-.export display_help_page, current_help_page
+
+.macpack utility
 
 .include "joyride.inc"
 
-help_screen_title = screen + 1
-help_screen_text = screen + 40 * 2 + 1
-
-.bss
-
-current_help_page:
-	.res 1
-
-
-.code
-
-display_help_page:
-	lda current_help_page
-	bmi negative
-	cmp num_help_screens
-	bne ok
-	lda #0
-	beq ok
-negative:
-	ldx num_help_screens
-	dex
-	txa
-ok:
-	sta current_help_page
-	asl
-	tax
-
-	lda help_screens,x
-	sta ptr1
-	lda help_screens + 1,x
-	sta ptr1 + 1
-	lda #<help_screen_title
-	sta ptr2
-	lda #>help_screen_title
-	sta ptr2 + 1
-	jsr rl_expand
-    lda #<help_screen_text
+; ptr1: runlength encoded string
+; ptr2: destination to expand to
+rl_expand:
+.scope
+	ldy #0
+loop:
+	lda (ptr1),y
+	inc_16 ptr1
+	cmp #$fe
+	bne no_skip
+    lda (ptr1),y
+    inc_16 ptr1
+    clc
+    adc ptr2
     sta ptr2
-    lda #>help_screen_text
-    sta ptr2 + 1
-    jmp rl_expand
+    bcc loop
+    inc ptr2 + 1
+    bne loop
+no_skip:
+	ldx #$01
+	cmp #$ff
+	bne runlength_loop
+	lda (ptr1),y
+	inc_16 ptr1
+	cmp #$00
+	bne :+
+	rts
+:   tax
+    lda (ptr1),y
+    inc_16 ptr1
+runlength_loop:
+	sta (ptr2),y
+	iny
+	dex
+	bne runlength_loop
+	tya
+    clc
+    adc ptr2
+    sta ptr2
+    bcc :+
+    inc ptr2 + 1
+:   jmp rl_expand
+.endscope

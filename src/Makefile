@@ -1,7 +1,18 @@
+VERSION = $(shell cat ../version.txt)
+
 DEPDIR := .deps
 
 CC = cl65
 CFLAGS = -t c64
+
+CONVERT_SCREENS = ../scripts/convert-screens
+
+CONVERT_SCREENS_DEPENDENCIES = \
+	../scripts/convert-screens \
+	../scripts/AssemblerOutput.py \
+	../scripts/RunlengthEncoder.py \
+	../scripts/Screens.py
+
 
 LD = cl65
 LDFLAGS = -t c64 -u __EXEHDR__ -C c64-asm.cfg
@@ -28,6 +39,7 @@ SOURCES = \
 	display-mouse.s \
 	display-paddle.s \
 	display-port.s \
+	display-protopad.s \
 	display-raw.s \
 	display-trapthem.s \
 	dpad.s \
@@ -35,6 +47,7 @@ SOURCES = \
 	f-keys.s \
 	help.s \
 	help-screen.s \
+	help-screens.s \
 	hex.s \
 	inception.s \
 	irq.s \
@@ -46,6 +59,7 @@ SOURCES = \
 	port-screen.s \
 	ports.s \
 	pot.s \
+	rl-expand.s \
 	screen.s \
 	snes.s \
 	snespad.s \
@@ -95,28 +109,31 @@ sprites.bin: sprites.png
 	gfx-convert sprites sprites.png sprites.bin
 
 dpad.bin: dpad.png charset.bin
-	gfx-convert screen dpad.png charset.bin dpad.bin
+	gfx-convert -b 255 screen dpad.png charset.bin dpad.bin
 
 lightpen-buttons.bin: lightpen-buttons.png charset.bin
-	gfx-convert screen lightpen-buttons.png charset.bin lightpen-buttons.bin
+	gfx-convert  -b 255 screen lightpen-buttons.png charset.bin lightpen-buttons.bin
 
 mouse-buttons.bin: mouse-buttons.png charset.bin
-	gfx-convert screen mouse-buttons.png charset.bin mouse-buttons.bin
+	gfx-convert  -b 255 screen charset.bin "" $<
 
 port-screens.bin: port-screens.png charset.bin
-	gfx-convert screen port-screens.png charset.bin port-screens.bin \
-		&& ./fixup-buttons port-screens.bin
+	gfx-convert  -b 255 screen charset.bin "" $< \
+		&& ./fixup-buttons $@
 
 userport-screens.bin: userport-screens.png charset.bin
-	gfx-convert screen userport-screens.png charset.bin userport-screens.bin \
-		&& ./fixup-buttons userport-screens.bin
+	gfx-convert  -b 255 screen charset.bin "" $< \
+		&& ./fixup-buttons $@
 
 scroll-wheel.bin: scroll-wheel.png charset.bin
-	gfx-convert screen scroll-wheel.png charset.bin scroll-wheel.bin
+	gfx-convert  -b 255 screen charset.bin "" $<
 
 eight-player.bin: eight-player.png charset.bin
-	gfx-convert screen eight-player.png charset.bin eight-player.bin \
-		&& ./fixup-buttons eight-player.bin
+	gfx-convert  -b 255 screen charset.bin "" eight-player.png $< \
+		&& ./fixup-buttons $@
+
+help-screens.s: help-screens.txt ../version.txt ${CONVERT_SCREENS_DEPENDENCIES}
+	${CONVERT_SCREENS} -DVERSION=${VERSION} -D__C64__ $< $@
 
 
 ${PROGRAM}: ${OBJECTS}

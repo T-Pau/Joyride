@@ -1,6 +1,6 @@
 SUBDIRS = src
 
-VERSION = 1.5.1
+VERSION = $(shell cat ../version.txt)
 
 FILES = README.md NEWS.md Joyride\ User\ Manual.pdf screenshot.png src/joyride.prg src/joyride.d64 src/joyride.d81
 

@@ -1,3 +1,9 @@
+# Version 1.6 (2022-06-xx)
+
+- Add support for Protovision Protopad.
+- Improve rejecting phantom key presses caused by joystick movement. 
+
+
 # Version 1.5.1 (2022-05-21)
 
 - Fix for C64 mode on MEGA65.
