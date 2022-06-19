@@ -1,11 +1,11 @@
 # Version 1.5.1 (2022-05-21)
 
 - Fix for C64 mode on MEGA65.
-- 
+
 
 # Version 1.5 (2020-12-16)
 
-- Add support for PETCSII Robots adapter.
+- Add support for PETSCII Robots adapter.
 - Add raw view to SuperPad64, Ninja SNES Pad, and Inception.
 
 

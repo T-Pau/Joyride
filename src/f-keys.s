@@ -38,6 +38,9 @@
 shift:
 	.res 1
 
+last_key:
+    .res 1
+
 .rodata
 
 function_handlers:
@@ -97,6 +100,18 @@ not_f1:
 	bmi f_none
 	ldx #7
 f_got:
+	lda #$00
+	sta CIA1_DDRA
+	sta CIA1_DDRB
+	lda #$ff
+	sta CIA1_PRA
+	sta CIA1_PRB
+
+	lda CIA1_PRA
+	and CIA1_PRB
+	cmp #$ff
+	bne f_none
+
 	lda shift
 	beq f_end
 	inx
@@ -105,8 +120,13 @@ f_none:
 	ldx #0
 f_end:
 	lda #$ff
+	sta CIA1_DDRA
 	sta CIA1_DDRB
-	cpx #0
+	cpx last_key
+	stx last_key
+	beq :+
+	ldx #0
+:	cpx #0
 	rts
 
 handle_keyboard:

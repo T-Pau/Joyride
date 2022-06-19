@@ -1,9 +1,8 @@
 ## Bugs
 
 - fix on NTSC
-
+- fix with CPU accelerator 
 
 ## Upcoming Hardware
 
 - Protopad
-- controller for Attack of the PETSCII Robots
