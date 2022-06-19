@@ -138,7 +138,9 @@ bottom_no_change:
 	ldx #0
 	jsr display_port
 end_port1:
-	rts
+    lda VIC_HLINE
+    bmi end_port1
+    jmp handle_top
 .endscope
 
 handle_port2:
