@@ -1,8 +1,9 @@
 ## Before Release
 
-- Convert documentation to Markdown, update.
-- Document MultiJoy 8/16.
-- fix on NTSC
+- Add screenshots to documentation.
+- Document loading the program. 
+- Update help screen from documentation.
+- Fix on NTSC.
 
 ## Hardware Support
 
