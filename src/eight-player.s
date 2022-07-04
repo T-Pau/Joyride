@@ -185,7 +185,7 @@ copy_eight_player_type_name:
 	bpl :-
 	; fallthrough
 copy_eight_player_page_title:
-	store_word screen + 35, ptr2
+	store_word screen + 33, ptr2
 	ldx eight_player_type
 	lda eight_player_page_name_index,x
 	clc
@@ -196,7 +196,7 @@ copy_eight_player_page_title:
 	sta ptr1
 	lda eight_player_page_name + 1,x
 	sta ptr1 + 1
-	ldy #2
+	ldy #4
 :	lda (ptr1),y
 	sta (ptr2),y
 	dey
@@ -264,6 +264,7 @@ top_handler:
 	.word spaceballs_top
 	.word inception_top
 	.word inception_top
+	.word multijoy_top
 
 bottom_handler:
 	.word superpad_bottom
@@ -272,6 +273,7 @@ bottom_handler:
 	.word spaceballs_bottom
 	.word inception_bottom
 	.word inception_bottom
+	.word spaceballs_bottom
 
 f_key_commands:
 	.byte 0
@@ -281,11 +283,12 @@ f_key_commands:
 	.byte COMMAND_MAIN, COMMAND_HELP
 
 eight_player_num_pages:
-	.byte 3, 3, 2, 2, 3, 3
+	.byte 3, 3, 2, 2, 3, 3, 4
 
 eight_player_default_view:
 	.word eight_player_default_view_superpad
 	.word eight_player_default_view_superpad
+	.word eight_player_default_view_joystick
 	.word eight_player_default_view_joystick
 	.word eight_player_default_view_joystick
 	.word eight_player_default_view_joystick
@@ -321,24 +324,30 @@ eight_player_type_name_data:
 	invcode "spaceballs port 2   "
 	invcode "inception port 1    "
 	invcode "inception port 2    "
+	invcode "multijoy            "
 
 ; index into eight_player_page_name by type
 eight_player_page_name_index:
 	.byte 0, 0, 0, 0
 	.byte 3, 3
+	.byte 6
 
 eight_player_page_name:
-	.repeat 6, i
-	.word eight_player_page_name_data + i * 3
+	.repeat 10, i
+	.word eight_player_page_name_data + i * 5
 	.endrep
 
 eight_player_page_name_data:
-	invcode "1-4"
-	invcode "5-8"
-	invcode "raw"
-	invcode "a-d"
-	invcode "e-h"
-	invcode "raw"
+	invcode "  1-4"
+	invcode "  5-8"
+	invcode "  raw"
+	invcode "  a-d"
+	invcode "  e-h"
+	invcode "  raw"
+	invcode "  1-4"
+	invcode "  5-8"
+	invcode " 9-12"
+	invcode "13-16"
 
 eight_player_view:
 	.repeat EIGHT_PLYAER_NUM_VIEWS, i

@@ -1,6 +1,7 @@
-# Version 1.6 (2022-06-xx)
+# Version 1.6 (2022-07-xx)
 
 - Add support for Protovision Protopad.
+- Add support for MultiJoy adapter.
 - Improve rejecting phantom key presses caused by joystick movement. 
 
 

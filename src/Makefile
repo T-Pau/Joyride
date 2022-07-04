@@ -55,6 +55,7 @@ SOURCES = \
 	logo.s \
 	main-loop.s \
 	memcpy.s \
+	multijoy.s \
 	petscii.s \
 	port-screen.s \
 	ports.s \
