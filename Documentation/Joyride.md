@@ -1,6 +1,6 @@
 # Joyride
 
-This program monitors the controllers connected to your c64 and displays relevant information. It supports a wide variety of controllers and adapters.
+This program monitors the controllers connected to your Commodore 64 and displays relevant information. It supports a wide variety of controllers and adapters.
 
 To test the keyboard, use the companion program [Anykey](https://github.com/T-Pau/Anykey).
 
