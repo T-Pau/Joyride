@@ -1,8 +1,14 @@
 SUBDIRS = src
 
-VERSION = $(shell cat ../version.txt)
+VERSION = $(shell cat version.txt)
 
-FILES = README.md NEWS.md Joyride\ User\ Manual.pdf screenshot.png src/joyride.prg src/joyride.d64 src/joyride.d81
+FILES = \
+	README.md \
+	NEWS.md \
+	screenshot.png \
+	src/joyride.prg \
+	src/joyride.d64 \
+	src/joyride.d81
 
 DISTFILE = Joyride-${VERSION}.zip
 
@@ -11,7 +17,7 @@ DISTFILE = Joyride-${VERSION}.zip
 all:
 	@for dir in ${SUBDIRS}; \
 	do \
-		(cd $$dir && make VERSION="${VERSION}" all) || exit 1; \
+		(cd $$dir && make all) || exit 1; \
 	done
 
 dist: ${DISTFILE}
@@ -23,4 +29,5 @@ clean:
 	done
 
 ${DISTFILE}: ${FILES}
-	zip -9jq ${DISTFILE} ${FILES}
+	zip -9jq ${DISTFILE} ${FILES} && \
+	zip -9rq ${DISTFILE} Documentation

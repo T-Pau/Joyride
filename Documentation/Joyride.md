@@ -13,6 +13,11 @@ Adapters that support more than two controllers don't fit in the main screen. `F
 For digital inputs, the button or direction is inverted when pressed. Analog inputs are displayed as numbers and by positioning a cursor.
 
 
+## Loading the Program
+
+Load the program from the disc image with `LOAD"*",8,1`. On C128 and MEGA65, switch to 64 mode before loading.
+
+
 ## Supported Devices
 
 Controller Port:
@@ -163,9 +168,9 @@ It has these inputs:
 
 These adapters support eight or more input devices. The type of devices depends on the adapter.
 
-The connect to the user port, controller port, or both. 
+They connect to the user port, controller port, or both. 
 
-Four controllers are displayed per page. Use `F3`/`F4` to switch pages.
+Four controllers are displayed per page, from left to right, top to bottom. Use `F3`/`F4` to switch pages.
 
 
 ### SuperPAD 64 / Ninja SNES Pad
