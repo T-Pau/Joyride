@@ -24,7 +24,7 @@ Controller Port:
  - Protovision Protopad
  - Trap Them Controller
 
-Userport:
+User Port:
  - Protovision / Classic Game Adapter
  - Digital Excess / Hitmen
  - Kingsoft
@@ -91,7 +91,9 @@ They point directly at a position on screen. This is indicated by a big cross-ha
 They can have up to two buttons. Some pens require a button to be pressed for the position to register.
 
 
-### Protopad
+### Protovision Protopad
+
+![](Protopad.png)
 
 This is a SuperNES style controller that can emulate a regular joystick or all buttons can be read in natvie mode. 
 
@@ -103,10 +105,12 @@ It has these inputs:
 - two shoulder buttons (L, R)
 - Select, Start
 
-Note: Support for this adapter has not been tested with real hardware.
+Note: Support for this controller has not been tested with real hardware.
 
 
 ### Trap Them Controller
+
+![](Trap%20Them.png)
 
 This is a SuperNES style controller with these inputs:
 - d-pad
@@ -124,7 +128,7 @@ This view displays the five digital input lines, and the two analog potentiomete
 For port 1, it also displays the light pen coordinates.
 
 
-## Userport 
+## User Port 
 
 The C64 has a user port that allows it to interface with various hardware attachments.
 
@@ -146,7 +150,7 @@ Supported are the following variants:
 
 ![](PETSCII%20Robots.png)
 
-This adapter is included with the game *Attack of the PETSCII Robots* and allows connecting one SuperNES controller to the User Port.
+This adapter is included with the game *Attack of the PETSCII Robots* and allows connecting one SuperNES controller to the user port.
 
 It has these inputs:
 - d-pad
@@ -185,6 +189,8 @@ The third page shows the raw data read from each controller.
 
 ### Luigi Pantarotto's Spaceballs
 
+![](4%20Joysticks.png)
+
 This adapter supports eight joysticks with one button each.
 
 It connects to the user port and either controller port.
@@ -193,6 +199,8 @@ Note: Support for this adapter has not been tested with real hardware.
 
 
 ### Inception
+
+![](4%20Joysticks.png)
 
 This adapter supports eight joysticks with one button each.
 
@@ -204,6 +212,8 @@ The third page shows the raw data read from the adapter.
 
 
 ### MultiJoy
+
+![](4%20Joysticks.png)
 
 This adapter supports eight or sixteen joysticks with one button each.
 

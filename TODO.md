@@ -1,6 +1,6 @@
 ## Before Release
 
-- Add screenshots to documentation.
+- Test MultiJoy on real hardware.
 - Document loading the program. 
 - Update help screen from documentation.
 - Fix on NTSC.
