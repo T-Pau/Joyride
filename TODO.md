@@ -1,6 +1,5 @@
 ## Before Release
 
-- Update help screen from documentation.
 - Fix on NTSC.
 - Rename Eight Player to Multi Player. 
 
