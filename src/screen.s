@@ -75,7 +75,7 @@ main_screen:
 	.byte $a0, $a0, $a0, $a0
 	invcode "                                        "
 	invcode "     f1/f2: port 1   f3/f4: port 2      "
-	invcode "f5/f6: user port   f7: 8 player adapter "
+	invcode "  f5/f6: user port   f7: multi adapter  "
 	invcode "               f8: help                 "
 
 help_screen:

@@ -2,6 +2,8 @@
 
 This program monitors the controllers connected to your Commodore 64 and displays relevant information. It supports a wide variety of controllers and adapters.
 
+Joyride currently does not work on NTSC machines.
+
 To test the keyboard, use the companion program [Anykey](https://github.com/T-Pau/Anykey).
 
 The top left window displays the device connected to controller port 1, the top right window controller port 2. The bottom window displays the device connected to the user port.
@@ -36,7 +38,7 @@ User Port:
  - Starbyte Tie Break Adapter
  - PETSCII Robots Adapter
 
-Multi Player Adapters:
+Multi Adapters:
 - SuperPAD 64
 - Ninja SNED Pad
 - Luigi Pantarotto's Spaceballs
@@ -164,7 +166,7 @@ It has these inputs:
 - Select, Start
 
 
-## Multi Player Adapters
+## Multi Adapters
 
 These adapters support eight or more input devices. The type of devices depends on the adapter.
 

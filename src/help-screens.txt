@@ -1,5 +1,5 @@
 ;  help-screen.s -- Text for help screens.
-;  Copyright (C) 2020 Dieter Baron
+;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
 ;  The authors can be contacted at <joyride@tpau.group>.
@@ -44,6 +44,8 @@ Joyride
 
 This program monitors the controllers connected to your Commodore 64 and displays relevant information. It supports a wide variety of controllers and adapters.
 
+Joyride currently does not work on NTSC machines.
+
 This is Joyride ${VERSION}. The newest version and further information can be found at
    https://github.com/T-Pau/Joyride
 
@@ -80,7 +82,7 @@ User Port:
 ---
 Supported Devices
 
-Multi Player Adapters:
+Multi Adapters:
 - SuperPAD 64
 - Ninja SNED Pad
 - Luigi Pantarotto's Spaceballs
@@ -165,7 +167,7 @@ It has these inputs:
 - two shoulder buttons (L, R)
 - Select, Start
 ---
-Multi Player Adapter
+Multi Adapters
 
 These adapters support eight input devices. The type of devices depends on the adapter.
 
