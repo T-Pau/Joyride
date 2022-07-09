@@ -68,7 +68,7 @@ Controller Port:
  - Joystick
  - Mouse
  - Paddle
- - Koalapad
+ - KoalaPad
  - Light Pen (only in port 1)
  - Protovision Protopad
  - Trap Them Controller
@@ -107,7 +107,7 @@ A paddle gives the rotational position of its knob as a value from 0 to 255. It 
 
 Two paddles can be connected to one port at the same time. They are displayed in two separate pages.
 ---
-Koalapad
+KoalaPad
 
 This is a touch tablet that gives the position in x and y as values from ca. 6 to 251. It also contains two buttons.
 ---
