@@ -222,8 +222,8 @@ The third page shows the raw data read from the adapter.
 
 ![](4%20Joysticks.png)
 
-This adapter supports eight or sixteen joysticks with one button each.
+This adapter supports joysticks with one button each, depending on model 8 or 16 joysticks.
 
-It connects to both controller ports.
+It connects to both controller ports: port 1 for control, port 2 for joysticks.
 
 Note: Support for the sixteen joystick variant has not been tested.
