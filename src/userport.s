@@ -47,9 +47,11 @@ read_routines:
 	.word handle_hitmen
 	.word handle_kingsoft
 	.word handle_starbyte
+	.word handle_pet_dual
 	.word handle_petscii
 
 userport_views:
+	.byte USER_VIEW_JOYSTICK
 	.byte USER_VIEW_JOYSTICK
 	.byte USER_VIEW_JOYSTICK
 	.byte USER_VIEW_JOYSTICK
@@ -66,6 +68,7 @@ userport_name_strings:
 	invcode "digital xs / hitmen "
 	invcode "kingsoft            "
 	invcode "starbyte            "
+	invcode "pet dual joystick   "
 	invcode "petscii robots      "
 
 userport_view:
@@ -306,3 +309,31 @@ handle_starbyte:
 	lda temp + 1
 	sta port_digital + 1
 	jmp display_userport_joysticks
+
+handle_pet_dual:
+	lda #$00
+	sta CIA2_DDRB
+	lda CIA2_PRB
+	eor #$ff
+	tax
+	ldy #0
+	and #$0f
+    jsr translate_pet_dual
+    txa
+    lsr
+    lsr
+    lsr
+    lsr
+    iny
+    jsr translate_pet_dual
+    jmp display_userport_joysticks
+
+translate_pet_dual:
+    sta port_digital,y
+    and #$03
+    cmp #$03
+    bne :+
+    lda #$13
+    eor port_digital,y
+    sta port_digital,y
+:   rts

@@ -36,6 +36,7 @@ User Port:
  - Digital Excess / Hitmen
  - Kingsoft
  - Starbyte Tie Break Adapter
+ - PET Dual Joystick Adapter
  - PETSCII Robots Adapter
 
 Multi Adapters:
@@ -152,6 +153,15 @@ Supported are the following variants:
 - Kingsoft
 - Starbyte Tie Break Adapter
 
+### PET DUal Joystick Adapter
+
+![](4%20Player.png)
+
+This adapter from TFW8b is designed for the PET, but also works on the C64.
+
+It supports two joysticks with four directional switches and one button each.
+
+Due to technical limitations, up and down cannot be read while fire is pressed.
 
 ### PETSCII Robots Adapter
 

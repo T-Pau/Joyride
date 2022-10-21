@@ -30,6 +30,7 @@ User Port:
 - Digital Excess / Hitmen
 - Kingsoft
 - Starbyte Tie Break Adapter
+- PET Dual Joystick Adapter
 - PETSCII Robots Adapter
 
 Multi Adapters:
