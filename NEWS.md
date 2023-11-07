@@ -1,3 +1,8 @@
+# Version 1.7 (Unreleased)
+
+- Add support for the Protovision variant of the MultiJoy adapter.
+
+
 # Version 1.6 (2022-07-09)
 
 - Add support for Protovision Protopad.

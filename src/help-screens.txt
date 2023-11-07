@@ -218,10 +218,10 @@ PS/2 mice and auto-detection are not supported yet.
 
 The third page shows the raw data read from the adapter.
 ---
-MultiJoy
+MultiJoy / Protovision MultiJoy
 
-This adapter supports joysticks with one button each, depending on model 8 or 16 joysticks.
+These adapter supports joysticks with one button each, depending on model 8 or 16 joysticks.
 
-It connects to both controller ports: port 1 for control, port 2 for joysticks.
+They connect to both controller ports. For the original variant, port 1 is used for control, port 2 for joysticks. The Protovision variant has the ports swapped.
 
 Note: Support for the sixteen joystick variant has not been tested.

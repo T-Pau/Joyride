@@ -265,6 +265,7 @@ top_handler:
 	.word inception_top
 	.word inception_top
 	.word multijoy_top
+	.word protovision_multijoy_top
 
 bottom_handler:
 	.word superpad_bottom
@@ -273,6 +274,7 @@ bottom_handler:
 	.word spaceballs_bottom
 	.word inception_bottom
 	.word inception_bottom
+	.word spaceballs_bottom
 	.word spaceballs_bottom
 
 f_key_commands:
@@ -283,11 +285,12 @@ f_key_commands:
 	.byte COMMAND_MAIN, COMMAND_HELP
 
 eight_player_num_pages:
-	.byte 3, 3, 2, 2, 3, 3, 4
+	.byte 3, 3, 2, 2, 3, 3, 4, 2
 
 eight_player_default_view:
 	.word eight_player_default_view_superpad
 	.word eight_player_default_view_superpad
+	.word eight_player_default_view_joystick
 	.word eight_player_default_view_joystick
 	.word eight_player_default_view_joystick
 	.word eight_player_default_view_joystick
@@ -325,12 +328,13 @@ eight_player_type_name_data:
 	invcode "inception port 1    "
 	invcode "inception port 2    "
 	invcode "multijoy            "
+	invcode "protovision multijoy"
 
 ; index into eight_player_page_name by type
 eight_player_page_name_index:
 	.byte 0, 0, 0, 0
 	.byte 3, 3
-	.byte 6
+	.byte 6, 6
 
 eight_player_page_name:
 	.repeat 10, i

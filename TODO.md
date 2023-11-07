@@ -1,5 +1,7 @@
 ## Before Release
 
+- Fix for 8BitDo SNES Adapter.
+
 
 ## Hardware Support
 
