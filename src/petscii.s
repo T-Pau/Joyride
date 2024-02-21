@@ -53,6 +53,7 @@ handle_petscii:
 	lda #$00
 	sta CIA2_PRB
 	ldx #0
+byte_loop:
 	ldy #7
 loop:
 	clc
@@ -67,10 +68,9 @@ loop:
 	sta CIA2_PRB
 	dey
 	bpl loop
-	ldy #3
 	inx
 	cpx #2
-	bne loop
+	bne byte_loop
 	
 	; 0,  1,    2,    3,      4, 5, 6,   7
 	; 01  02    04    08      10 20 40   80
