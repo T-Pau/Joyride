@@ -25,159 +25,136 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export display_main_screen, display_help_screen, display_eight_player_screen, display_current_screen
+.section data
 
-.autoimport +
+main_screen {
+    .data " port 1:             port 2:            ":screen_inverted
+    .data "I                 J":screen, $a0, "I                 J":screen, $a0
+    .data "                   ":screen, $a0, "                   ":screen, $a0
+    .data "                   ":screen, $a0, "                   ":screen, $a0
+    .data "                   ":screen, $a0, "                   ":screen, $a0
+    .data "                   ":screen, $a0, "                   ":screen, $a0
+    .data "                   ":screen, $a0, "                   ":screen, $a0
+    .data "                   ":screen, $a0, "                   ":screen, $a0
+    .data "                   ":screen, $a0, "                   ":screen, $a0
+    .data "                   ":screen, $a0, "                   ":screen, $a0
+    .data "                   ":screen, $a0, "                   ":screen, $a0
+    .data "KMMMMMMMMMMMMMMMMML":screen, $a0, "KMMMMMMMMMMMMMMMMML":screen, $a0
+    .data "                                        ":screen_inverted
+    .data "    user port:                          ":screen_inverted
+    .data $a0, $a0, $a0, "I                               J":screen, $a0, $a0, $a0, $a0
+    .data $a0, $a0, $a0, "                                 ":screen, $a0, $a0, $a0, $a0
+    .data $a0, $a0, $a0, "           AHB           AHB     ":screen, $a0, $a0, $a0, $a0
+    .data $a0, $a0, $a0, "           EfF           EfF     ":screen, $a0, $a0, $a0, $a0
+    .data $a0, $a0, $a0, "           CGD           CGD     ":screen, $a0, $a0, $a0, $a0
+    .data $a0, $a0, $a0, "                                 ":screen, $a0, $a0, $a0, $a0
+    .data $a0, $a0, $a0, "KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMML":screen, $a0, $a0, $a0, $a0
+    .data "                                        ":screen_inverted
+    .data "     f1/f2: port 1   f3/f4: port 2      ":screen_inverted
+    .data "  f5/f6: user port   f7: multi adapter  ":screen_inverted
+    .data "               f8: help                 ":screen_inverted
+}
 
-.include "joyride.inc"
+help_screen {
+    .data "                                        ":screen_inverted
+    .data "I                                     J":screen, $a0
+    .repeat 18 {
+        .data "                                       ":screen, $a0
+    }
+    .data "KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMML":screen, $a0
+    .data "                                        ":screen_inverted
+    .data "  space/+: next page  -: previous page  ":screen_inverted
+    .data "         ":screen_inverted, $9f, ": return to program          ":screen_inverted
+    .data "                                        ":screen_inverted
+}
 
-.macpack cbm
-.macpack cbm_ext
-.macpack utility
+eight_player_legend {
+    .data "   f1/f2: adapter type   f3/f4: page    ":screen_inverted
+    .data "      f7: controller & user ports       ":screen_inverted
+    .data "               f8: help                 ":screen_inverted
+}
 
-.rodata
+.section code
 
-main_screen:
-	invcode " port 1:             port 2:            "
-	scrcode "I                 J"
-	.byte $a0
-	scrcode "I                 J"
-	.byte $a0
-	.byte "                   ", $a0, "                   ", $a0
-	.byte "                   ", $a0, "                   ", $a0
-	.byte "                   ", $a0, "                   ", $a0
-	.byte "                   ", $a0, "                   ", $a0
-	.byte "                   ", $a0, "                   ", $a0
-	.byte "                   ", $a0, "                   ", $a0
-	.byte "                   ", $a0, "                   ", $a0
-	.byte "                   ", $a0, "                   ", $a0
-	.byte "                   ", $a0, "                   ", $a0
-	scrcode "KMMMMMMMMMMMMMMMMML"
-	.byte $a0
-	scrcode "KMMMMMMMMMMMMMMMMML"
-	.byte $a0
-	invcode "                                        "
-	invcode "    user port:                          "
-	.byte $a0, $a0, $a0
-	scrcode "I                               J"
-	.byte $a0, $a0, $a0, $a0
-	.byte $a0, $a0, $a0, "                                 ", $a0, $a0, $a0, $a0
-	.byte $a0, $a0, $a0
-	scrcode "           AHB           AHB     "
-	.byte $a0, $a0, $a0, $a0,  $a0, $a0, $a0
-	scrcode "           EfF           EfF     "
-	.byte $a0, $a0, $a0, $a0,  $a0, $a0, $a0
-	scrcode "           CGD           CGD     "
-	.byte $a0, $a0, $a0, $a0
-	.byte $a0, $a0, $a0, "                                 ", $a0, $a0, $a0, $a0
-	.byte $a0, $a0, $a0
-	scrcode "KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMML"
-	.byte $a0, $a0, $a0, $a0
-	invcode "                                        "
-	invcode "     f1/f2: port 1   f3/f4: port 2      "
-	invcode "  f5/f6: user port   f7: multi adapter  "
-	invcode "               f8: help                 "
+.public display_main_screen {
+    lda #MODE_MAIN
+    sta mode
 
-help_screen:
-	invcode "                                        "
-	scrcode "I                                     J"
-	.byte $a0
-	.repeat 18, i
-	scrcode "                                       "
-	.byte $a0
-	.endrep
-	scrcode "KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMML"
-	.byte $a0
-	invcode "                                        "
-	invcode "  space/+: next page  -: previous page  "
-	invcode "         "
-	.byte $9f
-	invcode            ": return to program          "
-	invcode "                                        "
+    memcpy screen, main_screen, 1000
+    memcpy color_ram, main_color, 1000
+    ldy #0
+    jsr copy_port_screen
+    ldy #1
+    jsr copy_port_screen
+    jsr copy_userport
+    ldx #<main_irq_table
+    ldy #>main_irq_table
+    lda main_irq_table_length
+    jsr set_irq_table
+    rts
+}
 
-eight_player_legend:
-	invcode "   f1/f2: adapter type   f3/f4: page    "
-	invcode "      f7: controller & user ports       "
-	invcode "               f8: help                 "
+.public display_eight_player_screen {
+    lda #MODE_EIGHT_PLAYER
+    sta mode
 
+    ldx #<eight_player_irq_table
+    ldy #>eight_player_irq_table
+    lda eight_player_irq_table_length
+    jsr set_irq_table
 
-.code
+    lda #0
+    ldy #7
+:    sta VIC_SPR0_X,y
+    dey
+    bpl :-
+    lda VIC_SPR_HI_X
+    and #$f0
+    sta VIC_SPR_HI_X
 
-display_main_screen:
-	lda #MODE_MAIN
-	sta mode
+    ldx #7
+    lda EIGHT_PLAYER_VIEW_NONE
+:    sta eight_player_views,x
+    dex
+    bpl :-
+    ldx #3
+:    sta eight_player_current_views,x
+    dex
+    bpl :-
 
-	memcpy screen, main_screen, 1000
-	memcpy color_ram, main_color, 1000
-	ldy #0
-	jsr copy_port_screen
-	ldy #1
-	jsr copy_port_screen
-	jsr copy_userport
-	ldx #<main_irq_table
-	ldy #>main_irq_table
-	lda main_irq_table_length
-	jsr set_irq_table
-	rts
+    memcpy screen, help_screen, 1000
+    memcpy color_ram, help_color, 1000
+    memcpy screen + 40 * 22, eight_player_legend, 120
+    jsr copy_eight_player_type_name
+    rts
+}
 
-display_eight_player_screen:
-	lda #MODE_EIGHT_PLAYER
-	sta mode
+.public display_help_screen {
+    ldx #<help_irq_table
+    ldy #>help_irq_table
+    lda help_irq_table_length
+    jsr set_irq_table
 
-	ldx #<eight_player_irq_table
-	ldy #>eight_player_irq_table
-	lda eight_player_irq_table_length
-	jsr set_irq_table
+    lda #0
+    ldy #7
+:    sta VIC_SPR0_X,y
+    dey
+    bpl :-
+    lda VIC_SPR_HI_X
+    and #$f0
+    sta VIC_SPR_HI_X
 
-	lda #0
-	ldy #7
-:	sta VIC_SPR0_X,y
-	dey
-	bpl :-
-	lda VIC_SPR_HI_X
-	and #$f0
-	sta VIC_SPR_HI_X
+    memcpy screen, help_screen, 1000
+    memcpy color_ram, help_color, 1000
+    ldx #0
+    stx current_help_page
+    jsr display_help_page
+    rts
+}
 
-	ldx #7
-	lda EIGHT_PLAYER_VIEW_NONE
-:	sta eight_player_views,x
-	dex
-	bpl :-
-	ldx #3
-:	sta eight_player_current_views,x
-	dex
-	bpl :-
-
-	memcpy screen, help_screen, 1000
-	memcpy color_ram, help_color, 1000
-	memcpy screen + 40 * 22, eight_player_legend, 120
-	jsr copy_eight_player_type_name
-	rts
-
-display_help_screen:
-	ldx #<help_irq_table
-	ldy #>help_irq_table
-	lda help_irq_table_length
-	jsr set_irq_table
-
-	lda #0
-	ldy #7
-:	sta VIC_SPR0_X,y
-	dey
-	bpl :-
-	lda VIC_SPR_HI_X
-	and #$f0
-	sta VIC_SPR_HI_X
-
-	memcpy screen, help_screen, 1000
-	memcpy color_ram, help_color, 1000
-	ldx #0
-	stx current_help_page
-	jsr display_help_page
-	rts
-
-display_current_screen:
-	lda mode
-	bne :+
-	jmp display_main_screen
-:	jmp display_eight_player_screen
+.public display_current_screen {
+    lda mode
+    bne :+
+    jmp display_main_screen
+:    jmp display_eight_player_screen
+}

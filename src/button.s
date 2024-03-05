@@ -1,5 +1,5 @@
 ;  button.s -- Set state of button.
-;  Copyright (C) 2020 Dieter Baron
+;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
 ;  The authors can be contacted at <joyride@tpau.group>.
@@ -25,135 +25,131 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export button, small_button, tiny_button
+.section reserved
 
-.autoimport +
+state .reserve 1
 
-.include "joyride.inc"
-
-.bss
-
-state:
-	.res 1
-
-.code
+.section code
 
 ; set state of button at ptr2 to A
 
-button:
-	cmp #0
-	beq :+
-	lda #$80
-:	sta state
+.public button {
+    cmp #0
+    beq :+
+    lda #$80
+:    sta state
 
-	ldy #0
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
-	iny
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
-	iny
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
-	
-	ldy #40
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
-	iny
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
-	iny
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
-	
-	ldy #80
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
-	iny
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
-	iny
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
+    ldy #0
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
+    iny
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
+    iny
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
 
-	clc
-	lda ptr2
-	adc #3
-	sta ptr2
-	bcc :+
-	inc ptr2 + 1
+    ldy #40
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
+    iny
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
+    iny
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
+
+    ldy #80
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
+    iny
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
+    iny
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
+
+    clc
+    lda ptr2
+    adc #3
+    sta ptr2
+    bcc :+
+    inc ptr2 + 1
 :
-	rts
+    rts
+}
 
-small_button:
-	cmp #0
-	beq :+
-	lda #$80
-:	sta state
+.public small_button {
+    cmp #0
+    beq :+
+    lda #$80
+:    sta state
 
-	ldy #1
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
+    ldy #1
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
 
-	ldy #40
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
-	iny
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
-	iny
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
+    ldy #40
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
+    iny
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
+    iny
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
 
-	ldy #81
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
+    ldy #81
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
 
-	rts
+    rts
+}
 
-tiny_button:
-	cmp #0
-	beq :+
-	lda #$80
-:	sta state
+.public tiny_button {
+    cmp #0
+    beq :+
+    lda #$80
+:    sta state
 
-	ldy #0
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
-	iny
-	lda (ptr2),y
-	and #$7f
-	ora state
-	sta (ptr2),y
+    ldy #0
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
+    iny
+    lda (ptr2),y
+    and #$7f
+    ora state
+    sta (ptr2),y
 
-	rts
+    rts
+}

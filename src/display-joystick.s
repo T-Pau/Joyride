@@ -1,5 +1,5 @@
 ;  display-joystick.s -- Display state of joystick.
-;  Copyright (C) 2020 Dieter Baron
+;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
 ;  The authors can be contacted at <joyride@tpau.group>.
@@ -25,70 +25,65 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.autoimport +
+.section reserved
 
-.export display_joystick
+tmp .reserve 2
 
-.include "joyride.inc"
+.section data
 
-.bss
+joy_positions {
+    .data screen + 4 * 40 + 2
+    .data screen + 4 * 40 + 22
+    .data screen + 15 * 40 + 8
+    .data screen + 15 * 40 + 22
+}
 
-tmp:
-	.res 2
-
-.rodata
-
-joy_positions:
-	.word screen + 4 * 40 + 2
-	.word screen + 4 * 40 + 22
-	.word screen + 15 * 40 + 8
-	.word screen + 15 * 40 + 22
-
-.code
+.section code
 
 ; display joystick number X
 
-display_joystick:
-	txa
-	asl
-	sta tmp
-	tax
-	lda joy_positions,x
-	sta ptr2
-	lda joy_positions + 1,x
-	sta ptr2 + 1
-	lda port_digital
-	and #$f
-	jsr dpad
+.public display_joystick {
+    txa
+    asl
+    sta tmp
+    tax
+    lda joy_positions,x
+    sta ptr2
+    lda joy_positions + 1,x
+    sta ptr2 + 1
+    lda port_digital
+    and #$f
+    jsr dpad
 
-	; button 1
-	clc
-	ldx tmp
-	lda joy_positions,x
-	adc #46
-	sta ptr2
-	lda joy_positions + 1,x
-	adc #0
-	sta ptr2 + 1
-	lda port_digital
-	and #$10
-	jsr button
+    ; button 1
+    clc
+    ldx tmp
+    lda joy_positions,x
+    adc #46
+    sta ptr2
+    lda joy_positions + 1,x
+    adc #0
+    sta ptr2 + 1
+    lda port_digital
+    and #$10
+    jsr button
 
-	ldx tmp
-	cpx #4
-	bcs end
+    ldx tmp
+    cpx #4
+    bcs end
 
-	; button 2
-	lda port_pot1
-	eor #$ff
-	and #80
-	jsr button
+    ; button 2
+    lda port_pot1
+    eor #$ff
+    and #80
+    jsr button
 
-	; button 3
-	lda port_pot2
-	eor #$ff
-	and #80
-	jsr button
+    ; button 3
+    lda port_pot2
+    eor #$ff
+    and #80
+    jsr button
 
 end:
-	rts
+    rts
+}

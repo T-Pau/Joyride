@@ -25,39 +25,28 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export mode, port1_type, port2_type, userport_type, eight_player_type, eight_player_page, eight_player_views, eight_player_current_views, init_state
+.section reserved
 
-.include "joyride.inc"
+.public mode .reserve 1
 
-.bss
+.public port1_type .reserve 1
+.public port2_type .reserve 1
+.public userport_type .reserve 1
 
-mode: ;
-	.res 1
+.public eight_player_type .reserve 1
+.public eight_player_page .reserve 1
+.public eight_player_current_views .reserve 4
+.public eight_player_views .reserve 12
 
-port1_type:
-	.res 1
-port2_type:
-	.res 1
-userport_type:
-	.res 1
+.section code
 
-eight_player_type:
-	.res 1
-eight_player_page:
-	.res 1
-eight_player_current_views:
-	.res 4
-eight_player_views:
-	.res 12
-
-.code
-
-init_state:
-	lda #0
-	sta mode
-	sta port1_type
-	sta port2_type
-	sta userport_type
-	sta eight_player_type
-	sta eight_player_page
-	rts
+.public init_state {
+    lda #0
+    sta mode
+    sta port1_type
+    sta port2_type
+    sta userport_type
+    sta eight_player_type
+    sta eight_player_page
+    rts
+}

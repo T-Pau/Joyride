@@ -25,32 +25,23 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.section reserved
 
-.autoimport +
+pad .reserve 2
 
-.export display_protopad
+.section code
 
-.include "joyride.inc"
-.macpack utility
-
-.bss
-
-pad:
-	.res 2
-
-.code
-
-display_protopad:
-	dex
-	beq :+
-	ldx #1
+.public display_protopad {
+    dex
+    beq :+
+    ldx #1
 :
     lda #$00
     sta pad
     sta pad + 1
 
-ldx #%00000000
-ldy #%00001000
+    ldx #%00000000
+    ldy #%00001000
 
     lda #$00
     sta CIA1_PRA,x
@@ -116,19 +107,20 @@ ldy #%00001000
     sta CIA1_DDRA,x
 
 not_connected:
-	clc
-	lda ptr2
-	adc #41
-	sta ptr2
-	bcc :+
-	inc ptr2 + 1
+    clc
+    lda ptr2
+    adc #41
+    sta ptr2
+    bcc :+
+    inc ptr2 + 1
 :
-	lda pad
+    lda pad
     ldx pad + 1
-	ldy #1
-	jmp display_snes
+    ldy #1
+    jmp display_snes
+}
 
-.rodata
+.section data
 
     ; Protopad
     ; BA→ ←↓↑
@@ -138,42 +130,46 @@ not_connected:
     ; BYET↑↓←→
     ; AXLR....
 
-translate_1:
-    .byte $00, $00  ; ...
-    .byte $01, $00  ; ..→
-    .byte $00, $80  ; .A.
-    .byte $01, $80  ; .A→
-    .byte $80, $00  ; B..
-    .byte $81, $00  ; B.→
-    .byte $80, $80  ; BA.
-    .byte $81, $80  ; BA→
+translate_1 {
+    .data $00, $00  ; ...
+    .data $01, $00  ; ..→
+    .data $00, $80  ; .A.
+    .data $01, $80  ; .A→
+    .data $80, $00  ; B..
+    .data $81, $00  ; B.→
+    .data $80, $80  ; BA.
+    .data $81, $80  ; BA→
+}
 
-translate_2:
-    .byte $00  ; ...
-    .byte $08  ; ..↑
-    .byte $04  ; .↓.
-    .byte $0C  ; .↓↑
-    .byte $02  ; ←..
-    .byte $0a  ; ←.↑
-    .byte $06  ; ←↓.
-    .byte $0e  ; ←↓↑
+translate_2 {
+    .data $00  ; ...
+    .data $08  ; ..↑
+    .data $04  ; .↓.
+    .data $0C  ; .↓↑
+    .data $02  ; ←..
+    .data $0a  ; ←.↑
+    .data $06  ; ←↓.
+    .data $0e  ; ←↓↑
+}
 
-translate_3:
-    .byte $00, $00  ; ...
-    .byte $00, $10  ; ..R
-    .byte $20, $00  ; .E.
-    .byte $20, $10  ; .ER
-    .byte $10, $00  ; T..
-    .byte $10, $10  ; T.R
-    .byte $30, $00  ; TE.
-    .byte $30, $10  ; TER
+translate_3 {
+    .data $00, $00  ; ...
+    .data $00, $10  ; ..R
+    .data $20, $00  ; .E.
+    .data $20, $10  ; .ER
+    .data $10, $00  ; T..
+    .data $10, $10  ; T.R
+    .data $30, $00  ; TE.
+    .data $30, $10  ; TER
+}
 
-translate_4:
-    .byte $00, $00  ; ...
-    .byte $00, $40  ; ..X
-    .byte $40, $00  ; .Y.
-    .byte $40, $40  ; .YX
-    .byte $00, $20  ; L..
-    .byte $00, $60  ; L.X
-    .byte $40, $20  ; LY.
-    .byte $40, $60  ; LYX
+translate_4 {
+    .data $00, $00  ; ...
+    .data $00, $40  ; ..X
+    .data $40, $00  ; .Y.
+    .data $40, $40  ; .YX
+    .data $00, $20  ; L..
+    .data $00, $60  ; L.X
+    .data $40, $20  ; LY.
+    .data $40, $60  ; LYX
+}

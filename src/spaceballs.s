@@ -25,108 +25,102 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export spaceballs_top, spaceballs_bottom
-
-.include "joyride.inc"
-
-.macpack utility
-
 DPAD_OFFSET = 40 * 2 + 5
 BUTTON_OFFSET = 40 * 4 - 6 ; negative
 
-.autoimport +
+.section reserved
 
-.bss
+index .reserve 1
 
-index:
-	.res 1
+end_index .reserve 1
 
-end_index:
-	.res 1
+.section code
 
-.code
-
-spaceballs_top:
-	lda command
-	beq :+
-	rts
+.public spaceballs_top {
+    lda command
+    beq :+
+    rts
 :
 
-	ldx #1
-	lda eight_player_type
-	cmp #EIGHT_PLAYER_TYPE_SPACEBALLS_1
-	beq :+
-	dex
+    ldx #1
+    lda eight_player_type
+    cmp #EIGHT_PLAYER_TYPE_SPACEBALLS_1
+    beq :+
+    dex
 :
-	lda #$ff
-	sta CIA2_DDRB
-	sta CIA1_PRA,x
-	lda #$00
-	sta CIA1_DDRA,x
+    lda #$ff
+    sta CIA2_DDRB
+    sta CIA1_PRA,x
+    lda #$00
+    sta CIA1_DDRA,x
 
-	ldy #7
+    ldy #7
 read_loop:
-	lda bits,y
-	sta CIA2_PRB
-	lda CIA1_PRA,x
-	and #$1f
-	eor #$1f
-	sta snes_buttons,y
-	dey
-	bpl read_loop
+    lda bits,y
+    sta CIA2_PRB
+    lda CIA1_PRA,x
+    and #$1f
+    eor #$1f
+    sta snes_buttons,y
+    dey
+    bpl read_loop
 
-	rts
+    rts
+}
 
-spaceballs_bottom:
-	lda command
-	beq :+
-	rts
+.public spaceballs_bottom {
+    lda command
+    beq :+
+    rts
 :
-	lda eight_player_page
-	asl
-	asl
-	sta index
-	clc
-	adc #4
-	sta end_index
+    lda eight_player_page
+    asl
+    asl
+    sta index
+    clc
+    adc #4
+    sta end_index
 
 loop:
-	ldx index
-	cpx end_index
-	beq end
-	txa
+    ldx index
+    cpx end_index
+    beq end
+    txa
 
-	and #3
-	asl
-	tay
-	lda display_start,y
-	sta ptr2
-	lda display_start + 1,y
-	sta ptr2 + 1
+    and #3
+    asl
+    tay
+    lda display_start,y
+    sta ptr2
+    lda display_start + 1,y
+    sta ptr2 + 1
 
-	lda snes_buttons,x
-	and #$f
-	jsr dpad
+    lda snes_buttons,x
+    and #$f
+    jsr dpad
 
-	subtract_word ptr2, BUTTON_OFFSET
-	ldx index
-	lda snes_buttons,x
-	inx
-	stx index
-	and #$10
-	jsr button
-	jmp loop
+    subtract_word ptr2, BUTTON_OFFSET
+    ldx index
+    lda snes_buttons,x
+    inx
+    stx index
+    and #$10
+    jsr button
+    jmp loop
 
 end:
-	rts
+    rts
+}
 
-.rodata
+.section data
 
-display_start:
-	.word screen + EIGHT_PLAYER_OFFSET_FIRST + DPAD_OFFSET
-	.word screen + EIGHT_PLAYER_OFFSET_SECOND + DPAD_OFFSET
-	.word screen + EIGHT_PLAYER_OFFSET_THIRD + DPAD_OFFSET
-	.word screen + EIGHT_PLAYER_OFFSET_FOURTH + DPAD_OFFSET
+display_start {
+    .data screen + EIGHT_PLAYER_OFFSET_FIRST + DPAD_OFFSET
+    .data screen + EIGHT_PLAYER_OFFSET_SECOND + DPAD_OFFSET
+    .data screen + EIGHT_PLAYER_OFFSET_THIRD + DPAD_OFFSET
+    .data screen + EIGHT_PLAYER_OFFSET_FOURTH + DPAD_OFFSET
+}
 
-bits:
-	.byte $01 ^ $ff, $02 ^ $ff, $04 ^ $ff, $08 ^ $ff, $10 ^ $ff, $20 ^ $ff, $40 ^ $ff, $80 ^ $ff
+bits {
+    .data $01 ^ $ff, $02 ^ $ff, $04 ^ $ff, $08 ^ $ff, $10 ^ $ff, $20 ^ $ff, $40 ^ $ff, $80 ^ $ff
+}

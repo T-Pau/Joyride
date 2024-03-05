@@ -25,15 +25,6 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
-.export handle_petscii
-
-.autoimport +
-
-.include "joyride.inc"
-
-.macpack utility
-
 OFFSET_X = 15
 OFFSET_R = 5
 OFFSET_DPAD = 18 ; negative
@@ -43,106 +34,107 @@ OFFSET_B = 40 * 1 - 2
 OFFSET_SELECT = 40 - 7
 OFFSET_START = 3
 
-.code
+.section code
 
-handle_petscii:
-	lda #$28
-	sta CIA2_DDRB
-	lda #$20
-	sta CIA2_PRB
-	lda #$00
-	sta CIA2_PRB
-	ldx #0
-	ldy #7
+.public handle_petscii {
+    lda #$28
+    sta CIA2_DDRB
+    lda #$20
+    sta CIA2_PRB
+    lda #$00
+    sta CIA2_PRB
+    ldx #0
+    ldy #7
 loop:
-	clc
-	lda CIA2_PRB
-	and #$40
-	bne :+
-	sec
-:	rol port_digital,x
-	lda #$08
-	sta CIA2_PRB
-	lda #0
-	sta CIA2_PRB
-	dey
-	bpl loop
-	ldy #3
-	inx
-	cpx #2
-	bne loop
-	
-	; 0,  1,    2,    3,      4, 5, 6,   7
-	; 01  02    04    08      10 20 40   80
-	; right, left, down, up,  start, select, Y, B
-	;                         R, L, X, A
-	
-	; L
-	store_word USERPORT_VIEW_START + 5, ptr2
-	lda port_digital + 1
-	and #$20
-	jsr tiny_button
+    clc
+    lda CIA2_PRB
+    and #$40
+    bne :+
+    sec
+:    rol port_digital,x
+    lda #$08
+    sta CIA2_PRB
+    lda #0
+    sta CIA2_PRB
+    dey
+    bpl loop
+    ldy #3
+    inx
+    cpx #2
+    bne loop
 
-	add_word ptr2, OFFSET_X
-	lda port_digital + 1
-	and #$40
-	jsr small_button
+    ; 0,  1,    2,    3,      4, 5, 6,   7
+    ; 01  02    04    08      10 20 40   80
+    ; right, left, down, up,  start, select, Y, B
+    ;                         R, L, X, A
 
-	add_word ptr2, OFFSET_R
-	lda port_digital + 1
-	and #$10
-	jsr tiny_button
+    ; L
+    store_word USERPORT_VIEW_START + 5, ptr2
+    lda port_digital + 1
+    and #$20
+    jsr tiny_button
 
-	subtract_word ptr2, OFFSET_DPAD
-	lda port_digital
-	and #$0f
-	tax
-	lda dpad_mirror,x
-	jsr dpad
+    add_word ptr2, OFFSET_X
+    lda port_digital + 1
+    and #$40
+    jsr small_button
 
-	subtract_word ptr2, OFFSET_Y
-	lda port_digital
-	and #$40
-	jsr small_button
+    add_word ptr2, OFFSET_R
+    lda port_digital + 1
+    and #$10
+    jsr tiny_button
 
-	add_word ptr2, OFFSET_A
-	lda port_digital + 1
-	and #$80
-	jsr small_button
+    subtract_word ptr2, OFFSET_DPAD
+    lda port_digital
+    and #$0f
+    tax
+    lda dpad_mirror,x
+    jsr dpad
 
-	add_word ptr2, OFFSET_B
-	lda port_digital
-	and #$80
-	jsr small_button
-	
-	ldx #0
-	lda port_digital + 1 ; X
-	and #$40
-	beq :+
-	inx
-:	lda port_digital ; B
-	and #$80
-	beq :+
-	inx
-	inx
-:	ldy #1
-	lda	xb_overlap,x
-	sta (ptr2),y
+    subtract_word ptr2, OFFSET_Y
+    lda port_digital
+    and #$40
+    jsr small_button
 
-	add_word ptr2, OFFSET_SELECT
-	lda port_digital
-	and #$20
-	jsr tiny_button
+    add_word ptr2, OFFSET_A
+    lda port_digital + 1
+    and #$80
+    jsr small_button
 
-	add_word ptr2, OFFSET_START
-	lda port_digital
-	and #$10
-	jsr tiny_button
+    add_word ptr2, OFFSET_B
+    lda port_digital
+    and #$80
+    jsr small_button
 
-	rts
+    ldx #0
+    lda port_digital + 1 ; X
+    and #$40
+    beq :+
+    inx
+:    lda port_digital ; B
+    and #$80
+    beq :+
+    inx
+    inx
+:    ldy #1
+    lda    xb_overlap,x
+    sta (ptr2),y
 
+    add_word ptr2, OFFSET_SELECT
+    lda port_digital
+    and #$20
+    jsr tiny_button
 
-.rodata
+    add_word ptr2, OFFSET_START
+    lda port_digital
+    and #$10
+    jsr tiny_button
 
-xb_overlap:
-	.byte $fd, $fe, $ff, $f5
+    rts
+}
+
+.section data
+
+xb_overlap {
+    .data $fd, $fe, $ff, $f5
+}

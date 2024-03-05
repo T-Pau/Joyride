@@ -28,87 +28,86 @@
 
 ; display number Y/A at ptr2, only two digits if X is 0
 
-.autoimport +
+.section reserved
 
-.export pot_number
+bit0 .reserve 1
 
-.include "joyride.inc"
+bit9 .reserve 1
 
-.bss
+halfed .reserve 1
 
-bit0:
-	.res 1
+hundred .reserve 1
 
-bit9:
-	.res 1
+.section data
 
-halfed:
-	.res 1
+digits_ten {
+    ;.repeat 50, i {
+    ;    .data (i / 5) .mod 10 + $30
+    ;}
+    .repeat 10, i {
+        .data $30 + i, $30 + i, $30 + i, $30 + i, $30 + i
+    }
+}
 
-hundred:
-	.res 1
+digits_one {
+    ;.repeat 50, i {
+    ;    .data (i * 2) .mod 10 + $30
+    ;}
+    .repeat 10 {
+        .data 0, 2, 4, 6, 8
+    }
+}
 
-.rodata
+.section code
 
-digits_ten:
-	.repeat 50, i
-	.byte (i / 5) .MOD 10 + $30
-	.endrep
-
-digits_one:
-	.repeat 50, i
-	.byte (i * 2) .MOD 10 + $30
-	.endrep
-
-.code
-
-pot_number:
-	sty bit9
-	ldy #0
-	sty bit0
-	sty hundred
-	lsr
-	rol bit0
-	ldy bit9
-	beq :+
-	ora #$80
+.public pot_number {
+    sty bit9
+    ldy #0
+    sty bit0
+    sty hundred
+    lsr
+    rol bit0
+    ldy bit9
+    beq :+
+    ora #$80
 :
 
-	ldy #0
-	cpx #0
-	beq digit2
-	ldx #0
-:	cmp #50
-	bcc found
-	sec
-	sbc #50
-	inx
-	bne :-
+    ldy #0
+    cpx #0
+    beq digit2
+    ldx #0
+:    cmp #50
+    bcc found
+    sec
+    sbc #50
+    inx
+    bne :-
 found:
-	stx hundred
-	sta halfed
-	txa
-	bne digit3
-	lda #$20
-	bne display_digit3
+    stx hundred
+    sta halfed
+    txa
+    bne digit3
+    lda #$20
+    bne display_digit3
 digit3:
-	ora #$30
+    ora #$30
 display_digit3:
-	sta (ptr2),y
-	iny
-	lda halfed
+    sta (ptr2),y
+    iny
+    lda halfed
 digit2:
-	tax
-	lda digits_ten,x
-	cmp #$30
-	bne :+
-	dec hundred
-	bpl :+
-	lda #$20
-:	sta (ptr2),y
-	iny
-	lda digits_one,x
-	clc
-	adc bit0
-	sta (ptr2),y
-	rts
+    tax
+    lda digits_ten,x
+    cmp #$30
+    bne :+
+    dec hundred
+    bpl :+
+    lda #$20
+:    sta (ptr2),y
+    iny
+    lda digits_one,x
+    clc
+    adc bit0
+    sta (ptr2),y
+    rts
+}

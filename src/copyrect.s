@@ -1,5 +1,5 @@
 ;  copyrect.s -- Copy rectangular area to screen.
-;  Copyright (C) 2020 Dieter Baron
+;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
 ;  The authors can be contacted at <joyride@tpau.group>.
@@ -25,43 +25,40 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export copyrect
-
-.include "joyride.inc"
-
-.code
+.section code
 
 ; copy rect from ptr1 to ptr2, x is width, y is height
 
-copyrect:
-	dex
-	stx ptr3
-	tya
-	tax
+.public copyrect {
+    dex
+    stx ptr3
+    tya
+    tax
 
 line_loop:
-	ldy ptr3
+    ldy ptr3
 char_loop:
-	lda (ptr1),y
-	sta (ptr2),y
-	dey
-	bpl char_loop
+    lda (ptr1),y
+    sta (ptr2),y
+    dey
+    bpl char_loop
 
-	; increment ptr1 by width, ptr2 by 40
-	sec ; ptr3 is width - 1
-	lda ptr1
-	adc ptr3
-	sta ptr1
-	bcc :+
-	inc ptr1 + 1
-	clc
-:	lda ptr2
-	adc #40
-	sta ptr2
-	bcc :+
-	inc ptr2 + 1
+    ; increment ptr1 by width, ptr2 by 40
+    sec ; ptr3 is width - 1
+    lda ptr1
+    adc ptr3
+    sta ptr1
+    bcc :+
+    inc ptr1 + 1
+    clc
+:    lda ptr2
+    adc #40
+    sta ptr2
+    bcc :+
+    inc ptr2 + 1
 :
-	dex
-	bne line_loop
+    dex
+    bne line_loop
 
-	rts
+    rts
+}

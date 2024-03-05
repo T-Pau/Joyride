@@ -28,31 +28,28 @@
 
 ; copy dpad for value in A to ptr2
 
-.autoimport +
+.section data
 
-.export dpad
+dpad_rects {
+    .repeat 16, i {
+        .data dpad_rect_data + i * 25
+    }
+}
 
-.include "joyride.inc"
+dpad_rect_data {
+    .binary_file "dpad.bin"
+}
 
-.rodata
+.section code
 
-dpad_rects:
-	.repeat 16, i
-	.word dpad_rect_data + i * 25
-	.endrep
-
-dpad_rect_data:
-	.incbin "dpad.bin"
-
-.code
-
-dpad:
-	asl
-	tax
-	lda dpad_rects,x
-	sta ptr1
-	lda dpad_rects + 1,x
-	sta ptr1 + 1
-	ldx #5
-	ldy #5
-	jmp copyrect
+.public dpad {
+    asl
+    tax
+    lda dpad_rects,x
+    sta ptr1
+    lda dpad_rects + 1,x
+    sta ptr1 + 1
+    ldx #5
+    ldy #5
+    jmp copyrect
+}

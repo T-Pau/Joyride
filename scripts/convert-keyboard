@@ -147,7 +147,7 @@ with open(config["charset"], mode='w') as file_charset:
                 segment = config["segment"]
                 print(f".segment \"{segment}\"", file=file_charset)
             else:
-                print(".rodata", file=file_charset)
+                print(".section data", file=file_charset)
             for y in range(0, config["height"]):
                 if y == 0:
                     charset = Charset(128, (0, 0))

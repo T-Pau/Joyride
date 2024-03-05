@@ -6,7 +6,7 @@ class AssemblerFormat:
         "cc65": {
             "byte": ".byte",
             "comment": "; ",
-            "data_section": ".rodata",
+            "data_section": ".section data",
             "export": ".export",
             "word": ".word"
         },

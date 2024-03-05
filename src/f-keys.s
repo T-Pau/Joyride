@@ -25,181 +25,174 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.section reserved
 
-.autoimport +
+shift .reserve 1
 
-.export handle_keyboard, get_f_key
-.export port1_next, port1_previous, port2_next, port2_previous, userport_next, userport_previous
+last_key .reserve 1
 
-.include "joyride.inc"
+.section code
 
-.bss
+.public get_f_key {
+    lda #$00
+    sta CIA1_DDRA
+    sta CIA1_DDRB
+    lda #$ff
+    sta CIA1_PRA
+    sta CIA1_PRB
 
-shift:
-	.res 1
+    lda CIA1_PRA
+    and CIA1_PRB
+    cmp #$ff
+    bne f_none
+    lda #$ff
+    sta CIA1_DDRA
 
-last_key:
-    .res 1
+    ; get shift
+    lda #$40 ^ $ff
+    sta CIA1_PRA
+    lda CIA1_PRB
+    eor #$ff
+    and #$10
+    sta shift
+    lda #$02 ^ $ff
+    sta CIA1_PRA
+    lda CIA1_PRB
+    eor #$ff
+    and #$80
+    ora shift
+    sta shift
 
-.rodata
-
-function_handlers:
-
-.code
-
-get_f_key:
-	lda #$00
-	sta CIA1_DDRA
-	sta CIA1_DDRB
-	lda #$ff
-	sta CIA1_PRA
-	sta CIA1_PRB
-
-	lda CIA1_PRA
-	and CIA1_PRB
-	cmp #$ff
-	bne f_none
-	lda #$ff
-	sta CIA1_DDRA
-
-	; get shift
-	lda #$40 ^ $ff
-	sta CIA1_PRA
-	lda CIA1_PRB
-	eor #$ff
-	and #$10
-	sta shift
-	lda #$02 ^ $ff
-	sta CIA1_PRA
-	lda CIA1_PRB
-	eor #$ff
-	and #$80
-	ora shift
-	sta shift
-
-	lda #$01 ^ $ff
-	sta CIA1_PRA
-	lda CIA1_PRB
-	; down F5 F3 F1 F7 ...
-	rol
-	rol
-	bcs not_f5
-	ldx #5
-	bne f_got
+    lda #$01 ^ $ff
+    sta CIA1_PRA
+    lda CIA1_PRB
+    ; down F5 F3 F1 F7 ...
+    rol
+    rol
+    bcs not_f5
+    ldx #5
+    bne f_got
 not_f5:
-	rol
-	bcs not_f3
-	ldx #3
-	bne f_got
+    rol
+    bcs not_f3
+    ldx #3
+    bne f_got
 not_f3:
-	rol
-	bcs not_f1
-	ldx #1
-	bne f_got
+    rol
+    bcs not_f1
+    ldx #1
+    bne f_got
 not_f1:
-	bmi f_none
-	ldx #7
+    bmi f_none
+    ldx #7
 f_got:
-	lda #$00
-	sta CIA1_DDRA
-	sta CIA1_DDRB
-	lda #$ff
-	sta CIA1_PRA
-	sta CIA1_PRB
+    lda #$00
+    sta CIA1_DDRA
+    sta CIA1_DDRB
+    lda #$ff
+    sta CIA1_PRA
+    sta CIA1_PRB
 
-	lda CIA1_PRA
-	and CIA1_PRB
-	cmp #$ff
-	bne f_none
+    lda CIA1_PRA
+    and CIA1_PRB
+    cmp #$ff
+    bne f_none
 
-	lda shift
-	beq f_end
-	inx
-	bne f_end
+    lda shift
+    beq f_end
+    inx
+    bne f_end
 f_none:
-	ldx #0
+    ldx #0
 f_end:
-	lda #$ff
-	sta CIA1_DDRA
-	sta CIA1_DDRB
-	cpx last_key
-	stx last_key
-	beq :+
-	ldx #0
-:	cpx #0
-	rts
+    lda #$ff
+    sta CIA1_DDRA
+    sta CIA1_DDRB
+    cpx last_key
+    stx last_key
+    beq :+
+    ldx #0
+:    cpx #0
+    rts
+}
 
-handle_keyboard:
-	jsr get_f_key
-	beq none
-	lda last_command
-	ora command
-	bne end
-	stx command
+.public handle_keyboard {
+    jsr get_f_key
+    beq none
+    lda last_command
+    ora command
+    bne end
+    stx command
 none:
-	stx last_command
+    stx last_command
 end:
-	rts
+    rts
+}
 
+.public port1_next {
+    ldx port1_type
+    inx
+    cpx #CONTROLLER_NUM_TYPES
+    bne :+
+    ldx #0
+:    stx port1_type
+    ldy #0
+    jmp copy_port_screen
+}
 
-port1_next:
-	ldx port1_type
-	inx
-	cpx #CONTROLLER_NUM_TYPES
-	bne :+
-	ldx #0
-:	stx port1_type
-	ldy #0
-	jmp copy_port_screen
+.public port1_previous {
+    ldx port1_type
+    dex
+    bpl :+
+    ldx #CONTROLLER_NUM_TYPES - 1
+:    stx port1_type
+    ldy #0
+    jmp copy_port_screen
+}
 
-port1_previous:
-	ldx port1_type
-	dex
-	bpl :+
-	ldx #CONTROLLER_NUM_TYPES - 1
-:	stx port1_type
-	ldy #0
-	jmp copy_port_screen
+.public port2_next {
+    ldx port2_type
+    inx
+    cpx #CONTROLLER_TYPE_LIGHTPEN
+    bne :+
+    inx
+:    cpx #CONTROLLER_NUM_TYPES
+    bne :+
+    ldx #0
+:    stx port2_type
+    ldy #1
+    jmp copy_port_screen
+}
 
-port2_next:
-	ldx port2_type
-	inx
-	cpx #CONTROLLER_TYPE_LIGHTPEN
-	bne :+
-	inx
-:	cpx #CONTROLLER_NUM_TYPES
-	bne :+
-	ldx #0
-:	stx port2_type
-	ldy #1
-	jmp copy_port_screen
+.public port2_previous {
+    ldx port2_type
+    dex
+    cpx #CONTROLLER_TYPE_LIGHTPEN
+    bne :+
+    dex
+:    cpx #$FF
+    bne :+
+    ldx #CONTROLLER_NUM_TYPES - 1
+:    stx port2_type
+    ldy #1
+    jmp copy_port_screen
+}
 
-port2_previous:
-	ldx port2_type
-	dex
-	cpx #CONTROLLER_TYPE_LIGHTPEN
-	bne :+
-	dex
-:	cpx #$FF
-	bne :+
-	ldx #CONTROLLER_NUM_TYPES - 1
-:	stx port2_type
-	ldy #1
-	jmp copy_port_screen
+.public userport_next {
+    ldx userport_type
+    inx
+    cpx #USER_NUM_TYPES
+    bne :+
+    ldx #0
+:    stx userport_type
+    jmp copy_userport
+}
 
-userport_next:
-	ldx userport_type
-	inx
-	cpx #USER_NUM_TYPES
-	bne :+
-	ldx #0
-:	stx userport_type
-	jmp copy_userport
-
-userport_previous:
-	ldx userport_type
-	dex
-	bpl :+
-	ldx #USER_NUM_TYPES - 1
-:	stx userport_type
-	jmp copy_userport
+.public userport_previous {
+    ldx userport_type
+    dex
+    bpl :+
+    ldx #USER_NUM_TYPES - 1
+:    stx userport_type
+    jmp copy_userport
+}

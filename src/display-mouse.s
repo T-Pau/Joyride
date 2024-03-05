@@ -25,14 +25,6 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
-.autoimport +
-
-.export display_mouse
-
-.include "joyride.inc"
-.macpack utility
-
 buttons_offset = 10
 wheel_offset = 2
 position_offset = 40 + 6 ; negative
@@ -40,104 +32,108 @@ position_offset = 40 + 6 ; negative
 sprite_x_offset = 2
 sprite_y_offset = 50 + 18
 
-.bss
+.section reserved
 
-tmp:
-	.res 1
+tmp .reserve 1
 
-.code
+.section code
 
-display_mouse:
-	lda port_digital
-	and #$03
-	asl
-	sta tmp
-	lda port_digital
-	and #$10
-	lsr
-	ora tmp
-	tay
-	lda button_rects,y
-	sta ptr1
-	lda button_rects + 1,y
-	sta ptr1 + 1
-	add_word ptr2, buttons_offset
-	ldx #7
-	ldy #3
-	jsr copyrect
+.public display_mouse {
+    lda port_digital
+    and #$03
+    asl
+    sta tmp
+    lda port_digital
+    and #$10
+    lsr
+    ora tmp
+    tay
+    lda button_rects,y
+    sta ptr1
+    lda button_rects + 1,y
+    sta ptr1 + 1
+    add_word ptr2, buttons_offset
+    ldx #7
+    ldy #3
+    jsr copyrect
 
-	add_word ptr2, wheel_offset
-	lda port_digital
-	and #$0c
-	lsr
-	tay
-	lda wheel_rects,y
-	sta ptr1
-	lda wheel_rects + 1,y
-	sta ptr1 + 1
-	ldx #3
-	ldy #4
-	jsr copyrect
+    add_word ptr2, wheel_offset
+    lda port_digital
+    and #$0c
+    lsr
+    tay
+    lda wheel_rects,y
+    sta ptr1
+    lda wheel_rects + 1,y
+    sta ptr1 + 1
+    ldx #3
+    ldy #4
+    jsr copyrect
 
-	subtract_word ptr2, position_offset
-	lda port_pot1
-	cmp #$7f
-	bne :+
-	lda #$80
-:	lsr
-	and #$3f
-	sta sprite_x
-	ldx #0
-	ldy #0
-	jsr pot_number
+    subtract_word ptr2, position_offset
+    lda port_pot1
+    cmp #$7f
+    bne :+
+    lda #$80
+:    lsr
+    and #$3f
+    sta sprite_x
+    ldx #0
+    ldy #0
+    jsr pot_number
 
-	add_word ptr2, 40
-	lda port_pot2
-	cmp #$7f
-	bne :+
-	lda #$80
-:	lsr
-	and #$3f
-	eor #$3f
-	sta sprite_y
-	ldy #0
-	ldx #0
-	jsr pot_number
+    add_word ptr2, 40
+    lda port_pot2
+    cmp #$7f
+    bne :+
+    lda #$80
+:    lsr
+    and #$3f
+    eor #$3f
+    sta sprite_y
+    ldy #0
+    ldx #0
+    jsr pot_number
 
-	ldx port_number
-	clc
-	lda sprite_x
-	adc #sprite_x_offset
-	adc port_x_offset,x
-	sta sprite_x
-	lda #0
-	adc #0
-	sta sprite_x + 1
+    ldx port_number
+    clc
+    lda sprite_x
+    adc #sprite_x_offset
+    adc port_x_offset,x
+    sta sprite_x
+    lda #0
+    adc #0
+    sta sprite_x + 1
 
-	lda sprite_y
-	adc #sprite_y_offset
-	sta sprite_y
+    lda sprite_y
+    adc #sprite_y_offset
+    sta sprite_y
 
-	txa
-	asl
-	jsr set_sprite
+    txa
+    asl
+    jsr set_sprite
 
-	rts
+    rts
+}
 
-.rodata
+.section data
 
-button_rects:
-	.repeat 8, i
-	.word buttons_data + i * 21
-	.endrep
+button_rects {
+    .repeat 8, i {
+        .data buttons_data + i * 21
+    }
+}
 
-wheel_rects:
-	.repeat 8, i
-	.word wheel_data + i * 12
-	.endrep
+wheel_rects {
+    .repeat 8, i {
+        .data wheel_data + i * 12
+    }
+}
 
-buttons_data:
-	.incbin "mouse-buttons.bin"
+buttons_data {
+    .binary_file "mouse-buttons.bin"
+}
 
-wheel_data:
-	.incbin "scroll-wheel.bin"
+wheel_data {
+    .binary_file "scroll-wheel.bin"
+}

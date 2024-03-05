@@ -25,8 +25,6 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.include "c64.inc"
-
 COLOR_BLACK = 0
 COLOR_WHITE = 1
 COLOR_RED = 2
@@ -56,10 +54,6 @@ sprite_bar = sprite_none + 2
 sprite_cross = sprite_none + 3
 sprite_logo = sprite_none + 4
 
-tmp1 = $02
-ptr1 = $fb
-ptr2 = $fd
-ptr3 = $c1
 
 top = 50 ; first raster line of screen
 
@@ -141,3 +135,9 @@ COMMAND_EIGHT_PLAYER_NEXT_PAGE = 14
 COMMAND_EIGHT_PLAYER_PREVIOUS_PAGE = 15
 COMMAND_MAIN = 16
 COMMAND_EIGHT_PLAYER_UPDATE_VIEWS = 17
+
+.section zero_page
+.public tmp1 .reserve 1
+.public ptr1 .reserve 2
+.public ptr2 .reserve 2
+.public ptr3 .reserve 2

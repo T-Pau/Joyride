@@ -3,8 +3,8 @@
 import sys
 
 if len(sys.argv) < 2:
-	print("usage: ", sys.argv[0], " filename.bin\n")
-	sys.exit(1)
+    print("usage: ", sys.argv[0], " filename.bin\n")
+    sys.exit(1)
 
 filename = sys.argv[1]
 

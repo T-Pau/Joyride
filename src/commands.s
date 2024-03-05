@@ -1,5 +1,5 @@
 ;  commands.s -- Command handler table
-;  Copyright (C) 2020 Dieter Baron
+;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
 ;  The authors can be contacted at <joyride@tpau.group>.
@@ -25,28 +25,25 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export command_handlers
+.section data
 
-.autoimport +
-
-.rodata
-
-command_handlers:
-	.word 0
-	.word port1_next
-	.word port1_previous
-	.word port2_next
-	.word port2_previous
-	.word userport_next
-	.word userport_previous
-	.word display_eight_player_screen
-	.word display_help_screen
-	.word help_next
-	.word help_previous
-	.word display_current_screen
-	.word eight_player_next_type
-	.word eight_player_previous_type
-	.word eight_player_next_page
-	.word eight_player_previous_page
-	.word display_main_screen
-	.word eight_player_update_views
+.public command_handlers {
+    .data $0000
+    .data port1_next
+    .data port1_previous
+    .data port2_next
+    .data port2_previous
+    .data userport_next
+    .data userport_previous
+    .data display_eight_player_screen
+    .data display_help_screen
+    .data help_next
+    .data help_previous
+    .data display_current_screen
+    .data eight_player_next_type
+    .data eight_player_previous_type
+    .data eight_player_next_page
+    .data eight_player_previous_page
+    .data display_main_screen
+    .data eight_player_update_views
+}

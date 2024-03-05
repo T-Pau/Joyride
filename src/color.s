@@ -1,5 +1,5 @@
 ;  color.s -- Contents of color RAM.
-;  Copyright (C) 2020 Dieter Baron
+;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
 ;  The authors can be contacted at <joyride@tpau.group>.
@@ -25,47 +25,25 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export main_color, help_color
+.section data
 
-.rodata
+.public main_color {
+    .data .fill(2 * 40, $c)
+    .repeat 9 {
+        .data .fill(19, $b), $c
+        .data .fill(19, $b), $c
+    }
+    .data .fill(4 * 40, $c)
+    .repeat 5 {
+        .data .fill(4, $c), .fill(30, $b), .fill(6, $c)
+    }
+    .data .fill(5 * 40, $c)
+}
 
-main_color:
-	.res 80, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.res 160, $c
-	.byte $c, $c, $c, $c, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c, $c, $c, $c, $c, $c
-	.byte $c, $c, $c, $c, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c, $c, $c, $c, $c, $c
-	.byte $c, $c, $c, $c, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c, $c, $c, $c, $c, $c
-	.byte $c, $c, $c, $c, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c, $c, $c, $c, $c, $c
-	.byte $c, $c, $c, $c, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c, $c, $c, $c, $c, $c
-	.res 5*40, $c
-
-help_color:
-	.res 2 * 40, $c
-	.repeat 18, i
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b
-	.byte $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c
-	.endrep
-	.res 5 * 40, $c
+.public help_color {
+    .data fill (2 * 40, $c)
+    .repeat 18 {
+        .data .fill(39, $b), $c
+    }
+    .data .fill(5 * 40, $c)
+}

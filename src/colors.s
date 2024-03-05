@@ -1,5 +1,5 @@
 ;  colors.s -- Set background color.
-;  Copyright (C) 2020 Dieter Baron
+;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
 ;  The authors can be contacted at <joyride@tpau.group>.
@@ -25,37 +25,35 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.section code
 
-.export label_background, content_background, logo_background, top_label
+.public top_label {
+    lda #COLOR_BLACK
+:    ldx VIC_HLINE
+    cpx #top + 1
+    bne :-
+    sta VIC_BG_COLOR0
+    rts
+}
 
-.include "joyride.inc"
+.public label_background {
+    nop
+    nop
+    nop
+    nop
+    lda #COLOR_BLACK
+    sta VIC_BG_COLOR0
+    rts
+}
 
-.code
+.public content_background {
+    lda #COLOR_GRAY3
+    sta VIC_BG_COLOR0
+    rts
+}
 
-top_label:
-	lda #COLOR_BLACK
-:	ldx VIC_HLINE
-	cpx #top + 1
-	bne :-
-	sta VIC_BG_COLOR0
-	rts
-
-label_background:
-	nop
-	nop
-	nop
-	nop
-	lda #COLOR_BLACK
-	sta VIC_BG_COLOR0
-	rts
-
-content_background:
-	lda #COLOR_GRAY3
-	sta VIC_BG_COLOR0
-	rts
-
-logo_background:
-	lda #COLOR_GRAY1
-	sta VIC_BG_COLOR0
-	rts
-
+.public logo_background {
+    lda #COLOR_GRAY1
+    sta VIC_BG_COLOR0
+    rts
+}

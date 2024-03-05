@@ -28,139 +28,135 @@
 
 ; copy screen for port Y
 
-.autoimport +
-.export copy_port_screen, port_x_offset
-
-.include "joyride.inc"
-
-.macpack cbm
-.macpack cbm_ext
-.macpack utility
-
 name_address = screen + 9
 
-.bss
+.section reserved
 
-type_times_2:
-	.res 1
+type_times_2 .reserve 1
 
-port:
-	.res 1
+port .reserve 1
 
-.rodata
+.section data
 
-port_x_offset:
-	.byte 32, 32 + 20 * 8
+.public port_x_offset {
+    .data 32, 32 + 20 * 8
+}
 
-.code
 
-copy_port_screen:
-	sty port
-	ldx port1_type,y
+.section code
 
-	lda #<name_address
-	cpy #1
-	bne port0
-	clc
-	adc #20
+.public copy_port_screen {
+    sty port
+    ldx port1_type,y
+
+    lda #<name_address
+    cpy #1
+    bne port0
+    clc
+    adc #20
 port0:
-	sta ptr2
-	lda #>name_address
-	sta ptr2 + 1
+    sta ptr2
+    lda #>name_address
+    sta ptr2 + 1
 
-	txa
-	asl
-	sta type_times_2
-	asl
-	asl
-	asl
-	clc
-	adc #<port_names
-	sta ptr1
-	lda #0
-	adc #>port_names
-	sta ptr1 + 1
+    txa
+    asl
+    sta type_times_2
+    asl
+    asl
+    asl
+    clc
+    adc #<port_names
+    sta ptr1
+    lda #0
+    adc #>port_names
+    sta ptr1 + 1
 
-	ldy #8
+    ldy #8
 loop:
-	lda (ptr1),y
-	sta (ptr2),y
-	dey
-	bpl loop
+    lda (ptr1),y
+    sta (ptr2),y
+    dey
+    bpl loop
 
-	clc
-	lda #72
-	adc ptr2
-	sta ptr2
-	ldx type_times_2
-	lda port_screens,x
-	sta ptr1
-	lda port_screens + 1,x
-	sta ptr1 + 1
-	ldx #17
-	ldy #9
-	jsr copyrect
+    clc
+    lda #72
+    adc ptr2
+    sta ptr2
+    ldx type_times_2
+    lda port_screens,x
+    sta ptr1
+    lda port_screens + 1,x
+    sta ptr1 + 1
+    ldx #17
+    ldy #9
+    jsr copyrect
 
-	lda port
-	beq next
-	lda type_times_2
-	cmp #(CONTROLLER_NUM_TYPES - 1) * 2
-	bne next
+    lda port
+    beq next
+    lda type_times_2
+    cmp #(CONTROLLER_NUM_TYPES - 1) * 2
+    bne next
 
-	subtract_word ptr2, 40
-	ldy #16
-	lda #$20
-:	sta (ptr2),y
-	dey
-	bpl :-
+    subtract_word ptr2, 40
+    ldy #16
+    lda #$20
+:    sta (ptr2),y
+    dey
+    bpl :-
 
 next:
-	; set correct sprite pointers
-	lda port
-	asl
-	tay
-	ldx type_times_2
-	lda port_sprite,x
-	sta screen + $3f8,y
-	lda port_sprite + 1,x
-	sta screen + $3f9,y
+    ; set correct sprite pointers
+    lda port
+    asl
+    tay
+    ldx type_times_2
+    lda port_sprite,x
+    sta screen + $3f8,y
+    lda port_sprite + 1,x
+    sta screen + $3f9,y
 
-	rts
+    rts
+}
 
-.rodata
+.section data
 
-port_sprite:
-	.byte sprite_none, sprite_none
-	.byte sprite_cross, sprite_none
-	.byte sprite_bar, sprite_none
-	.byte sprite_bar, sprite_none
-	.byte sprite_cross, sprite_none
-	.byte sprite_cross, sprite_lightpen
-	.byte sprite_none, sprite_none
-	.byte sprite_none, sprite_none
-	.byte sprite_bar, sprite_bar
+port_sprite {
+    .data sprite_none, sprite_none
+    .data sprite_cross, sprite_none
+    .data sprite_bar, sprite_none
+    .data sprite_bar, sprite_none
+    .data sprite_cross, sprite_none
+    .data sprite_cross, sprite_lightpen
+    .data sprite_none, sprite_none
+    .data sprite_none, sprite_none
+    .data sprite_bar, sprite_bar
+}
 
-port_names:
-	invcode "joystick        "
-	invcode "mouse           "
-	invcode "paddle 1        "
-	invcode "paddle 2        "
-	invcode "koalapad        "
-	invcode "light pen       "
-	invcode "protopad        "
-	invcode "trap them       "
-	invcode "raw             "
+port_names {
+    .data "joystick        ":screen_inverted
+    .data "mouse           ":screen_inverted
+    .data "paddle 1        ":screen_inverted
+    .data "paddle 2        ":screen_inverted
+    .data "koalapad        ":screen_inverted
+    .data "light pen       ":screen_inverted
+    .data "protopad        ":screen_inverted
+    .data "trap them       ":screen_inverted
+    .data "raw             ":screen_inverted
+}
 
-port_screens:
-	.word port_screen_data
-	.word port_screen_data + 17 * 9
-	.word port_screen_data + 17 * 9 * 2
-	.word port_screen_data + 17 * 9 * 2
-	.word port_screen_data + 17 * 9 * 3
-	.word port_screen_data + 17 * 9 * 4
-	.word port_screen_data + 17 * 9 * 5
-	.word port_screen_data + 17 * 9 * 6
-	.word port_screen_data + 17 * 9 * 7
+port_screens {
+    .data port_screen_data
+    .data port_screen_data + 17 * 9
+    .data port_screen_data + 17 * 9 * 2
+    .data port_screen_data + 17 * 9 * 2
+    .data port_screen_data + 17 * 9 * 3
+    .data port_screen_data + 17 * 9 * 4
+    .data port_screen_data + 17 * 9 * 5
+    .data port_screen_data + 17 * 9 * 6
+    .data port_screen_data + 17 * 9 * 7
+}
 
-port_screen_data:
-	.incbin "port-screens.bin"
+port_screen_data {
+    .binary_file "port-screens.bin"
+}

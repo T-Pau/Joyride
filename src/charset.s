@@ -1,6 +1,6 @@
 ;  charset.s -- Binary data of character set.
-;  Copyright (C) 2020 Dieter Baron
-;
+;  Copyright (C) Dieter Baron
+
 ;  This file is part of Joyride, a controller test program for C64.
 ;  The authors can be contacted at <joyride@tpau.group>.
 ;
@@ -25,10 +25,8 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.section data
 
-.export charset_data
-
-.rodata
-
-charset_data:
-	.incbin "charset.bin"
+.public charset_data {
+    .binary_file "charset.bin"
+}

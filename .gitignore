@@ -6,3 +6,4 @@ src/sym
 /src/.deps
 /src/joyride.d64
 /src/joyride.d81
+/build

@@ -25,31 +25,30 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export main_loop, command, last_command
+.section data
 
-.autoimport +
+.public command {
+    .data 0
+}
 
-.data
+.public last_command {
+    .data 0
+}
 
-command:
-	.byte 0
+.section code
 
-last_command:
-	.byte 0
-
-.code
-
-main_loop:
-	lda command
-	beq main_loop
-	asl
-	tax
-	lda command_handlers,x
-	sta jump + 1
-	lda command_handlers + 1,x
-	sta jump + 2
+.public main_loop {
+    lda command
+    beq main_loop
+    asl
+    tax
+    lda command_handlers,x
+    sta jump + 1
+    lda command_handlers + 1,x
+    sta jump + 2
 jump:
-	jsr $0000
-	lda #0
-	sta command
-	beq main_loop
+    jsr $0000
+    lda #0
+    sta command
+    beq main_loop
+}

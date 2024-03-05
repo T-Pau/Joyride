@@ -25,72 +25,67 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.section code
 
-.autoimport +
+.public help_next {
+    inc current_help_page
+    jmp display_help_page
+}
 
-.export help_next, help_previous, handle_help
+.public help_previous {
+    dec current_help_page
+    jmp display_help_page
+}
 
-.include "joyride.inc"
-.macpack utility
+.public handle_help {
+    jsr display_logo
 
-.code
+    lda #$00
+    sta CIA1_DDRA
+    sta CIA1_DDRB
 
-help_next:
-	inc current_help_page
-	jmp display_help_page
+    lda CIA1_PRA
+    and CIA1_PRB
+    cmp #$ff
+    bne end
 
-help_previous:
-	dec current_help_page
-	jmp display_help_page
+    lda #$ff
+    sta CIA1_DDRA
 
-handle_help:
-	jsr display_logo
-
-	lda #$00
-	sta CIA1_DDRA
-	sta CIA1_DDRB
-
-	lda CIA1_PRA
-	and CIA1_PRB
-	cmp #$ff
-	bne end
-
-	lda #$ff
-	sta CIA1_DDRA
-
-	lda #$80 ^ $ff
-	sta CIA1_PRA
-	lda CIA1_PRB
-	tax
-	and #$02
-	bne :+
-	lda #COMMAND_HELP_EXIT
-	bne got_key
-:	txa
-	and #$10
-	bne :+
-	lda #COMMAND_HELP_NEXT
-	bne got_key
-:	lda #$20 ^ $ff
-	sta CIA1_PRA
-	lda CIA1_PRB
-	and #$01
-	bne :+
-	lda #COMMAND_HELP_NEXT
-	bne got_key
-:	lda CIA1_PRB
-	and #$08
-	beq :+
-	lda #0
-	sta last_command
-	beq end
-:	lda #COMMAND_HELP_PREVIOUS
+    lda #$80 ^ $ff
+    sta CIA1_PRA
+    lda CIA1_PRB
+    tax
+    and #$02
+    bne :+
+    lda #COMMAND_HELP_EXIT
+    bne got_key
+:    txa
+    and #$10
+    bne :+
+    lda #COMMAND_HELP_NEXT
+    bne got_key
+:    lda #$20 ^ $ff
+    sta CIA1_PRA
+    lda CIA1_PRB
+    and #$01
+    bne :+
+    lda #COMMAND_HELP_NEXT
+    bne got_key
+:    lda CIA1_PRB
+    and #$08
+    beq :+
+    lda #0
+    sta last_command
+    beq end
+:    lda #COMMAND_HELP_PREVIOUS
 got_key:
-	cmp last_command
-	beq end
-	sta last_command
-	sta command
+    cmp last_command
+    beq end
+    sta last_command
+    sta command
 end:
-	lda #$ff
-	sta CIA1_DDRB
-	rts
+    lda #$ff
+    sta CIA1_DDRB
+    rts
+}

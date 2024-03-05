@@ -25,25 +25,16 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.section reserved
 
-.autoimport +
+pad .reserve 2
 
-.export display_trapthem
+.section code
 
-.include "joyride.inc"
-.macpack utility
-
-.bss
-
-pad:
-	.res 2
-
-.code
-
-display_trapthem:
-	dex
-	beq :+
-	ldx #1
+.public display_trapthem {
+    dex
+    beq :+
+    ldx #1
 :
     lda #$18
     sta CIA1_DDRA,x
@@ -52,9 +43,9 @@ display_trapthem:
     lda #$00
     sta CIA1_PRA,x
 
-	lda #<pad
-	sta rotate + 1
-	ldy #12
+    lda #<pad
+    sta rotate + 1
+    ldy #12
 loop:
     lda CIA1_PRA,x
     ror
@@ -68,38 +59,39 @@ rotate:
     lda #$00
     sta CIA1_PRA,x
 
-	dey
-	cpy #4
-	bne :+
-	inc rotate + 1
-:	cpy #0
-	bne loop
+    dey
+    cpy #4
+    bne :+
+    inc rotate + 1
+:    cpy #0
+    bne loop
 
-	lda #$10
-	sta CIA1_PRA,x
-	lda #0
-	sta CIA1_PRA,x
+    lda #$10
+    sta CIA1_PRA,x
+    lda #0
+    sta CIA1_PRA,x
 
-	lda pad + 1
-	asl
-	asl
-	asl
-	asl
-	sta pad + 1
+    lda pad + 1
+    asl
+    asl
+    asl
+    asl
+    sta pad + 1
 
-	clc
-	lda ptr2
-	adc #41
-	sta ptr2
-	bcc :+
-	inc ptr2 + 1
+    clc
+    lda ptr2
+    adc #41
+    sta ptr2
+    bcc :+
+    inc ptr2 + 1
 :
-	lda pad + 1
-	eor #$ff
-	tax
-	lda pad
-	eor #$ff
-	ldy #1
-	jsr display_snes
+    lda pad + 1
+    eor #$ff
+    tax
+    lda pad
+    eor #$ff
+    ldy #1
+    jsr display_snes
 
-	rts
+    rts
+}

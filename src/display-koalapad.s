@@ -25,69 +25,62 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
-.autoimport +
-
-.export display_koalapad
-
-.include "joyride.inc"
-.macpack utility
-
 buttons_offset = 40 + 11
 position_offset = 5 * 40 - 3
 
 sprite_x_offset = 2
 sprite_y_offset = 50 + 18
 
-.code
+.section code
 
-display_koalapad:
-	add_word ptr2, buttons_offset
+.public display_koalapad {
+    add_word ptr2, buttons_offset
 
-	lda port_digital
-	and #$04
-	jsr button
+    lda port_digital
+    and #$04
+    jsr button
 
-	lda port_digital
-	and #$08
-	jsr button
+    lda port_digital
+    and #$08
+    jsr button
 
-	add_word ptr2, position_offset
+    add_word ptr2, position_offset
 
-	lda port_pot1
-	ldy #0
-	ldx #1
-	jsr pot_number
+    lda port_pot1
+    ldy #0
+    ldx #1
+    jsr pot_number
 
-	add_word ptr2, 40
+    add_word ptr2, 40
 
-	lda port_pot2
-	ldy #0
-	ldx #1
-	jsr pot_number
+    lda port_pot2
+    ldy #0
+    ldx #1
+    jsr pot_number
 
-	ldx port_number
+    ldx port_number
 
-	lda port_pot2
-	lsr
-	lsr
-	clc
-	adc #sprite_y_offset
-	sta sprite_y
+    lda port_pot2
+    lsr
+    lsr
+    clc
+    adc #sprite_y_offset
+    sta sprite_y
 
-	lda port_pot1
-	lsr
-	lsr
-	clc
-	adc #sprite_x_offset
-	adc port_x_offset,x
-	sta sprite_x
-	lda #0
-	adc #0
-	sta sprite_x + 1
+    lda port_pot1
+    lsr
+    lsr
+    clc
+    adc #sprite_x_offset
+    adc port_x_offset,x
+    sta sprite_x
+    lda #0
+    adc #0
+    sta sprite_x + 1
 
-	txa
-	asl
-	jsr set_sprite
+    txa
+    asl
+    jsr set_sprite
 
-	rts
+    rts
+}

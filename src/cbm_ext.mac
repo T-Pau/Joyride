@@ -25,77 +25,26 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.macro set_vic_bank base_address
+.macro set_vic_bank base_address {
     lda CIA2_PRA ; switch VIC bank
     and #$fc
-    ora #((base_address >> 14) ^ 3)
+    ora #(base_address >> 14) ^ 3
     sta CIA2_PRA
-.endmacro
+}
 
-.macro set_vic_text screen, charset
-	lda #(((screen & $3c00) >> 6) | ((charset & $3800) >> 10))
-	sta VIC_VIDEO_ADR
-.endmacro
+.macro set_vic_text screen, charset {
+    lda #((screen & $3c00) >> 6) | ((charset & $3800) >> 10)
+    sta VIC_VIDEO_ADR
+}
 
-.macro set_vic_24_lines
-	lda VIC_CTRL1
-	and #$08 ^ $ff
-	sta VIC_CTRL1
-.endmacro
+.macro set_vic_24_lines {
+    lda VIC_CTRL1
+    and #$08 ^ $ff
+    sta VIC_CTRL1
+}
 
-.macro set_vic_25_lines
-	lda VIC_CTRL1
-	ora #$08
-	sta VIC_CTRL1
-.endmacro
-
-; Convert characters to inverse screen codes
-
-; Macro that converts one character.
-; invbyte() can be used as an instruction operand
-.define invbyte(code)   (<(.strat ("h@dbdlhh", code >> 5) << 4) ^ code | $80)
-
-; Helper macro that stores one character
-.macro _invcode char
-        .if (char < 256)
-                .byte   invbyte {char}
-        .else
-                .error  "invcode: Character constant out of range"
-        .endif
-.endmacro
-
-.macro  invcode arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9
-
-        ; Bail out if next argument is empty
-        .if     .blank ({arg1})
-                .exitmacro
-        .endif
-
-        ; Check for a string
-        .if     .match ({arg1}, "")
-
-                ; Walk over all string chars
-                .repeat .strlen (arg1), i
-                        _invcode        {.strat (arg1, i)}
-                .endrepeat
-
-        ; Check for a number
-        .elseif .match (.left (1, {arg1}), 0)
-
-                ; Just output the number
-                _invcode        arg1
-
-        ; Check for a character
-        .elseif .match (.left (1, {arg1}), 'a')
-
-                ; Just output the character
-                _invcode        arg1
-
-        ; Anything else is an error
-        .else
-                .error  "invcode: invalid argument type"
-        .endif
-
-        ; Call the macro recursively with the remaining args
-        invcode arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9
-.endmacro
+.macro set_vic_25_lines {
+    lda VIC_CTRL1
+    ora #$08
+    sta VIC_CTRL1
+}

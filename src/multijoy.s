@@ -1,12 +1,6 @@
-.autoimport +
+.section code
 
-.include "joyride.inc"
-
-.macpack generic
-
-.export multijoy_top
-multijoy_top:
-.scope
+.public multijoy_top {
     lda #$0f
     sta CIA1_DDRB
     lda #$00
@@ -19,21 +13,19 @@ multijoy_top:
 loop:
     sta CIA1_PRB
     lda CIA1_PRA
-	and #$1f
-	eor #$1f
-	sta snes_buttons,y
+    and #$1f
+    eor #$1f
+    sta snes_buttons,y
     iny
     tya
     inx
     cpx #4
     blt loop
     rts
-.endscope
+}
 
 ; TODO: merge with multijoy_top
-.export protovision_multijoy_top
-protovision_multijoy_top:
-.scope
+.public protovision_multijoy_top {
     lda #$0f
     sta CIA1_DDRA
     lda #$00
@@ -46,13 +38,13 @@ protovision_multijoy_top:
 loop:
     sta CIA1_PRA
     lda CIA1_PRB
-	and #$1f
-	eor #$1f
-	sta snes_buttons,y
+    and #$1f
+    eor #$1f
+    sta snes_buttons,y
     iny
     tya
     inx
     cpx #4
     blt loop
     rts
-.endscope
+}

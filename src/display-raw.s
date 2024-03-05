@@ -25,14 +25,6 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
-.autoimport +
-
-.export display_raw
-
-.include "joyride.inc"
-.macpack utility
-
 bit0_position = 1
 pot1_offset = 40 * 7 - 11
 pot2_offset = 9
@@ -43,88 +35,89 @@ sprite_x_offset = 4
 sprite0_y_offset = 50 + 20 + 3 * 8
 sprite1_y_offset = sprite0_y_offset + 16
 
-.code
+.section code
 
-display_raw:
-	add_word ptr2, bit0_position
+.public display_raw {
+    add_word ptr2, bit0_position
 
-	lda port_digital
-	and #$01
-	jsr button
+    lda port_digital
+    and #$01
+    jsr button
 
-	lda port_digital
-	and #$02
-	jsr button
+    lda port_digital
+    and #$02
+    jsr button
 
-	lda port_digital
-	and #$04
-	jsr button
+    lda port_digital
+    and #$04
+    jsr button
 
-	lda port_digital
-	and #$08
-	jsr button
+    lda port_digital
+    and #$08
+    jsr button
 
-	lda port_digital
-	and #$10
-	jsr button
+    lda port_digital
+    and #$10
+    jsr button
 
-	add_word ptr2, pot1_offset
-	lda port_pot1
-	ldy #0
-	ldx #1
-	jsr pot_number
+    add_word ptr2, pot1_offset
+    lda port_pot1
+    ldy #0
+    ldx #1
+    jsr pot_number
 
-	add_word ptr2, pot2_offset
-	lda port_pot2
-	ldy #0
-	ldx #1
-	jsr pot_number
+    add_word ptr2, pot2_offset
+    lda port_pot2
+    ldy #0
+    ldx #1
+    jsr pot_number
 
-	lda port_number
-	bne :+
-	add_word ptr2, penx_offset
-	lda pen_x
-	ldy #0
-	ldx #1
-	jsr pot_number
-	add_word ptr2, peny_offset
-	lda pen_y
-	ldy pen_y + 1
-	ldx #1
-	jsr pot_number
+    lda port_number
+    bne :+
+    add_word ptr2, penx_offset
+    lda pen_x
+    ldy #0
+    ldx #1
+    jsr pot_number
+    add_word ptr2, peny_offset
+    lda pen_y
+    ldy pen_y + 1
+    ldx #1
+    jsr pot_number
 
-:	ldx port_number
-	lda port_pot1
-	lsr
-	clc
-	adc #sprite_x_offset
-	adc port_x_offset,x
-	sta sprite_x
-	lda #0
-	adc #0
-	sta sprite_x + 1
-	lda #sprite0_y_offset
-	sta sprite_y
-	txa
-	asl
-	jsr set_sprite
+:    ldx port_number
+    lda port_pot1
+    lsr
+    clc
+    adc #sprite_x_offset
+    adc port_x_offset,x
+    sta sprite_x
+    lda #0
+    adc #0
+    sta sprite_x + 1
+    lda #sprite0_y_offset
+    sta sprite_y
+    txa
+    asl
+    jsr set_sprite
 
-	ldx port_number
-	lda port_pot2
-	lsr
-	clc
-	adc #sprite_x_offset
-	adc port_x_offset,x
-	sta sprite_x
-	lda #0
-	adc #0
-	sta sprite_x + 1
-	lda #sprite1_y_offset
-	sta sprite_y
-	txa
-	asl
-	clc
-	adc #1
-	jsr set_sprite
+    ldx port_number
+    lda port_pot2
+    lsr
+    clc
+    adc #sprite_x_offset
+    adc port_x_offset,x
+    sta sprite_x
+    lda #0
+    adc #0
+    sta sprite_x + 1
+    lda #sprite1_y_offset
+    sta sprite_y
+    txa
+    asl
+    clc
+    adc #1
+    jsr set_sprite
 
-	rts
+    rts
+}

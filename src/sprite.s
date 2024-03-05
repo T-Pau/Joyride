@@ -27,40 +27,37 @@
 
 
 ; set sprite A coordinates
-.export sprite_x, sprite_y, set_sprite
 
-.include "c64.inc"
+.section data
 
-.rodata
+highbit {
+    .data $01, $fe,  $02, $fd,  $04, $fb,  $08, $f7
+    .data $10, $ef,  $20, $df,  $40, $bf,  $80, $7f
+}
 
-highbit:
-	.byte $01, $fe,  $02, $fd,  $04, $fb,  $08, $f7
-	.byte $10, $ef,  $20, $df,  $40, $bf,  $80, $7f
+.section reserved
 
-.bss
+.public sprite_x .reserve 2
+.public sprite_y .reserve 1
 
-sprite_x:
-	.res 2
-sprite_y:
-	.res 1
+.section code
 
-.code
+.public set_sprite {
+    asl
+    tax
 
-set_sprite:
-	asl
-	tax
-
-	lda VIC_SPR_HI_X
-	and highbit + 1,x
-	ldy sprite_x + 1
-	beq set_high	
-	ora highbit,x
+    lda VIC_SPR_HI_X
+    and highbit + 1,x
+    ldy sprite_x + 1
+    beq set_high
+    ora highbit,x
 set_high:
-	sta VIC_SPR_HI_X
+    sta VIC_SPR_HI_X
 
-	lda sprite_x
-	sta VIC_SPR0_X,x
-	lda sprite_y
-	sta VIC_SPR0_Y,x
+    lda sprite_x
+    sta VIC_SPR0_X,x
+    lda sprite_y
+    sta VIC_SPR0_Y,x
 
-	rts
+    rts
+}

@@ -25,10 +25,8 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.section data
 
-.export sprite_data
-
-.rodata
-
-sprite_data:
-	.incbin "sprites.bin"
+.public sprite_data {
+    .binary_file "sprites.bin"
+}

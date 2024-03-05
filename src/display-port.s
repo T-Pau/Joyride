@@ -25,47 +25,42 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
-.autoimport +
-
-.export display_port
-
-.include "joyride.inc"
-
 display_position = screen + 40 * 2 + 1
 
-.rodata
+.section data
 
-display_routines:
-	.word display_joystick
-	.word display_mouse
-	.word display_paddle1
-	.word display_paddle2
-	.word display_koalapad
-	.word display_lightpen
-    .word display_protopad
-	.word display_trapthem
-	.word display_raw
+display_routines {
+    .data display_joystick
+    .data display_mouse
+    .data display_paddle1
+    .data display_paddle2
+    .data display_koalapad
+    .data display_lightpen
+    .data display_protopad
+    .data display_trapthem
+    .data display_raw
+}
 
-.code
+.section code
 
-display_port:
-	stx port_number
-	clc
-	lda #<display_position
-	cpx #1
-	bne :+
-	adc #19
-:	sta ptr2
-	lda #>display_position
-	sta ptr2 + 1
+.public display_port {
+    stx port_number
+    clc
+    lda #<display_position
+    cpx #1
+    bne :+
+    adc #19
+:    sta ptr2
+    lda #>display_position
+    sta ptr2 + 1
 
-	lda port1_type, x
-	asl
-	tay
-	lda display_routines,y
-	sta jump + 1
-	lda display_routines + 1,y
-	sta jump + 2
+    lda port1_type, x
+    asl
+    tay
+    lda display_routines,y
+    sta jump + 1
+    lda display_routines + 1,y
+    sta jump + 2
 jump:
-	jmp $0000
+    jmp $0000
+}

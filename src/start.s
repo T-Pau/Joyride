@@ -25,20 +25,9 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.section code
 
-.autoimport +
-.export start, machine_type
-
-.include "joyride.inc"
-.include "mega65.inc"
-
-.macpack cbm_ext
-.macpack utility
-
-.code
-
-start:
-.scope
+.public start {
     lda #1
     sta VIC_SPR0_X
     lda #VIC_KNOCK_IV_1
@@ -60,57 +49,57 @@ both:
     sta machine_type
 
     lda #12; COLOR_GREY2
-	sta VIC_BORDERCOLOR
+    sta VIC_BORDERCOLOR
 
-	memcpy charset, charset_data, $800
-	memcpy sprites, sprite_data, (64 * 8)
+    memcpy charset, charset_data, $800
+    memcpy sprites, sprite_data, (64 * 8)
 
-	jsr init_state
-	jsr display_main_screen
+    jsr init_state
+    jsr display_main_screen
 
-	set_vic_bank $c000
-	set_vic_text screen, charset
+    set_vic_bank $c000
+    set_vic_text screen, charset
 
-	lda #$0f
-	sta VIC_SPR_ENA
-	lda #0
-	sta VIC_SPR_BG_PRIO
-	sta VIC_SPR_EXP_X
-	sta VIC_SPR_EXP_Y
-	sta VIC_SPR_MCOLOR
+    lda #$0f
+    sta VIC_SPR_ENA
+    lda #0
+    sta VIC_SPR_BG_PRIO
+    sta VIC_SPR_EXP_X
+    sta VIC_SPR_EXP_Y
+    sta VIC_SPR_MCOLOR
 
-	lda #COLOR_WHITE
-	sta VIC_SPR0_COLOR
-	sta VIC_SPR1_COLOR
-	sta VIC_SPR2_COLOR
-	sta VIC_SPR3_COLOR
+    lda #COLOR_WHITE
+    sta VIC_SPR0_COLOR
+    sta VIC_SPR1_COLOR
+    sta VIC_SPR2_COLOR
+    sta VIC_SPR3_COLOR
 
-	jsr setup_logo
+    jsr setup_logo
 
-	lda #$ff
-	sta CIA1_DDRA
-	sta CIA1_DDRB
+    lda #$ff
+    sta CIA1_DDRA
+    sta CIA1_DDRB
 
-	jsr init_irq
+    jsr init_irq
 
-	; set up serial loopback for userport adapters
-	lda #0
-	sta CIA2_DDRB
-	lda #1
-	sta CIA1_TA
-	sta CIA2_TA
-	lda #0
-	sta CIA1_TA + 1
-	sta CIA2_TA + 1
-	lda #%00010001
-	sta CIA2_CRA
-	lda #%01010001
-	sta CIA1_CRA
+    ; set up serial loopback for userport adapters
+    lda #0
+    sta CIA2_DDRB
+    lda #1
+    sta CIA1_TA
+    sta CIA2_TA
+    lda #0
+    sta CIA1_TA + 1
+    sta CIA2_TA + 1
+    lda #%00010001
+    sta CIA2_CRA
+    lda #%01010001
+    sta CIA1_CRA
 
-	jmp main_loop
-.endscope
+    jmp main_loop
+}
 
-.bss
 
-machine_type:
-    .res 1
+.section reserved
+
+.public machine_type .reserve 1

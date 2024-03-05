@@ -1,0 +1,78 @@
+petcat = petcat
+
+CONVERT_SCREENS = ../scripts/convert-screens
+
+CONVERT_SCREENS_DEPENDENCIES :=
+    ../scripts/convert-screens
+    ../scripts/AssemblerOutput.py
+    ../scripts/RunlengthEncoder.py
+    ../scripts/Screens.py
+
+sources :=
+    start.s
+    button.s
+    charset.s
+    color.s
+    colors.s
+    commands.s
+    copyrect.s
+    display-joystick.s
+    display-koalapad.s
+    display-lightpen.s
+    display-mouse.s
+    display-paddle.s
+    display-port.s
+    display-protopad.s
+    display-raw.s
+    display-trapthem.s
+    dpad.s
+    eight-player.s
+    f-keys.s
+    help.s
+    help-screen.s
+    help-screens.s
+    hex.s
+    inception.s
+    irq.s
+    irq-table.s
+    logo.s
+    main-loop.s
+    memcpy.s
+    multijoy.s
+    petscii.s
+    port-screen.s
+    ports.s
+    pot.s
+    rl-expand.s
+    screen.s
+    snes.s
+    snespad.s
+    spaceballs.s
+    sprite.s
+    sprites.s
+    state.s
+    superpad.s
+    userport.s
+
+rule basic
+    command = $petcat -w$dialect -l $address -o $out $in
+
+rule convert-screen
+    command = $CONVERT_SCREENS -DVERSION=$VERSION -D__C64__ $in $out
+
+rule gfx-convert-charset
+    command = gfx-convert -b 255 charset $in $out
+
+rule gfx-convert-sprites
+    command = gfx-convert sprites $in $out
+
+rule gfx-convert-screen
+    command = gfx-convert -b 255 screen $in charset.bin $out
+
+rule gfx-convert-screen-buttons
+    command = gfx-convert -b 255 screen charset.bin "" $in && ./fixup-buttons $out
+
+
+build joyride.prg: link $sources
+    target = c64-basic
+    libs = mega65.lib cbm.lib

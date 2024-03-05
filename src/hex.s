@@ -25,41 +25,33 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.section reserved
 
-.autoimport +
+tmp .reserve 1
 
-.export hex
+.section code
 
-.include "joyride.inc"
+.public hex {
+    sta tmp
+    lsr
+    lsr
+    lsr
+    lsr
+    tax
+    lda hex_digits,x
+    sta (ptr2),y
+    iny
+    lda tmp
+    and #$0f
+    tax
+    lda hex_digits,x
+    sta (ptr2),y
+    iny
+    rts
+}
 
-.macpack utility
+.section data
 
-.bss
-
-tmp:
-	.res 1
-
-.code
-
-hex:
-	sta tmp
-	lsr
-	lsr
-	lsr
-	lsr
-	tax
-	lda hex_digits,x
-	sta (ptr2),y
-	iny
-	lda tmp
-	and #$0f
-	tax
-	lda hex_digits,x
-	sta (ptr2),y
-	iny
-	rts
-
-.rodata
-
-hex_digits:
-	.byte "0123456789", $1, $2, $3, $4, $5, $6
+hex_digits {
+    .data "0123456789abcdef":screen
+}

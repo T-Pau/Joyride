@@ -25,24 +25,19 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.export rl_expand
 
-.autoimport +
-
-.macpack utility
-
-.include "joyride.inc"
+.section code
 
 ; ptr1: runlength encoded string
 ; ptr2: destination to expand to
-rl_expand:
-.scope
-	ldy #0
+
+.public rl_expand {
+    ldy #0
 loop:
-	lda (ptr1),y
-	inc_16 ptr1
-	cmp #$fe
-	bne no_skip
+    lda (ptr1),y
+    inc_16 ptr1
+    cmp #$fe
+    bne no_skip
     lda (ptr1),y
     inc_16 ptr1
     clc
@@ -52,27 +47,27 @@ loop:
     inc ptr2 + 1
     bne loop
 no_skip:
-	ldx #$01
-	cmp #$ff
-	bne runlength_loop
-	lda (ptr1),y
-	inc_16 ptr1
-	cmp #$00
-	bne :+
-	rts
+    ldx #$01
+    cmp #$ff
+    bne runlength_loop
+    lda (ptr1),y
+    inc_16 ptr1
+    cmp #$00
+    bne :+
+    rts
 :   tax
     lda (ptr1),y
     inc_16 ptr1
 runlength_loop:
-	sta (ptr2),y
-	iny
-	dex
-	bne runlength_loop
-	tya
+    sta (ptr2),y
+    iny
+    dex
+    bne runlength_loop
+    tya
     clc
     adc ptr2
     sta ptr2
     bcc :+
     inc ptr2 + 1
 :   jmp rl_expand
-.endscope
+}

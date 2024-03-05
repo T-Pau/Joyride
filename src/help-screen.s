@@ -25,50 +25,44 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
-.autoimport +
-.export display_help_page, current_help_page
-
-.include "joyride.inc"
-
 help_screen_title = screen + 1
 help_screen_text = screen + 40 * 2 + 1
 
-.bss
+.section reserved
 
-current_help_page:
-	.res 1
+.public current_help_page .reserve 1
 
 
-.code
+.section code
 
-display_help_page:
-	lda current_help_page
-	bmi negative
-	cmp num_help_screens
-	bne ok
-	lda #0
-	beq ok
+.public display_help_page {
+    lda current_help_page
+    bmi negative
+    cmp num_help_screens
+    bne ok
+    lda #0
+    beq ok
 negative:
-	ldx num_help_screens
-	dex
-	txa
+    ldx num_help_screens
+    dex
+    txa
 ok:
-	sta current_help_page
-	asl
-	tax
+    sta current_help_page
+    asl
+    tax
 
-	lda help_screens,x
-	sta ptr1
-	lda help_screens + 1,x
-	sta ptr1 + 1
-	lda #<help_screen_title
-	sta ptr2
-	lda #>help_screen_title
-	sta ptr2 + 1
-	jsr rl_expand
+    lda help_screens,x
+    sta ptr1
+    lda help_screens + 1,x
+    sta ptr1 + 1
+    lda #<help_screen_title
+    sta ptr2
+    lda #>help_screen_title
+    sta ptr2 + 1
+    jsr rl_expand
     lda #<help_screen_text
     sta ptr2
     lda #>help_screen_text
     sta ptr2 + 1
     jmp rl_expand
+}

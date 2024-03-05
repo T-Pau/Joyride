@@ -25,37 +25,31 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.section data
 
-.autoimport +
-.export main_irq_table, main_irq_table_length, help_irq_table, help_irq_table_length, eight_player_irq_table, eight_player_irq_table_length
+.public main_irq_table {
+    .data top - 1:2, top_label
+    .data top + 8 - 1:2, handle_userport
+    .data top + 13 * 8:2, label_background
+    .data top + 14 * 8 - 1:2, handle_port2
+    .data top + 21 * 8:2, label_background
+    .data top + 24 * 8 + 7:2, handle_port1
 
-.include "joyride.inc"
+}
+.public main_irq_table_length = .sizeof(main_irq_table)
 
-.data
+.public help_irq_table {
+    .data top - 1:2, top_label
+    .data top + 8 - 1:2, content_background
+    .data top + 21 * 8:2, label_background
+    .data top + 24 * 8 + 7:2, handle_help
+}
+.public help_irq_table_length = .sizeof(help_irq_table)
 
-main_irq_table:
-	.word top - 1, top_label
-	.word top + 8 - 1, handle_userport
-	.word top + 13 * 8, label_background
-	.word top + 14 * 8 - 1, handle_port2
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 7, handle_port1
-main_irq_table_length:
-	.byte * - main_irq_table
-
-
-help_irq_table:
-	.word top - 1, top_label
-	.word top + 8 - 1, content_background
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 7, handle_help
-help_irq_table_length:
-	.byte * - help_irq_table
-
-eight_player_irq_table:
-	.word top - 1, top_label
-	.word top + 8 - 1, eight_player_top
-	.word top + 21 * 8, label_background
-	.word top + 24 * 8 + 7, eight_player_bottom
-eight_player_irq_table_length:
-	.byte * - eight_player_irq_table
+.public eight_player_irq_table {
+    .data top - 1:2, top_label
+    .data top + 8 - 1:2, eight_player_top
+    .data top + 21 * 8:2, label_background
+    .data top + 24 * 8 + 7:2, eight_player_bottom
+}
+.public eight_player_irq_table_length = .sizeof(eight_player_irq_table)
