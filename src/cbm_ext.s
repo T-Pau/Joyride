@@ -33,18 +33,18 @@
 }
 
 .macro set_vic_text screen, charset {
-    lda #((screen & $3c00) >> 6) | ((charset & $3800) >> 10)
-    sta VIC_VIDEO_ADR
+    lda #VIC_ADDRESS(screen, charset)
+    sta VIC_VIDEO_ADDRESS
 }
 
 .macro set_vic_24_lines {
-    lda VIC_CTRL1
+    lda VIC_CONTROL_1
     and #$08 ^ $ff
-    sta VIC_CTRL1
+    sta VIC_CONTROL_1
 }
 
 .macro set_vic_25_lines {
-    lda VIC_CTRL1
+    lda VIC_CONTROL_1
     ora #$08
-    sta VIC_CTRL1
+    sta VIC_CONTROL_1
 }

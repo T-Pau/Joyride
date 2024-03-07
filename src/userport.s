@@ -25,7 +25,7 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-name_address = screen + 13 * 40 + 15
+userport_name_address = screen + 13 * 40 + 15
 
 .section reserved
 
@@ -85,9 +85,9 @@ userport_view_data {
     asl
     tax
 
-    lda #<name_address
+    lda #<userport_name_address
     sta ptr2
-    lda #>name_address
+    lda #>userport_name_address
     sta ptr2 + 1
 
     lda userport_names,x
@@ -202,8 +202,8 @@ read_hitmen {
 :
     ; read port 4 fire
     lda #$ff
-    sta CIA1_SDR
-    lda CIA2_SDR
+    sta CIA1_SERIAL_DATA
+    lda CIA2_SERIAL_DATA
     cmp #$ff
     beq :+
     lda port_digital + 1

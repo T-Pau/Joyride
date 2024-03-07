@@ -29,7 +29,7 @@ eight_player_screen_start = screen + 40 * 2 + 1
 
 .section reserved
 
-index .reserve 2
+eight_player_index .reserve 2
 
 .section code
 
@@ -107,9 +107,9 @@ loop:
     asl
     asl
     tax
-    stx index
+    stx eight_player_index
     ldy #0
-    sty index + 1
+    sty eight_player_index + 1
 view_loop:
     lda eight_player_views,x
     cmp eight_player_current_views,y
@@ -129,8 +129,8 @@ view_loop:
     asl
     tay
     lda #0
-    sta VIC_SPR0_X,y
-    sta VIC_SPR0_Y,y
+    sta VIC_SPRITE_0_X,y
+    sta VIC_SPRITE_0_Y,y
     lda view_start,y
     sta ptr2
     lda view_start + 1,y
@@ -139,12 +139,12 @@ view_loop:
     ldy #9
     jsr copyrect
 same_view:
-    ldx index
+    ldx eight_player_index
     inx
-    stx index
-    ldy index + 1
+    stx eight_player_index
+    ldy eight_player_index + 1
     iny
-    sty index + 1
+    sty eight_player_index + 1
     cpy #4
     bne view_loop
     rts

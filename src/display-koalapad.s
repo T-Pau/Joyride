@@ -25,16 +25,16 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-buttons_offset = 40 + 11
-position_offset = 5 * 40 - 3
+koalapad_buttons_offset = 40 + 11
+koalapad_position_offset = 5 * 40 - 3
 
-sprite_x_offset = 2
-sprite_y_offset = 50 + 18
+koalapad_sprite_x_offset = 2
+koalapad_sprite_y_offset = 50 + 18
 
 .section code
 
 .public display_koalapad {
-    add_word ptr2, buttons_offset
+    add_word ptr2, koalapad_buttons_offset
 
     lda port_digital
     and #$04
@@ -44,7 +44,7 @@ sprite_y_offset = 50 + 18
     and #$08
     jsr button
 
-    add_word ptr2, position_offset
+    add_word ptr2, koalapad_position_offset
 
     lda port_pot1
     ldy #0
@@ -64,14 +64,14 @@ sprite_y_offset = 50 + 18
     lsr
     lsr
     clc
-    adc #sprite_y_offset
+    adc #koalapad_sprite_y_offset
     sta sprite_y
 
     lda port_pot1
     lsr
     lsr
     clc
-    adc #sprite_x_offset
+    adc #koalapad_sprite_x_offset
     adc port_x_offset,x
     sta sprite_x
     lda #0

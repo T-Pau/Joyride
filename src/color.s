@@ -41,7 +41,7 @@
 }
 
 .public help_color {
-    .data fill (2 * 40, $c)
+    .data .fill(2 * 40, $c)
     .repeat 18 {
         .data .fill(39, $b), $c
     }

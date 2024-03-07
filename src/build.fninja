@@ -11,6 +11,7 @@ CONVERT_SCREENS_DEPENDENCIES :=
 sources :=
     start.s
     button.s
+    cbm_ext.s
     charset.s
     color.s
     colors.s
@@ -35,6 +36,7 @@ sources :=
     inception.s
     irq.s
     irq-table.s
+    joyride.s
     logo.s
     main-loop.s
     memcpy.s
@@ -53,6 +55,7 @@ sources :=
     state.s
     superpad.s
     userport.s
+    utility.s
 
 rule basic
     command = $petcat -w$dialect -l $address -o $out $in

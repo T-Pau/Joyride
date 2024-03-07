@@ -29,14 +29,14 @@
 
 .public start {
     lda #1
-    sta VIC_SPR0_X
+    sta VIC_SPRITE_0_X
     lda #VIC_KNOCK_IV_1
     sta VIC_KEY
     lda #VIC_KNOCK_IV_2
     sta VIC_KEY
     lda #0
     sta VIC_PALETTE_RED
-    lda VIC_SPR0_X
+    lda VIC_SPRITE_0_X
     beq not_m65
     ;; Enable fast CPU for quick depack
     lda #65
@@ -49,7 +49,7 @@ both:
     sta machine_type
 
     lda #12; COLOR_GREY2
-    sta VIC_BORDERCOLOR
+    sta VIC_BORDER_COLOR
 
     memcpy charset, charset_data, $800
     memcpy sprites, sprite_data, (64 * 8)
@@ -61,18 +61,18 @@ both:
     set_vic_text screen, charset
 
     lda #$0f
-    sta VIC_SPR_ENA
+    sta VIC_SPRITE_ENABLE
     lda #0
-    sta VIC_SPR_BG_PRIO
-    sta VIC_SPR_EXP_X
-    sta VIC_SPR_EXP_Y
-    sta VIC_SPR_MCOLOR
+    sta VIC_SPRITE_PRIORITY
+    sta VIC_SPRITE_EXPAND_X
+    sta VIC_SPRITE_EXPAND_Y
+    sta VIC_SPRITE_MULTICOLOR
 
     lda #COLOR_WHITE
-    sta VIC_SPR0_COLOR
-    sta VIC_SPR1_COLOR
-    sta VIC_SPR2_COLOR
-    sta VIC_SPR3_COLOR
+    sta VIC_SPRITE_0_COLOR
+    sta VIC_SPRITE_1_COLOR
+    sta VIC_SPRITE_2_COLOR
+    sta VIC_SPRITE_3_COLOR
 
     jsr setup_logo
 
@@ -86,15 +86,15 @@ both:
     lda #0
     sta CIA2_DDRB
     lda #1
-    sta CIA1_TA
-    sta CIA2_TA
+    sta CIA1_TIMER_A
+    sta CIA2_TIMER_A
     lda #0
-    sta CIA1_TA + 1
-    sta CIA2_TA + 1
+    sta CIA1_TIMER_A + 1
+    sta CIA2_TIMER_A + 1
     lda #%00010001
-    sta CIA2_CRA
+    sta CIA2_TIMER_A_CONTROL
     lda #%01010001
-    sta CIA1_CRA
+    sta CIA1_TIMER_A_CONTROL
 
     jmp main_loop
 }

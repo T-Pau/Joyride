@@ -25,14 +25,14 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-OFFSET_X = 15
-OFFSET_R = 5
-OFFSET_DPAD = 18 ; negative
-OFFSET_Y = 40 * 4 - 11 ; negative
-OFFSET_A = 4
-OFFSET_B = 40 * 1 - 2
-OFFSET_SELECT = 40 - 7
-OFFSET_START = 3
+PETSCII_OFFSET_X = 15
+PETSCII_OFFSET_R = 5
+PETSCII_OFFSET_DPAD = 18 ; negative
+PETSCII_OFFSET_Y = 40 * 4 - 11 ; negative
+PETSCII_OFFSET_A = 4
+PETSCII_OFFSET_B = 40 * 1 - 2
+PETSCII_OFFSET_SELECT = 40 - 7
+PETSCII_OFFSET_START = 3
 
 .section code
 
@@ -74,34 +74,34 @@ loop:
     and #$20
     jsr tiny_button
 
-    add_word ptr2, OFFSET_X
+    add_word ptr2, PETSCII_OFFSET_X
     lda port_digital + 1
     and #$40
     jsr small_button
 
-    add_word ptr2, OFFSET_R
+    add_word ptr2, PETSCII_OFFSET_R
     lda port_digital + 1
     and #$10
     jsr tiny_button
 
-    subtract_word ptr2, OFFSET_DPAD
+    subtract_word ptr2, PETSCII_OFFSET_DPAD
     lda port_digital
     and #$0f
     tax
     lda dpad_mirror,x
     jsr dpad
 
-    subtract_word ptr2, OFFSET_Y
+    subtract_word ptr2, PETSCII_OFFSET_Y
     lda port_digital
     and #$40
     jsr small_button
 
-    add_word ptr2, OFFSET_A
+    add_word ptr2, PETSCII_OFFSET_A
     lda port_digital + 1
     and #$80
     jsr small_button
 
-    add_word ptr2, OFFSET_B
+    add_word ptr2, PETSCII_OFFSET_B
     lda port_digital
     and #$80
     jsr small_button
@@ -120,12 +120,12 @@ loop:
     lda    xb_overlap,x
     sta (ptr2),y
 
-    add_word ptr2, OFFSET_SELECT
+    add_word ptr2, PETSCII_OFFSET_SELECT
     lda port_digital
     and #$20
     jsr tiny_button
 
-    add_word ptr2, OFFSET_START
+    add_word ptr2, PETSCII_OFFSET_START
     lda port_digital
     and #$10
     jsr tiny_button

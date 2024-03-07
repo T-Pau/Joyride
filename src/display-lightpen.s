@@ -25,9 +25,9 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-buttons_offset = 12
-x_offset = 40 * 2 + 2
-y_offset = 40
+lightpen_buttons_offset = 12
+lightpen_x_offset = 40 * 2 + 2
+lightpen_y_offset = 40
 
 lightpen_sprite_x_offset = 24 + 8
 lightpen_sprite_y_offset = 50 + 14
@@ -74,16 +74,16 @@ set_bottom_sprite:
     iny
     iny
     iny
-:    lda button_rects,y
+:    lda lightpen_button_rects,y
     sta ptr1
-    lda button_rects + 1,y
+    lda lightpen_button_rects + 1,y
     sta ptr1 + 1
-    add_word ptr2, buttons_offset
+    add_word ptr2, lightpen_buttons_offset
     ldx #5
     ldy #3
     jsr copyrect
 
-    add_word ptr2, x_offset
+    add_word ptr2, lightpen_x_offset
     ldy #0
     lda pen_x
     asl
@@ -92,7 +92,7 @@ set_bottom_sprite:
 :    ldx #1
     jsr pot_number
 
-    add_word ptr2, y_offset
+    add_word ptr2, lightpen_y_offset
     lda pen_y
     ldy pen_y + 1
     ldx #1
@@ -154,12 +154,12 @@ show_cursor:
 
 .section data
 
-button_rects {
+lightpen_button_rects {
     .repeat 8, i {
-        .data buttons_data + i * 15
+        .data lightpen_buttons_data + i * 15
     }
 }
 
-buttons_data {
+lightpen_buttons_data {
     .binary_file "lightpen-buttons.bin"
 }

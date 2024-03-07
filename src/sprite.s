@@ -46,18 +46,18 @@ highbit {
     asl
     tax
 
-    lda VIC_SPR_HI_X
+    lda VIC_SPRITE_X_MSB
     and highbit + 1,x
     ldy sprite_x + 1
     beq set_high
     ora highbit,x
 set_high:
-    sta VIC_SPR_HI_X
+    sta VIC_SPRITE_X_MSB
 
     lda sprite_x
-    sta VIC_SPR0_X,x
+    sta VIC_SPRITE_0_X,x
     lda sprite_y
-    sta VIC_SPR0_Y,x
+    sta VIC_SPRITE_0_Y,x
 
     rts
 }

@@ -29,10 +29,10 @@
 
 .public top_label {
     lda #COLOR_BLACK
-:    ldx VIC_HLINE
+:    ldx VIC_RASTER
     cpx #top + 1
     bne :-
-    sta VIC_BG_COLOR0
+    sta VIC_BACKGROUND_COLOR
     rts
 }
 
@@ -42,18 +42,18 @@
     nop
     nop
     lda #COLOR_BLACK
-    sta VIC_BG_COLOR0
+    sta VIC_BACKGROUND_COLOR
     rts
 }
 
 .public content_background {
     lda #COLOR_GRAY3
-    sta VIC_BG_COLOR0
+    sta VIC_BACKGROUND_COLOR
     rts
 }
 
 .public logo_background {
     lda #COLOR_GRAY1
-    sta VIC_BG_COLOR0
+    sta VIC_BACKGROUND_COLOR
     rts
 }

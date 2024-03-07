@@ -105,12 +105,12 @@ eight_player_legend {
 
     lda #0
     ldy #7
-:    sta VIC_SPR0_X,y
+:    sta VIC_SPRITE_0_X,y
     dey
     bpl :-
-    lda VIC_SPR_HI_X
+    lda VIC_SPRITE_X_MSB
     and #$f0
-    sta VIC_SPR_HI_X
+    sta VIC_SPRITE_X_MSB
 
     ldx #7
     lda EIGHT_PLAYER_VIEW_NONE
@@ -137,12 +137,12 @@ eight_player_legend {
 
     lda #0
     ldy #7
-:    sta VIC_SPR0_X,y
+:    sta VIC_SPRITE_0_X,y
     dey
     bpl :-
-    lda VIC_SPR_HI_X
+    lda VIC_SPRITE_X_MSB
     and #$f0
-    sta VIC_SPR_HI_X
+    sta VIC_SPRITE_X_MSB
 
     memcpy screen, help_screen, 1000
     memcpy color_ram, help_color, 1000

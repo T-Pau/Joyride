@@ -27,7 +27,7 @@
 
 .section reserved
 
-pad .reserve 2
+trapthem_pad .reserve 2
 
 .section code
 
@@ -43,7 +43,7 @@ pad .reserve 2
     lda #$00
     sta CIA1_PRA,x
 
-    lda #<pad
+    lda #<trapthem_pad
     sta rotate + 1
     ldy #12
 loop:
@@ -52,7 +52,7 @@ loop:
     ror
     ror
 rotate:
-    rol pad
+    rol trapthem_pad
 
     lda #$08
     sta CIA1_PRA,x
@@ -71,12 +71,12 @@ rotate:
     lda #0
     sta CIA1_PRA,x
 
-    lda pad + 1
+    lda trapthem_pad + 1
     asl
     asl
     asl
     asl
-    sta pad + 1
+    sta trapthem_pad + 1
 
     clc
     lda ptr2
@@ -85,10 +85,10 @@ rotate:
     bcc :+
     inc ptr2 + 1
 :
-    lda pad + 1
+    lda trapthem_pad + 1
     eor #$ff
     tax
-    lda pad
+    lda trapthem_pad
     eor #$ff
     ldy #1
     jsr display_snes

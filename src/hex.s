@@ -27,12 +27,12 @@
 
 .section reserved
 
-tmp .reserve 1
+hex_tmp .reserve 1
 
 .section code
 
 .public hex {
-    sta tmp
+    sta hex_tmp
     lsr
     lsr
     lsr
@@ -41,7 +41,7 @@ tmp .reserve 1
     lda hex_digits,x
     sta (ptr2),y
     iny
-    lda tmp
+    lda hex_tmp
     and #$0f
     tax
     lda hex_digits,x

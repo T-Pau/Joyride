@@ -25,11 +25,11 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-button_offset = 40 + 7
-value_offset = 5 * 40
+paddle_button_offset = 40 + 7
+paddle_value_offset = 5 * 40
 
-sprite_x_offset = 4
-sprite_y_offset = 50 + 20 + 4 * 8
+paddle_sprite_x_offset = 4
+paddle_sprite_y_offset = 50 + 20 + 4 * 8
 
 .section reserved
 
@@ -50,7 +50,7 @@ paddle .reserve 1
 }
 
 display_paddle {
-    add_word ptr2, button_offset
+    add_word ptr2, paddle_button_offset
     lda port_digital
     lsr
     lsr
@@ -61,7 +61,7 @@ display_paddle {
 :    and #1
     jsr button
 
-    add_word ptr2, value_offset
+    add_word ptr2, paddle_value_offset
     lda port_pot1
     ldx paddle
     beq :+
@@ -77,14 +77,14 @@ display_paddle {
     sbc sprite_x
     lsr
     clc
-    adc #sprite_x_offset
+    adc #paddle_sprite_x_offset
     adc port_x_offset,x
     sta sprite_x
     lda #0
     adc #0
     sta sprite_x + 1
 
-    lda #sprite_y_offset
+    lda #paddle_sprite_y_offset
     sta sprite_y
 
     txa

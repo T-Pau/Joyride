@@ -20,7 +20,7 @@ loop:
     tya
     inx
     cpx #4
-    blt loop
+    bcc loop
     rts
 }
 
@@ -45,6 +45,6 @@ loop:
     tya
     inx
     cpx #4
-    blt loop
+    bcc loop
     rts
 }

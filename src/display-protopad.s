@@ -27,7 +27,7 @@
 
 .section reserved
 
-pad .reserve 2
+protopad_pad .reserve 2
 
 .section code
 
@@ -37,8 +37,8 @@ pad .reserve 2
     ldx #1
 :
     lda #$00
-    sta pad
-    sta pad + 1
+    sta protopad_pad
+    sta protopad_pad + 1
 
     ldx #%00000000
     ldy #%00001000
@@ -61,9 +61,9 @@ pad .reserve 2
     asl
     tay
     lda translate_1,y
-    sta pad
+    sta protopad_pad
     lda translate_1 + 1,y
-    sta pad + 1
+    sta protopad_pad + 1
 
     lda #0
     sta CIA1_PRA,x
@@ -72,8 +72,8 @@ pad .reserve 2
     and #$07
     tay
     lda translate_2,y
-    ora pad
-    sta pad
+    ora protopad_pad
+    sta protopad_pad
 
     lda #$08
     sta CIA1_PRA,x
@@ -83,11 +83,11 @@ pad .reserve 2
     asl
     tay
     lda translate_3,y
-    ora pad
-    sta pad
+    ora protopad_pad
+    sta protopad_pad
     lda translate_3 + 1,y
-    ora pad + 1
-    sta pad + 1
+    ora protopad_pad + 1
+    sta protopad_pad + 1
 
     lda #$00
     sta CIA1_PRA,x
@@ -97,11 +97,11 @@ pad .reserve 2
     asl
     tay
     lda translate_4,y
-    ora pad
-    sta pad
+    ora protopad_pad
+    sta protopad_pad
     lda translate_4 + 1,y
-    ora pad + 1
-    sta pad + 1
+    ora protopad_pad + 1
+    sta protopad_pad + 1
 
     lda #0
     sta CIA1_DDRA,x
@@ -114,8 +114,8 @@ not_connected:
     bcc :+
     inc ptr2 + 1
 :
-    lda pad
-    ldx pad + 1
+    lda protopad_pad
+    ldx protopad_pad + 1
     ldy #1
     jmp display_snes
 }

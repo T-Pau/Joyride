@@ -33,7 +33,7 @@ table .reserve 1
 
 .section reserved
 
-index .reserve 1
+irq_index .reserve 1
 
 table_length .reserve 1
 
@@ -44,11 +44,11 @@ table_length .reserve 1
     sei
     ; disable cia 1 interrupts
     lda #$7f
-    sta CIA1_ICR
+    sta CIA1_INTERRUPT
 
     ; enable rasterline irq
     ldx #1
-    stx VIC_IMR
+    stx VIC_INTERRUPT_MASK
 
     lda #<irq_main
     sta $0314
@@ -63,43 +63,43 @@ table_length .reserve 1
     sty table + 1
     sta table_length
     lda #0
-    sta index
+    sta irq_index
     jmp setup_next_irq
 }
 
 irq_main {
     .if .defined(IRQ_DEBUG) {
-        inc VIC_BORDERCOLOR
+        inc VIC_BORDER_COLOR
     }
 irq_jsr:
     jsr $0000
     jsr setup_next_irq
     ; acknowledge irq
     lda #1
-    sta VIC_IRR
+    sta VIC_INTERRUPT_REQUEST
     .if .defined(IRQ_DEBUG) {
-        dec VIC_BORDERCOLOR
+        dec VIC_BORDER_COLOR
     }
     jmp $ea81
 }
 
 setup_next_irq {
-    ldy index
+    ldy irq_index
 
     ; activate next entry
     lda (table),y
-    sta VIC_HLINE
+    sta VIC_RASTER
     iny
     lda (table),y
     beq high0
-    lda VIC_CTRL1
+    lda VIC_CONTROL_1
     ora #$80
-    sta VIC_CTRL1
+    sta VIC_CONTROL_1
     bne addr
 high0:
-    lda VIC_CTRL1
+    lda VIC_CONTROL_1
     and #$7f
-    sta VIC_CTRL1
+    sta VIC_CONTROL_1
 addr:
     iny
     lda (table),y
@@ -112,6 +112,6 @@ addr:
     cpy table_length
     bne :+
     ldy #0
-:    sty index
+:    sty irq_index
     rts
 }

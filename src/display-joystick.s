@@ -27,7 +27,7 @@
 
 .section reserved
 
-tmp .reserve 2
+joystick_tmp .reserve 1
 
 .section data
 
@@ -45,7 +45,7 @@ joy_positions {
 .public display_joystick {
     txa
     asl
-    sta tmp
+    sta joystick_tmp
     tax
     lda joy_positions,x
     sta ptr2
@@ -57,7 +57,7 @@ joy_positions {
 
     ; button 1
     clc
-    ldx tmp
+    ldx joystick_tmp
     lda joy_positions,x
     adc #46
     sta ptr2
@@ -68,7 +68,7 @@ joy_positions {
     and #$10
     jsr button
 
-    ldx tmp
+    ldx joystick_tmp
     cpx #4
     bcs end
 

@@ -25,16 +25,16 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-buttons_offset = 10
-wheel_offset = 2
-position_offset = 40 + 6 ; negative
+mouse_buttons_offset = 10
+mouse_wheel_offset = 2
+mouse_position_offset = 40 + 6 ; negative
 
-sprite_x_offset = 2
-sprite_y_offset = 50 + 18
+mouse_sprite_x_offset = 2
+mouse_sprite_y_offset = 50 + 18
 
 .section reserved
 
-tmp .reserve 1
+mouse_tmp .reserve 1
 
 .section code
 
@@ -42,35 +42,35 @@ tmp .reserve 1
     lda port_digital
     and #$03
     asl
-    sta tmp
+    sta mouse_tmp
     lda port_digital
     and #$10
     lsr
-    ora tmp
+    ora mouse_tmp
     tay
-    lda button_rects,y
+    lda mouse_button_rects,y
     sta ptr1
-    lda button_rects + 1,y
+    lda mouse_button_rects + 1,y
     sta ptr1 + 1
-    add_word ptr2, buttons_offset
+    add_word ptr2, mouse_buttons_offset
     ldx #7
     ldy #3
     jsr copyrect
 
-    add_word ptr2, wheel_offset
+    add_word ptr2, mouse_wheel_offset
     lda port_digital
     and #$0c
     lsr
     tay
-    lda wheel_rects,y
+    lda mouse_wheel_rects,y
     sta ptr1
-    lda wheel_rects + 1,y
+    lda mouse_wheel_rects + 1,y
     sta ptr1 + 1
     ldx #3
     ldy #4
     jsr copyrect
 
-    subtract_word ptr2, position_offset
+    subtract_word ptr2, mouse_position_offset
     lda port_pot1
     cmp #$7f
     bne :+
@@ -98,7 +98,7 @@ tmp .reserve 1
     ldx port_number
     clc
     lda sprite_x
-    adc #sprite_x_offset
+    adc #mouse_sprite_x_offset
     adc port_x_offset,x
     sta sprite_x
     lda #0
@@ -106,7 +106,7 @@ tmp .reserve 1
     sta sprite_x + 1
 
     lda sprite_y
-    adc #sprite_y_offset
+    adc #mouse_sprite_y_offset
     sta sprite_y
 
     txa
@@ -118,22 +118,22 @@ tmp .reserve 1
 
 .section data
 
-button_rects {
+mouse_button_rects {
     .repeat 8, i {
-        .data buttons_data + i * 21
+        .data mouse_buttons_data + i * 21
     }
 }
 
-wheel_rects {
+mouse_wheel_rects {
     .repeat 8, i {
-        .data wheel_data + i * 12
+        .data mouse_wheel_data + i * 12
     }
 }
 
-buttons_data {
+mouse_buttons_data {
     .binary_file "mouse-buttons.bin"
 }
 
-wheel_data {
+mouse_wheel_data {
     .binary_file "scroll-wheel.bin"
 }

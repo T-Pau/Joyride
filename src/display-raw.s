@@ -25,11 +25,11 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-bit0_position = 1
-pot1_offset = 40 * 7 - 11
-pot2_offset = 9
-penx_offset = 40 - 9
-peny_offset = pot2_offset
+raw_bit0_position = 1
+raw_pot1_offset = 40 * 7 - 11
+raw_pot2_offset = 9
+raw_pen_x_offset = 40 - 9
+raw_pen_y_offset = raw_pot2_offset
 
 sprite_x_offset = 4
 sprite0_y_offset = 50 + 20 + 3 * 8
@@ -38,7 +38,7 @@ sprite1_y_offset = sprite0_y_offset + 16
 .section code
 
 .public display_raw {
-    add_word ptr2, bit0_position
+    add_word ptr2, raw_bit0_position
 
     lda port_digital
     and #$01
@@ -60,13 +60,13 @@ sprite1_y_offset = sprite0_y_offset + 16
     and #$10
     jsr button
 
-    add_word ptr2, pot1_offset
+    add_word ptr2, raw_pot1_offset
     lda port_pot1
     ldy #0
     ldx #1
     jsr pot_number
 
-    add_word ptr2, pot2_offset
+    add_word ptr2, raw_pot2_offset
     lda port_pot2
     ldy #0
     ldx #1
@@ -74,12 +74,12 @@ sprite1_y_offset = sprite0_y_offset + 16
 
     lda port_number
     bne :+
-    add_word ptr2, penx_offset
+    add_word ptr2, raw_pen_x_offset
     lda pen_x
     ldy #0
     ldx #1
     jsr pot_number
-    add_word ptr2, peny_offset
+    add_word ptr2, raw_pen_y_offset
     lda pen_y
     ldy pen_y + 1
     ldx #1

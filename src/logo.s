@@ -36,15 +36,15 @@ stripe_colors {
 display_logo {
     set_vic_24_lines
     lda #COLOR_GRAY2
-    sta VIC_BG_COLOR0
+    sta VIC_BACKGROUND_COLOR
 
     ldy #LOGO_Y + 2
     ldx #0
 loop:
     lda stripe_colors,x
-:    cpy VIC_HLINE
+:    cpy VIC_RASTER
     bne :-
-    sta VIC_SPR4_COLOR
+    sta VIC_SPRITE_4_COLOR
     iny
     iny
     inx
@@ -60,26 +60,26 @@ setup_logo {
     lda #00
     sta $ffff
     lda #<LOGO_X
-    sta VIC_SPR4_X
-    sta VIC_SPR5_X
+    sta VIC_SPRITE_4_X
+    sta VIC_SPRITE_5_X
     clc
     adc #17
-    sta VIC_SPR6_X
+    sta VIC_SPRITE_6_X
     adc #24
-    sta VIC_SPR7_X
-    lda VIC_SPR_HI_X
+    sta VIC_SPRITE_7_X
+    lda VIC_SPRITE_X_MSB
     ora #$f0
-    sta VIC_SPR_HI_X
+    sta VIC_SPRITE_X_MSB
     lda #LOGO_Y
-    sta VIC_SPR4_Y
-    sta VIC_SPR5_Y
-    sta VIC_SPR6_Y
-    sta VIC_SPR7_Y
+    sta VIC_SPRITE_4_Y
+    sta VIC_SPRITE_5_Y
+    sta VIC_SPRITE_6_Y
+    sta VIC_SPRITE_7_Y
     lda #COLOR_BLACK
-    sta VIC_SPR5_COLOR
+    sta VIC_SPRITE_5_COLOR
     lda #COLOR_GRAY1
-    sta VIC_SPR6_COLOR
-    sta VIC_SPR7_COLOR
+    sta VIC_SPRITE_6_COLOR
+    sta VIC_SPRITE_7_COLOR
     ldx #sprite_logo
     stx screen + $3fc
     inx
@@ -88,8 +88,8 @@ setup_logo {
     stx screen + $3fe
     inx
     stx screen + $3ff
-    lda VIC_SPR_ENA
+    lda VIC_SPRITE_ENABLE
     ora #$f0
-    sta VIC_SPR_ENA
+    sta VIC_SPRITE_ENABLE
     rts
 }

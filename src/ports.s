@@ -45,8 +45,8 @@ pen_y_new .reserve 1
 
 .public handle_top {
     lda #0
-    ldx VIC_LPEN_X
-    ldy VIC_LPEN_Y
+    ldx VIC_LIGHT_PEN_X
+    ldy VIC_LIGHT_PEN_Y
     bmi :+
     lda #1
 :    cpx pen_x
@@ -66,9 +66,9 @@ top_no_change:
 }
 
 .public handle_port1 {
-    lda VIC_LPEN_X
+    lda VIC_LIGHT_PEN_X
     sta pen_x_new
-    lda VIC_LPEN_Y
+    lda VIC_LIGHT_PEN_Y
     sta pen_y_new
 
     jsr display_logo
@@ -82,9 +82,9 @@ top_no_change:
     sta port_pot2
     jmp end_pot
 sid:
-    lda SID_ADConv1
+    lda SID_POT_X
     sta port_pot1
-    lda SID_ADConv2
+    lda SID_POT_Y
     sta port_pot2
 
 end_pot:
@@ -124,7 +124,7 @@ bottom_no_change:
     ldx #0
     jsr display_port
 end_port1:
-    lda VIC_HLINE
+    lda VIC_RASTER
     bmi end_port1
     jmp handle_top
 }
@@ -141,9 +141,9 @@ end_port1:
     sta port_pot2
     jmp end_pot
 sid:
-    lda SID_ADConv1
+    lda SID_POT_X
     sta port_pot1
-    lda SID_ADConv2
+    lda SID_POT_Y
     sta port_pot2
 
 end_pot:

@@ -34,9 +34,9 @@ OPCODE_IDENTIFY = $02
 
 .section reserved
 
-tmp .reserve 1
+inception_tmp .reserve 1
 
-length .reserve 1
+inception_length .reserve 1
 
 .section code
 
@@ -68,7 +68,7 @@ length .reserve 1
     lda eight_player_page
     cmp #2
     bne :+
-    jmp display_raw
+    jmp display_raw_all
 :    lda eight_player_views
     cmp #EIGHT_PLAYER_VIEW_JOYSTICK
     bne :+
@@ -77,7 +77,7 @@ length .reserve 1
 }
 
 inception_read {
-    sty length
+    sty inception_length
     sta CIA1_PRA,x
     lda #$1f
     sta CIA1_DDRA,x
@@ -101,7 +101,7 @@ loop:
     asl
     asl
     asl
-    sta tmp
+    sta inception_tmp
     lda #0
     sta CIA1_PRA,x
     nop
@@ -114,16 +114,16 @@ loop:
     nop
     lda CIA1_PRA,x
     and #$0f
-    ora tmp
+    ora inception_tmp
     sta (ptr1),y
     lda #$10
     iny
-    cpy length
+    cpy inception_length
     bne loop
     rts
 }
 
-display_raw {
+display_raw_all {
     store_word screen + EIGHT_PLAYER_OFFSET_FIRST + RAW_OFFSET_1, ptr2
     ldx #0
     jsr display_raw_one
@@ -163,10 +163,10 @@ display_raw_one {
     iny
     iny
     lda snes_buttons,x
-    stx tmp
+    stx inception_tmp
     jsr hex
     iny
-    ldx tmp
+    ldx inception_tmp
     lda snes_buttons1,x
     jmp hex
 }
