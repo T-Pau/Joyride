@@ -313,7 +313,7 @@ eight_player_default_view_joystick {
 
 
 eight_player_type_name {
-    .repeat EIGHT_PLAYER_NUM_TYPES, i {
+    .repeat i, EIGHT_PLAYER_NUM_TYPES {
         .data eight_player_type_name_data + i * 20
     }
 }
@@ -338,7 +338,7 @@ eight_player_page_name_index {
 }
 
 eight_player_page_name {
-    .repeat 10, i {
+    .repeat i, 10 {
         .data eight_player_page_name_data + i * 5
     }
 }
@@ -357,7 +357,7 @@ eight_player_page_name_data {
 }
 
 eight_player_view {
-    .repeat EIGHT_PLYAER_NUM_VIEWS, i {
+    .repeat i, EIGHT_PLYAER_NUM_VIEWS {
         .data eight_player_view_data + i * 18 * 9
     }
 }

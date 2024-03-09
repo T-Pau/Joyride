@@ -119,13 +119,13 @@ mouse_tmp .reserve 1
 .section data
 
 mouse_button_rects {
-    .repeat 8, i {
+    .repeat i, 8 {
         .data mouse_buttons_data + i * 21
     }
 }
 
 mouse_wheel_rects {
-    .repeat 8, i {
+    .repeat i, 8 {
         .data mouse_wheel_data + i * 12
     }
 }

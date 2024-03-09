@@ -155,7 +155,7 @@ show_cursor:
 .section data
 
 lightpen_button_rects {
-    .repeat 8, i {
+    .repeat i, 8 {
         .data lightpen_buttons_data + i * 15
     }
 }

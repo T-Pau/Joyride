@@ -41,16 +41,16 @@ hundred .reserve 1
 .section data
 
 digits_ten {
-    ;.repeat 50, i {
+    ;.repeat i, 50 {
     ;    .data (i / 5) .mod 10 + $30
     ;}
-    .repeat 10, i {
+    .repeat i, 10 {
         .data $30 + i, $30 + i, $30 + i, $30 + i, $30 + i
     }
 }
 
 digits_one {
-    ;.repeat 50, i {
+    ;.repeat i, 50 {
     ;    .data (i * 2) .mod 10 + $30
     ;}
     .repeat 10 {

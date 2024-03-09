@@ -31,7 +31,7 @@
 .section data
 
 dpad_rects {
-    .repeat 16, i {
+    .repeat i, 16 {
         .data dpad_rect_data + i * 25
     }
 }

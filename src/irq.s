@@ -71,7 +71,7 @@ irq_main {
     .if .defined(IRQ_DEBUG) {
         inc VIC_BORDER_COLOR
     }
-irq_jsr:
+.private irq_jsr:
     jsr $0000
     jsr setup_next_irq
     ; acknowledge irq

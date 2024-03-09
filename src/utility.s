@@ -28,16 +28,16 @@
 .macro adc_16 address {
         adc address
         sta address
-        bcc no_carry
+        bcc :+
         inc address + 1
-no_carry:
+:
 }
 
 .macro inc_16 address {
         inc address
-        bne no_carry
+        bne :+
         inc address + 1
-no_carry:
+:
 }
 
 .macro store_word value, address {
@@ -52,9 +52,9 @@ no_carry:
     adc #<(value)
     sta address
     .if (value) < 256 {
-        bcc end_add_word
+        bcc :+
         inc address + 1
-    end_add_word:
+    :
     }
     .else {
         lda address + 1
@@ -69,9 +69,9 @@ no_carry:
     sbc #<(value)
     sta address
     .if value < 256 {
-        bcs subtract_word_end
+        bcs :+
         dec address + 1
-    subtract_word_end:
+    :
     }
     .else {
         lda address + 1

@@ -52,7 +52,7 @@ userport_views {
 }
 
 userport_names {
-    .repeat USER_NUM_TYPES, i {
+    .repeat i, USER_NUM_TYPES {
         .data userport_name_strings + 20 * i
     }
 }
@@ -67,7 +67,7 @@ userport_name_strings {
 }
 
 userport_view {
-    .repeat USER_NUM_VIEWS, i {
+    .repeat i, USER_NUM_VIEWS {
         .data userport_view_data + i * 31 * 5
     }
 }
