@@ -29,7 +29,7 @@
 
 main_screen {
     .data " port 1:             port 2:            ":screen_inverted
-    .data "I                 J":screen, $a0, "I                 J":screen, $a0
+    .data "I                 J":screen_lowercase, $a0, "I                 J":screen_lowercase, $a0
     .data "                   ":screen, $a0, "                   ":screen, $a0
     .data "                   ":screen, $a0, "                   ":screen, $a0
     .data "                   ":screen, $a0, "                   ":screen, $a0
@@ -39,16 +39,16 @@ main_screen {
     .data "                   ":screen, $a0, "                   ":screen, $a0
     .data "                   ":screen, $a0, "                   ":screen, $a0
     .data "                   ":screen, $a0, "                   ":screen, $a0
-    .data "KMMMMMMMMMMMMMMMMML":screen, $a0, "KMMMMMMMMMMMMMMMMML":screen, $a0
+    .data "KMMMMMMMMMMMMMMMMML":screen_lowercase, $a0, "KMMMMMMMMMMMMMMMMML":screen_lowercase, $a0
     .data "                                        ":screen_inverted
     .data "    user port:                          ":screen_inverted
-    .data $a0, $a0, $a0, "I                               J":screen, $a0, $a0, $a0, $a0
-    .data $a0, $a0, $a0, "                                 ":screen, $a0, $a0, $a0, $a0
-    .data $a0, $a0, $a0, "           AHB           AHB     ":screen, $a0, $a0, $a0, $a0
-    .data $a0, $a0, $a0, "           EfF           EfF     ":screen, $a0, $a0, $a0, $a0
-    .data $a0, $a0, $a0, "           CGD           CGD     ":screen, $a0, $a0, $a0, $a0
-    .data $a0, $a0, $a0, "                                 ":screen, $a0, $a0, $a0, $a0
-    .data $a0, $a0, $a0, "KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMML":screen, $a0, $a0, $a0, $a0
+    .data $a0, $a0, $a0, "I                               J":screen_lowercase, $a0, $a0, $a0, $a0
+    .data $a0, $a0, $a0, "                                 ":screen_lowercase, $a0, $a0, $a0, $a0
+    .data $a0, $a0, $a0, "           AHB           AHB     ":screen_lowercase, $a0, $a0, $a0, $a0
+    .data $a0, $a0, $a0, "           EfF           EfF     ":screen_lowercase, $a0, $a0, $a0, $a0
+    .data $a0, $a0, $a0, "           CGD           CGD     ":screen_lowercase, $a0, $a0, $a0, $a0
+    .data $a0, $a0, $a0, "                                 ":screen_lowercase, $a0, $a0, $a0, $a0
+    .data $a0, $a0, $a0, "KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMML":screen_lowercase, $a0, $a0, $a0, $a0
     .data "                                        ":screen_inverted
     .data "     f1/f2: port 1   f3/f4: port 2      ":screen_inverted
     .data "  f5/f6: user port   f7: multi adapter  ":screen_inverted
@@ -57,14 +57,14 @@ main_screen {
 
 help_screen {
     .data "                                        ":screen_inverted
-    .data "I                                     J":screen, $a0
+    .data "I                                     J":screen_lowercase, $a0
     .repeat 18 {
         .data "                                       ":screen, $a0
     }
-    .data "KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMML":screen, $a0
+    .data "KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMML":screen_lowercase, $a0
     .data "                                        ":screen_inverted
     .data "  space/+: next page  -: previous page  ":screen_inverted
-    .data "         ":screen_inverted, $9f, ": return to program          ":screen_inverted
+    .data "         ":screen_inverted, $9f, ": return to program           ":screen_inverted
     .data "                                        ":screen_inverted
 }
 
@@ -89,7 +89,7 @@ eight_player_legend {
     jsr copy_userport
     ldx #<main_irq_table
     ldy #>main_irq_table
-    lda main_irq_table_length
+    lda #.sizeof(main_irq_table)
     jsr set_irq_table
     rts
 }
@@ -100,7 +100,7 @@ eight_player_legend {
 
     ldx #<eight_player_irq_table
     ldy #>eight_player_irq_table
-    lda eight_player_irq_table_length
+    lda #.sizeof(eight_player_irq_table)
     jsr set_irq_table
 
     lda #0
@@ -132,7 +132,7 @@ eight_player_legend {
 .public display_help_screen {
     ldx #<help_irq_table
     ldy #>help_irq_table
-    lda help_irq_table_length
+    lda #.sizeof(help_irq_table)
     jsr set_irq_table
 
     lda #0
@@ -156,5 +156,5 @@ eight_player_legend {
     lda mode
     bne :+
     jmp display_main_screen
-:    jmp display_eight_player_screen
+:   jmp display_eight_player_screen
 }

@@ -54,7 +54,7 @@ digits_one {
     ;    .data (i * 2) .mod 10 + $30
     ;}
     .repeat 10 {
-        .data 0, 2, 4, 6, 8
+        .data $30, $32, $34, $36, $38
     }
 }
 

@@ -75,7 +75,13 @@ rule gfx-convert-screen
 rule gfx-convert-screen-buttons
     command = gfx-convert -b 255 screen charset.bin "" $in && ./fixup-buttons $out
 
+rule vice-ll
+  command = awk '{print "al "$$2" ."$$4}' $in > $out
 
-build joyride.prg: link $sources
+build joyride.prg | joyride.prg.sym: link $sources
     target = c64-basic
     libs = mega65.lib cbm.lib
+
+build joyride.prg.ll: vice-ll joyride.prg.sym
+
+default joyride.prg.ll

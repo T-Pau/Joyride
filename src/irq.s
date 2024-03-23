@@ -112,6 +112,6 @@ addr:
     cpy table_length
     bne :+
     ldy #0
-:    sty irq_index
+:   sty irq_index
     rts
 }

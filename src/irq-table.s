@@ -36,7 +36,6 @@
     .data top + 24 * 8 + 7:2, handle_port1
 
 }
-.public main_irq_table_length = .sizeof(main_irq_table)
 
 .public help_irq_table {
     .data top - 1:2, top_label
@@ -44,7 +43,6 @@
     .data top + 21 * 8:2, label_background
     .data top + 24 * 8 + 7:2, handle_help
 }
-.public help_irq_table_length = .sizeof(help_irq_table)
 
 .public eight_player_irq_table {
     .data top - 1:2, top_label
@@ -52,4 +50,3 @@
     .data top + 21 * 8:2, label_background
     .data top + 24 * 8 + 7:2, eight_player_bottom
 }
-.public eight_player_irq_table_length = .sizeof(eight_player_irq_table)
