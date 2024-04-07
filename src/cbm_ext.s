@@ -33,7 +33,7 @@
 }
 
 .macro set_vic_text screen, charset {
-    lda #VIC_ADDRESS(screen, charset)
+    lda #VIC_VIDEO_ADDRESS(screen, charset)
     sta VIC_VIDEO_ADDRESS
 }
 
