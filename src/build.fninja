@@ -1,6 +1,6 @@
 petcat = petcat
 
-CONVERT_SCREENS = ../scripts/convert-screens
+CONVERT_SCREENS := ../scripts/convert-screens
 
 CONVERT_SCREENS_DEPENDENCIES :=
     ../scripts/convert-screens
@@ -77,6 +77,12 @@ rule gfx-convert-screen-buttons
 
 rule vice-ll
   command = awk '{print "al "$$2" ."$$4}' $in > $out
+
+rule disk
+    command = {{create-disk}} $out $in
+
+build joyride.d64: disk joyride.prg
+build joyride.d81: disk joyride.prg
 
 build joyride.prg | joyride.prg.sym: link $sources
     target = c64-basic

@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+disk="$1"
+shift
+type=$(echo "$disk" | sed 's/.*\.//')
+disk_name=$(basename "$disk" | sed 's/\..*//')
+
+tmp_disk="$disk_name.$$.$type"
+c1541 -silent -format "$disk_name,tp" $type "$tmp_disk"
+
+for prg in "$@"
+do
+  file_name=$(basename "$prg" | sed 's/\.prg//')
+  c1541 "$tmp_disk" -silent -write "$prg" "$file_name"
+done
+
+mv "$tmp_disk" "$disk"
