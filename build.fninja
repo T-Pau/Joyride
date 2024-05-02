@@ -1,5 +1,15 @@
 VERSION = 1.7
 
+distfile := Joyride-$VERSION.zip
+
+dist_files :=
+  README.md
+  NEWS.md
+  screenshot.png
+  src/joyride.prg
+  src/joyride.d64
+  src/joyride.d81
+
 rule link
   command = xlr8 --verbose-errors -I $build_directory --target $target --depfile $depfile --symbol-map $out.sym --output $out $in $libs
   depfile = $out.d
@@ -7,5 +17,12 @@ rule link
 rule library
   command = xlr8 --verbose-errors -I $build_directory --create-library --target $target --depfile $depfile --output $out $in $libs
   depfile = $out.d
+
+rule zip
+  command = zip -9jq $out $in
+
+build $distfile: zip $dist_files
+
+build dist: phony $distfile
 
 subninja src/build.fninja
