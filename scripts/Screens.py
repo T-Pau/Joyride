@@ -83,7 +83,7 @@ class Screens:
         self.single_screen = False
         self.prefix = b""
         self.postfix = b""
-        self.assembler = "z88dk"
+        self.assembler = "xlr8"
         self.word_wrap = False
 
         self.encoder = RunlengthEncoder.RunlengthEncoder()
