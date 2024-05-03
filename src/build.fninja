@@ -70,10 +70,10 @@ rule gfx-convert-sprites
     command = gfx-convert sprites $in $out
 
 rule gfx-convert-screen
-    command = gfx-convert -b 255 screen $in charset.bin $out
+    command = gfx-convert -b 255 screen $in {{charset.bin}} $out
 
 rule gfx-convert-screen-buttons
-    command = gfx-convert -b 255 screen charset.bin "" $in && ./fixup-buttons $out
+    command = gfx-convert -b 255 screen {{charset.bin}} "" $in && {{./fixup-buttons}} $out
 
 rule vice-ll
   command = awk '{print "al "$$2" ."$$4}' $in > $out
@@ -90,4 +90,14 @@ build joyride.prg | joyride.prg.sym: link $sources
 
 build joyride.prg.ll: vice-ll joyride.prg.sym
 
-default joyride.prg.ll
+
+#build charset.bin: gfx-convert-charset charset.png
+#build sprites.bin: gfx-convert-sprites sprites.png
+#build dpad.bin: gfx-convert-screen dpad.png | charset.bin
+#build lightpen-buttons.bin: gfx-convert-screen lightpen-buttons.png | charset.bin
+#build mouse-buttons.bin: gfx-convert-screen-buttons mouse-buttons.png | charset.bin
+#build port-screens.bin: gfx-convert-screen-buttons port-screens.png | charset.bin
+#build userport-screens.bin: gfx-convert-screen-buttons userport-screens.png | charset.bin
+#build scroll-wheel.bin: gfx-convert-screen-buttons scroll-wheel.png | charset.bin
+#build eight-player.bin: gfx-convert-screen-buttons eight-player.png | charset.bin
+#build help-screens.s: convert-screen help-screens.txt | $CONVERT_SCREENS_DEPENDENCIES

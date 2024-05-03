@@ -2,6 +2,11 @@ VERSION = 1.7
 
 distfile := Joyride-$VERSION.zip
 
+built_dist_files :=
+  src/joyride.prg
+  src/joyride.d64
+  src/joyride.d81
+
 dist_files :=
   README.md
   NEWS.md
@@ -9,6 +14,7 @@ dist_files :=
   src/joyride.prg
   src/joyride.d64
   src/joyride.d81
+# $build_dist_files
 
 rule link
   command = xlr8 --verbose-errors -I $build_directory --target $target --depfile $depfile --symbol-map $out.sym --output $out $in $libs
@@ -24,5 +30,7 @@ rule zip
 build $distfile: zip $dist_files
 
 build dist: phony $distfile
+
+default $built_dist_files
 
 subninja src/build.fninja
