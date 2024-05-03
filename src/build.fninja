@@ -84,12 +84,22 @@ rule disk
 build joyride.d64: disk joyride.prg
 build joyride.d81: disk joyride.prg
 
-build joyride.prg | joyride.prg.sym: link $sources
+build joyride.prg | joyride.prg.sym: link $sources | $built_dependencies
     target = c64-basic
     libs = mega65.lib cbm.lib
 
 build joyride.prg.ll: vice-ll joyride.prg.sym
 
+built_dependencies :=
+    charset.bin
+    dpad.bin
+    eight-player.bin
+    lightpen-buttons.bin
+    mouse-buttons.bin
+    port-screens.bin
+    scroll-wheel.bin
+    sprites.bin
+    userport-screens.bin
 
 #build charset.bin: gfx-convert-charset charset.png
 #build sprites.bin: gfx-convert-sprites sprites.png
@@ -100,4 +110,4 @@ build joyride.prg.ll: vice-ll joyride.prg.sym
 #build userport-screens.bin: gfx-convert-screen-buttons userport-screens.png | charset.bin
 #build scroll-wheel.bin: gfx-convert-screen-buttons scroll-wheel.png | charset.bin
 #build eight-player.bin: gfx-convert-screen-buttons eight-player.png | charset.bin
-#build help-screens.s: convert-screen help-screens.txt | $CONVERT_SCREENS_DEPENDENCIES
+build help-screens.s: convert-screen help-screens.txt | $CONVERT_SCREENS_DEPENDENCIES
