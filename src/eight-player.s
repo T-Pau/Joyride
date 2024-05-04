@@ -265,6 +265,7 @@ top_handler {
     .data inception_top
     .data multijoy_top
     .data protovision_multijoy_top
+    .data wheel_of_joy_top
 }
 
 bottom_handler {
@@ -274,6 +275,7 @@ bottom_handler {
     .data spaceballs_bottom
     .data inception_bottom
     .data inception_bottom
+    .data spaceballs_bottom
     .data spaceballs_bottom
     .data spaceballs_bottom
 }
@@ -287,7 +289,7 @@ f_key_commands {
 }
 
 eight_player_num_pages {
-    .data 3, 3, 2, 2, 3, 3, 4, 2
+    .data 3, 3, 2, 2, 3, 3, 4, 2, 2
 }
 
 eight_player_default_view {
@@ -299,10 +301,11 @@ eight_player_default_view {
     .data eight_player_default_view_joystick
     .data eight_player_default_view_joystick
     .data eight_player_default_view_joystick
+    .data eight_player_default_view_joystick
 }
 
 eight_player_default_view_superpad {
-       .data .fill(8, EIGHT_PLAYER_VIEW_NONE)
+    .data .fill(8, EIGHT_PLAYER_VIEW_NONE)
     .data .fill(4, EIGHT_PLAYER_VIEW_EMPTY)
 }
 
@@ -328,13 +331,14 @@ eight_player_type_name_data {
     .data "inception port 2    ":screen_inverted
     .data "multijoy            ":screen_inverted
     .data "protovision multijoy":screen_inverted
+    .data "wheel of joy        ":screen_inverted
 }
 
 ; index into eight_player_page_name by type
 eight_player_page_name_index {
     .data 0, 0, 0, 0
     .data 3, 3
-    .data 6, 6
+    .data 6, 6, 6
 }
 
 eight_player_page_name {

@@ -45,6 +45,7 @@ Multi Adapters:
 - Luigi Pantarotto's Spaceballs
 - Inception
 - MultiJoy
+- Wheel of Joy
 
 
 ## Controller Port
@@ -237,3 +238,12 @@ These adapter supports joysticks with one button each, depending on model 8 or 1
 They connect to both controller ports. For the original variant, port 1 is used for control, port 2 for joysticks. The Protovision variant has the ports swapped.
 
 Note: Support for the sixteen joystick variant has not been tested.
+
+
+### Wheel of Joy
+
+![](4%20Joysticks.png)
+
+This adapter supports eight joysticks with one button each.
+
+It connects to the user port through an adapter cable.

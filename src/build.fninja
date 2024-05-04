@@ -56,6 +56,7 @@ sources :=
     superpad.s
     userport.s
     utility.s
+    wheel-of-joy.s
 
 rule basic
     command = $petcat -w$dialect -l $address -o $out $in

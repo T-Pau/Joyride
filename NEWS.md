@@ -1,6 +1,7 @@
 # Version 1.7 (Unreleased)
 
 - Add support for the Protovision variant of the MultiJoy adapter.
+- Add support for Wheel of Joy by SukkoPera.
 
 
 # Version 1.6 (2022-07-09)
