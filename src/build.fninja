@@ -73,7 +73,7 @@ rule gfx-convert-screen
     command = gfx-convert -b 255 screen $in {{charset.bin}} $out
 
 rule gfx-convert-screen-buttons
-    command = gfx-convert -b 255 screen {{charset.bin}} "" $in && {{./fixup-buttons}} $out
+    command = gfx-convert -b 255 -d $build_directory screen {{charset.bin}} "" $in && {{./fixup-buttons}} $out
 
 rule vice-ll
   command = awk '{print "al "$$2" ."$$4}' $in > $out
