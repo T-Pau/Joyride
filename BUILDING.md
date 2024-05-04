@@ -4,11 +4,28 @@
 
 You will need the following programs installed:
 
-- GNU make
+- [Accelerate](https://github.com/T-Pau/Accelerate)
+- `c1541` utility from [Vice](http://vice-emu.sourceforge.net)
+- [fast-ninja](https://github.com/T-Pau/fast-ninja/)
+- [gfx-converter](https://github.com/T-Pau/gfx-converter)
+- [ninja](https://ninja-build.org/)
 - [Python](https://www.python.org/)
 
-Graphics are drawn in [Affinity Photo](https://affinity.serif.com/en-gb/photo/) and converted with the custom program [gfx-converter](https://github.com/T-Pau/gfx-converter).
+Graphics are drawn in [Affinity Photo](https://affinity.serif.com/en-gb/photo/).
 
-The versions for Commodore 8-bt computers is written in [CC65](https://cc65.github.io) assembler.
+## Building 
 
-You also need the `c1541` utility from [Vice](http://vice-emu.sourceforge.net).
+To build Joyride:
+
+```shell
+mkdir build
+cd build
+fast-ninja ..
+ninja
+```
+
+To create a binary distribution:
+
+```shell
+ninja dist
+```
