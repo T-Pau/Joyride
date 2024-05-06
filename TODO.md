@@ -1,13 +1,14 @@
 ## Before Release
 
+- Retest everything.
+- Fix Protopad.
 - Integrate PR#3.
 
 
 ## Hardware Support
 
-- Stupid PET Tricks Gaming Edition 
-- PET Dual Joystick
-- QuadTari
+- PET Space Invaders+ 
+- QuadTari (if possible)
 - Keypads
 
 

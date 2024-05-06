@@ -229,6 +229,8 @@ Note: Support for the sixteen joystick variant has not been tested.
 ---
 Wheel of Joy
 
-This adapter supports eight joysticks with one button each.
+This adapter from SukkoPera is designed for the Plus/4, but also works on the C64.
+
+It supports eight joysticks with one button each.
 
 It connects to the user port through an adapter cable.
