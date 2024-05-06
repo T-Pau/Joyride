@@ -37,6 +37,7 @@ User Port:
  - Kingsoft
  - Starbyte Tie Break Adapter
  - PET Dual Joystick Adapter
+ - Stupid PET Tricks
  - PETSCII Robots Adapter
 
 Multi Adapters:
@@ -163,6 +164,14 @@ This adapter from TFW8b is designed for the PET, but also works on the C64.
 It supports two joysticks with four directional switches and one button each.
 
 Due to technical limitations, up and down cannot be read while fire is pressed.
+
+### PET Space Invaders+
+
+![](Userport Joystick.png)
+
+This adapter is an extension of the Space Invaders adapter designed for the PET, which adds up and down.
+
+It supports one joystick with four directional switches and one button.
 
 ### PETSCII Robots Adapter
 

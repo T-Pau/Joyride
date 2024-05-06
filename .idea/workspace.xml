@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeRunConfigurationManager">
+    <generated />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e8310351-06d0-4e61-8a4f-4addefb90db3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Documentation/Joyride.md" beforeDir="false" afterPath="$PROJECT_DIR$/Documentation/Joyride.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NEWS.md" beforeDir="false" afterPath="$PROJECT_DIR$/NEWS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/userport-screens.afphoto" beforeDir="false" afterPath="$PROJECT_DIR$/assets/userport-screens.afphoto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/display-joystick.s" beforeDir="false" afterPath="$PROJECT_DIR$/src/display-joystick.s" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/help-screens.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/help-screens.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/joyride.s" beforeDir="false" afterPath="$PROJECT_DIR$/src/joyride.s" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userport-screens.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/userport-screens.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/userport.s" beforeDir="false" afterPath="$PROJECT_DIR$/src/userport.s" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/..">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLabMergeRequestsSettings">{}</component>
+  <component name="GithubPullRequestsUISettings">{}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2022" />
+    <option name="minorVersion" value="1.2" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2AnW2pddrQUSQHUiz0F1Tnq80m9" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/dillo/Projects/T-Pau/Joyride/Documentation",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Documentation" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" nameIsGenerated="true">
+      <makefile filename="$PROJECT_DIR$/src/Makefile" target="all" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e8310351-06d0-4e61-8a4f-4addefb90db3" name="Changes" comment="" />
+      <created>1655645624385</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1655645624385</updated>
+      <workItem from="1655645625586" duration="12866000" />
+      <workItem from="1655963031206" duration="3000" />
+      <workItem from="1655964722721" duration="273000" />
+      <workItem from="1656574316201" duration="2966000" />
+      <workItem from="1656869005266" duration="18151000" />
+      <workItem from="1657638280418" duration="598000" />
+      <workItem from="1658697673320" duration="1865000" />
+      <workItem from="1658999481258" duration="15000" />
+      <workItem from="1666373687631" duration="3025000" />
+      <workItem from="1666682188693" duration="592000" />
+      <workItem from="1668194939693" duration="244000" />
+      <workItem from="1694808088014" duration="7835000" />
+      <workItem from="1695795975549" duration="1655000" />
+      <workItem from="1699340855391" duration="249000" />
+      <workItem from="1700238017649" duration="372000" />
+      <workItem from="1701386362645" duration="1933000" />
+      <workItem from="1701897799723" duration="741000" />
+      <workItem from="1702449316146" duration="475000" />
+      <workItem from="1702882509768" duration="1855000" />
+      <workItem from="1703099587815" duration="2186000" />
+      <workItem from="1705850428981" duration="598000" />
+      <workItem from="1706081263216" duration="140000" />
+      <workItem from="1707727194058" duration="1626000" />
+      <workItem from="1709483274797" duration="706000" />
+      <workItem from="1709881701301" duration="5882000" />
+      <workItem from="1711571342206" duration="45000" />
+      <workItem from="1711571701294" duration="34000" />
+      <workItem from="1711571743353" duration="16601000" />
+      <workItem from="1715007205019" duration="1907000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

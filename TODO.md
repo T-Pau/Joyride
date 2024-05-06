@@ -7,7 +7,6 @@
 
 ## Hardware Support
 
-- PET Space Invaders+ 
 - C64DTV Hummer userport joystick adapter
 - Synergy userport joy adapter 
 - QuadTari (if possible)

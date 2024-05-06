@@ -36,6 +36,7 @@ joy_positions {
     .data screen + 4 * 40 + 22
     .data screen + 15 * 40 + 8
     .data screen + 15 * 40 + 22
+    .data screen + 15 * 40 + 15
 }
 
 .section code

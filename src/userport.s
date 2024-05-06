@@ -39,15 +39,17 @@ read_routines {
     .data handle_kingsoft
     .data handle_starbyte
     .data handle_pet_dual
+    .data handle_stupid_pet_tricks
     .data handle_petscii
 }
 
 userport_views {
-    .data USER_VIEW_JOYSTICK
-    .data USER_VIEW_JOYSTICK
-    .data USER_VIEW_JOYSTICK
-    .data USER_VIEW_JOYSTICK
-    .data USER_VIEW_JOYSTICK
+    .data USER_VIEW_TWO_JOYSTICKS
+    .data USER_VIEW_TWO_JOYSTICKS
+    .data USER_VIEW_TWO_JOYSTICKS
+    .data USER_VIEW_TWO_JOYSTICKS
+    .data USER_VIEW_TWO_JOYSTICKS
+    .data USER_VIEW_ONE_JOYSTICK
     .data USER_VIEW_SNES
 }
 
@@ -63,6 +65,7 @@ userport_name_strings {
     .data "kingsoft            ":screen_inverted
     .data "starbyte            ":screen_inverted
     .data "pet dual joystick   ":screen_inverted
+    .data "PET Space Invaders+ ":screen_inverted
     .data "petscii robots      ":screen_inverted
 }
 
@@ -141,6 +144,11 @@ display_userport_joysticks {
     ldx #3
     jsr display_joystick
     rts
+}
+
+display_userport_joystick {
+    ldx #4
+    jmp display_joystick
 }
 
 handle_protovision {
@@ -344,4 +352,27 @@ translate_pet_dual {
     eor port_digital,y
     sta port_digital,y
 :   rts
+}
+
+handle_stupid_pet_tricks {
+    lda #$00
+    sta CIA2_DDRB
+    lda CIA2_PRB
+    eor #$2f
+    tax
+    and #$20
+    lsr
+    sta port_digital
+    txa
+    and #$0f
+    tax
+    lda stupid_pet_tricks_dpad,x
+    ora port_digital
+    sta port_digital
+    jmp display_userport_joystick
+}
+
+stupid_pet_tricks_dpad {
+    ;     $0, $1, $2, $3, $4, $5, $6, $7, $8, $9, $a, $b, $c, $d, $e, $f
+    .data $0, $4, $8, $c, $1, $5, $9, $d, $2, $6, $a, $e, $3, $7, $b, $f
 }

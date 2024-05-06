@@ -1,6 +1,7 @@
 # Version 1.7 (Unreleased)
 
 - Add support for the Protovision variant of the MultiJoy adapter.
+- Add support for PET Space Invaders+.
 - Add support for Wheel of Joy by SukkoPera.
 
 
