@@ -1,15 +1,18 @@
 ## Before Release
 
 - Retest everything.
-- Fix Protopad.
+- Fix Protopad, Ninja SNES Pad.
 - Integrate PR#3.
 
 
 ## Hardware Support
 
 - PET Space Invaders+ 
+- C64DTV Hummer userport joystick adapter
+- Synergy userport joy adapter 
 - QuadTari (if possible)
 - Keypads
+- Microflyte Joystick
 
 
 ## Other

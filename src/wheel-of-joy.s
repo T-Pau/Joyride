@@ -9,6 +9,7 @@ loop:
     sta CIA2_PRB
     lda CIA2_PRB
     and #$1f
+    eor #$1f
     sta snes_buttons,y
     dey
     bpl loop
