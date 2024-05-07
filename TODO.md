@@ -1,7 +1,7 @@
 ## Before Release
 
-- Retest everything.
-- Fix Protopad, Ninja SNES Pad.
+- Fix Ninja SNES Pad.
+- Investigate MultiJoy real hardware failure.
 - Integrate PR#3.
 
 

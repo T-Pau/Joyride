@@ -29,6 +29,12 @@
 
 protopad_pad .reserve 2
 
+.macro protopad_delay {
+    nop
+    nop
+    nop
+}
+
 .section code
 
 .public display_protopad {
@@ -40,24 +46,27 @@ protopad_pad .reserve 2
     sta protopad_pad
     sta protopad_pad + 1
 
-    ldx #%00000000
-    ldy #%00001000
-
     lda #$00
     sta CIA1_PRA,x
-    lda #$ff
+    lda #%00011111
     sta CIA1_DDRA,x
+    protopad_delay
 
-    lda #$f8
+    lda #%00011000
     sta CIA1_DDRA,x
+    protopad_delay
     lda CIA1_PRA,x
-    bne not_connected
-
-    lda #$08
-    sta CIA1_PRA,x
-    lda CIA1_PRA,x
-    eor #$07
     and #$07
+    beq :+
+    jmp not_connected
+:
+
+    lda #%00001000
+    sta CIA1_PRA,x
+    protopad_delay
+    lda CIA1_PRA,x
+    and #$07
+    eor #$07
     asl
     tay
     lda translate_1,y
@@ -65,21 +74,23 @@ protopad_pad .reserve 2
     lda translate_1 + 1,y
     sta protopad_pad + 1
 
-    lda #0
+    lda #%0000000
     sta CIA1_PRA,x
+    protopad_delay
     lda CIA1_PRA,x
-    eor #$07
     and #$07
+    eor #$07
     tay
     lda translate_2,y
     ora protopad_pad
     sta protopad_pad
 
-    lda #$08
+    lda #%00001000
     sta CIA1_PRA,x
+    protopad_delay
     lda CIA1_PRA,x
-    eor #$07
     and #$07
+    eor #$07
     asl
     tay
     lda translate_3,y
@@ -89,11 +100,12 @@ protopad_pad .reserve 2
     ora protopad_pad + 1
     sta protopad_pad + 1
 
-    lda #$00
+    lda #%00000000
     sta CIA1_PRA,x
+    protopad_delay
     lda CIA1_PRA,x
+    and #$07
     eor #$07
-    and #07
     asl
     tay
     lda translate_4,y

@@ -3,6 +3,7 @@
 - Add support for the Protovision variant of the MultiJoy adapter.
 - Add support for PET Space Invaders+.
 - Add support for Wheel of Joy by SukkoPera.
+- Fix Protovision Protopad support.
 
 
 # Version 1.6 (2022-07-09)
