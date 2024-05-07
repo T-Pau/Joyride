@@ -40,6 +40,8 @@ read_routines {
     .data handle_starbyte
     .data handle_pet_dual
     .data handle_stupid_pet_tricks
+    .data handle_vic20_oem
+    .data handle_c64dtv_hummer
     .data handle_petscii
 }
 
@@ -49,6 +51,8 @@ userport_views {
     .data USER_VIEW_TWO_JOYSTICKS
     .data USER_VIEW_TWO_JOYSTICKS
     .data USER_VIEW_TWO_JOYSTICKS
+    .data USER_VIEW_ONE_JOYSTICK
+    .data USER_VIEW_ONE_JOYSTICK
     .data USER_VIEW_ONE_JOYSTICK
     .data USER_VIEW_SNES
 }
@@ -60,13 +64,15 @@ userport_names {
 }
 
 userport_name_strings {
-    .data "protovision / cga   ":screen_inverted
-    .data "digital xs / hitmen ":screen_inverted
-    .data "kingsoft            ":screen_inverted
-    .data "starbyte            ":screen_inverted
-    .data "pet dual joystick   ":screen_inverted
+    .data "Protovision / CGA   ":screen_inverted
+    .data "Digital XS / Hitmen ":screen_inverted
+    .data "Kingsoft            ":screen_inverted
+    .data "Starbyte            ":screen_inverted
+    .data "PET Dual Joystick   ":screen_inverted
     .data "PET Space Invaders+ ":screen_inverted
-    .data "petscii robots      ":screen_inverted
+    .data "VIC-20 OEM          ":screen_inverted
+    .data "C64DTV Hummer       ":screen_inverted
+    .data "PETSCII Robots      ":screen_inverted
 }
 
 userport_view {
@@ -372,7 +378,85 @@ handle_stupid_pet_tricks {
     jmp display_userport_joystick
 }
 
+handle_vic20_oem {
+    lda #$00
+    sta CIA2_DDRB
+    lda CIA2_PRB
+    lsr
+    lsr
+    lsr
+    eor #$1f
+    tax
+    lda vic20_oem,x
+    sta port_digital
+    jmp display_userport_joystick
+}
+
+handle_c64dtv_hummer {
+    lda #$00
+    sta CIA2_DDRB
+    lda CIA2_PRB
+    eor #$1f
+    sta port_digital
+    jmp display_userport_joystick
+}
+
+.section data
+
+; PET Space Invaders+ : F-↓↑→←
+
 stupid_pet_tricks_dpad {
-    ;     $0, $1, $2, $3, $4, $5, $6, $7, $8, $9, $a, $b, $c, $d, $e, $f
-    .data $0, $4, $8, $c, $1, $5, $9, $d, $2, $6, $a, $e, $3, $7, $b, $f
+    ;      →←↓↑ ; ↓↑→←
+    .data %0000 ; ----
+    .data %0100 ; ---←
+    .data %1000 ; --→-
+    .data %1100 ; --→←
+    .data %0001 ; -↑--
+    .data %0101 ; -↑-←
+    .data %1001 ; -↑→-
+    .data %1101 ; -↑→←
+    .data %0010 ; ↓---
+    .data %0110 ; ↓--←
+    .data %1010 ; ↓-→-
+    .data %1110 ; ↓-→←
+    .data %0011 ; ↓↑--
+    .data %0111 ; ↓↑-←
+    .data %1011 ; ↓↑→-
+    .data %1111 ; ↓↑→←
+}
+
+vic20_oem {
+    ;      F→←↓↑ ; ↑↓←→F
+    .data %00000 ; -----
+    .data %10000 ; ----F
+    .data %01000 ; ---→-
+    .data %11000 ; ---→F
+    .data %00100 ; --←--
+    .data %10100 ; --←-F
+    .data %01100 ; --←→-
+    .data %11100 ; --←→F
+    .data %00010 ; -↓---
+    .data %10010 ; -↓--F
+    .data %01010 ; -↓-→-
+    .data %11010 ; -↓-→F
+    .data %00110 ; -↓←--
+    .data %10110 ; -↓←-F
+    .data %01110 ; -↓←→-
+    .data %11110 ; -↓←→F
+    .data %00001 ; ↑----
+    .data %10001 ; ↑---F
+    .data %01001 ; ↑--→-
+    .data %11001 ; ↑--→F
+    .data %00101 ; ↑-←--
+    .data %10101 ; ↑-←-F
+    .data %01101 ; ↑-←→-
+    .data %11101 ; ↑-←→F
+    .data %00011 ; ↑↓---
+    .data %10011 ; ↑↓--F
+    .data %01011 ; ↑↓-→-
+    .data %11011 ; ↑↓-→F
+    .data %00111 ; ↑↓←--
+    .data %10111 ; ↑↓←-F
+    .data %01111 ; ↑↓←→-
+    .data %11111 ; ↑↓←→F
 }

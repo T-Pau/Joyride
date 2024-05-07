@@ -73,16 +73,20 @@ Controller Port:
  - Protovision Protopad
  - Trap Them Controller
 
-User Port:
+User Port, Two Joysticks:
  - Protovision / Classic Game Adapter
  - Digital Excess / Hitmen
  - Kingsoft
  - Starbyte Tie Break Adapter
  - PET Dual Joystick
- - PET Space Invaders+
- - PETSCII Robots Adapter
 ---
 Supported Devices
+
+User Port, One Joystick:
+ - PET Space Invaders+
+ - VIC-20 OEM
+ - C64DTV Hummer
+ - PETSCII Robots Adapter
 
 Multi Adapters:
 - SuperPAD 64
@@ -160,7 +164,7 @@ Supported are the following variants:
 - Kingsoft
 - Starbyte Tie Break Adapter
 ---
-PET DUal Joystick Adapter
+PET Dual Joystick Adapter
 
 This adapter from TFW8b is designed for the PET, but also works on the C64.
 
@@ -173,6 +177,22 @@ PET Space Invaders+
 This adapter is an extension of the Space Invaders adapter designed for the PET, which adds up and down.
 
 It supports one joystick with four directional switches and one button.
+---
+VIC-20 OEM
+
+This adapter was designed for the VIC-20, but also works on the C64.
+
+It supports one joystick with four directional switches and one button.
+
+Note: Support for this adapter has not been tested with real hardware.
+---
+C64DTV Hummer
+
+This adapter was designed for the C64DTV, but also works on the regular C64.
+
+It supports one joystick with four directional switches and one button.
+
+Note: Support for this adapter has not been tested with real hardware.
 ---
 PETSCII Robots Adapter
 

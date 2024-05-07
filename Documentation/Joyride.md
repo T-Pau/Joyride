@@ -23,22 +23,26 @@ Load the program from the disc image with `LOAD"*",8,1`. On C128 and MEGA65, swi
 ## Supported Devices
 
 Controller Port:
- - Joystick
- - Mouse
- - Paddle
- - KoalaPad
- - Light Pen (only in port 1)
- - Protovision Protopad
- - Trap Them Controller
+- Joystick
+- Mouse
+- Paddle
+- KoalaPad
+- Light Pen (only in port 1)
+- Protovision Protopad
+- Trap Them Controller
 
-User Port:
- - Protovision / Classic Game Adapter
- - Digital Excess / Hitmen
- - Kingsoft
- - Starbyte Tie Break Adapter
- - PET Dual Joystick Adapter
- - Stupid PET Tricks
- - PETSCII Robots Adapter
+User Port, Two Joysticks:
+- Protovision / Classic Game Adapter
+- Digital Excess / Hitmen
+- Kingsoft
+- Starbyte Tie Break Adapter
+- PET Dual Joystick
+
+User Port, One Joystick:
+- PET Space Invaders+
+- VIC-20 OEM
+- C64DTV Hummer
+- PETSCII Robots Adapter
 
 Multi Adapters:
 - SuperPAD 64
@@ -172,6 +176,26 @@ Due to technical limitations, up and down cannot be read while fire is pressed.
 This adapter is an extension of the Space Invaders adapter designed for the PET, which adds up and down.
 
 It supports one joystick with four directional switches and one button.
+
+### VIC-20 OEM
+
+![](Userport Joystick.png)
+
+This adapter was designed for the VIC-20, but also works on the C64.
+
+It supports one joystick with four directional switches and one button.
+
+Note: Support for this adapter has not been tested with real hardware.
+
+### C64DTV Hummer
+
+![](Userport Joystick.png)
+
+This adapter was designed for the C64DTV, but also works on the regular C64.
+
+It supports one joystick with four directional switches and one button.
+
+Note: Support for this adapter has not been tested with real hardware.
 
 ### PETSCII Robots Adapter
 
