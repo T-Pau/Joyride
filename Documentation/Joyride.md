@@ -51,6 +51,7 @@ Multi Adapters:
 - Inception
 - MultiJoy
 - Wheel of Joy
+- Wheel of Joy Mini
 
 
 ## Controller Port
@@ -171,7 +172,7 @@ Due to technical limitations, up and down cannot be read while fire is pressed.
 
 ### PET Space Invaders+
 
-![](Userport Joystick.png)
+![](Userport%20Joystick.png)
 
 This adapter is an extension of the Space Invaders adapter designed for the PET, which adds up and down.
 
@@ -179,7 +180,7 @@ It supports one joystick with four directional switches and one button.
 
 ### VIC-20 OEM
 
-![](Userport Joystick.png)
+![](Userport%20Joystick.png)
 
 This adapter was designed for the VIC-20, but also works on the C64.
 
@@ -189,7 +190,7 @@ Note: Support for this adapter has not been tested with real hardware.
 
 ### C64DTV Hummer
 
-![](Userport Joystick.png)
+![](Userport%20Joystick.png)
 
 This adapter was designed for the C64DTV, but also works on the regular C64.
 
@@ -282,3 +283,15 @@ This adapter from SukkoPera is designed for the Plus/4, but also works on the C6
 It supports eight joysticks with one button each.
 
 It connects to the user port through an adapter cable.
+
+### Wheel of Joy Mini
+
+![](4%202%20Button%20Joysticks.png)
+
+This adapter from SukkoPera is designed for the Plus/4, but also works on the C64.
+
+It supports four joysticks with two button each.
+
+It connects to the user port through an adapter cable.
+
+Note: Support for this adapter has not been tested. 

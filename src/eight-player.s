@@ -266,6 +266,7 @@ top_handler {
     .data multijoy_top
     .data protovision_multijoy_top
     .data wheel_of_joy_top
+    .data wheel_of_joy_mini_top
 }
 
 bottom_handler {
@@ -278,6 +279,7 @@ bottom_handler {
     .data spaceballs_bottom
     .data spaceballs_bottom
     .data spaceballs_bottom
+    .data wheel_of_joy_mini_bottom
 }
 
 f_key_commands {
@@ -302,6 +304,7 @@ eight_player_default_view {
     .data eight_player_default_view_joystick
     .data eight_player_default_view_joystick
     .data eight_player_default_view_joystick
+    .data eight_player_default_view_joystick_2_button
 }
 
 eight_player_default_view_superpad {
@@ -311,6 +314,11 @@ eight_player_default_view_superpad {
 
 eight_player_default_view_joystick {
     .data .fill(8, EIGHT_PLAYER_VIEW_JOYSTICK)
+    .data .fill(4, EIGHT_PLAYER_VIEW_EMPTY)
+}
+
+eight_player_default_view_joystick_2_button {
+    .data .fill(8, EIGHT_PLAYER_VIEW_JOYSTICK_2_BUTTON)
     .data .fill(4, EIGHT_PLAYER_VIEW_EMPTY)
 }
 
@@ -332,13 +340,14 @@ eight_player_type_name_data {
     .data "multijoy            ":screen_inverted
     .data "protovision multijoy":screen_inverted
     .data "wheel of joy        ":screen_inverted
+    .data "wheel of joy mini   ":screen_inverted
 }
 
 ; index into eight_player_page_name by type
 eight_player_page_name_index {
     .data 0, 0, 0, 0
     .data 3, 3
-    .data 6, 6, 6
+    .data 6, 6, 6, 0
 }
 
 eight_player_page_name {

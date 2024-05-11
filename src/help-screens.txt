@@ -95,6 +95,7 @@ Multi Adapters:
 - Inception
 - MultiJoy
 - Wheel of Joy
+- Wheel of Joy Mini
 ---
 Joystick
 
@@ -261,3 +262,13 @@ This adapter from SukkoPera is designed for the Plus/4, but also works on the C6
 It supports eight joysticks with one button each.
 
 It connects to the user port through an adapter cable.
+---
+Wheel of Joy Mini
+
+This adapter from SukkoPera is designed for the Plus/4, but also works on the C64.
+
+It supports four joysticks with two button each.
+
+It connects to the user port through an adapter cable.
+
+Note: Support for this adapter has not been tested.

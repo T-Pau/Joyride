@@ -4,7 +4,7 @@
 - Add support for PET Space Invaders+.
 - Add support for VIC-20 OEM adapter.
 - Add support for C64DTV Hummer adapter.
-- Add support for Wheel of Joy by SukkoPera.
+- Add support for Wheel of Joy and Wheel of Joy Mini by SukkoPera.
 - Fix Protovision Protopad support.
 
 

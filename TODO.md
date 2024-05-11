@@ -8,7 +8,6 @@
 ## Hardware Support
 
 - Synergy userport joy adapter 
-- QuadTari (if possible)
 - Keypads
 - Microflyte Joystick
 
