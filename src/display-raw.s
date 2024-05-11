@@ -1,5 +1,5 @@
 ;  display-raw.s -- Display raw data for controller port.
-;  Copyright (C) 2020 Dieter Baron
+;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
 ;  The authors can be contacted at <joyride@tpau.group>.

@@ -1,5 +1,5 @@
 ;  expand.s -- expand run length encoded data.
-;  Copyright (C) 2021 Dieter Baron
+;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Anykey, a keyboard test program for C64.
 ;  The authors can be contacted at <anykey@tpau.group>.
