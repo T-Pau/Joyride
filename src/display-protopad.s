@@ -1,4 +1,4 @@
-;  display-trapthem.s -- Display Trap Them controller.
+;  display-trapthem.s -- Display Protopad controller.
 ;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
