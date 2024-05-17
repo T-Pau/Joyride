@@ -76,8 +76,10 @@ port2_update_view {
     ldx port1_type,y
     lda port_default_screens,x
     sta port1_current_view,y
+    cmp #VIEW_DYNAMIC
+    beq :+
     jsr copy_port_view
-    jmp copy_port_name
+:   jmp copy_port_name
 }
 
 ; Y: port (0, 1)
@@ -115,6 +117,7 @@ loop:
 }
 
 ; Y: port (0, 1)
+; preserves Y
 .public copy_port_view {
     sty port
     lda #<view_address
@@ -200,8 +203,8 @@ port_default_screens {
     .data CONTROLLER_VIEW_PADDLE
     .data CONTROLLER_VIEW_KOALAPAD
     .data CONTROLLER_VIEW_LIGHTPEN
-    .data CONTROLLER_VIEW_SNES
-    .data CONTROLLER_VIEW_TRAPTHEM
+    .data VIEW_DYNAMIC
+    .data VIEW_DYNAMIC
     .data CONTROLLER_VIEW_RAW
 }
 

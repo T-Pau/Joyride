@@ -54,7 +54,7 @@ userport_default_views {
     .data USER_VIEW_ONE_JOYSTICK
     .data USER_VIEW_ONE_JOYSTICK
     .data USER_VIEW_ONE_JOYSTICK
-    .data USER_VIEW_SNES
+    .data VIEW_DYNAMIC
 }
 
 userport_names {
@@ -104,8 +104,10 @@ end:
     ldx userport_type
     lda userport_default_views,x
     sta userport_current_view
+    cmp #VIEW_DYNAMIC
+    beq :+
     jsr copy_userport_name
-    jmp copy_userport_view
+:   jmp copy_userport_view
 }
 
 .public copy_userport_name {
