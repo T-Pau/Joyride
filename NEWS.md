@@ -5,8 +5,9 @@
 - Add support for VIC-20 OEM adapter.
 - Add support for C64DTV Hummer adapter.
 - Add support for Wheel of Joy and Wheel of Joy Mini by SukkoPera.
+- Add support for SNES mouse connected to PETSCII Robots adapter.
 - Fix Protovision Protopad support.
-- Autodetect connected controller for Protopad, Trap Them, and PETSCII Robots.
+- Autodetect connected controller for Protopad, Trap Them, and PETSCII Robots adpter.
 
 
 # Version 1.6 (2022-07-09)

@@ -34,6 +34,14 @@ PETSCII_OFFSET_B = 40 * 1 - 2
 PETSCII_OFFSET_SELECT = 40 - 7
 PETSCII_OFFSET_START = 3
 
+PETSCII_MOUSE_L_OFFSET = 16
+PETSCII_MOUSE_R_OFFSET = 3
+PETSCII_MOUSE_X_OFFSET = 40 * 3 - 1
+PETSCII_MOUSE_Y_OFFSET = 40
+
+PETSCII_MOUSE_SPRITE_X_OFFSET = 138
+PETSCII_MOUSE_SPRITE_Y_OFFSET = 172
+
 .section reserved
 
 petscii_data .reserve 4
@@ -156,7 +164,79 @@ pad:
 }
 
 display_petscii_mouse {
-    rts
+    lda petscii_data + 3
+    bmi minus_x
+    clc
+    adc snes_x
+    bcc:+
+    lda #$ff
+:   sta snes_x
+    jmp compute_y
+minus_x:
+    and #$7f
+    sta tmp
+    lda snes_x
+    sec
+    sbc tmp
+    bcs :+
+    lda #$00
+:   sta snes_x
+
+compute_y:
+    lda petscii_data + 2
+    bmi minus_y
+    clc
+    adc snes_y
+    bcc:+
+    lda #$ff
+:   sta snes_y
+    jmp display
+minus_y:
+    and #$7f
+    sta tmp
+    lda snes_y
+    sec
+    sbc tmp
+    bcs :+
+    lda #$00
+:   sta snes_y
+
+display:
+    lda #sprite_cross
+    sta lower_sprite_ptr
+    lda snes_x
+    lsr
+    lsr
+    lsr
+    clc
+    adc #PETSCII_MOUSE_SPRITE_X_OFFSET
+    sta lower_sprite_x
+    lda snes_y
+    lsr
+    lsr
+    lsr
+    clc
+    adc #PETSCII_MOUSE_SPRITE_Y_OFFSET
+    sta lower_sprite_y
+
+    store_word USERPORT_VIEW_START + PETSCII_MOUSE_L_OFFSET, ptr2
+    lda petscii_data + 1
+    and #$40
+    jsr small_button
+    add_word ptr2, PETSCII_MOUSE_R_OFFSET
+    lda petscii_data + 1
+    and #$80
+    jsr small_button
+    add_word ptr2, PETSCII_MOUSE_X_OFFSET
+    lda snes_x
+    ldy #0
+    ldx #1
+    jsr pot_number
+    add_word ptr2, PETSCII_MOUSE_Y_OFFSET
+    lda snes_y
+    ldy #0
+    ldx #1
+    jmp pot_number
 }
 
 .section data

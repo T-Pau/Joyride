@@ -133,6 +133,9 @@ loop:
 }
 
 .public copy_userport_view {
+    lda #0
+    sta lower_sprite_x
+    sta lower_sprite_y
     lda userport_current_view
     asl
     tax

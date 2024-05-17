@@ -40,6 +40,10 @@ highbit {
 .public sprite_x .reserve 2
 .public sprite_y .reserve 1
 
+lower_sprite_x .reserve 1
+lower_sprite_y .reserve 1
+lower_sprite_ptr .reserve 1
+
 .section code
 
 .public set_sprite {
@@ -61,3 +65,40 @@ set_high:
 
     rts
 }
+
+switch_sprite_lower {
+    lda #1
+    sta VIC_SPRITE_4_COLOR
+    lda lower_sprite_x
+    sta VIC_SPRITE_4_X
+    lda lower_sprite_y
+    sta VIC_SPRITE_4_Y
+    lda VIC_SPRITE_X_MSB
+    and #$ef
+    sta VIC_SPRITE_X_MSB
+    lda lower_sprite_ptr
+    sta screen + $3fc
+    rts
+}
+
+switch_sprite_logo {
+    lda #<LOGO_X
+    sta VIC_SPRITE_4_X
+    lda VIC_SPRITE_X_MSB
+    ora #$10
+    sta VIC_SPRITE_X_MSB
+    lda #LOGO_Y
+    sta VIC_SPRITE_4_Y
+    lda #sprite_logo
+    sta screen + $3fc
+    rts
+}
+
+.section reserved
+
+upper_sprite_x .reserve 1
+upper_sprite_y .reserve 1
+upper_sprite_x_msb .reserve 1
+upper_sprite_ptr .reserve 1
+
+

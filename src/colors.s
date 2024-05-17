@@ -33,7 +33,7 @@
     cpx #top + 1
     bne :-
     sta VIC_BACKGROUND_COLOR
-    rts
+    jmp switch_sprite_lower
 }
 
 .public label_background {
@@ -43,7 +43,11 @@
     nop
     lda #COLOR_BLACK
     sta VIC_BACKGROUND_COLOR
-    rts
+    lda VIC_RASTER
+    cmp #top + 21 * 8
+    bcc :+
+    jsr switch_sprite_logo
+:   rts
 }
 
 .public content_background {
