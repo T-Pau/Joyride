@@ -79,7 +79,7 @@ next_bit:
     sta rot + 1
     bcc :+
     inc rot + 2
-:    cmp #<snes_buttons_end
+:   cmp #<snes_buttons_end
     bne bytes
 
     ; latch again to reset input lines

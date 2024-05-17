@@ -29,7 +29,7 @@
 
 .public top_label {
     lda #COLOR_BLACK
-:    ldx VIC_RASTER
+:   ldx VIC_RASTER
     cpx #top + 1
     bne :-
     sta VIC_BACKGROUND_COLOR

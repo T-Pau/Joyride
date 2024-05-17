@@ -49,7 +49,7 @@ pen_y_new .reserve 1
     ldy VIC_LIGHT_PEN_Y
     bmi :+
     lda #1
-:    cpx pen_x
+:   cpx pen_x
     bne top_change
     cpy pen_y
     beq top_no_change
@@ -62,7 +62,7 @@ top_no_change:
     cmp #CONTROLLER_TYPE_LIGHTPEN
     bne :+
     jsr lightpen_sprite_top
-:    rts
+:   rts
 }
 
 .public handle_port1 {

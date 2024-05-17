@@ -63,7 +63,7 @@ rotate:
     cpy #4
     bne :+
     inc rotate + 1
-:    cpy #0
+:   cpy #0
     bne loop
 
     lda #$10

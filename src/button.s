@@ -37,7 +37,7 @@ state .reserve 1
     cmp #0
     beq :+
     lda #$80
-:    sta state
+:   sta state
 
     ldy #0
     lda (ptr2),y
@@ -101,7 +101,7 @@ state .reserve 1
     cmp #0
     beq :+
     lda #$80
-:    sta state
+:   sta state
 
     ldy #1
     lda (ptr2),y
@@ -138,7 +138,7 @@ state .reserve 1
     cmp #0
     beq :+
     lda #$80
-:    sta state
+:   sta state
 
     ldy #0
     lda (ptr2),y

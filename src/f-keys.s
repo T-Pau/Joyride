@@ -112,7 +112,7 @@ f_end:
     stx last_key
     beq :+
     ldx #0
-:    cpx #0
+:   cpx #0
     rts
 }
 
@@ -135,7 +135,7 @@ end:
     cpx #CONTROLLER_NUM_TYPES
     bne :+
     ldx #0
-:    stx port1_type
+:   stx port1_type
     ldy #0
     jmp copy_port_screen
 }
@@ -145,7 +145,7 @@ end:
     dex
     bpl :+
     ldx #CONTROLLER_NUM_TYPES - 1
-:    stx port1_type
+:   stx port1_type
     ldy #0
     jmp copy_port_screen
 }
@@ -156,10 +156,10 @@ end:
     cpx #CONTROLLER_TYPE_LIGHTPEN
     bne :+
     inx
-:    cpx #CONTROLLER_NUM_TYPES
+:   cpx #CONTROLLER_NUM_TYPES
     bne :+
     ldx #0
-:    stx port2_type
+:   stx port2_type
     ldy #1
     jmp copy_port_screen
 }
@@ -170,10 +170,10 @@ end:
     cpx #CONTROLLER_TYPE_LIGHTPEN
     bne :+
     dex
-:    cpx #$FF
+:   cpx #$FF
     bne :+
     ldx #CONTROLLER_NUM_TYPES - 1
-:    stx port2_type
+:   stx port2_type
     ldy #1
     jmp copy_port_screen
 }
@@ -184,7 +184,7 @@ end:
     cpx #USER_NUM_TYPES
     bne :+
     ldx #0
-:    stx userport_type
+:   stx userport_type
     jmp copy_userport
 }
 
@@ -193,6 +193,6 @@ end:
     dex
     bpl :+
     ldx #USER_NUM_TYPES - 1
-:    stx userport_type
+:   stx userport_type
     jmp copy_userport
 }

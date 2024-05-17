@@ -45,7 +45,7 @@ display_logo {
     ldx #0
 loop:
     lda stripe_colors,x
-:    cpy VIC_RASTER
+:   cpy VIC_RASTER
     bne :-
     sta VIC_SPRITE_4_COLOR
     iny

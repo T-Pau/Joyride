@@ -67,14 +67,14 @@ set_bottom_sprite:
     beq :+
     iny
     iny
-:    lda port_digital
+:   lda port_digital
     and #$10
     beq :+
     iny
     iny
     iny
     iny
-:    lda lightpen_button_rects,y
+:   lda lightpen_button_rects,y
     sta ptr1
     lda lightpen_button_rects + 1,y
     sta ptr1 + 1
@@ -89,7 +89,7 @@ set_bottom_sprite:
     asl
     bcc :+
     iny
-:    ldx #1
+:   ldx #1
     jsr pot_number
 
     add_word ptr2, lightpen_y_offset
@@ -103,7 +103,7 @@ set_bottom_sprite:
     cmp #91
     bcc :+
     lda #91
-:    clc
+:   clc
     adc #lightpen_sprite_x_offset
     sta sprite_x
     lda #0
@@ -116,7 +116,7 @@ set_bottom_sprite:
     cmp #71
     bcc :+
     lda #71
-:    clc
+:   clc
     adc #lightpen_sprite_y_offset
     sta sprite_y
     lda #0
@@ -138,7 +138,7 @@ position_cursor:
     sta sprite_x
     bcc :+
     iny
-:    sty sprite_x + 1
+:   sty sprite_x + 1
     lda pen_y
     sec
     sbc #10

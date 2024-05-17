@@ -50,7 +50,7 @@ display_routines {
     cpx #1
     bne :+
     adc #19
-:    sta ptr2
+:   sta ptr2
     lda #>display_position
     sta ptr2 + 1
 

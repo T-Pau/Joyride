@@ -76,7 +76,7 @@ digits_one {
     cpx #0
     beq digit2
     ldx #0
-:    cmp #50
+:   cmp #50
     bcc found
     sec
     sbc #50
@@ -103,7 +103,7 @@ digit2:
     dec hundred
     bpl :+
     lda #$20
-:    sta (ptr2),y
+:   sta (ptr2),y
     iny
     lda digits_one,x
     clc

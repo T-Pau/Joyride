@@ -78,7 +78,7 @@ tmp .reserve 1
     store_word screen + EIGHT_PLAYER_OFFSET_FOURTH + SUPERPAD_MOUSE_OFFSET, ptr2
     jsr display_snes_mouse
     jmp read
-:    store_word screen + EIGHT_PLAYER_OFFSET_FOURTH + SUPERPAD_CONTROLELR_OFFSET, ptr2
+:   store_word screen + EIGHT_PLAYER_OFFSET_FOURTH + SUPERPAD_CONTROLELR_OFFSET, ptr2
     lda snes_buttons,y
     ldx snes_buttons1,y
     ldy #0
@@ -134,7 +134,7 @@ rot:
     sta rot + 1
     bcc :+
     inc rot + 2
-:    cmp #<snes_buttons_end
+:   cmp #<snes_buttons_end
     bne bytes
 
 .public detect_connected:
@@ -164,14 +164,14 @@ detected:
     cmp eight_player_views,x
     beq :+
     iny
-:    sta eight_player_views,x
+:   sta eight_player_views,x
     dex
     bpl detect
     cpy #0
     beq :+
     lda #COMMAND_EIGHT_PLAYER_UPDATE_VIEWS
     sta command
-:    rts
+:   rts
 }
 
 .public superpad_bottom {
@@ -197,7 +197,7 @@ detected:
     store_word screen + EIGHT_PLAYER_OFFSET_FIRST + SUPERPAD_MOUSE_OFFSET, ptr2
     jsr display_snes_mouse
     jmp second
-:    store_word screen + EIGHT_PLAYER_OFFSET_FIRST + SUPERPAD_CONTROLELR_OFFSET, ptr2
+:   store_word screen + EIGHT_PLAYER_OFFSET_FIRST + SUPERPAD_CONTROLELR_OFFSET, ptr2
     lda snes_buttons,y
     ldx snes_buttons1,y
     ldy #0
@@ -215,7 +215,7 @@ second:
     store_word screen + EIGHT_PLAYER_OFFSET_SECOND + SUPERPAD_MOUSE_OFFSET, ptr2
     jsr display_snes_mouse
     jmp third
-:    store_word screen + EIGHT_PLAYER_OFFSET_SECOND + SUPERPAD_CONTROLELR_OFFSET, ptr2
+:   store_word screen + EIGHT_PLAYER_OFFSET_SECOND + SUPERPAD_CONTROLELR_OFFSET, ptr2
     lda snes_buttons,y
     ldx snes_buttons1,y
     ldy #0
@@ -233,7 +233,7 @@ third:
     store_word screen + EIGHT_PLAYER_OFFSET_THIRD + SUPERPAD_MOUSE_OFFSET, ptr2
     jsr display_snes_mouse
     jmp fourth
-:    store_word screen + EIGHT_PLAYER_OFFSET_THIRD + SUPERPAD_CONTROLELR_OFFSET, ptr2
+:   store_word screen + EIGHT_PLAYER_OFFSET_THIRD + SUPERPAD_CONTROLELR_OFFSET, ptr2
     lda snes_buttons,y
     ldx snes_buttons1,y
     ldy #0
@@ -249,7 +249,7 @@ display_snes_mouse {
     adc snes_x,y
     bcc :+
     lda #$ff
-:    sta snes_x,y
+:   sta snes_x,y
     jmp compute_y
 minus_x:
     and #$7f
@@ -259,7 +259,7 @@ minus_x:
     sbc tmp
     bcs :+
     lda #$00
-:    sta snes_x,y
+:   sta snes_x,y
 compute_y:
     lda snes_buttons2,y
     bmi minus_y
@@ -267,7 +267,7 @@ compute_y:
     adc snes_y,y
     bcc :+
     lda #$ff
-:    sta snes_y,y
+:   sta snes_y,y
     jmp mouse_display
 minus_y:
     and #$7f
@@ -277,7 +277,7 @@ minus_y:
     sbc tmp
     bcs :+
     lda #$00
-:    sta snes_y,y
+:   sta snes_y,y
 
 mouse_display:
     lda snes_buttons1,y

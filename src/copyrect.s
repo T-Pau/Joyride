@@ -51,7 +51,7 @@ char_loop:
     bcc :+
     inc ptr1 + 1
     clc
-:    lda ptr2
+:   lda ptr2
     adc #40
     sta ptr2
     bcc :+

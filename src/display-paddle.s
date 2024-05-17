@@ -58,7 +58,7 @@ display_paddle {
     ldx paddle
     beq :+
     lsr
-:    and #1
+:   and #1
     jsr button
 
     add_word ptr2, paddle_value_offset
@@ -66,7 +66,7 @@ display_paddle {
     ldx paddle
     beq :+
     lda port_pot2
-:    sta sprite_x
+:   sta sprite_x
     ldy #0
     ldx #1
     jsr pot_number

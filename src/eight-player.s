@@ -39,7 +39,7 @@ eight_player_index .reserve 2
     cpx #EIGHT_PLAYER_NUM_TYPES
     bne :+
     ldx #0
-:    stx eight_player_type
+:   stx eight_player_type
     ldx #0
     stx eight_player_page
     jsr copy_eight_player_type_name
@@ -51,7 +51,7 @@ eight_player_index .reserve 2
     dex
     bpl :+
     ldx #EIGHT_PLAYER_NUM_TYPES - 1
-:    stx eight_player_type
+:   stx eight_player_type
     ldx #0
     stx eight_player_page
     jsr copy_eight_player_type_name
@@ -66,7 +66,7 @@ eight_player_index .reserve 2
     cmp eight_player_num_pages,x
     bne :+
     ldy #0
-:    sty eight_player_page
+:   sty eight_player_page
     jsr eight_player_update_views
     jsr copy_eight_player_page_title
     rts
@@ -79,7 +79,7 @@ eight_player_index .reserve 2
     ldx eight_player_type
     ldy eight_player_num_pages,x
     dey
-:    sty eight_player_page
+:   sty eight_player_page
     jsr eight_player_update_views
     jsr copy_eight_player_page_title
     rts
@@ -93,13 +93,13 @@ loop:
     beq :+
     iny
     sta eight_player_views,x
-:    dex
+:   dex
     bpl loop
     cpy #0
     beq :+
     lda #COMMAND_EIGHT_PLAYER_UPDATE_VIEWS
     sta command
-:    rts
+:   rts
 }
 
 .public eight_player_update_views {
@@ -159,7 +159,7 @@ same_view:
     lda eight_player_default_view + 1,x
     sta ptr1 + 1
     ldy #11
-:    lda (ptr1),y
+:   lda (ptr1),y
     sta eight_player_views,y
     dey
     bpl :-
@@ -173,7 +173,7 @@ same_view:
     lda eight_player_type_name + 1,x
     sta ptr1 + 1
     ldy #19
-:    lda (ptr1),y
+:   lda (ptr1),y
     sta (ptr2),y
     dey
     bpl :-
@@ -191,7 +191,7 @@ same_view:
     lda eight_player_page_name + 1,x
     sta ptr1 + 1
     ldy #4
-:    lda (ptr1),y
+:   lda (ptr1),y
     sta (ptr2),y
     dey
     bpl :-

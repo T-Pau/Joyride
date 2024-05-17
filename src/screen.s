@@ -105,7 +105,7 @@ eight_player_legend {
 
     lda #0
     ldy #7
-:    sta VIC_SPRITE_0_X,y
+:   sta VIC_SPRITE_0_X,y
     dey
     bpl :-
     lda VIC_SPRITE_X_MSB
@@ -114,11 +114,11 @@ eight_player_legend {
 
     ldx #7
     lda EIGHT_PLAYER_VIEW_NONE
-:    sta eight_player_views,x
+:   sta eight_player_views,x
     dex
     bpl :-
     ldx #3
-:    sta eight_player_current_views,x
+:   sta eight_player_current_views,x
     dex
     bpl :-
 
@@ -137,7 +137,7 @@ eight_player_legend {
 
     lda #0
     ldy #7
-:    sta VIC_SPRITE_0_X,y
+:   sta VIC_SPRITE_0_X,y
     dey
     bpl :-
     lda VIC_SPRITE_X_MSB

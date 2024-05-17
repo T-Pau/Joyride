@@ -75,7 +75,7 @@ mouse_tmp .reserve 1
     cmp #$7f
     bne :+
     lda #$80
-:    lsr
+:   lsr
     and #$3f
     sta sprite_x
     ldx #0
@@ -87,7 +87,7 @@ mouse_tmp .reserve 1
     cmp #$7f
     bne :+
     lda #$80
-:    lsr
+:   lsr
     and #$3f
     eor #$3f
     sta sprite_y

@@ -51,7 +51,7 @@ loop:
     and #$40
     bne :+
     sec
-:    rol port_digital,x
+:   rol port_digital,x
     lda #$08
     sta CIA2_PRB
     lda #0
@@ -111,12 +111,12 @@ loop:
     and #$40
     beq :+
     inx
-:    lda port_digital ; B
+:   lda port_digital ; B
     and #$80
     beq :+
     inx
     inx
-:    ldy #1
+:   ldy #1
     lda    xb_overlap,x
     sta (ptr2),y
 

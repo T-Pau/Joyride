@@ -69,11 +69,11 @@ inception_length .reserve 1
     cmp #2
     bne :+
     jmp display_raw_all
-:    lda eight_player_views
+:   lda eight_player_views
     cmp #EIGHT_PLAYER_VIEW_JOYSTICK
     bne :+
     jmp spaceballs_bottom
-:    rts
+:   rts
 }
 
 inception_read {

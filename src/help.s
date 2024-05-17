@@ -60,25 +60,25 @@
     bne :+
     lda #COMMAND_HELP_EXIT
     bne got_key
-:    txa
+:   txa
     and #$10
     bne :+
     lda #COMMAND_HELP_NEXT
     bne got_key
-:    lda #$20 ^ $ff
+:   lda #$20 ^ $ff
     sta CIA1_PRA
     lda CIA1_PRB
     and #$01
     bne :+
     lda #COMMAND_HELP_NEXT
     bne got_key
-:    lda CIA1_PRB
+:   lda CIA1_PRB
     and #$08
     beq :+
     lda #0
     sta last_command
     beq end
-:    lda #COMMAND_HELP_PREVIOUS
+:   lda #COMMAND_HELP_PREVIOUS
 got_key:
     cmp last_command
     beq end

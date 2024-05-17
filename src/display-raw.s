@@ -85,7 +85,7 @@ sprite1_y_offset = sprite0_y_offset + 16
     ldx #1
     jsr pot_number
 
-:    ldx port_number
+:   ldx port_number
     lda port_pot1
     lsr
     clc

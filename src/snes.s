@@ -68,12 +68,12 @@ compact .reserve 1
     ldy compact
     bne :+
     sec
-:    lda ptr2
+:   lda ptr2
     adc #SNES_OFFSET_X
     sta ptr2
     bcc :+
     inc ptr2 + 1
-:    lda buttons + 1
+:   lda buttons + 1
     and #$40
     jsr small_button
 

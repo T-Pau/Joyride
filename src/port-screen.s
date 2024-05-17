@@ -101,7 +101,7 @@ loop:
     subtract_word ptr2, 40
     ldy #16
     lda #$20
-:    sta (ptr2),y
+:   sta (ptr2),y
     dey
     bpl :-
 

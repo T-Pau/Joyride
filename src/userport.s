@@ -131,7 +131,7 @@ loop:
     lda command
     beq :+
     rts
-:    lda userport_type
+:   lda userport_type
     asl
     tay
     lda read_routines,y
