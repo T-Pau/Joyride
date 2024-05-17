@@ -27,11 +27,12 @@
 
 .section reserved
 
-trapthem_pad .reserve 2
+trapthem_pad .reserve 3
 
 .section code
 
 .public display_trapthem {
+    stx port
     dex
     beq :+
     ldx #1
@@ -45,7 +46,7 @@ trapthem_pad .reserve 2
 
     lda #<trapthem_pad
     sta rotate + 1
-    ldy #12
+    ldy #24
 loop:
     lda CIA1_PRA,x
     ror
@@ -60,24 +61,31 @@ rotate:
     sta CIA1_PRA,x
 
     dey
-    cpy #4
-    bne :+
+    beq end
+    tya
+    and #7
+    bne loop
     inc rotate + 1
-:   cpy #0
     bne loop
 
+end:
     lda #$10
     sta CIA1_PRA,x
     lda #0
     sta CIA1_PRA,x
 
+    ldy port
     lda trapthem_pad + 1
-    asl
-    asl
-    asl
-    asl
-    sta trapthem_pad + 1
+    and #$07
+    beq found
+    lda trapthem_pad + 2
+    beq found
+    lda #CONTROLLER_VIEW_NONE
+    jmp change_port_view
 
+found:
+    lda #CONTROLLER_VIEW_SNES
+    jsr change_port_view
     clc
     lda ptr2
     adc #41

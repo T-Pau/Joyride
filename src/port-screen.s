@@ -29,10 +29,11 @@
 ; copy screen for port Y
 
 name_address = screen + 9
+view_address = screen + 81
 
 .section reserved
 
-type_times_2 .reserve 1
+view_times_2 .reserve 1
 
 port .reserve 1
 
@@ -45,23 +46,55 @@ port .reserve 1
 
 .section code
 
+; A: view
+; Y: port (0, 1)
+change_port_view {
+    cmp port1_current_view,y
+    beq end
+    sta port1_current_view,y
+    lda #COMMAND_PORT1_UPDATE_VIEW
+    cpy #0
+    beq :+
+    lda #COMMAND_PORT2_UPDATE_VIEW
+:   sta command
+end:
+    rts
+}
+
+port1_update_view {
+    ldy #0
+    jmp copy_port_view
+}
+
+port2_update_view {
+    ldy #1
+    jmp copy_port_view
+}
+
+; Y: port (0, 1)
 .public copy_port_screen {
-    sty port
+    ldx port1_type,y
+    lda port_default_screens,x
+    sta port1_current_view,y
+    jsr copy_port_view
+    jmp copy_port_name
+}
+
+; Y: port (0, 1)
+.public copy_port_name {
     ldx port1_type,y
 
     lda #<name_address
     cpy #1
-    bne port0
+    bne :+
     clc
     adc #20
-port0:
-    sta ptr2
+:   sta ptr2
     lda #>name_address
     sta ptr2 + 1
 
     txa
     asl
-    sta type_times_2
     asl
     asl
     asl
@@ -78,12 +111,25 @@ loop:
     sta (ptr2),y
     dey
     bpl loop
+    rts
+}
 
+; Y: port (0, 1)
+.public copy_port_view {
+    sty port
+    lda #<view_address
+    cpy #1
+    bne :+
     clc
-    lda #72
-    adc ptr2
-    sta ptr2
-    ldx type_times_2
+    adc #20
+:   sta ptr2
+    lda #>view_address
+    sta ptr2 + 1
+
+    lda port1_current_view,y
+    asl
+    tax
+    stx view_times_2
     lda port_screens,x
     sta ptr1
     lda port_screens + 1,x
@@ -92,10 +138,10 @@ loop:
     ldy #9
     jsr copyrect
 
-    lda port
+    ldy port
     beq next
-    lda type_times_2
-    cmp #(CONTROLLER_NUM_TYPES - 1) * 2
+    lda port1_current_view,y
+    cmp #CONTROLLER_VIEW_RAW
     bne next
 
     subtract_word ptr2, 40
@@ -110,27 +156,29 @@ next:
     lda port
     asl
     tay
-    ldx type_times_2
+    ldx view_times_2
     lda port_sprite,x
     sta screen + $3f8,y
     lda port_sprite + 1,x
     sta screen + $3f9,y
 
+    ldy port
     rts
 }
 
 .section data
 
+; indexed by port view
 port_sprite {
     .data sprite_none, sprite_none
     .data sprite_cross, sprite_none
-    .data sprite_bar, sprite_none
     .data sprite_bar, sprite_none
     .data sprite_cross, sprite_none
     .data sprite_cross, sprite_lightpen
     .data sprite_none, sprite_none
     .data sprite_none, sprite_none
     .data sprite_bar, sprite_bar
+    .data sprite_none, sprite_none
 }
 
 port_names {
@@ -145,16 +193,22 @@ port_names {
     .data "raw             ":screen_inverted
 }
 
+port_default_screens {
+    .data CONTROLLER_VIEW_JOYSTICK
+    .data CONTROLLER_VIEW_MOUSE
+    .data CONTROLLER_VIEW_PADDLE
+    .data CONTROLLER_VIEW_PADDLE
+    .data CONTROLLER_VIEW_KOALAPAD
+    .data CONTROLLER_VIEW_LIGHTPEN
+    .data CONTROLLER_VIEW_SNES
+    .data CONTROLLER_VIEW_TRAPTHEM
+    .data CONTROLLER_VIEW_RAW
+}
+
 port_screens {
-    .data port_screen_data
-    .data port_screen_data + 17 * 9
-    .data port_screen_data + 17 * 9 * 2
-    .data port_screen_data + 17 * 9 * 2
-    .data port_screen_data + 17 * 9 * 3
-    .data port_screen_data + 17 * 9 * 4
-    .data port_screen_data + 17 * 9 * 5
-    .data port_screen_data + 17 * 9 * 6
-    .data port_screen_data + 17 * 9 * 7
+    .repeat i, CONTROLLER_NUM_VIEWS {
+        .data port_screen_data + 17 * 9 * i
+    }
 }
 
 port_screen_data {

@@ -45,7 +45,7 @@ read_routines {
     .data handle_petscii
 }
 
-userport_views {
+userport_default_views {
     .data USER_VIEW_TWO_JOYSTICKS
     .data USER_VIEW_TWO_JOYSTICKS
     .data USER_VIEW_TWO_JOYSTICKS
@@ -87,9 +87,28 @@ userport_view_data {
 
 .section code
 
-; display name for userport type A
+userport_update_view = copy_userport_view
+
+change_userport_view {
+    cmp userport_current_view
+    beq end
+    sta userport_current_view
+    lda #COMMAND_USERPORT_UPDATE_VIEW
+    sta command
+end:
+    rts
+}
+
 
 .public copy_userport {
+    ldx userport_type
+    lda userport_default_views,x
+    sta userport_current_view
+    jsr copy_userport_name
+    jmp copy_userport_view
+}
+
+.public copy_userport_name {
     lda userport_type
     asl
     tax
@@ -110,9 +129,11 @@ loop:
     sta (ptr2),y
     dey
     bpl loop
+    rts
+}
 
-    ldx userport_type
-    lda userport_views,x
+.public copy_userport_view {
+    lda userport_current_view
     asl
     tax
     lda userport_view,x
@@ -122,8 +143,7 @@ loop:
     store_word USERPORT_VIEW_START, ptr2
     ldx #31
     ldy #5
-    jsr copyrect
-    rts
+    jmp copyrect
 }
 
 .public handle_userport {
@@ -148,8 +168,7 @@ display_userport_joysticks {
     lda port_digital + 1
     sta port_digital
     ldx #3
-    jsr display_joystick
-    rts
+    jmp display_joystick
 }
 
 display_userport_joystick {

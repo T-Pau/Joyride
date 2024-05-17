@@ -8,3 +8,4 @@ src/sym
 /src/joyride.d81
 /build
 */__pycache__/*
+*.afphoto~lock~

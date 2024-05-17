@@ -16,14 +16,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8310351-06d0-4e61-8a4f-4addefb90db3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Documentation/Joyride.md" beforeDir="false" afterPath="$PROJECT_DIR$/Documentation/Joyride.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NEWS.md" beforeDir="false" afterPath="$PROJECT_DIR$/NEWS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/userport-screens.afphoto" beforeDir="false" afterPath="$PROJECT_DIR$/assets/userport-screens.afphoto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/display-joystick.s" beforeDir="false" afterPath="$PROJECT_DIR$/src/display-joystick.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/help-screens.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/help-screens.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/joyride.s" beforeDir="false" afterPath="$PROJECT_DIR$/src/joyride.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/userport-screens.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/userport-screens.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/userport.s" beforeDir="false" afterPath="$PROJECT_DIR$/src/userport.s" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,27 +62,27 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.RadMigrateCodeStyle": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/dillo/Projects/T-Pau/Joyride/Documentation",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/dillo/Projects/T-Pau/Joyride/Documentation&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Documentation" />
@@ -139,6 +133,7 @@
       <workItem from="1711571701294" duration="34000" />
       <workItem from="1711571743353" duration="16601000" />
       <workItem from="1715007205019" duration="1907000" />
+      <workItem from="1715014979171" duration="35478000" />
     </task>
     <servers />
   </component>

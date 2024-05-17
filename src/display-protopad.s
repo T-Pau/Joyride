@@ -38,6 +38,7 @@ protopad_pad .reserve 2
 .section code
 
 .public display_protopad {
+    stx port
     dex
     beq :+
     ldx #1
@@ -118,7 +119,10 @@ protopad_pad .reserve 2
     lda #0
     sta CIA1_DDRA,x
 
-not_connected:
+    ldy port
+    lda #CONTROLLER_VIEW_SNES
+    jsr change_port_view
+
     clc
     lda ptr2
     adc #41
@@ -130,6 +134,11 @@ not_connected:
     ldx protopad_pad + 1
     ldy #1
     jmp display_snes
+
+not_connected:
+    ldy port
+    lda #CONTROLLER_VIEW_NONE
+    jmp change_port_view
 }
 
 .section data

@@ -29,9 +29,12 @@
 
 .public mode .reserve 1
 
-.public port1_type .reserve 1
-.public port2_type .reserve 1
+.public port1_type .reserve 2
+.public port2_type = port1_type + 1
+.public port1_current_view .reserve 2
+.public port2_current_view = port1_current_view + 1
 .public userport_type .reserve 1
+.public userport_current_view .reserve 1
 
 .public eight_player_type .reserve 1
 .public eight_player_page .reserve 1

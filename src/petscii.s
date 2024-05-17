@@ -34,6 +34,10 @@ PETSCII_OFFSET_B = 40 * 1 - 2
 PETSCII_OFFSET_SELECT = 40 - 7
 PETSCII_OFFSET_START = 3
 
+.section reserved
+
+petscii_data .reserve 4
+
 .section code
 
 .public handle_petscii {
@@ -44,6 +48,7 @@ PETSCII_OFFSET_START = 3
     lda #$00
     sta CIA2_PRB
     ldx #0
+byte_loop:
     ldy #7
 loop:
     clc
@@ -51,18 +56,35 @@ loop:
     and #$40
     bne :+
     sec
-:   rol port_digital,x
+:   rol petscii_data,x
     lda #$08
     sta CIA2_PRB
     lda #0
     sta CIA2_PRB
     dey
     bpl loop
-    ldy #3
     inx
-    cpx #2
-    bne loop
+    cpx #4
+    bne byte_loop
 
+    lda petscii_data + 1
+    and #$07
+    bne detected
+    lda petscii_data + 2
+    bne detected
+    lda #USER_VIEW_NONE
+    jmp change_userport_view
+
+detected:
+    cmp #$01
+    bne pad
+    lda #USER_VIEW_SNES_MOUSE
+    jsr change_userport_view
+    jmp display_petscii_mouse
+
+pad:
+    lda #USER_VIEW_SNES
+    jsr change_userport_view
     ; 0,  1,    2,    3,      4, 5, 6,   7
     ; 01  02    04    08      10 20 40   80
     ; right, left, down, up,  start, select, Y, B
@@ -70,48 +92,48 @@ loop:
 
     ; L
     store_word USERPORT_VIEW_START + 5, ptr2
-    lda port_digital + 1
+    lda petscii_data + 1
     and #$20
     jsr tiny_button
 
     add_word ptr2, PETSCII_OFFSET_X
-    lda port_digital + 1
+    lda petscii_data + 1
     and #$40
     jsr small_button
 
     add_word ptr2, PETSCII_OFFSET_R
-    lda port_digital + 1
+    lda petscii_data + 1
     and #$10
     jsr tiny_button
 
     subtract_word ptr2, PETSCII_OFFSET_DPAD
-    lda port_digital
+    lda petscii_data
     and #$0f
     tax
     lda dpad_mirror,x
     jsr dpad
 
     subtract_word ptr2, PETSCII_OFFSET_Y
-    lda port_digital
+    lda petscii_data
     and #$40
     jsr small_button
 
     add_word ptr2, PETSCII_OFFSET_A
-    lda port_digital + 1
+    lda petscii_data + 1
     and #$80
     jsr small_button
 
     add_word ptr2, PETSCII_OFFSET_B
-    lda port_digital
+    lda petscii_data
     and #$80
     jsr small_button
 
     ldx #0
-    lda port_digital + 1 ; X
+    lda petscii_data + 1 ; X
     and #$40
     beq :+
     inx
-:   lda port_digital ; B
+:   lda petscii_data ; B
     and #$80
     beq :+
     inx
@@ -121,15 +143,19 @@ loop:
     sta (ptr2),y
 
     add_word ptr2, PETSCII_OFFSET_SELECT
-    lda port_digital
+    lda petscii_data
     and #$20
     jsr tiny_button
 
     add_word ptr2, PETSCII_OFFSET_START
-    lda port_digital
+    lda petscii_data
     and #$10
     jsr tiny_button
 
+    rts
+}
+
+display_petscii_mouse {
     rts
 }
 

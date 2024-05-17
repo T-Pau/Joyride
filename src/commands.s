@@ -46,4 +46,7 @@
     .data eight_player_previous_page
     .data display_main_screen
     .data eight_player_update_views
+    .data port1_update_view
+    .data port2_update_view
+    .data userport_update_view
 }

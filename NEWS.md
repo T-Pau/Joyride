@@ -6,6 +6,7 @@
 - Add support for C64DTV Hummer adapter.
 - Add support for Wheel of Joy and Wheel of Joy Mini by SukkoPera.
 - Fix Protovision Protopad support.
+- Autodetect connected controller for Protopad, Trap Them, and PETSCII Robots.
 
 
 # Version 1.6 (2022-07-09)
