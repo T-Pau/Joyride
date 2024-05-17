@@ -106,8 +106,8 @@ end:
     sta userport_current_view
     cmp #VIEW_DYNAMIC
     beq :+
-    jsr copy_userport_name
-:   jmp copy_userport_view
+    jsr copy_userport_view
+:   jmp copy_userport_name
 }
 
 .public copy_userport_name {
