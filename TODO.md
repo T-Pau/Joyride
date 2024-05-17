@@ -2,7 +2,6 @@
 
 - Fix Ninja SNES Pad.
 - Investigate MultiJoy real hardware failure.
-- Integrate PR#3.
 
 
 ## Hardware Support
