@@ -202,13 +202,15 @@ Note: Support for this adapter has not been tested with real hardware.
 
 ![](PETSCII%20Robots.png)
 
-This adapter is included with the game *Attack of the PETSCII Robots* and allows connecting one SuperNES controller to the user port.
+This adapter is included with the game Attack of the PETSCII Robots and allows connecting one SuperNES controller or mouse to the userport.
 
-It has these inputs:
+The controller has these inputs:
 - d-pad
 - four face buttons (A, B, X, Y)
 - two shoulder buttons (L, R)
 - Select, Start
+
+Mice display x/y and two buttons.
 
 
 ## Multi Adapters
