@@ -36,7 +36,7 @@
 .public eight_player_type .reserve 1
 .public eight_player_page .reserve 1
 .public eight_player_current_views .reserve 4
-.public eight_player_views .reserve 12
+.public eight_player_views .reserve 16
 
 .section code
 

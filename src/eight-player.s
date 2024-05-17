@@ -158,7 +158,7 @@ same_view:
     sta ptr1
     lda eight_player_default_view + 1,x
     sta ptr1 + 1
-    ldy #11
+    ldy #15
 :   lda (ptr1),y
     sta eight_player_views,y
     dey
@@ -291,7 +291,7 @@ f_key_commands {
 }
 
 eight_player_num_pages {
-    .data 3, 3, 2, 2, 3, 3, 4, 2, 2
+    .data 3, 3, 2, 2, 3, 3, 4, 2, 2, 1
 }
 
 eight_player_default_view {
@@ -301,7 +301,7 @@ eight_player_default_view {
     .data eight_player_default_view_joystick
     .data eight_player_default_view_joystick
     .data eight_player_default_view_joystick
-    .data eight_player_default_view_joystick
+    .data eight_player_default_view_joystick_4_pages
     .data eight_player_default_view_joystick
     .data eight_player_default_view_joystick
     .data eight_player_default_view_joystick_2_button
@@ -315,6 +315,10 @@ eight_player_default_view_superpad {
 eight_player_default_view_joystick {
     .data .fill(8, EIGHT_PLAYER_VIEW_JOYSTICK)
     .data .fill(4, EIGHT_PLAYER_VIEW_EMPTY)
+}
+
+eight_player_default_view_joystick_4_pages {
+    .data .fill(16, EIGHT_PLAYER_VIEW_JOYSTICK)
 }
 
 eight_player_default_view_joystick_2_button {
@@ -350,23 +354,21 @@ eight_player_page_name_index {
     .data 6, 6, 6, 0
 }
 
+eight_player_page_name(i) = eight_player_page_name_data + i * 5
 eight_player_page_name {
-    .repeat i, 10 {
-        .data eight_player_page_name_data + i * 5
-    }
+    .data eight_player_page_name(0), eight_player_page_name(1), eight_player_page_name(6)
+    .data eight_player_page_name(4), eight_player_page_name(5), eight_player_page_name(6)
+    .data eight_player_page_name(0), eight_player_page_name(1), eight_player_page_name(2), eight_player_page_name(3)
 }
 
 eight_player_page_name_data {
     .data "  1-4":screen_inverted
     .data "  5-8":screen_inverted
-    .data "  raw":screen_inverted
+    .data " 9-12":screen_inverted
+    .data "13-16":screen_inverted
     .data "  a-d":screen_inverted
     .data "  e-h":screen_inverted
     .data "  raw":screen_inverted
-    .data "  1-4":screen_inverted
-    .data "  5-8":screen_inverted
-    .data " 9-12":screen_inverted
-    .data "13-16":screen_inverted
 }
 
 eight_player_view {
