@@ -63,7 +63,7 @@ Except for light pens and light guns, all devices can be connected to either por
 
 ### Joystick
 
-![](Joystick.png)
+![](images/Joystick.png)
 
 Joysticks contain a stick or d-pad with switches for the four cardinal directions and up to three buttons.
 
@@ -74,14 +74,14 @@ These potentiometers are also used by paddles and the 1351 mouse; if such a devi
 
 ### Mouse
 
-![](Mouse.png)
+![](images/Mouse.png)
 
 Supported are 1351 compatible mice. They give the position in x and y modulo 64 and support up to three buttons and a scroll wheel.
 
 
 ### Paddle
 
-![](Paddle.png)
+![](images/Paddle.png)
 
 A paddle gives the rotational position of its knob as a value from 0 to 255. It also contains a button.
 
@@ -90,14 +90,14 @@ Two paddles can be connected to one port at the same time. They are displayed in
 
 ### KoalaPad
 
-![](Koalapad.png)
+![](images/Koalapad.png)
 
 This is a touch tablet that gives the position in x and y as values from ca. 6 to 251. It also contains two buttons.
 
 
 ### Light Pen
 
-![](Lightpen.png)
+![](images/Lightpen.png)
 
 Light pens and light guns only work in controller port 1 and require a CRT monitor.
 
@@ -108,7 +108,7 @@ They can have up to two buttons. Some pens require a button to be pressed for th
 
 ### Protovision Protopad
 
-![](Protopad.png)
+![](images/Protopad.png)
 
 This is a SuperNES style controller that can emulate a regular joystick or all buttons can be read in native mode. 
 
@@ -125,7 +125,7 @@ Note: Support for this controller has not been tested with real hardware.
 
 ### Trap Them Controller
 
-![](Trap%20Them.png)
+![](images/Trap-Them.png)
 
 This is a SuperNES style controller with these inputs:
 - d-pad
@@ -136,7 +136,7 @@ This is a SuperNES style controller with these inputs:
 
 ### Raw
 
-![](Raw.png)
+![](images/Raw.png)
 
 This view displays the five digital input lines, and the two analog potentiometers as values from 0 to 255.
 
@@ -150,7 +150,7 @@ The C64 has a user port that allows it to interface with various hardware attach
 
 ### 4-Player Adapter
 
-![](4%20Player.png)
+![](images/4-Player.png)
 
 These adapters support two additional joysticks with four directional switches and one button each.
 
@@ -162,7 +162,7 @@ Supported are the following variants:
 
 ### PET DUal Joystick Adapter
 
-![](4%20Player.png)
+![](images/4-Player.png)
 
 This adapter from TFW8b is designed for the PET, but also works on the C64.
 
@@ -172,7 +172,7 @@ Due to technical limitations, up and down cannot be read while fire is pressed.
 
 ### PET Space Invaders+
 
-![](Userport%20Joystick.png)
+![](images/Userport-Joystick.png)
 
 This adapter is an extension of the Space Invaders adapter designed for the PET, which adds up and down.
 
@@ -180,7 +180,7 @@ It supports one joystick with four directional switches and one button.
 
 ### VIC-20 OEM
 
-![](Userport%20Joystick.png)
+![](images/Userport-Joystick.png)
 
 This adapter was designed for the VIC-20, but also works on the C64.
 
@@ -190,7 +190,7 @@ Note: Support for this adapter has not been tested with real hardware.
 
 ### C64DTV Hummer
 
-![](Userport%20Joystick.png)
+![](images/Userport-Joystick.png)
 
 This adapter was designed for the C64DTV, but also works on the regular C64.
 
@@ -200,7 +200,7 @@ Note: Support for this adapter has not been tested with real hardware.
 
 ### PETSCII Robots Adapter
 
-![](PETSCII%20Robots.png)
+![](images/PETSCII-Robots.png)
 
 This adapter is included with the game Attack of the PETSCII Robots and allows connecting one SuperNES controller or mouse to the userport.
 
@@ -224,7 +224,7 @@ Four controllers are displayed per page, from left to right, top to bottom. Use 
 
 ### SuperPAD 64 / Ninja SNES Pad
 
-![](SuperPAD%2064.png)
+![](images/SuperPAD-64.png)
 
 These adapters support eight Nintendo SuperNES controllers or mice. The types of connected devices are detected automatically.
 
@@ -243,7 +243,7 @@ The third page shows the raw data read from each controller.
 
 ### Luigi Pantarotto's Spaceballs
 
-![](4%20Joysticks.png)
+![](images/4-Joysticks.png)
 
 This adapter supports eight joysticks with one button each.
 
@@ -254,7 +254,7 @@ Note: Support for this adapter has not been tested with real hardware.
 
 ### Inception
 
-![](4%20Joysticks.png)
+![](images/4-Joysticks.png)
 
 This adapter supports eight joysticks with one button each.
 
@@ -267,7 +267,7 @@ The third page shows the raw data read from the adapter.
 
 ### MultiJoy / Protovision MultiJoy
 
-![](4%20Joysticks.png)
+![](images/4-Joysticks.png)
 
 These adapter supports joysticks with one button each, depending on model 8 or 16 joysticks.
 
@@ -278,7 +278,7 @@ Note: Support for the sixteen joystick variant has not been tested.
 
 ### Wheel of Joy
 
-![](4%20Joysticks.png)
+![](images/4-Joysticks.png)
 
 This adapter from SukkoPera is designed for the Plus/4, but also works on the C64.
 
@@ -288,7 +288,7 @@ It connects to the user port through an adapter cable.
 
 ### Wheel of Joy Mini
 
-![](4%202%20Button%20Joysticks.png)
+![](images/4-2-Button-Joysticks.png)
 
 This adapter from SukkoPera is designed for the Plus/4, but also works on the C64.
 

@@ -11,10 +11,7 @@ dist_files :=
   README.md
   NEWS.md
   screenshot.png
-  src/joyride.prg
-  src/joyride.d64
-  src/joyride.d81
-# $build_dist_files
+  $built_dist_files
 
 rule link
   command = xlr8 --verbose-errors -I $build_directory --target $target --depfile $depfile --symbol-map $out.sym --output $out $in $libs

@@ -43,9 +43,7 @@ Multi Adapters:
 
 ## Using Joyride
 
-For detailed usage instructions, see the documentation page:
-
-- [Joyride](Documentation/Joyride.md)
+For detailed usage instructions, see the [documentation](Documentation/Joyride.md).
 
 
 ## Building Joyride
