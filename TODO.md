@@ -1,9 +1,3 @@
-## Before Release
-
-- Fix Ninja SNES Pad.
-- Investigate MultiJoy real hardware failure.
-
-
 ## Hardware Support
 
 - Synergy userport joy adapter 

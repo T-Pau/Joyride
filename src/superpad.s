@@ -138,8 +138,9 @@ rot:
     bne bytes
 
 .public detect_connected:
+    ;          hardware    / vice spad64 / vice ninja
     ; nothing: 00 00 00 00
-    ; joypad:  xx x0 ff ff
+    ; joypad:  xx x0 ff ff / xx xf 00 00 / xx x0 ff ff
     ; mouse:   00 x1 xx xx
 
     ldy #0
@@ -148,14 +149,18 @@ detect:
     lda snes_buttons1,x
     and #$0f
     cmp #$0f
-    beq none
-    cmp #$01
+    bne :+
+    lda snes_buttons2,x
+    beq dpad
+    bne none
+:   cmp #$01
     bne :+
     lda #EIGHT_PLAYER_VIEW_MOUSE
     bne detected
 :
     lda snes_buttons2,x
     beq none
+dpad:
     lda #EIGHT_PLAYER_VIEW_SNES
     bne detected
 none:

@@ -112,6 +112,8 @@ loop:
     sty eight_player_index + 1
 view_loop:
     lda eight_player_views,x
+    cmp #$ff
+    beq same_view
     cmp eight_player_current_views,y
     beq same_view
     sta eight_player_current_views,y
@@ -308,7 +310,7 @@ eight_player_default_view {
 }
 
 eight_player_default_view_superpad {
-    .data .fill(8, EIGHT_PLAYER_VIEW_NONE)
+    .data .fill(8, VIEW_DYNAMIC)
     .data .fill(4, EIGHT_PLAYER_VIEW_EMPTY)
 }
 
