@@ -1,6 +1,5 @@
 ## Hardware Support
 
-- Synergy userport joy adapter 
 - Keypads
 - Microflyte Joystick
 
