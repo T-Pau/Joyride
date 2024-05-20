@@ -25,12 +25,17 @@ Controller Port:
 - Protovision Protopad
 - Trap Them Controller
 
-User Port:
+User Port, Two Joysticks:
 - Protovision / Classic Game Adapter
 - Digital Excess / Hitmen
 - Kingsoft
 - Starbyte Tie Break Adapter
-- PET Dual Joystick Adapter
+- PET Dual Joystick
+
+User Port, One Joystick:
+- PET Space Invaders+
+- VIC-20 OEM
+- C64DTV Hummer
 - PETSCII Robots Adapter
 
 Multi Adapters:
@@ -39,6 +44,8 @@ Multi Adapters:
 - Luigi Pantarotto's Spaceballs
 - Inception
 - MultiJoy
+- Wheel of Joy
+- Wheel of Joy Mini
 
 
 ## Using Joyride

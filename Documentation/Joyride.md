@@ -160,7 +160,7 @@ Supported are the following variants:
 - Kingsoft
 - Starbyte Tie Break Adapter
 
-### PET DUal Joystick Adapter
+### PET Dual Joystick Adapter
 
 ![](images/4-Player.png)
 
