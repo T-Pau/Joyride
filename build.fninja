@@ -22,7 +22,7 @@ rule library
   depfile = $out.d
 
 rule zip
-  command = zip -9jq $out $in
+  command = rm -f $out; zip -9jq $out $in && (d=$$(pwd); cd $top_source_directory && zip -9rq $$d/$out Documentation)
 
 build $distfile: zip $dist_files
 
