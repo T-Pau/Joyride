@@ -63,7 +63,7 @@ help_screen {
     }
     .data "KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMML":screen_lowercase, $a0
     .data "                                        ":screen_inverted
-    .data "  space/+: next page  -: previous page  ":screen_inverted
+    .data " space/+: next page   -: previous page  ":screen_inverted
     .data "         ":screen_inverted, $9f, ": return to program           ":screen_inverted
     .data "                                        ":screen_inverted
 }
