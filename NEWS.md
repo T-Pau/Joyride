@@ -1,4 +1,4 @@
-# Version 1.7 (Unreleased)
+# Version 1.7 (2024-05-30)
 
 - Add support for the Protovision variant of the MultiJoy adapter.
 - Add support for PET Space Invaders+.
