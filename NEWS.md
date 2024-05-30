@@ -7,7 +7,7 @@
 - Add support for Wheel of Joy and Wheel of Joy Mini by SukkoPera.
 - Add support for SNES mouse connected to PETSCII Robots adapter.
 - Fix Protovision Protopad support.
-- Autodetect connected controller for Protopad, Trap Them, and PETSCII Robots adpter.
+- Autodetect connected controller for Protopad, Trap Them, and PETSCII Robots adapter.
 
 
 # Version 1.6 (2022-07-09)
