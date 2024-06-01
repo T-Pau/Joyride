@@ -38,12 +38,12 @@ help_screen_text = screen + 40 * 2 + 1
 .public display_help_page {
     lda current_help_page
     bmi negative
-    cmp num_help_screens
+    cmp help_screens_count
     bne ok
     lda #0
     beq ok
 negative:
-    ldx num_help_screens
+    ldx help_screens_count
     dex
     txa
 ok:

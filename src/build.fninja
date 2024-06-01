@@ -1,12 +1,7 @@
+include ../Toolkit/fast-ninja/xlr8.fninja
+include ../Toolkit/fast-ninja/scripts.fninja
+
 petcat = petcat
-
-CONVERT_SCREENS := ../scripts/convert-screens
-
-CONVERT_SCREENS_DEPENDENCIES :=
-    ../scripts/convert-screens
-    ../scripts/AssemblerOutput.py
-    ../scripts/RunlengthEncoder.py
-    ../scripts/Screens.py
 
 sources :=
     start.s
@@ -27,6 +22,7 @@ sources :=
     display-raw.s
     display-trapthem.s
     dpad.s
+    extra-screens.s
     eight-player.s
     f-keys.s
     help.s
@@ -60,9 +56,6 @@ sources :=
 
 rule basic
     command = $petcat -w$dialect -l $address -o $out $in
-
-rule convert-screen
-    command = $CONVERT_SCREENS -DVERSION=$VERSION -D__C64__ $in $out
 
 rule gfx-convert-charset
     command = gfx-convert -b 255 charset $in $out
@@ -111,4 +104,7 @@ build port-screens.bin: gfx-convert-screen-buttons port-screens.png | charset.bi
 build userport-screens.bin: gfx-convert-screen-buttons userport-screens.png | charset.bin
 build scroll-wheel.bin: gfx-convert-screen-buttons scroll-wheel.png | charset.bin
 build eight-player.bin: gfx-convert-screen-buttons eight-player.png | charset.bin
-build help-screens.s: convert-screen help-screens.txt | $CONVERT_SCREENS_DEPENDENCIES
+build extra-screens.s: convert-characters extra-screens.yaml
+
+build help-screens.s: convert-screens help-screens.txt
+    flags = -DVERSION=$VERSION

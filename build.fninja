@@ -13,13 +13,6 @@ dist_files :=
   screenshot.png
   $built_dist_files
 
-rule link
-  command = xlr8 --verbose-errors -I $build_directory --target $target --depfile $depfile --symbol-map $out.sym --output $out $in $libs
-  depfile = $out.d
-
-rule library
-  command = xlr8 --verbose-errors -I $build_directory --create-library --target $target --depfile $depfile --output $out $in $libs
-  depfile = $out.d
 
 rule zip
   command = rm -f $out; zip -9jq $out $in && (d=$$(pwd); cd $top_source_directory && zip -9rq $$d/$out Documentation)
