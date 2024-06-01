@@ -3,7 +3,8 @@ charset:
     width: 8
     height: 8
     count: 256
-    name: charset_extra
+    name: charset_extra_data
+    rl_encode: true
     predefined:
         32: "0000000000000000"
         160: "ffffffffffffffff"

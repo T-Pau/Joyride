@@ -53,6 +53,7 @@ both:
 
     memcpy charset, charset_data, $800
     memcpy sprites, sprite_data, (64 * 8)
+    rl_expand charset_extra, charset_extra_data
 
     jsr init_state
     jsr display_main_screen

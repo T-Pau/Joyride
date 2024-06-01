@@ -26,6 +26,7 @@
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 charset = $e000
+charset_extra = $c800
 screen = $c000
 sprites = $c400
 color_ram = $d800
