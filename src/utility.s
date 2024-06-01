@@ -25,64 +25,10 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.macro adc_16 address {
-        adc address
-        sta address
-        bcc :+
-        inc address + 1
-:
-}
-
-.macro inc_16 address {
-        inc address
-        bne :+
-        inc address + 1
-:
-}
-
-.macro store_word value, address {
-    lda #<(value)
-    sta address
-    lda #>(value)
-    sta address + 1
-}
-.macro add_word address, value {
-    clc
-    lda address
-    adc #<(value)
-    sta address
-    .if (value) < 256 {
-        bcc :+
-        inc address + 1
-    :
-    }
-    .else {
-        lda address + 1
-        adc #>(value)
-        sta address + 1
-    }
-}
-
-.macro subtract_word address, value {
-    sec
-    lda address
-    sbc #<(value)
-    sta address
-    .if value < 256 {
-        bcs :+
-        dec address + 1
-    :
-    }
-    .else {
-        lda address + 1
-        sbc #>(value)
-        sta address + 1
-    }
-}
 
 .macro memcpy destination, source, length {
-    store_word destination, ptr2
-    store_word source, ptr1
-    store_word length, ptr3
+    store_word ptr2, destination
+    store_word ptr1, source
+    store_word ptr3, length
     jsr memcpy
 }

@@ -99,7 +99,7 @@ pad:
     ;                         R, L, X, A
 
     ; L
-    store_word USERPORT_VIEW_START + 5, ptr2
+    store_word ptr2, USERPORT_VIEW_START + 5
     lda petscii_data + 1
     and #$20
     jsr tiny_button
@@ -219,7 +219,7 @@ display:
     adc #PETSCII_MOUSE_SPRITE_Y_OFFSET
     sta lower_sprite_y
 
-    store_word USERPORT_VIEW_START + PETSCII_MOUSE_L_OFFSET, ptr2
+    store_word ptr2, USERPORT_VIEW_START + PETSCII_MOUSE_L_OFFSET
     lda petscii_data + 1
     and #$40
     jsr small_button

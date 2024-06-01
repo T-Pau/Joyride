@@ -50,3 +50,10 @@
     .data top + 21 * 8:2, label_background
     .data top + 24 * 8 + 7:2, eight_player_bottom
 }
+
+.public extra_irq_table {
+    .data top - 1:2, top_label
+    .data top + 8 - 1:2, content_background
+    .data top + 21 * 8:2, label_background
+    .data top + 24 * 8 + 7:2, handle_help
+}

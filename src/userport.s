@@ -145,7 +145,7 @@ loop:
     sta ptr1
     lda userport_view + 1,x
     sta ptr1 + 1
-    store_word USERPORT_VIEW_START, ptr2
+    store_word ptr2, USERPORT_VIEW_START
     ldx #31
     ldy #5
     jmp copyrect

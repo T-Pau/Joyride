@@ -75,10 +75,10 @@ tmp .reserve 1
     beq :+
     cmp #EIGHT_PLAYER_VIEW_MOUSE
     bne read
-    store_word screen + EIGHT_PLAYER_OFFSET_FOURTH + SUPERPAD_MOUSE_OFFSET, ptr2
+    store_word ptr2, screen + EIGHT_PLAYER_OFFSET_FOURTH + SUPERPAD_MOUSE_OFFSET
     jsr display_snes_mouse
     jmp read
-:   store_word screen + EIGHT_PLAYER_OFFSET_FOURTH + SUPERPAD_CONTROLELR_OFFSET, ptr2
+:   store_word ptr2, screen + EIGHT_PLAYER_OFFSET_FOURTH + SUPERPAD_CONTROLELR_OFFSET
     lda snes_buttons,y
     ldx snes_buttons1,y
     ldy #0
@@ -199,10 +199,10 @@ detected:
     beq :+
     cmp #EIGHT_PLAYER_VIEW_MOUSE
     bne second
-    store_word screen + EIGHT_PLAYER_OFFSET_FIRST + SUPERPAD_MOUSE_OFFSET, ptr2
+    store_word ptr2, screen + EIGHT_PLAYER_OFFSET_FIRST + SUPERPAD_MOUSE_OFFSET
     jsr display_snes_mouse
     jmp second
-:   store_word screen + EIGHT_PLAYER_OFFSET_FIRST + SUPERPAD_CONTROLELR_OFFSET, ptr2
+:   store_word ptr2, screen + EIGHT_PLAYER_OFFSET_FIRST + SUPERPAD_CONTROLELR_OFFSET
     lda snes_buttons,y
     ldx snes_buttons1,y
     ldy #0
@@ -217,10 +217,10 @@ second:
     beq :+
     cmp #EIGHT_PLAYER_VIEW_MOUSE
     bne third
-    store_word screen + EIGHT_PLAYER_OFFSET_SECOND + SUPERPAD_MOUSE_OFFSET, ptr2
+    store_word ptr2, screen + EIGHT_PLAYER_OFFSET_SECOND + SUPERPAD_MOUSE_OFFSET
     jsr display_snes_mouse
     jmp third
-:   store_word screen + EIGHT_PLAYER_OFFSET_SECOND + SUPERPAD_CONTROLELR_OFFSET, ptr2
+:   store_word ptr2, screen + EIGHT_PLAYER_OFFSET_SECOND + SUPERPAD_CONTROLELR_OFFSET
     lda snes_buttons,y
     ldx snes_buttons1,y
     ldy #0
@@ -235,10 +235,10 @@ third:
     beq :+
     cmp #EIGHT_PLAYER_VIEW_MOUSE
     bne fourth
-    store_word screen + EIGHT_PLAYER_OFFSET_THIRD + SUPERPAD_MOUSE_OFFSET, ptr2
+    store_word ptr2, screen + EIGHT_PLAYER_OFFSET_THIRD + SUPERPAD_MOUSE_OFFSET
     jsr display_snes_mouse
     jmp fourth
-:   store_word screen + EIGHT_PLAYER_OFFSET_THIRD + SUPERPAD_CONTROLELR_OFFSET, ptr2
+:   store_word ptr2, screen + EIGHT_PLAYER_OFFSET_THIRD + SUPERPAD_CONTROLELR_OFFSET
     lda snes_buttons,y
     ldx snes_buttons1,y
     ldy #0
@@ -335,7 +335,7 @@ mouse_display:
 }
 
 superpad_display_raw {
-    store_word screen + EIGHT_PLAYER_OFFSET_FIRST + SUPERPAD_RAW_OFFSET_1, ptr2
+    store_word ptr2, screen + EIGHT_PLAYER_OFFSET_FIRST + SUPERPAD_RAW_OFFSET_1
     ldx #0
     jsr superpad_display_raw_one
     add_word ptr2, SUPERPAD_RAW_OFFSET_NEXT

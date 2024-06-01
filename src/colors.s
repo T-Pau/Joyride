@@ -51,13 +51,13 @@
 }
 
 .public content_background {
-    lda #COLOR_GRAY3
+    lda #COLOR_GREY_3
     sta VIC_BACKGROUND_COLOR
     rts
 }
 
 .public logo_background {
-    lda #COLOR_GRAY1
+    lda #COLOR_GREY_1
     sta VIC_BACKGROUND_COLOR
     rts
 }

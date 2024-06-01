@@ -166,7 +166,7 @@ same_view:
     dey
     bpl :-
     jsr eight_player_update_views
-    store_word screen + 1, ptr2
+    store_word ptr2, screen + 1
     lda eight_player_type
     asl
     tax
@@ -181,7 +181,7 @@ same_view:
     bpl :-
     ; fallthrough
 .public copy_eight_player_page_title:
-    store_word screen + 33, ptr2
+    store_word ptr2, screen + 33
     ldx eight_player_type
     lda eight_player_page_name_index,x
     clc
@@ -232,7 +232,7 @@ bottom_jmp:
     lda last_command
     ora command
     bne end
-    lda f_key_commands,x
+    lda eight_player_f_key_commands,x
     tax
     stx command
 none:
@@ -284,12 +284,13 @@ bottom_handler {
     .data wheel_of_joy_mini_bottom
 }
 
-f_key_commands {
+eight_player_f_key_commands {
     .data 0
     .data COMMAND_EIGHT_PLAYER_NEXT_TYPE, COMMAND_EIGHT_PLAYER_PREVIOUS_TYPE
     .data COMMAND_EIGHT_PLAYER_NEXT_PAGE, COMMAND_EIGHT_PLAYER_PREVIOUS_PAGE
     .data 0, 0
     .data COMMAND_MAIN, COMMAND_HELP
+    .data COMMAND_EXTRA
 }
 
 eight_player_num_pages {

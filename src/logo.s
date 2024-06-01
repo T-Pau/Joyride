@@ -38,7 +38,7 @@ stripe_colors {
 
 display_logo {
     set_vic_24_lines
-    lda #COLOR_GRAY2
+    lda #COLOR_GREY_2
     sta VIC_BACKGROUND_COLOR
 
     ldy #LOGO_Y + 2
@@ -80,7 +80,7 @@ setup_logo {
     sta VIC_SPRITE_7_Y
     lda #COLOR_BLACK
     sta VIC_SPRITE_5_COLOR
-    lda #COLOR_GRAY1
+    lda #COLOR_GREY_1
     sta VIC_SPRITE_6_COLOR
     sta VIC_SPRITE_7_COLOR
     ldx #sprite_logo

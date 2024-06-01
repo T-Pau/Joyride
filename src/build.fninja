@@ -4,6 +4,9 @@ include ../Toolkit/fast-ninja/scripts.fninja
 petcat = petcat
 
 sources :=
+    ../Toolkit/xlr8/6502/rl-expand.s
+    ../Toolkit/xlr8/6502/utility.s
+    ../Toolkit/xlr8/commodore/irq.s
     start.s
     button.s
     cbm_ext.s
@@ -22,6 +25,8 @@ sources :=
     display-raw.s
     display-trapthem.s
     dpad.s
+    extra.s
+    extra-screen.s
     extra-screens.s
     eight-player.s
     f-keys.s
@@ -30,7 +35,6 @@ sources :=
     help-screens.s
     hex.s
     inception.s
-    irq.s
     irq-table.s
     joyride.s
     logo.s
@@ -41,7 +45,6 @@ sources :=
     port-screen.s
     ports.s
     pot.s
-    rl-expand.s
     screen.s
     snes.s
     snespad.s
@@ -105,6 +108,6 @@ build userport-screens.bin: gfx-convert-screen-buttons userport-screens.png | ch
 build scroll-wheel.bin: gfx-convert-screen-buttons scroll-wheel.png | charset.bin
 build eight-player.bin: gfx-convert-screen-buttons eight-player.png | charset.bin
 build extra-screens.s: convert-characters extra-screens.yaml
-
+build extra-screen.s: convert-screens extra-screen.txt
 build help-screens.s: convert-screens help-screens.txt
     flags = -DVERSION=$VERSION

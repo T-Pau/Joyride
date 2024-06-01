@@ -33,6 +33,10 @@ last_key .reserve 1
 
 .section code
 
+; Get pressed function or C= key.
+; Returns:
+;   X: function key number, 9 for C=, 0 for none pressed
+;   Z: set if key pressed
 .public get_f_key {
     lda #$00
     sta CIA1_DDRA
@@ -48,6 +52,16 @@ last_key .reserve 1
     lda #$ff
     sta CIA1_DDRA
 
+    lda #$80 ^ $ff
+    sta CIA1_PRA
+    lda CIA1_PRB
+    eor #$ff
+    and #$20
+    beq not_commodore
+    ldx #9
+    bne f_end
+
+not_commodore:
     ; get shift
     lda #$40 ^ $ff
     sta CIA1_PRA
@@ -118,13 +132,15 @@ f_end:
 
 .public handle_keyboard {
     jsr get_f_key
+    txa
     beq none
     lda last_command
     ora command
     bne end
-    stx command
+    lda main_f_key_commands,x
+    sta command
 none:
-    stx last_command
+    sta last_command
 end:
     rts
 }
@@ -195,4 +211,15 @@ end:
     ldx #USER_NUM_TYPES - 1
 :   stx userport_type
     jmp copy_userport
+}
+
+.section data
+
+main_f_key_commands {
+    .data 0
+    .data COMMAND_PORT1_NEXT, COMMAND_PORT1_PREVIOUS
+    .data COMMAND_PORT2_NEXT, COMMAND_PORT2_PREVIOUS
+    .data COMMAND_USERPORT_NEXT, COMMAND_USERPORT_PREVIOUS
+    .data COMMAND_EIGHT_PLAYER, COMMAND_HELP
+    .data COMMAND_EXTRA
 }

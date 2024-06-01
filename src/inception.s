@@ -51,7 +51,7 @@ inception_length .reserve 1
     beq :+
     dex
 :
-    store_word snes_buttons, ptr1
+    store_word ptr1, snes_buttons
     lda #OPCODE_JOYSTICKS
 ;    lda #OPCODE_IDENTIFY
     ldy #16
@@ -124,7 +124,7 @@ loop:
 }
 
 display_raw_all {
-    store_word screen + EIGHT_PLAYER_OFFSET_FIRST + RAW_OFFSET_1, ptr2
+    store_word ptr2, screen + EIGHT_PLAYER_OFFSET_FIRST + RAW_OFFSET_1
     ldx #0
     jsr display_raw_one
     add_word ptr2, RAW_OFFSET_NEXT
