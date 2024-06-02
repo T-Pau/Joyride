@@ -82,7 +82,7 @@ build joyride.d64: disk joyride.prg
 build joyride.d81: disk joyride.prg
 
 build joyride.prg | joyride.prg.sym: link $sources | $built_dependencies
-    target = c64-basic
+    target = {{joyride-c64.target}}
     libs = mega65.lib cbm.lib
 
 build joyride.prg.ll: vice-ll joyride.prg.sym

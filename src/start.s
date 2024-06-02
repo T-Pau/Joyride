@@ -48,7 +48,7 @@ not_m65:
 both:
     sta machine_type
 
-    lda #12; COLOR_GREY2
+    lda #COLOR_FRAME
     sta VIC_BORDER_COLOR
 
     memcpy charset, charset_data, $800

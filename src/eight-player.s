@@ -1,4 +1,4 @@
-;  eight_player.s -- Display and handle keyboard input for 8 player adapters.
+;  eight-player.s -- Display and handle keyboard input for 8 player adapters.
 ;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.

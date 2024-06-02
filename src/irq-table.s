@@ -52,8 +52,8 @@
 }
 
 .public extra_irq_table {
-    .data top - 1:2, top_label
-    .data top + 8 - 1:2, content_background
-    .data top + 21 * 8:2, label_background
-    .data top + 24 * 8 + 7:2, handle_help
+    .data top + 8 * 2 - 1:2, label_background
+    .data top + 8 * 3 - 1:2, extra_content
+    .data top + 8 * 15 - 1:2, extra_label
+    .data top + 24 * 8 + 7:2, handle_extra
 }

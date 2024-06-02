@@ -1,0 +1,6 @@
+.include "c64-basic.target"
+
+.section graphics {
+    type: reserve_only
+    address: $c000-$ffff
+}

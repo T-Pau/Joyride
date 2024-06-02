@@ -25,10 +25,12 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-charset = $e000
-charset_extra = $c800
-screen = $c000
-sprites = $c400
+.section graphics
+
+charset .reserve $800 .address $e000 .used
+charset_extra .reserve $800 .address $e800 .used
+screen .reserve $400 .address $c000 .used
+sprites .reserve 6*64 .address $c400 .used
 color_ram = $d800
 
 sprite_none = (sprites & $3fff) / 64
@@ -36,6 +38,12 @@ sprite_lightpen = sprite_none + 1
 sprite_bar = sprite_none + 2
 sprite_cross = sprite_none + 3
 sprite_logo = sprite_none + 4
+
+
+COLOR_LABEL = COLOR_BLACK
+COLOR_FRAME = COLOR_GREY_2
+COLOR_BACKGROUND = COLOR_GREY_3
+COLOR_CONTENT = COLOR_GREY_1
 
 
 top = 50 ; first raster line of screen
