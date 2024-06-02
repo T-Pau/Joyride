@@ -47,6 +47,7 @@ EXTRA_TITLE_START = EXTRA_VIEW_START - 80
 .section code
 
 display_extra_screen {
+    set_f_key_command_table extra_f_key_commands
     store_word source_ptr, extra_screen
     store_word destination_ptr, screen
     jsr rl_expand
@@ -65,11 +66,22 @@ display_extra_screen {
 }
 
 extra_next_type {
-    rts
+    ldx extra_type
+    inx
+    cpx #EXTRA_NUM_TYPES
+    bne :+
+    ldx #0
+:   stx extra_type
+    jmp setup_extra_display
 }
 
 extra_previous_type {
-    rts
+    ldx extra_type
+    dex
+    bpl :+
+    ldx #EXTRA_NUM_TYPES - 1
+:   stx extra_type
+    jmp setup_extra_display
 }
 
 ; Display title and view of current type
@@ -143,8 +155,8 @@ extra_label {
 
 handle_extra {
     jsr display_logo
-    ; TODO: handle keyboard
-    rts
+    sec
+    jmp handle_keyboard
 }
 
 .section data
@@ -184,6 +196,15 @@ extra_default_view {
     .data EXTRA_VIEW_CARDKEY
     .data EXTRA_VIEW_RUSHWARE
     .data EXTRA_VIEW_COPLIN
+}
+
+extra_f_key_commands {
+    .data 0
+    .data COMMAND_EXTRA_NEXT, COMMAND_EXTRA_PREVIOUS
+    .data 0, 0
+    .data 0, 0
+    .data 0, 0
+    .data COMMAND_MAIN
 }
 
 .section reserved

@@ -2,5 +2,9 @@
 
 .section graphics {
     type: reserve_only
-    address: $c000-$ffff
+    address: $c000-$cfff
+}
+.section graphics_read_only {
+    type: reserve_only
+    address: $e000-$ffff
 }

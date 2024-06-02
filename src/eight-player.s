@@ -227,18 +227,8 @@ top_jmp:
 bottom_jmp:
     jsr $0000
 
-    jsr get_f_key
-    beq none
-    lda last_command
-    ora command
-    bne end
-    lda eight_player_f_key_commands,x
-    tax
-    stx command
-none:
-    stx last_command
-end:
-    rts
+    clc
+    jmp handle_keyboard
 }
 
 

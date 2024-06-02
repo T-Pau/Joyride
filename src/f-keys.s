@@ -33,9 +33,27 @@ last_key .reserve 1
 
 .section code
 
+.macro set_f_key_command_table address {
+    ldx #<address
+    ldy #>address
+    jsr set_f_key_command_table
+}
+
+; Set command table
+; Arguments:
+;   X/Y: address
+.public set_f_key_command_table .used { ; XLR8: used shouldn't be neccessary
+    stx f_key_commands
+    sty f_key_commands + 1
+    rts
+}
+
+
 ; Get pressed function or C= key.
+; Arguments:
+;   C: if set, ignore joystick 1
 ; Returns:
-;   X: function key number, 9 for C=, 0 for none pressed
+;   Y: function key number, 9 for C=, 0 for none pressed
 ;   Z: set if key pressed
 .public get_f_key {
     lda #$00
@@ -45,8 +63,10 @@ last_key .reserve 1
     sta CIA1_PRA
     sta CIA1_PRB
 
-    lda CIA1_PRA
-    and CIA1_PRB
+    lda CIA1_PRB
+    bcc :+
+    ora #$0f
+:   and CIA1_PRA
     cmp #$ff
     bne f_none
     lda #$ff
@@ -58,7 +78,7 @@ last_key .reserve 1
     eor #$ff
     and #$20
     beq not_commodore
-    ldx #9
+    ldy #9
     bne f_end
 
 not_commodore:
@@ -84,21 +104,21 @@ not_commodore:
     rol
     rol
     bcs not_f5
-    ldx #5
+    ldy #5
     bne f_got
 not_f5:
     rol
     bcs not_f3
-    ldx #3
+    ldy #3
     bne f_got
 not_f3:
     rol
     bcs not_f1
-    ldx #1
+    ldy #1
     bne f_got
 not_f1:
     bmi f_none
-    ldx #7
+    ldy #7
 f_got:
     lda #$00
     sta CIA1_DDRA
@@ -114,30 +134,30 @@ f_got:
 
     lda shift
     beq f_end
-    inx
+    iny
     bne f_end
 f_none:
-    ldx #0
+    ldy #0
 f_end:
     lda #$ff
     sta CIA1_DDRA
     sta CIA1_DDRB
-    cpx last_key
-    stx last_key
+    cpy last_key
+    sty last_key
     beq :+
-    ldx #0
-:   cpx #0
+    ldy #0
+:   cpy #0
     rts
 }
 
 .public handle_keyboard {
     jsr get_f_key
-    txa
+    tya
     beq none
     lda last_command
     ora command
     bne end
-    lda main_f_key_commands,x
+    lda (f_key_commands),y
     sta command
 none:
     sta last_command
@@ -223,3 +243,7 @@ main_f_key_commands {
     .data COMMAND_EIGHT_PLAYER, COMMAND_HELP
     .data COMMAND_EXTRA
 }
+
+.section zero_page
+
+f_key_commands .reserve 2

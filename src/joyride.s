@@ -25,20 +25,26 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+NUM_SPRITES = 8
+
+color_ram = $d800
+
 .section graphics
 
-charset .reserve $800 .address $e000 .used
-charset_extra .reserve $800 .address $e800 .used
-screen .reserve $400 .address $c000 .used
-sprites .reserve 6*64 .address $c400 .used
-color_ram = $d800
+screen .reserve $400 
+
+.section graphics_read_only
+
+charset .reserve $800
+charset_extra .reserve $800
+;sprites .reserve NUM_SPRITES * 64 .used ; XLR8
+sprites = $f000
 
 sprite_none = (sprites & $3fff) / 64
 sprite_lightpen = sprite_none + 1
 sprite_bar = sprite_none + 2
 sprite_cross = sprite_none + 3
 sprite_logo = sprite_none + 4
-
 
 COLOR_LABEL = COLOR_BLACK
 COLOR_FRAME = COLOR_GREY_2
@@ -154,7 +160,7 @@ COMMAND_PORT2_UPDATE_VIEW = 19
 COMMAND_USERPORT_UPDATE_VIEW = 20
 COMMAND_EXTRA = 21
 COMMAND_EXTRA_NEXT = 22
-COMMAND_EXTRA_PREVIOUS = 22
+COMMAND_EXTRA_PREVIOUS = 23
 
 source_ptr = ptr1
 destination_ptr = ptr2

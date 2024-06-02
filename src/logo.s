@@ -55,6 +55,7 @@ loop:
     bne loop
 
     set_vic_25_lines
+    set_vic_text screen, charset
 
     rts
 }

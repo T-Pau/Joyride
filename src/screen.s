@@ -77,6 +77,7 @@ eight_player_legend {
 .section code
 
 .public display_main_screen {
+    set_f_key_command_table main_f_key_commands
     lda #MODE_MAIN
     sta mode
 
@@ -95,6 +96,7 @@ eight_player_legend {
 }
 
 .public display_eight_player_screen {
+    set_f_key_command_table eight_player_f_key_commands
     lda #MODE_EIGHT_PLAYER
     sta mode
 
