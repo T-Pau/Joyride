@@ -44,6 +44,8 @@ EXTRA_NUM_VIEWS = 6
 EXTRA_VIEW_START = screen + 4 * 40 + 11
 EXTRA_TITLE_START = EXTRA_VIEW_START - 80
 
+MAX_NUM_KEYS = 16
+
 .section code
 
 display_extra_screen {
@@ -211,3 +213,4 @@ extra_f_key_commands {
 
 extra_type .reserve 1
 extra_view .reserve 1
+

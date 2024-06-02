@@ -3,6 +3,10 @@ include ../Toolkit/fast-ninja/scripts.fninja
 
 petcat = petcat
 
+rule key-table
+    command = {{../scripts/key-table}} -M $depfile $in $out
+    depfile = $out.d
+
 sources :=
     ../Toolkit/xlr8/6502/rl-expand.s
     ../Toolkit/xlr8/6502/utility.s
@@ -16,6 +20,8 @@ sources :=
     commands.s
     copyrect.s
     display-joystick.s
+    display-key.s
+    display-key-vicii-ted.s
     display-koalapad.s
     display-lightpen.s
     display-mouse.s
@@ -37,6 +43,7 @@ sources :=
     inception.s
     irq-table.s
     joyride.s
+    keys-cx21.s
     logo.s
     main-loop.s
     memcpy.s
@@ -111,3 +118,5 @@ build extra-screens.s: convert-characters extra-screens.yaml
 build extra-screen.s: convert-screens extra-screen.txt
 build help-screens.s: convert-screens help-screens.txt
     flags = -DVERSION=$VERSION
+
+build keys-cx21.s: key-table keys-cx21.key
