@@ -44,7 +44,7 @@ EXTRA_NUM_VIEWS = 6
 EXTRA_VIEW_START = screen + 4 * 40 + 11
 EXTRA_TITLE_START = EXTRA_VIEW_START - 80
 
-MAX_NUM_KEYS = 16
+MAX_NUM_KEYS = 17
 
 .section code
 
@@ -64,7 +64,7 @@ display_extra_screen {
     lda #VIEW_DYNAMIC
     sta extra_view
 
-    jmp setup_extra_display
+    jmp setup_extra_type
 }
 
 extra_next_type {
@@ -74,7 +74,7 @@ extra_next_type {
     bne :+
     ldx #0
 :   stx extra_type
-    jmp setup_extra_display
+    jmp setup_extra_type
 }
 
 extra_previous_type {
@@ -83,11 +83,29 @@ extra_previous_type {
     bpl :+
     ldx #EXTRA_NUM_TYPES - 1
 :   stx extra_type
-    jmp setup_extra_display
+    jmp setup_extra_type
 }
 
 ; Display title and view of current type
-setup_extra_display {
+setup_extra_type {
+    lda extra_type
+    asl
+    tax
+    lda extra_top_handler,x
+    sta extra_top_jsr
+    lda extra_top_handler + 1,x
+    sta extra_top_jsr + 1
+    lda extra_bottom_handler,x
+    sta extra_bottom_jsr
+    lda extra_bottom_handler + 1,x
+    sta extra_bottom_jsr + 1
+    lda extra_keys,x
+    ldy extra_keys + 1,x
+    sta temp
+    ldx extra_type
+    lda extra_num_keys,x
+    ldx temp
+    jsr set_keys_table
     jsr copy_extra_type_name
     ldx extra_type
     lda extra_default_view,x
@@ -143,6 +161,13 @@ extra_content {
     cpy #top + 3 * 8 - 5
     bne :-
     sta VIC_VIDEO_ADDRESS
+
+    lda command
+    bne end
+extra_top_jsr_instruction:
+.private extra_top_jsr = extra_top_jsr_instruction + 1
+    jsr $0000
+end:
     rts
 }
 
@@ -157,8 +182,18 @@ extra_label {
 
 handle_extra {
     jsr display_logo
+    lda command
+    bne end
+extra_bottom_jsr_instruction:
+.private extra_bottom_jsr = extra_bottom_jsr_instruction + 1
+    jsr $0000
+end:
     sec
     jmp handle_keyboard
+}
+
+handler_dummy {
+    rts
 }
 
 .section data
@@ -200,6 +235,42 @@ extra_default_view {
     .data EXTRA_VIEW_COPLIN
 }
 
+extra_top_handler {
+    .data handler_dummy
+    .data handler_dummy
+    .data handler_dummy
+    .data handler_dummy
+    .data handler_dummy
+    .data handler_dummy
+}
+
+extra_bottom_handler {
+    .data handler_dummy
+    .data display_keyboard
+    .data handler_dummy
+    .data handler_dummy
+    .data handler_dummy
+    .data handler_dummy
+}
+
+extra_keys {
+    .data 0:2
+    .data keys_cx21_keys
+    .data 0:2 ; keys_cx85_keys
+    .data 0:2 ; keys_cardkey_keys
+    .data 0:2 ; keys_rushware_keys
+    .data 0:2 ; keys_coplin_keys
+}
+
+extra_num_keys {
+    .data 0
+    .data 12
+    .data 17
+    .data 16
+    .data 16
+
+}
+
 extra_f_key_commands {
     .data 0
     .data COMMAND_EXTRA_NEXT, COMMAND_EXTRA_PREVIOUS
@@ -213,4 +284,3 @@ extra_f_key_commands {
 
 extra_type .reserve 1
 extra_view .reserve 1
-

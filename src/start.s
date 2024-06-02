@@ -28,6 +28,9 @@
 .section code
 
 .public start {
+    ; disable BASIC ROM
+    lda #$36
+    sta $01
     lda #1
     sta VIC_SPRITE_0_X
     lda #VIC_KNOCK_IV_1

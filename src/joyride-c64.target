@@ -9,6 +9,10 @@
     address: $e000-$ffff
 }
 
-;.section reserved .extend {
-;    address: $a000-$bfff
-;}
+.section data .extend {
+    address: $a000-$bfff
+}
+
+.section reserved .extend {
+    address: $a000-$bfff
+}

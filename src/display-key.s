@@ -106,12 +106,13 @@ next:
     adc #0
     sta display_high + 1
 
+    ldx num_keys
+    beq end
     lda #0
-    ldx new_key_state
 :   dex
     sta key_state,x
     bne :-
-
+end:
     rts
 }
 
