@@ -220,6 +220,7 @@ display_single_key {
     lda #0
     jsr display_key
 :   ldx new_key_index
+    stx key_index
     bmi :+
     lda #1
     jsr display_key
@@ -317,7 +318,7 @@ extra_top_handler {
     .data handler_dummy
     .data handler_dummy
     .data handler_dummy
-    .data handler_dummy
+    .data read_coplin
 }
 
 extra_bottom_handler {

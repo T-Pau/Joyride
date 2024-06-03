@@ -55,16 +55,6 @@ loop:
 :	cmp key_state,x
     beq next
     sta key_state,x
-    .if  !.defined(USE_PET) {
-        cmp #0
-        beq unpressed
-        ldy #COLOR_PRESSED
-        bne display
-    unpressed:
-        ldy #COLOR_CHECKED
-    display:
-        sty current_key_color
-    }
     jsr display_key
 next:
     inx
@@ -129,10 +119,19 @@ end:
     .private display_high = display_high_instruction + 1
     .private jump = jump_instruction + 1
 
+    .if  !.defined(USE_PET) {
+        ldy #COLOR_CHECKED
+    }
     cmp #0
     beq :+
+    .if  !.defined(USE_PET) {
+        ldy #COLOR_PRESSED
+    }
     lda #$80
 :	sta current_key_state
+    .if  !.defined(USE_PET) {
+        sty current_key_color
+    }
 
 address_low_instruction:
     lda $1000,x
