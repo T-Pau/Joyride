@@ -404,6 +404,46 @@ COLOR_RAM_OFFSET = color_ram - screen
 }
 
 
+.public display_key_2x6 {
+    ldy #160
+    lda (ptr1),y
+    and #$7f
+    ora current_key_state
+    sta (ptr1),y
+    iny
+    lda (ptr1),y
+    and #$7f
+    ora current_key_state
+    sta (ptr1),y
+
+    ldy #200
+    lda (ptr1),y
+    and #$7f
+    ora current_key_state
+    sta (ptr1),y
+    iny
+    lda (ptr1),y
+    and #$7f
+    ora current_key_state
+    sta (ptr1),y
+
+    ldy #0
+    jsr display_key_2_2
+
+    ldy #160
+    sta (ptr1),y
+    iny
+    sta (ptr1),y
+
+    ldy #200
+    sta (ptr1),y
+    iny
+    sta (ptr1),y
+
+    rts
+}
+
+
 .public display_key_down {
     iny
     lda (ptr1),y

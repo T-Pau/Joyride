@@ -43,7 +43,9 @@ sources :=
     inception.s
     irq-table.s
     joyride.s
-    keys-cx21.s
+    keys-3x4.s
+    keys-4x4.s
+    keys-cx85.s
     logo.s
     main-loop.s
     memcpy.s
@@ -119,4 +121,6 @@ build extra-screen.s: convert-screens extra-screen.txt
 build help-screens.s: convert-screens help-screens.txt
     flags = -DVERSION=$VERSION
 
-build keys-cx21.s: key-table keys-cx21.key
+build keys-3x4.s: key-table keys-3x4.key
+build keys-4x4.s: key-table keys-4x4.key
+build keys-cx85.s: key-table keys-cx85.key

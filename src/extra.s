@@ -41,6 +41,10 @@ EXTRA_VIEW_RUSHWARE = 4
 EXTRA_VIEW_COPLIN = 5
 EXTRA_NUM_VIEWS = 6
 
+EXTRA_COLOR_NEOS = 0
+EXTRA_COLOR_KEYPAD = 1
+
+EXTRA_COLOR_START = color_ram + 4 * 40 + 11
 EXTRA_VIEW_START = screen + 4 * 40 + 11
 EXTRA_TITLE_START = EXTRA_VIEW_START - 80
 
@@ -106,6 +110,24 @@ setup_extra_type {
     lda extra_num_keys,x
     ldx temp
     jsr set_keys_table
+    lda #$ff
+    sta key_index
+    sta new_key_index
+    ldx #MAX_NUM_KEYS - 1
+    lda #0
+:   sta new_key_state,x
+    dex
+    bpl :-
+    ldx extra_type
+    lda extra_default_color,x
+    asl
+    tax
+    lda extra_color,x
+    sta source_ptr
+    lda extra_color + 1,x
+    sta source_ptr + 1
+    store_word destination_ptr, EXTRA_COLOR_START
+    jsr rl_expand
     jsr copy_extra_type_name
     ldx extra_type
     lda extra_default_view,x
@@ -192,6 +214,27 @@ end:
     jmp handle_keyboard
 }
 
+display_single_key {
+    ldx key_index
+    bmi :+
+    lda #0
+    jsr display_key
+:   ldx new_key_index
+    bmi :+
+    lda #1
+    jsr display_key
+:   rts    
+}
+
+read_cx21 {
+    ldx #11
+    lda #0
+:   sta new_key_state,x
+    dex
+    bpl :-
+    rts
+}
+
 handler_dummy {
     rts
 }
@@ -200,14 +243,33 @@ handler_dummy {
 
 extra_colors {
     rl_encode 10 + 4*40, COLOR_FRAME
-    rl_encode 20, COLOR_CONTENT
+    rl_skip 20
     .repeat 9 {
         rl_encode 20, COLOR_FRAME
-        rl_encode 20, COLOR_CONTENT
+        rl_skip 20
     }
     rl_encode 10 + 10*40, COLOR_FRAME
     rl_end
 }
+
+extra_neos_color {
+    rl_encode 18, COLOR_CONTENT
+    .repeat 8 {
+        rl_skip 22
+        rl_encode 18, COLOR_CONTENT
+    }
+    rl_end
+}
+
+extra_keypad_color {
+    rl_encode 18, COLOR_UNCHECKED
+    .repeat 8 {
+        rl_skip 22
+        rl_encode 18, COLOR_UNCHECKED
+    }
+    rl_end
+}
+
 
 extra_type_name {
     .repeat i, EXTRA_NUM_TYPES {
@@ -215,6 +277,10 @@ extra_type_name {
     }
 }
 
+extra_color {
+    .data extra_neos_color
+    .data extra_keypad_color
+}
 
 extra_type_name_data {
     ;      123456789012345678
@@ -235,9 +301,19 @@ extra_default_view {
     .data EXTRA_VIEW_COPLIN
 }
 
+extra_default_color {
+    .data EXTRA_COLOR_NEOS
+    .data EXTRA_COLOR_KEYPAD
+    .data EXTRA_COLOR_KEYPAD
+    .data EXTRA_COLOR_KEYPAD
+    .data EXTRA_COLOR_KEYPAD
+    .data EXTRA_COLOR_KEYPAD
+    .data EXTRA_COLOR_KEYPAD
+}
+
 extra_top_handler {
     .data handler_dummy
-    .data handler_dummy
+    .data read_cx21
     .data handler_dummy
     .data handler_dummy
     .data handler_dummy
@@ -247,19 +323,19 @@ extra_top_handler {
 extra_bottom_handler {
     .data handler_dummy
     .data display_keyboard
-    .data handler_dummy
-    .data handler_dummy
-    .data handler_dummy
-    .data handler_dummy
+    .data display_single_key
+    .data display_single_key
+    .data display_single_key
+    .data display_single_key
 }
 
 extra_keys {
     .data 0:2
-    .data keys_cx21_keys
-    .data 0:2 ; keys_cx85_keys
-    .data 0:2 ; keys_cardkey_keys
-    .data 0:2 ; keys_rushware_keys
-    .data 0:2 ; keys_coplin_keys
+    .data keys_3x4_keys
+    .data keys_cx85_keys
+    .data keys_4x4_keys
+    .data keys_4x4_keys
+    .data keys_3x4_keys
 }
 
 extra_num_keys {
@@ -268,7 +344,7 @@ extra_num_keys {
     .data 17
     .data 16
     .data 16
-
+    .data 12
 }
 
 extra_f_key_commands {
@@ -284,3 +360,6 @@ extra_f_key_commands {
 
 extra_type .reserve 1
 extra_view .reserve 1
+
+key_index .reserve 1
+new_key_index .reserve 1
