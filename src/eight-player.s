@@ -227,7 +227,6 @@ top_jmp:
 bottom_jmp:
     jsr $0000
 
-    clc
     jmp handle_keyboard
 }
 

@@ -50,8 +50,6 @@ last_key .reserve 1
 
 
 ; Get pressed function or C= key.
-; Arguments:
-;   C: if set, ignore joystick 1
 ; Returns:
 ;   Y: function key number, 9 for C=, 0 for none pressed
 ;   Z: set if key pressed
@@ -64,17 +62,19 @@ last_key .reserve 1
     sta CIA1_PRB
 
     lda CIA1_PRB
-    bcc :+
-    ora #$0f
-:   and CIA1_PRA
+    eor #$ff
+    sta f_key_mask
+    lda CIA1_PRA
     cmp #$ff
-    bne f_none
-    lda #$ff
+    beq :+
+    jmp f_none
+:   lda #$ff
     sta CIA1_DDRA
 
     lda #$80 ^ $ff
     sta CIA1_PRA
     lda CIA1_PRB
+    ora f_key_mask
     eor #$ff
     and #$20
     beq not_commodore
@@ -86,12 +86,14 @@ not_commodore:
     lda #$40 ^ $ff
     sta CIA1_PRA
     lda CIA1_PRB
+    ora f_key_mask
     eor #$ff
     and #$10
     sta shift
     lda #$02 ^ $ff
     sta CIA1_PRA
     lda CIA1_PRB
+    ora f_key_mask
     eor #$ff
     and #$80
     ora shift
@@ -100,6 +102,7 @@ not_commodore:
     lda #$01 ^ $ff
     sta CIA1_PRA
     lda CIA1_PRB
+    ora f_key_mask
     ; down F5 F3 F1 F7 ...
     rol
     rol
@@ -127,8 +130,9 @@ f_got:
     sta CIA1_PRA
     sta CIA1_PRB
 
-    lda CIA1_PRA
-    and CIA1_PRB
+    lda CIA1_PRB
+    ora f_key_mask
+    and CIA1_PRA
     cmp #$ff
     bne f_none
 
@@ -247,3 +251,4 @@ main_f_key_commands {
 .section zero_page
 
 f_key_commands .reserve 2
+f_key_mask .reserve 1

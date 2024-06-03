@@ -111,7 +111,6 @@ bottom_change:
     sta pen_y + 1
 bottom_no_change:
 
-    clc
     jsr handle_keyboard
 
     ; select POTs from port 2

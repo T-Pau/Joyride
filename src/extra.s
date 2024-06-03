@@ -210,7 +210,6 @@ extra_bottom_jsr_instruction:
 .private extra_bottom_jsr = extra_bottom_jsr_instruction + 1
     jsr $0000
 end:
-    sec
     jmp handle_keyboard
 }
 
