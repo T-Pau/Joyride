@@ -55,6 +55,7 @@ sources :=
     main-loop.s
     memcpy.s
     multijoy.s
+    neos.s
     petscii.s
     port-screen.s
     ports.s

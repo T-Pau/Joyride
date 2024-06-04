@@ -55,7 +55,6 @@ MAX_NUM_KEYS = 17
 .section code
 
 display_extra_screen {
-
     set_f_key_command_table extra_f_key_commands
     store_word source_ptr, extra_screen
     store_word destination_ptr, screen
@@ -169,7 +168,9 @@ setup_extra_type {
     sta source_ptr + 1
     store_word destination_ptr, EXTRA_VIEW_START
     jsr rl_expand
-    ; TODO: sprites
+    ldx extra_view
+    lda extra_view_sprite,x
+    sta screen + $3f8
 end:
     rts    
 }
@@ -348,6 +349,15 @@ extra_type_name_data {
     .data "coplin keypad     ":screen_inverted
 }
 
+extra_view_sprite {
+    .data sprite_cross
+    .data sprite_none
+    .data sprite_none
+    .data sprite_none
+    .data sprite_none
+    .data sprite_none
+}
+
 extra_default_view {
     .data EXTRA_VIEW_MOUSE
     .data EXTRA_VIEW_CX21
@@ -368,7 +378,7 @@ extra_default_color {
 }
 
 extra_top_handler {
-    .data handler_dummy
+    .data read_neos
     .data read_cx21
     .data read_cx85
     .data read_cardkey
@@ -377,7 +387,7 @@ extra_top_handler {
 }
 
 extra_bottom_handler {
-    .data handler_dummy
+    .data display_neos
     .data display_keyboard
     .data display_single_key
     .data display_single_key

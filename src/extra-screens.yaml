@@ -6,13 +6,11 @@ charset:
     name: charset_extra_data
     rl_encode: true
     predefined:
-        32: "0000000000000000"
         160: "ffffffffffffffff"
 images:
     -
         type: charset
-        file: border.png
-        offset: 64
+        file: charset-extra.png
     -
         type: image
         file: extra-screens.png

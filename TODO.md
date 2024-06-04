@@ -1,7 +1,7 @@
 ## Before Release
 
-- NEOS Mouse
 - Make key bindings more consistent.
+
 
 ## Hardware Support
 

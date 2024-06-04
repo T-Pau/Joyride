@@ -321,6 +321,8 @@ While they work in both controller ports, Joyride only supports them in port 1.
 
 This mouse give the position in x and y modulo 256 and supports two buttons.
 
+Due to technical limitations, mouse movement can't be read while the left button is pressed.
+
 
 ### Atari CX-21 / CX-50
 
