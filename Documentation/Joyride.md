@@ -323,6 +323,8 @@ This mouse give the position in x and y modulo 256 and supports two buttons.
 
 Due to technical limitations, mouse movement can't be read while the left button is pressed.
 
+Note: Support for this mouse has not been tested with real hardware.
+
 
 ### Atari CX-21 / CX-50
 
@@ -349,7 +351,7 @@ This keypad contains 16 keys.
 
 Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
 
-Note: Support for this controller has not been tested with real hardware.
+Note: Support for this keypad has not been tested with real hardware.
 
 
 ### Rushware Keypad
@@ -360,7 +362,7 @@ This keypad contains 16 keys.
 
 Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
 
-Note: Support for this controller has not been tested with real hardware.
+Note: Support for this keypad has not been tested with real hardware.
 
 
 ### Coplin Keypad
@@ -371,4 +373,4 @@ This keypad contains 12 keys.
 
 Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
 
-Note: Support for this controller has not been tested with real hardware.
+Note: Support for this keypad has not been tested with real hardware.
