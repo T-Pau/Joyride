@@ -28,12 +28,13 @@
 .include "features.inc"
 
 EXTRA_NEOS = 0
-EXTRA_CX21 = 1
-EXTRA_CX85 = 2
-EXTRA_CARDKEY = 3
-EXTRA_RUSHWARE = 4
-EXTRA_COPLIN = 5
-EXTRA_NUM_TYPES = 6
+EXTRA_ST = 1
+EXTRA_CX21 = 2
+EXTRA_CX85 = 3
+EXTRA_CARDKEY = 4
+EXTRA_RUSHWARE = 5
+EXTRA_COPLIN = 6
+EXTRA_NUM_TYPES = 7
 
 EXTRA_VIEW_MOUSE = 0
 EXTRA_VIEW_CARDKEY = 1
@@ -112,6 +113,9 @@ setup_extra_type {
     lda extra_type
     asl
     tax
+    lda extra_sampler,x
+    ldy extra_sampler + 1,x
+    jsr set_sampler
     lda extra_top_handler,x
     sta extra_top_jsr
     lda extra_top_handler + 1,x
@@ -342,6 +346,8 @@ extra_color {
 extra_type_name_data {
     ;      123456789012345678
     .data "neos mouse        ":screen_inverted
+    .data "atari st mouse    ":screen_inverted
+    .data "atari cx22        ":screen_inverted
     .data "atari cx21/cx50   ":screen_inverted
     .data "atari cx85        ":screen_inverted
     .data "cardco cardkey 1  ":screen_inverted
@@ -350,6 +356,8 @@ extra_type_name_data {
 }
 
 extra_view_sprite {
+    .data sprite_cross
+    .data sprite_cross
     .data sprite_cross
     .data sprite_none
     .data sprite_none
@@ -360,6 +368,8 @@ extra_view_sprite {
 
 extra_default_view {
     .data EXTRA_VIEW_MOUSE
+    .data EXTRA_VIEW_MOUSE
+    .data EXTRA_VIEW_MOUSE
     .data EXTRA_VIEW_CX21
     .data EXTRA_VIEW_CX85
     .data EXTRA_VIEW_CARDKEY
@@ -368,6 +378,8 @@ extra_default_view {
 }
 
 extra_default_color {
+    .data EXTRA_COLOR_NEOS
+    .data EXTRA_COLOR_NEOS
     .data EXTRA_COLOR_NEOS
     .data EXTRA_COLOR_KEYPAD
     .data EXTRA_COLOR_KEYPAD
@@ -379,6 +391,8 @@ extra_default_color {
 
 extra_top_handler {
     .data read_neos
+    .data read_st
+    .data read_cx22
     .data read_cx21
     .data read_cx85
     .data read_cardkey
@@ -388,6 +402,8 @@ extra_top_handler {
 
 extra_bottom_handler {
     .data display_neos
+    .data display_neos
+    .data display_neos
     .data display_keyboard
     .data display_single_key
     .data display_single_key
@@ -395,7 +411,20 @@ extra_bottom_handler {
     .data display_single_key
 }
 
+extra_sampler {
+    .data sample_none
+    .data sample_st
+    .data sample_cx22
+    .data sample_none
+    .data sample_none
+    .data sample_none
+    .data sample_none
+    .data sample_none
+}
+
 extra_keys {
+    .data 0:2
+    .data 0:2
     .data 0:2
     .data keys_3x4_keys
     .data keys_cx85_keys
@@ -405,6 +434,8 @@ extra_keys {
 }
 
 extra_num_keys {
+    .data 0
+    .data 0
     .data 0
     .data 12
     .data 17

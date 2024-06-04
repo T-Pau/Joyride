@@ -77,6 +77,7 @@ eight_player_legend {
 .section code
 
 .public display_main_screen {
+    jsr reset_sampler
     set_f_key_command_table main_f_key_commands
     lda #MODE_MAIN
     sta mode
@@ -132,6 +133,7 @@ eight_player_legend {
 }
 
 .public display_help_screen {
+    jsr reset_sampler
     ldx #<help_irq_table
     ldy #>help_irq_table
     lda #.sizeof(help_irq_table)

@@ -1,4 +1,4 @@
-;  main-loop.s -- Main loop.
+;  mouse-cx22.s -- Support for Atari CX-22 trackball.
 ;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
@@ -25,54 +25,60 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.section data
-
-.public command {
-    .data 0
-}
-
-.public last_command {
-    .data 0
-}
-
 .section code
 
-.public main_loop {
-    jsr sample_none
-    lda command
-    beq main_loop
-    asl
-    tax
-    lda command_handlers,x
-    sta jump + 1
-    lda command_handlers + 1,x
-    sta jump + 2
-jump:
-    jsr $0000
+read_cx22 {
+    lda CIA1_PRB
+    eor #$ff
+    and #$10
+    sta neos_button_l
     lda #0
-    sta command
-    beq main_loop
-}
-
-
-; Set sampling routine.
-; Arguments:
-;   A/Y: address
-; Preserves: A X Y
-.public set_sampler {
-    sta main_loop + 1
-    sty main_loop + 2
+    sta neos_button_r
     rts
 }
 
+sample_cx22 {
+    lda CIA1_PRB
+    tax
 
-; Stop sampling.
-.public reset_sampler {
-    lda #<sample_none
-    ldy #>sample_none
-    jmp set_sampler
+    and #$03
+    ora neos_diff
+    tay
+    lda cx22_diff,y
+    clc
+    adc neos_position
+    sta neos_position
+
+    txa
+    lsr
+    lsr
+    and #$03
+    ora neos_diff + 1
+    tay
+    lda cx22_diff,y
+    clc
+    adc neos_position + 1
+    sta neos_position + 1
+
+    txa
+    and #$03
+    asl
+    asl
+    sta neos_diff
+    txa 
+    and #$0c
+    sta neos_diff + 1
+    
+    rts
 }
 
-.public sample_none {
-    rts
+.section data
+
+; 00 -> 01 -> 11 -> 10
+cx22_diff {
+    ;      %00, %01, %10, %11
+    .data  $00, $00, $ff, $00 ; 00
+    .data  $00, $00, $00, $01 ; 01
+    .data  $ff, $00, $00, $00 ; 10
+    .data  $00, $01, $00, $00 ; 11
 }

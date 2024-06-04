@@ -101,8 +101,11 @@ Supported Devices
 
 Extra:
 - NEOS Mouse
-- Atari CX-21 / CX-50
-- Atari CX-85
+- Atari ST Mouse
+- Amiga Mouse
+- Atari CX-22 Trackball
+- Atari CX-21 / CX-50 Keypad
+- Atari CX-85 Keypad
 - Cardco Cardkey 1
 - Rushware Keypad
 - Coplin Keypad
@@ -293,17 +296,35 @@ While they work in both controller ports, Joyride only supports them in port 1.
 ---
 NEOS Mouse
 
-This mouse give the position in x and y modulo 256 and supports two buttons.
+This mouse displays x/y and two buttons.
 
 Due to technical limitations, mouse movement can't be read while the left button is pressed.
 
 Note: Support for this mouse has not been tested with real hardware.
 ---
-Atari CX-21 / CX-50
+Atari ST Mouse
+
+This mouse displays x/y and two buttons.
+
+The right mouse button can't be read on a Commodore 64. Movement may not be read reliably if the mouse is mooed too quickly.
+---
+Amiga Mouse
+
+This mouse displays x/y and two buttons.
+
+The right mouse button can't be read on a Commodore 64. Movement may not be read reliably if the mouse is mooed too quickly.
+---
+Atari CX-22 Trackball
+
+This trackball displays x/y and two buttons.
+
+Movement may not be read reliably if the mouse is mooed too quickly.
+---
+Atari CX-21 / CX-50 Keypad
 
 This keypad contians 12 keys.
 ---
-Atari CX-85
+Atari CX-85 Keypad
 
 This keypad contains 17 keys.
 
