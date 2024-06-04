@@ -1,7 +1,5 @@
 ## Before Release
 
-- Atari CX21
-- Atari CX50 (same as CX21?)
 - NEOS Mouse
 - Make key bindings more consistent.
 

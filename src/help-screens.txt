@@ -295,7 +295,7 @@ NEOS Mouse
 
 This mouse give the position in x and y modulo 256 and supports two buttons.
 ---
-Atari CX-21
+Atari CX-21 / CX-50
 
 This keypad contians 12 keys.
 ---
