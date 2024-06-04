@@ -43,7 +43,10 @@ sources :=
     inception.s
     irq-table.s
     joyride.s
+    keypad-cardkey.s
     keypad-coplin.s
+    keypad-cx85.s
+    keypad-rushware.s
     keys-3x4.s
     keys-4x4.s
     keys-cx85.s

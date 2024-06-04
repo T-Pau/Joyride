@@ -25,6 +25,8 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.include "features.inc"
+
 EXTRA_NEOS = 0
 EXTRA_CX21 = 1
 EXTRA_CX85 = 2
@@ -53,6 +55,7 @@ MAX_NUM_KEYS = 17
 .section code
 
 display_extra_screen {
+
     set_f_key_command_table extra_f_key_commands
     store_word source_ptr, extra_screen
     store_word destination_ptr, screen
@@ -62,6 +65,21 @@ display_extra_screen {
     jsr rl_expand
 
     set_irq_table extra_irq_table
+
+    ; TODO: setup sprites properly
+    lda #0
+    sta VIC_SPRITE_0_X
+    sta VIC_SPRITE_1_X
+    sta VIC_SPRITE_2_X
+    sta VIC_SPRITE_3_X
+    lda #$f0
+    sta VIC_SPRITE_X_MSB
+    lda #sprite_logo
+    sta screen + $3fc
+    lda #<LOGO_X
+    sta VIC_SPRITE_4_X
+    lda #LOGO_Y
+    sta VIC_SPRITE_4_Y
 
     lda #0
     sta extra_type
@@ -213,6 +231,21 @@ end:
     jmp handle_keyboard
 }
 
+extra_read_pots {
+    lda #$ff
+    sta CIA1_DDRA
+    lda #$7f
+    sta CIA1_PRA
+    lda VIC_RASTER
+    clc
+    adc #9
+:   cmp VIC_RASTER
+    bne :-
+    ldx SID_POT_X
+    ldy SID_POT_Y
+    rts
+}
+
 display_single_key {
     ldx key_index
     bmi :+
@@ -224,6 +257,33 @@ display_single_key {
     lda #1
     jsr display_key
 :   rts    
+}
+
+extra_reset_keypad {
+    store_word destination_ptr, EXTRA_COLOR_START
+    ldx #9
+line:
+    ldy #18
+row:  
+    lda (destination_ptr),y
+    .if .defined(USE_VICII) {
+        and #$0f
+    }
+    cmp #COLOR_CHECKED
+    bne :+
+    lda #COLOR_UNCHECKED
+    sta (destination_ptr),y
+:	dey
+    bpl row
+    clc
+    lda destination_ptr
+    adc #40
+    sta destination_ptr
+    bcc :+
+    inc destination_ptr + 1
+:   dex
+    bpl line
+    rts
 }
 
 read_cx21 {
@@ -254,7 +314,7 @@ extra_colors {
 
 extra_neos_color {
     rl_encode 18, COLOR_CONTENT
-    .repeat 8 {
+    .repeat 9 {
         rl_skip 22
         rl_encode 18, COLOR_CONTENT
     }
@@ -263,7 +323,7 @@ extra_neos_color {
 
 extra_keypad_color {
     rl_encode 18, COLOR_UNCHECKED
-    .repeat 8 {
+    .repeat 9 {
         rl_skip 22
         rl_encode 18, COLOR_UNCHECKED
     }
@@ -314,9 +374,9 @@ extra_default_color {
 extra_top_handler {
     .data handler_dummy
     .data read_cx21
-    .data handler_dummy
-    .data handler_dummy
-    .data handler_dummy
+    .data read_cx85
+    .data read_cardkey
+    .data read_rushware
     .data read_coplin
 }
 
@@ -350,7 +410,7 @@ extra_num_keys {
 extra_f_key_commands {
     .data 0
     .data COMMAND_EXTRA_NEXT, COMMAND_EXTRA_PREVIOUS
-    .data 0, 0
+    .data COMMAND_EXTRA_RESET_KEYPAD, 0
     .data 0, 0
     .data 0, 0
     .data COMMAND_MAIN

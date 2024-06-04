@@ -15,6 +15,18 @@ read_coplin {
 
 .section data
 
+; 0f 11  Enter
+; 11  9  0
+; 12 10  .
+; 13  4  5
+; 15  8  3
+; 16  2  9
+; 17  5  6
+; 19  6  1
+; 1a  0  7
+; 1b  3  4
+; 1d  7  2
+; 1e  1  8
 
 coplin_keycodes {
     .data $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff

@@ -48,7 +48,7 @@ name extra_screen
 
 
 
-
          f1/f2: controller type
+            f3: reset keypad
        c=: controller & user ports
                 f6: help                                   

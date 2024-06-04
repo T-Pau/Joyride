@@ -52,4 +52,5 @@
     .data display_extra_screen
     .data extra_next_type
     .data extra_previous_type
+    .data extra_reset_keypad
 }
