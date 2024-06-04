@@ -47,6 +47,14 @@ Multi Adapters:
 - Wheel of Joy
 - Wheel of Joy Mini
 
+Extra:
+- NEOS Mouse
+- Atari CX-21 / CX-50
+- Atari CX-85
+- Cardco Cardkey 1
+- Rushware Keypad
+- Coplin Keypad
+
 
 ## Using Joyride
 

@@ -97,6 +97,16 @@ Multi Adapters:
 - Wheel of Joy
 - Wheel of Joy Mini
 ---
+Supported Devices
+
+Extra:
+- NEOS Mouse
+- Atari CX-21 / CX-50
+- Atari CX-85
+- Cardco Cardkey 1
+- Rushware Keypad
+- Coplin Keypad
+---
 Joystick
 
 Joysticks contain a stick or d-pad with switches for the four cardinal directions and up to three buttons.
@@ -209,7 +219,7 @@ Mice display x/y and two buttons.
 ---
 Multi Adapters
 
-These adapters support eight input devices. The type of devices depends on the adapter.
+These adapters support 4 to 16 input devices. The type of devices depends on the adapter.
 
 They connect to the user port, controller port, or both.
 
@@ -274,3 +284,47 @@ It supports four joysticks with two buttons each.
 It connects to the user port through an adapter cable.
 
 Note: Support for this adapter has not been tested.
+---
+Extra
+
+These devices don't fit in the regular controller port window or block parts of the keyboard and are therefore collected in the extra view.
+
+While they work in both controller ports, Joyride only supports them in port 1.
+---
+NEOS Mouse
+
+This mouse give the position in x and y modulo 256 and supports two buttons.
+---
+Atari CX-21
+
+This keypad contians 12 keys.
+---
+Atari CX-85
+
+This keypad contains 17 keys.
+
+Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+---
+Cardco Cardkey 1
+
+This keypad contains 16 keys.
+
+Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+
+Note: Support for this controller has not been tested with real hardware.
+---
+Rushware Keypad
+
+This keypad contains 16 keys.
+
+Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+
+Note: Support for this controller has not been tested with real hardware.
+---
+Coplin Keypad
+
+This keypad contains 12 keys.
+
+Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+
+Note: Support for this controller has not been tested with real hardware.

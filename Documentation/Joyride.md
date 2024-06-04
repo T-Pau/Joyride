@@ -53,6 +53,14 @@ Multi Adapters:
 - Wheel of Joy
 - Wheel of Joy Mini
 
+Extra:
+- NEOS Mouse
+- Atari CX-21 / CX-50
+- Atari CX-85
+- Cardco Cardkey 1
+- Rushware Keypad
+- Coplin Keypad
+
 
 ## Controller Port
 
@@ -297,3 +305,68 @@ It supports four joysticks with two buttons each.
 It connects to the user port through an adapter cable.
 
 Note: Support for this adapter has not been tested. 
+
+
+## Extra
+
+These devices don't fit in the regular controller port window or block parts of the keyboard and are therefore collected in the extra view.
+
+While they work in both controller ports, Joyride only supports them in port 1.
+
+
+### NEOS Mouse
+
+![](images/NEOS-Mouse.png)
+
+
+This mouse give the position in x and y modulo 256 and supports two buttons.
+
+
+### Atari CX-21
+
+![](images/Atari-CX21.png)
+
+This keypad contians 12 keys.
+
+
+### Atari CX-85
+
+![](images/Atari-CX85.png)
+
+This keypad contains 17 keys.
+
+Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+
+
+### Cardco Cardkey 1
+
+![](images/Cardkey-1.png)
+
+
+This keypad contains 16 keys.
+
+Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+
+Note: Support for this controller has not been tested with real hardware.
+
+
+### Rushware Keypad
+
+![](images/Rushware-Keypad.png)
+
+This keypad contains 16 keys.
+
+Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+
+Note: Support for this controller has not been tested with real hardware.
+
+
+### Coplin Keypad
+
+![](images/Coplin-Keypad.png)
+
+This keypad contains 12 keys.
+
+Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+
+Note: Support for this controller has not been tested with real hardware.
