@@ -231,6 +231,11 @@ end:
     jmp handle_keyboard
 }
 
+; Read POTs from port 1.
+; Returns:
+;   A: POTX
+;   Y: POTY
+; Preserves: X
 extra_read_pots {
     lda #$ff
     sta CIA1_DDRA
@@ -241,7 +246,7 @@ extra_read_pots {
     adc #9
 :   cmp VIC_RASTER
     bne :-
-    ldx SID_POT_X
+    lda SID_POT_X
     ldy SID_POT_Y
     rts
 }
@@ -283,15 +288,6 @@ row:
     inc destination_ptr + 1
 :   dex
     bpl line
-    rts
-}
-
-read_cx21 {
-    ldx #11
-    lda #0
-:   sta new_key_state,x
-    dex
-    bpl :-
     rts
 }
 

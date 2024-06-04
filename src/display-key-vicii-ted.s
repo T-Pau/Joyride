@@ -1,8 +1,8 @@
 ;  display_key-vicii-ted.s -- Display current_key_state of key, VIC-II / TED version
 ;  Copyright (C) Dieter Baron
 ;
-;  This file is part of Anykey, a keyboard test program for C64.
-;  The authors can be contacted at <anykey@tpau.group>.
+;  This file is part of Joyride, a controller test program for C64.
+;  The authors can be contacted at <joyride@tpau.group>.
 ;
 ;  Redistribution and use in source and binary forms, with or without
 ;  modification, are permitted provided that the following conditions

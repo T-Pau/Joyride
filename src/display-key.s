@@ -1,8 +1,8 @@
 ;  display_key.s -- Display current_key_state of key
 ;  Copyright (C) Dieter Baron
 ;
-;  This file is part of Anykey, a keyboard test program for C64.
-;  The authors can be contacted at <anykey@tpau.group>.
+;  This file is part of Joyride, a controller test program for C64.
+;  The authors can be contacted at <joyride@tpau.group>.
 ;
 ;  Redistribution and use in source and binary forms, with or without
 ;  modification, are permitted provided that the following conditions
@@ -48,11 +48,7 @@ loop:
         bne next
     }
     lda new_key_state,x
-    and #$06
-    beq :+
-    lda #$02
-    sta new_key_state,x
-:	cmp key_state,x
+	cmp key_state,x
     beq next
     sta key_state,x
     jsr display_key

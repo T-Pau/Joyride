@@ -1,4 +1,4 @@
-;  keypad-rushware.s -- Read Rushware Keypad.
+;  keypad-cx21.s -- Read Atari CX-21 keypad.
 ;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
@@ -27,22 +27,40 @@
 
 .section code
 
-read_rushware {
+read_cx21 {
+    lda #$0f
+    sta CIA1_DDRB
     lda #$ff
+    sta CIA1_PRB
+
+    lda #$fe
+     ldx #0
+:   sta temp
+    sta CIA1_PRB
+    lda CIA1_PRB
+    eor #$ff
+    and #$10
+    sta new_key_state,x
+    inx
+    jsr extra_read_pots
+    eor #$ff
+    and #$80
+    sta new_key_state,x
+    inx
+    tya
+    eor #$ff
+    and #$80
+    sta new_key_state,x
+    lda temp
+    sec
+    rol 
+    inx
+    cpx #12
+    bne :-
+
+    lda #$00
     sta CIA1_DDRA
     sta CIA1_DDRB
-    sta CIA1_PRA
-    lda CIA1_PRB
-    tax
-    and #$10
-    beq :+
-    lda #$ff
-    bne end
-:   txa
-    and #$0f
-    tax
-    lda cardkey_keycodes,x
-end:    
-    sta new_key_index
     rts
 }
+

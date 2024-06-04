@@ -45,6 +45,7 @@ sources :=
     joyride.s
     keypad-cardkey.s
     keypad-coplin.s
+    keypad-cx21.s
     keypad-cx85.s
     keypad-rushware.s
     keys-3x4.s
