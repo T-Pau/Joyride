@@ -397,7 +397,7 @@ extra_top_handler {
     .data read_neos
     .data read_st
     .data read_st
-    .data read_cx22
+    .data read_st
     .data read_cx21
     .data read_cx85
     .data read_cardkey

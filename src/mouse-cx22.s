@@ -27,16 +27,6 @@
 
 .section code
 
-read_cx22 {
-    lda CIA1_PRB
-    eor #$ff
-    and #$10
-    sta neos_button_l
-    lda #0
-    sta neos_button_r
-    rts
-}
-
 sample_cx22 {
     lda CIA1_PRB
     tax
