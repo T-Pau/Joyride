@@ -28,24 +28,29 @@
 .include "features.inc"
 
 EXTRA_NEOS = 0
-EXTRA_ST = 1
-EXTRA_CX21 = 2
-EXTRA_CX85 = 3
-EXTRA_CARDKEY = 4
-EXTRA_RUSHWARE = 5
-EXTRA_COPLIN = 6
-EXTRA_NUM_TYPES = 7
+EXTRA_AMIGA = 1
+EXTRA_ST = 2
+EXTRA_CX_22 = 3
+EXTRA_CX21 = 4
+EXTRA_CX85 = 5
+EXTRA_CARDKEY = 6
+EXTRA_RUSHWARE = 7
+EXTRA_COPLIN = 8
+EXTRA_NUM_TYPES = 9
 
 EXTRA_VIEW_MOUSE = 0
-EXTRA_VIEW_CARDKEY = 1
-EXTRA_VIEW_CX85 = 2
-EXTRA_VIEW_CX21 = 3
-EXTRA_VIEW_RUSHWARE = 4
-EXTRA_VIEW_COPLIN = 5
-EXTRA_NUM_VIEWS = 6
+EXTRA_VIEW_TRACKBALL = 1
+EXTRA_VIEW_CARDKEY = 2
+EXTRA_VIEW_CX85 = 3
+EXTRA_VIEW_CX21 = 4
+EXTRA_VIEW_RUSHWARE = 5
+EXTRA_VIEW_COPLIN = 6
+EXTRA_NUM_VIEWS = 7
 
 EXTRA_COLOR_NEOS = 0
-EXTRA_COLOR_KEYPAD = 1
+EXTRA_COLOR_ST = 1
+EXTRA_COLOR_KEYPAD = 2
+
 
 EXTRA_COLOR_START = color_ram + 4 * 40 + 11
 EXTRA_VIEW_START = screen + 4 * 40 + 11
@@ -322,6 +327,21 @@ extra_neos_color {
     rl_end
 }
 
+extra_st_color {
+    rl_encode 18, COLOR_CONTENT
+    .repeat 3 {
+        rl_skip 22
+        rl_encode 14, COLOR_CONTENT
+        rl_encode 4, COLOR_DISABLED
+    }
+    .repeat 6 {
+        rl_skip 22
+        rl_encode 18, COLOR_CONTENT
+    }
+    rl_end
+
+}
+
 extra_keypad_color {
     rl_encode 18, COLOR_UNCHECKED
     .repeat 9 {
@@ -340,6 +360,7 @@ extra_type_name {
 
 extra_color {
     .data extra_neos_color
+    .data extra_st_color
     .data extra_keypad_color
 }
 
@@ -359,8 +380,6 @@ extra_type_name_data {
 extra_view_sprite {
     .data sprite_cross
     .data sprite_cross
-    .data sprite_cross
-    .data sprite_cross
     .data sprite_none
     .data sprite_none
     .data sprite_none
@@ -372,7 +391,7 @@ extra_default_view {
     .data EXTRA_VIEW_MOUSE
     .data EXTRA_VIEW_MOUSE
     .data EXTRA_VIEW_MOUSE
-    .data EXTRA_VIEW_MOUSE
+    .data EXTRA_VIEW_TRACKBALL
     .data EXTRA_VIEW_CX21
     .data EXTRA_VIEW_CX85
     .data EXTRA_VIEW_CARDKEY
@@ -382,8 +401,8 @@ extra_default_view {
 
 extra_default_color {
     .data EXTRA_COLOR_NEOS
-    .data EXTRA_COLOR_NEOS
-    .data EXTRA_COLOR_NEOS
+    .data EXTRA_COLOR_ST
+    .data EXTRA_COLOR_ST
     .data EXTRA_COLOR_NEOS
     .data EXTRA_COLOR_KEYPAD
     .data EXTRA_COLOR_KEYPAD
@@ -406,6 +425,7 @@ extra_top_handler {
 }
 
 extra_bottom_handler {
+    .data display_neos
     .data display_neos
     .data display_neos
     .data display_neos

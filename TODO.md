@@ -1,10 +1,8 @@
 ## Before Release
 
 - Fix graphics glitches when switching to/from extra.
-- Check right button for ST and Amiga mice, mark as disabled via color if unreadable.
-- Check button for Atari CX-22 trackball, fix view (only one button).
+- Check button for Atari CX-22 trackball, fix view (only one button), update screenshot.
 - Make key bindings more consistent.
-- Update extra mice screenshots.
 
 ## Hardware Support
 

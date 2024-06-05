@@ -55,8 +55,8 @@ Multi Adapters:
 
 Extra:
 - NEOS Mouse
-- Atari ST Mouse
 - Amiga Mouse
+- Atari ST Mouse
 - Atari CX-22 Trackball
 - Atari CX-21 / CX-50 Keypad
 - Atari CX-85 Keypad
@@ -331,7 +331,7 @@ Note: Support for this mouse has not been tested with real hardware.
 
 ### Amiga Mouse
 
-![](images/NEOS-Mouse.png)
+![](images/Amiga-ST-Mouse.png)
 
 This mouse displays x/y and two buttons.
 
@@ -340,7 +340,7 @@ The right mouse button can't be read on a Commodore 64.
 
 ### Atari ST Mouse
 
-![](images/NEOS-Mouse.png)
+![](images/Amiga-ST-Mouse.png)
 
 This mouse displays x/y and two buttons.
 
@@ -349,7 +349,7 @@ The right mouse button can't be read on a Commodore 64.
 
 ### Atari CX-22 Trackball
 
-![](images/NEOS-Mouse.png)
+![](images/Trackball.png)
 
 This trackball displays x/y and one button.
 

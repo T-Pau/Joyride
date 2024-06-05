@@ -15,6 +15,6 @@ images:
         type: image
         file: extra-screens.png
         inverted: if-different
-        slice-y: 6
+        slice-y: 7
         include-count: false
         name: extra_screens
