@@ -49,8 +49,11 @@ Multi Adapters:
 
 Extra:
 - NEOS Mouse
-- Atari CX-21 / CX-50
-- Atari CX-85
+- Atari ST Mouse
+- Amiga Mouse
+- Atari CX-22 Trackball
+- Atari CX-21 / CX-50 Keypad
+- Atari CX-85 Keypad
 - Cardco Cardkey 1
 - Rushware Keypad
 - Coplin Keypad

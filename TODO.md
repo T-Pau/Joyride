@@ -1,10 +1,9 @@
 ## Before Release
 
-- Amiga mouse
-- check right button for ST and Amiga mice, mark as disabled via color if unreadable.
-- Check button for Atari CX-22 trackball, fix view (only one button)
+- Check right button for ST and Amiga mice, mark as disabled via color if unreadable.
+- Check button for Atari CX-22 trackball, fix view (only one button).
 - Make key bindings more consistent.
-- Update documentation and extra mice screenshots.
+- Update extra mice screenshots.
 
 ## Hardware Support
 

@@ -55,8 +55,11 @@ Multi Adapters:
 
 Extra:
 - NEOS Mouse
-- Atari CX-21 / CX-50
-- Atari CX-85
+- Atari ST Mouse
+- Amiga Mouse
+- Atari CX-22 Trackball
+- Atari CX-21 / CX-50 Keypad
+- Atari CX-85 Keypad
 - Cardco Cardkey 1
 - Rushware Keypad
 - Coplin Keypad
@@ -326,14 +329,39 @@ Due to technical limitations, mouse movement can't be read while the left button
 Note: Support for this mouse has not been tested with real hardware.
 
 
-### Atari CX-21 / CX-50
+### Amiga Mouse
+
+![](images/NEOS-Mouse.png)
+
+This mouse displays x/y and two buttons.
+
+The right mouse button can't be read on a Commodore 64.
+
+
+### Atari ST Mouse
+
+![](images/NEOS-Mouse.png)
+
+This mouse displays x/y and two buttons.
+
+The right mouse button can't be read on a Commodore 64.
+
+
+### Atari CX-22 Trackball
+
+![](images/NEOS-Mouse.png)
+
+This trackball displays x/y and one button.
+
+
+### Atari CX-21 / CX-50 Keypad
 
 ![](images/Atari-CX21.png)
 
 This keypad contians 12 keys.
 
 
-### Atari CX-85
+### Atari CX-85 Keypad
 
 ![](images/Atari-CX85.png)
 

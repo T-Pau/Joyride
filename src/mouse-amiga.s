@@ -1,4 +1,4 @@
-;  mouse-cx22.s -- Support for Atari CX-22 trackball.
+;  mouse-amiga.s -- Support for Amiga mouse.
 ;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
@@ -27,46 +27,34 @@
 
 .section code
 
-read_cx22 {
-    lda CIA1_PRB
-    eor #$ff
-    and #$10
-    sta neos_button_l
-    lda #0
-    sta neos_button_r
-    rts
-}
-
-sample_cx22 {
+sample_amiga {
     lda CIA1_PRB
     tax
 
-    and #$03
+    lsr
+    and #$05
     ora neos_diff
     tay
-    lda cx22_diff,y
+    lda amiga_diff,y
     clc
     adc neos_position
     sta neos_position
 
     txa
-    lsr
-    lsr
-    and #$03
+    and #$05
     ora neos_diff + 1
     tay
-    lda cx22_diff,y
+    lda amiga_diff,y
     clc
     adc neos_position + 1
     sta neos_position + 1
 
     txa
-    and #$03
-    asl
-    asl
+    and #$0a
     sta neos_diff
     txa 
-    and #$0c
+    and #$05
+    asl
     sta neos_diff + 1
     
     rts
@@ -74,10 +62,12 @@ sample_cx22 {
 
 .section data
 
-cx22_diff {
+; 00 -> 01 -> 11 -> 10
+
+amiga_diff {
     ;      %00, %01, %10, %11
-    .data  $00, $00, $ff, $00 ; 00
-    .data  $00, $00, $00, $01 ; 01
-    .data  $ff, $00, $00, $00 ; 10
-    .data  $00, $01, $00, $00 ; 11
+    .data  $00, $01, $ff, $00 ; 00
+    .data  $ff, $00, $00, $01 ; 01
+    .data  $01, $00, $00, $ff ; 10
+    .data  $00, $ff, $01, $00 ; 11
 }

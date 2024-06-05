@@ -54,6 +54,7 @@ sources :=
     logo.s
     main-loop.s
     memcpy.s
+    mouse-amiga.s
     mouse-cx22.s
     mouse-neos.s
     mouse-st.s

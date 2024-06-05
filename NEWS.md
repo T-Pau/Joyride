@@ -1,3 +1,11 @@
+# Version 1.8 (Unreleased)
+
+- Add support for NEOS, Amiga, and Atari ST mice.
+- Add support for Atari CX-22 trackball.
+- Add support for Atari CX-21, CX-50, and CX-85 keypads.
+- Add support for Cardco Cardkey 1, Rushware, and Colin keypads.
+
+
 # Version 1.7 (2024-05-30)
 
 - Add support for the Protovision variant of the MultiJoy adapter.

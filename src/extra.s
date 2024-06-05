@@ -346,6 +346,7 @@ extra_color {
 extra_type_name_data {
     ;      123456789012345678
     .data "neos mouse        ":screen_inverted
+    .data "amgiga mouse      ":screen_inverted
     .data "atari st mouse    ":screen_inverted
     .data "atari cx22        ":screen_inverted
     .data "atari cx21/cx50   ":screen_inverted
@@ -356,6 +357,7 @@ extra_type_name_data {
 }
 
 extra_view_sprite {
+    .data sprite_cross
     .data sprite_cross
     .data sprite_cross
     .data sprite_cross
@@ -370,6 +372,7 @@ extra_default_view {
     .data EXTRA_VIEW_MOUSE
     .data EXTRA_VIEW_MOUSE
     .data EXTRA_VIEW_MOUSE
+    .data EXTRA_VIEW_MOUSE
     .data EXTRA_VIEW_CX21
     .data EXTRA_VIEW_CX85
     .data EXTRA_VIEW_CARDKEY
@@ -378,6 +381,7 @@ extra_default_view {
 }
 
 extra_default_color {
+    .data EXTRA_COLOR_NEOS
     .data EXTRA_COLOR_NEOS
     .data EXTRA_COLOR_NEOS
     .data EXTRA_COLOR_NEOS
@@ -391,6 +395,7 @@ extra_default_color {
 
 extra_top_handler {
     .data read_neos
+    .data read_st
     .data read_st
     .data read_cx22
     .data read_cx21
@@ -413,6 +418,7 @@ extra_bottom_handler {
 
 extra_sampler {
     .data sample_none
+    .data sample_amiga
     .data sample_st
     .data sample_cx22
     .data sample_none
@@ -426,6 +432,7 @@ extra_keys {
     .data 0:2
     .data 0:2
     .data 0:2
+    .data 0:2
     .data keys_3x4_keys
     .data keys_cx85_keys
     .data keys_4x4_keys
@@ -434,6 +441,7 @@ extra_keys {
 }
 
 extra_num_keys {
+    .data 0
     .data 0
     .data 0
     .data 0
