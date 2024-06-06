@@ -34,26 +34,26 @@ read_cx21 {
     sta CIA1_PRB
 
     lda #$fe
-     ldx #0
+    ldx #0
 :   sta temp
     sta CIA1_PRB
+    jsr extra_read_pots
+;    eor #$ff
+    and #$80
+    sta new_key_state + 1,x
+    tya
+;    eor #$ff
+    and #$80
+    sta new_key_state,x
     lda CIA1_PRB
     eor #$ff
     and #$10
-    sta new_key_state,x
-    inx
-    jsr extra_read_pots
-    eor #$ff
-    and #$80
-    sta new_key_state,x
-    inx
-    tya
-    eor #$ff
-    and #$80
-    sta new_key_state,x
+    sta new_key_state + 2,x
     lda temp
     sec
     rol 
+    inx
+    inx
     inx
     cpx #12
     bne :-

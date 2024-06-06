@@ -1,8 +1,8 @@
 ## Before Release
 
 - Fix graphics glitches when switching to/from extra.
-- Check button for Atari CX-22 trackball, fix view (only one button), update screenshot.
 - Make key bindings more consistent.
+- Warn that connecting CX-85 could damage CIA.
 
 ## Hardware Support
 

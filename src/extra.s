@@ -253,7 +253,7 @@ extra_read_pots {
     sta CIA1_PRA
     lda VIC_RASTER
     clc
-    adc #9
+    adc #13
 :   cmp VIC_RASTER
     bne :-
     lda SID_POT_X
