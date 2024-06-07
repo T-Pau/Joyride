@@ -3,21 +3,27 @@ VERSION = 1.7a
 distfile := Joyride-$VERSION.zip
 
 built_dist_files :=
-  src/joyride.prg
-  src/joyride.d64
-  src/joyride.d81
+    src/joyride.prg
+    src/joyride.d64
+    src/joyride.d81
 
 dist_files :=
-  README.md
-  NEWS.md
-  screenshot.png
-  $built_dist_files
+    README.md
+    NEWS.md
+    screenshot.png
+    Documentation
+    $built_dist_files
 
 
 rule zip
-  command = rm -f $out; zip -9jq $out $in && (d=$$(pwd); cd $top_source_directory && zip -9rq $$d/$out Documentation)
+    command = rm -f $out; zip -9jq $out $in && (d=$$(pwd); cd $top_source_directory && zip -9rq $$d/$out Documentation)
 
-build $distfile: zip $dist_files
+rule create-zip
+    command = {{$top_source_directory/Toolkit/bin/create-zip}} -M $depfile $flags $out $in
+    depfile = .dep.$out
+
+build $distfile: create-zip $dist_files
+    flags = --strip $top_source_directory --strip src
 
 build dist: phony $distfile
 
