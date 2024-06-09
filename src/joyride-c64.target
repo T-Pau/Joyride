@@ -41,5 +41,8 @@
 }
 
 .section reserved .extend {
-    address: $a000-$bfff
+    address [
+        : $02a7-$02ff
+        : $a000-$bfff
+    ]
 }
