@@ -133,7 +133,7 @@ not_commodore:
     bne got_key 
 not_runstop:
     ldx f_key_num_commands
-    cpx KEY_LEFT_ARROW
+    cpx #KEY_LEFT_ARROW
     bcc read_function
     tya
     and #SET_BIT(4)
@@ -146,7 +146,7 @@ not_runstop:
     ldy #KEY_LEFT_ARROW
     bne got_key
 
-    lda #CLEAR_BIT(5)
+:   lda #CLEAR_BIT(5)
     sta CIA1_PRA
     lda CIA1_PRB
     ora f_key_mask

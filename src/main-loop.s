@@ -49,7 +49,13 @@
     sta jump + 2
 jump:
     jsr $0000
-    lda #0
+.pre_if .false ; TODO: currently not working
+    lda command
+    cmp #COMMAND_EXIT
+    bne :+
+    rts
+.pre_end    
+:   lda #0
     sta command
     beq main_loop
 }

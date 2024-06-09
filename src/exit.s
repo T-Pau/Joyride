@@ -28,5 +28,12 @@
 .section code
 
 exit {
+    rts ; TODO: currently not working
+    lda #$37
+    sta $01
+    jsr restore_irq
+    : jmp :-
+    set_vic_bank $0000
+    set_vic_text $0400, $1000
     rts
 }

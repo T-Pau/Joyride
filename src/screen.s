@@ -63,8 +63,8 @@ help_screen {
     }
     .data "KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMML":screen_lowercase, $a0
     .data "                                        ":screen_inverted
-    .data " space/+: next page   -: previous page  ":screen_inverted
-    .data "         ":screen_inverted, $9f, ": return to program           ":screen_inverted
+    .data "        c=-f1: return to program        ":screen_inverted
+    .data "f3/space: next page   f4: previous page ":screen_inverted
     .data "                                        ":screen_inverted
 }
 
@@ -138,6 +138,7 @@ eight_player_legend {
     ldy #>help_irq_table
     lda #.sizeof(help_irq_table)
     jsr set_irq_table
+    set_f_key_command_table help_f_key_commands
 
     lda #0
     ldy #7
