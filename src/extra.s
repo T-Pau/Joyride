@@ -61,6 +61,8 @@ MAX_NUM_KEYS = 17
 .section code
 
 display_extra_screen {
+    lda #MODE_EXTRA
+    sta mode
     set_f_key_command_table extra_f_key_commands
     store_word source_ptr, extra_screen
     store_word destination_ptr, screen
@@ -474,11 +476,11 @@ extra_num_keys {
 
 extra_f_key_commands {
     .data 0
-    .data COMMAND_EXTRA_NEXT, COMMAND_EXTRA_PREVIOUS
-    .data COMMAND_EXTRA_RESET_KEYPAD, 0
-    .data 0, 0
-    .data 0, 0
-    .data COMMAND_MAIN
+    .data COMMAND_MAIN, COMMAND_EIGHT_PLAYER ; F1 / F2
+    .data COMMAND_EXTRA_NEXT, COMMAND_EXTRA_PREVIOUS ; F3 / F4
+    .data COMMAND_EXTRA_RESET_KEYPAD, 0 ; F5 / F6
+    .data 0, 0 ; F7 / F8
+    .data COMMAND_HELP, COMMAND_EXIT ; C=-F1 / RunStop
 }
 
 .section reserved

@@ -50,9 +50,9 @@ main_screen {
     .data $a0, $a0, $a0, "                                 ":screen_lowercase, $a0, $a0, $a0, $a0
     .data $a0, $a0, $a0, "KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMML":screen_lowercase, $a0, $a0, $a0, $a0
     .data "                                        ":screen_inverted
-    .data "     f1/f2: port 1   f3/f4: port 2      ":screen_inverted
-    .data "  f5/f6: user port   f7: multi adapter  ":screen_inverted
-    .data "               f8: help                 ":screen_inverted
+    .data "       f1/f2: view   c=-f1: help        ":screen_inverted
+    .data "     f3/f4: port 1   f5/f6: port 2      ":screen_inverted
+    .data "            f7/f8: user port            ":screen_inverted
 }
 
 help_screen {
@@ -69,9 +69,9 @@ help_screen {
 }
 
 eight_player_legend {
-    .data "   f1/f2: adapter type   f3/f4: page    ":screen_inverted
-    .data "      f7: controller & user ports       ":screen_inverted
-    .data "               f8: help                 ":screen_inverted
+    .data "       f1/f2: view   c=-f1: help        ":screen_inverted
+    .data "   f3/f4: adapter type   f5/f6: page    ":screen_inverted
+    .data "                                        ":screen_inverted
 }
 
 .section code
@@ -160,5 +160,8 @@ eight_player_legend {
     lda mode
     bne :+
     jmp display_main_screen
-:   jmp display_eight_player_screen
+:   cmp #MODE_EIGHT_PLAYER
+    bne :+
+    jmp display_eight_player_screen
+:   jmp display_extra_screen
 }

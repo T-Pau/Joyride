@@ -31,6 +31,7 @@ sources :=
     display-raw.s
     display-trapthem.s
     dpad.s
+    exit.s
     extra.s
     extra-screen.s
     extra-screens.s

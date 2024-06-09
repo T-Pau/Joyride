@@ -14,10 +14,6 @@ dist_files :=
     Documentation
     $built_dist_files
 
-
-rule zip
-    command = rm -f $out; zip -9jq $out $in && (d=$$(pwd); cd $top_source_directory && zip -9rq $$d/$out Documentation)
-
 rule create-zip
     command = {{$top_source_directory/Toolkit/bin/create-zip}} -M $depfile $flags $out $in
     depfile = .dep.$out

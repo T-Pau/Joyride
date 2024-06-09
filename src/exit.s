@@ -1,4 +1,4 @@
-;  help-screen.s -- Text for help screens.
+;  exit.s -- Exit program
 ;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
@@ -25,57 +25,8 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-help_screen_title = screen + 1
-help_screen_text = screen + 40 * 2 + 1
-
-.section reserved
-
-.public current_help_page .reserve 1
-
-
 .section code
 
-.public display_help_page {
-    lda current_help_page
-    bmi negative
-    cmp help_screens_count
-    bne ok
-    lda #0
-    beq ok
-negative:
-    ldx help_screens_count
-    dex
-    txa
-ok:
-    sta current_help_page
-    asl
-    tax
-
-    lda help_screens,x
-    sta ptr1
-    lda help_screens + 1,x
-    sta ptr1 + 1
-    lda #<help_screen_title
-    sta ptr2
-    lda #>help_screen_title
-    sta ptr2 + 1
-    jsr rl_expand
-    lda #<help_screen_text
-    sta ptr2
-    lda #>help_screen_text
-    sta ptr2 + 1
-    jmp rl_expand
-}
-
-.section data
-
-help_f_key_commands {
-    .data 0
-    .data COMMAND_HELP_PREVIOUS, 0 ; F1 / F2
-    .data COMMAND_HELP_NEXT, COMMAND_HELP_PREVIOUS ; F3 / F4
-    .data 0, 0 ; F5 / F6
-    .data 0, 0 ; F7 / F8
-    .data COMMAND_HELP_EXIT, COMMAND_EXIT ; C=-F1 / RunStop
-    .data COMMAND_HELP_EXIT, COMMAND_HELP_NEXT ; ← / Space
-    .data COMMAND_HELP_NEXT, COMMAND_HELP_PREVIOUS ; + / -
+exit {
+    rts
 }

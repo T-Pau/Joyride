@@ -1,4 +1,4 @@
-;  f-keys.s -- Handle keyboard input for main program.
+;  f-keys.s -- Handle keyboard input.
 ;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
@@ -25,104 +25,176 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+KEY_NONE = 0
+KEY_F1 = 1
+KEY_F2 = 2
+KEY_F3 = 3
+KEY_F4 = 4
+KEY_F5 = 5
+KEY_F6 = 6
+KEY_F7 = 7
+KEY_F8 = 8
+KEY_C_F1 = 9
+KEY_STOP = 10
+KEY_LEFT_ARROW = 11
+KEY_SPACE = 12
+KEY_PLUS = 13
+KEY_MINUS = 14
+
+CLEAR_BIT(bitt, value = $ff) = value & ($ff - (1 << bitt))
+SET_BIT(bitt, value = $00) = value | (1 << bitt)
+
+
 .section reserved
 
 shift .reserve 1
 
 last_key .reserve 1
 
+f_key_num_commands .reserve 1
+
 .section code
 
-.macro set_f_key_command_table address {
-    ldx #<address
-    ldy #>address
+.macro set_f_key_command_table table {
+    ldx #<table
+    ldy #>table
+    lda #.sizeof(table)
     jsr set_f_key_command_table
 }
 
 ; Set command table
 ; Arguments:
+;   A: number of commands in table
 ;   X/Y: address
 .public set_f_key_command_table .used { ; XLR8: used shouldn't be neccessary
+    sta f_key_num_commands
     stx f_key_commands
     sty f_key_commands + 1
     rts
 }
 
 
-; Get pressed function or C= key.
+; Get pressed key.
 ; Returns:
-;   Y: function key number, 9 for C=, 0 for none pressed
-;   Z: set if key pressed
-.public get_f_key {
+;   Y: number of key pressed, 0 for none pressed
+.public read_keys {
+    ; check for joystick interference
     lda #$00
     sta CIA1_DDRA
     sta CIA1_DDRB
     lda #$ff
     sta CIA1_PRA
     sta CIA1_PRB
-
     lda CIA1_PRB
     eor #$ff
     sta f_key_mask
     lda CIA1_PRA
     cmp #$ff
     beq :+
-    jmp f_none
+    jmp no_key
 :   lda #$ff
     sta CIA1_DDRA
 
-    lda #$80 ^ $ff
-    sta CIA1_PRA
-    lda CIA1_PRB
-    ora f_key_mask
-    eor #$ff
-    and #$20
-    beq not_commodore
-    ldy #9
-    bne f_end
-
-not_commodore:
     ; get shift
-    lda #$40 ^ $ff
+    ldx #0
+    lda #CLEAR_BIT(6)
     sta CIA1_PRA
     lda CIA1_PRB
     ora f_key_mask
     eor #$ff
-    and #$10
-    sta shift
-    lda #$02 ^ $ff
+    and #SET_BIT(4)
+    bne shift_pressed
+    lda #CLEAR_BIT(1)
     sta CIA1_PRA
     lda CIA1_PRB
     ora f_key_mask
     eor #$ff
-    and #$80
-    ora shift
-    sta shift
+    and #SET_BIT(7)
+    beq no_shift
+shift_pressed:    
+    inx
+no_shift:
+    lda #CLEAR_BIT(7)
+    sta CIA1_PRA
+    lda CIA1_PRB
+    ora f_key_mask
+    eor #$ff
+    tay
+    and #SET_BIT(5)
+    beq not_commodore
+    ldx #$80
+not_commodore:
+    stx shift
 
-    lda #$01 ^ $ff
+    ; get other keys
+    tya
+    bpl not_runstop
+    ldy #KEY_STOP
+    bne got_key 
+not_runstop:
+    ldx f_key_num_commands
+    cpx KEY_LEFT_ARROW
+    bcc read_function
+    tya
+    and #SET_BIT(4)
+    beq :+
+    ldy #KEY_SPACE
+    bne got_key
+:   tya
+    and #SET_BIT(1)
+    beq :+
+    ldy #KEY_LEFT_ARROW
+    bne got_key
+
+    lda #CLEAR_BIT(5)
+    sta CIA1_PRA
+    lda CIA1_PRB
+    ora f_key_mask
+    eor #$ff
+    tay
+    and #SET_BIT(3)
+    beq :+
+    ldy #KEY_MINUS
+    bne got_key
+:   tya
+    and #SET_BIT(0)    
+    beq read_function
+    ldy #KEY_PLUS
+    bne got_key
+
+read_function:
+    lda #CLEAR_BIT(0)
     sta CIA1_PRA
     lda CIA1_PRB
     ora f_key_mask
     ; down F5 F3 F1 F7 ...
     rol
     rol
-    bcs not_f5
+    bcs :+
     ldy #5
-    bne f_got
-not_f5:
-    rol
-    bcs not_f3
+    bne got_function_key
+:   rol
+    bcs :+
     ldy #3
-    bne f_got
-not_f3:
-    rol
-    bcs not_f1
+    bne got_function_key
+:   rol
+    bcs :+
     ldy #1
-    bne f_got
-not_f1:
-    bmi f_none
+    bne got_function_key
+:   bmi no_key
     ldy #7
-f_got:
+got_function_key:
+    lda shift
+    bpl :+
+    cpy #1
+    bne :+
+    ldy #KEY_C_F1
+    bne end
+:   tax
+    beq got_key
+    iny
+
+got_key:
     lda #$00
     sta CIA1_DDRA
     sta CIA1_DDRB
@@ -134,15 +206,11 @@ f_got:
     ora f_key_mask
     and CIA1_PRA
     cmp #$ff
-    bne f_none
+    beq end
 
-    lda shift
-    beq f_end
-    iny
-    bne f_end
-f_none:
+no_key:
     ldy #0
-f_end:
+end:
     lda #$ff
     sta CIA1_DDRA
     sta CIA1_DDRB
@@ -150,14 +218,15 @@ f_end:
     sty last_key
     beq :+
     ldy #0
-:   cpy #0
-    rts
+:   rts
 }
 
 .public handle_keyboard {
-    jsr get_f_key
+    jsr read_keys
     tya
     beq none
+    cmp f_key_num_commands
+    bcs none
     lda last_command
     ora command
     bne end
@@ -241,11 +310,11 @@ end:
 
 main_f_key_commands {
     .data 0
-    .data COMMAND_PORT1_NEXT, COMMAND_PORT1_PREVIOUS
-    .data COMMAND_PORT2_NEXT, COMMAND_PORT2_PREVIOUS
-    .data COMMAND_USERPORT_NEXT, COMMAND_USERPORT_PREVIOUS
-    .data COMMAND_EIGHT_PLAYER, COMMAND_HELP
-    .data COMMAND_EXTRA
+    .data COMMAND_EIGHT_PLAYER, COMMAND_EXTRA ; F1 / F2
+    .data COMMAND_PORT1_NEXT, COMMAND_PORT1_PREVIOUS ; F3 / F4
+    .data COMMAND_PORT2_NEXT, COMMAND_PORT2_PREVIOUS ; F5 / F6
+    .data COMMAND_USERPORT_NEXT, COMMAND_USERPORT_PREVIOUS ; F7 / F8
+    .data COMMAND_HELP, COMMAND_EXIT ; C=-F1 / RunStop
 }
 
 .section zero_page
