@@ -88,8 +88,6 @@ display_extra_screen {
     lda #LOGO_Y
     sta VIC_SPRITE_4_Y
 
-    lda #0
-    sta extra_type
     lda #VIEW_DYNAMIC
     sta extra_view
 

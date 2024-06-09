@@ -30,12 +30,28 @@
 .section code
 
 exit {
-    rts ; TODO: currently not working
+    ;rts ; TODO: currently not working
     sei
+    ; restore timer configuration
+    lda timer_1a
+    sta CIA1_TIMER_A
+    lda timer_1a + 1
+    sta CIA1_TIMER_A + 1
+    lda timer_1a_control
+    sta CIA1_TIMER_A_CONTROL
+    lda timer_2a
+    sta CIA2_TIMER_A
+    lda timer_2a + 1
+    sta CIA2_TIMER_A + 1
+    lda timer_2a_control
+    sta CIA2_TIMER_A_CONTROL
+
     lda #$37
     sta $01
     jsr restore_irq
     set_vic_bank $0000
     set_vic_text $0400, $1000
+
+    brk
     rts
 }

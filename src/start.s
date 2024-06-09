@@ -86,6 +86,20 @@ both:
 
     jsr init_irq
 
+    ; save timer configuration
+    lda CIA1_TIMER_A
+    sta timer_1a
+    lda CIA1_TIMER_A + 1
+    sta timer_1a + 1
+    lda CIA1_TIMER_A_CONTROL
+    sta timer_1a_control
+    lda CIA2_TIMER_A
+    sta timer_2a
+    lda CIA2_TIMER_A + 1
+    sta timer_2a + 1
+    lda CIA2_TIMER_A_CONTROL
+    sta timer_2a_control
+
     ; set up serial loopback for userport adapters
     lda #0
     sta CIA2_DDRB
@@ -107,3 +121,8 @@ both:
 .section reserved
 
 .public machine_type .reserve 1
+
+timer_1a .reserve 2
+timer_1a_control .reserve 1
+timer_2a .reserve 2
+timer_2a_control .reserve 1

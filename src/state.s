@@ -45,11 +45,13 @@
 
 .public init_state {
     lda #0
+    sta command
     sta mode
     sta port1_type
     sta port2_type
     sta userport_type
     sta eight_player_type
     sta eight_player_page
+    sta extra_type
     rts
 }
