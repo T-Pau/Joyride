@@ -28,22 +28,29 @@
 .section data
 
 .public main_color {
-    .data .fill(2 * 40, $c)
+    rl_encode 2 * 40, $c
     .repeat 9 {
-        .data .fill(19, $b), $c
-        .data .fill(19, $b), $c
+        rl_encode 19, $b
+        .data $c
+        rl_encode 19, $b
+        .data $c
     }
-    .data .fill(4 * 40, $c)
-    .repeat 5 {
-        .data .fill(4, $c), .fill(30, $b), .fill(6, $c)
+    rl_encode 4 * 40 + 4, $c
+    rl_encode 30, $b
+    .repeat 4 {
+        rl_encode 10, $c
+        rl_encode 30, $b
     }
-    .data .fill(5 * 40, $c)
+    rl_encode 5 * 40 + 6, $c
+    rl_end
 }
 
 .public help_color {
-    .data .fill(2 * 40, $c)
+    rl_encode 2 * 40, $c
     .repeat 18 {
-        .data .fill(39, $b), $c
+        rl_encode 39, $b
+        .data $c
     }
-    .data .fill(5 * 40, $c)
+    rl_encode 5 * 40, $c
+    rl_end
 }

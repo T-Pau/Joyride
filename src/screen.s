@@ -83,7 +83,7 @@ eight_player_legend {
     sta mode
 
     memcpy screen, main_screen, 1000
-    memcpy color_ram, main_color, 1000
+    rl_expand color_ram, main_color
     ldy #0
     jsr copy_port_screen
     ldy #1
@@ -126,7 +126,7 @@ eight_player_legend {
     bpl :-
 
     memcpy screen, help_screen, 1000
-    memcpy color_ram, help_color, 1000
+    rl_expand color_ram, help_color
     memcpy screen + 40 * 22, eight_player_legend, 120
     jsr copy_eight_player_type_name
     rts
@@ -150,7 +150,7 @@ eight_player_legend {
     sta VIC_SPRITE_X_MSB
 
     memcpy screen, help_screen, 1000
-    memcpy color_ram, help_color, 1000
+    rl_expand color_ram, help_color
     ldx #0
     stx current_help_page
     jsr display_help_page
