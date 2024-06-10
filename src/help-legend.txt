@@ -1,4 +1,4 @@
-;  screen-settings.s -- Settigns for screens.
+;  help-legend.txt -- Legend for help screen.
 ;
 ;  Copyright (C) Dieter Baron
 ;
@@ -26,27 +26,11 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-map $40-$5a $80
-map $61-$7a $81
-map $2190 $9f
-map $20-$3f $a0
-
-map $25a0 $20
-.if MAIN_CHARSET
-map $25e5 $4b
-map $25e4 $4c
-map $25e3 $4a
-map $2580 $4d
-map $25e2 $49
-.else
-map $25e5 $42
-map $25e4 $43
-map $25e3 $41
-map $2580 $44
-map $25e2 $40
-.endif
-
-line_length 40
-lines 25
-word_wrap 0
-single_screen 1
+name help_legend
+.define MAIN_CHARSET
+.include "screen-settings.inc"
+lines 3
+---
+        c=-f1: return to program        
+f3/space: next page   f4: previous page 
+                                        

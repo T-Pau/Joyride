@@ -25,55 +25,6 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-.section data
-
-main_screen {
-    .data " port 1:             port 2:            ":screen_inverted
-    .data "I                 J":screen_lowercase, $a0, "I                 J":screen_lowercase, $a0
-    .data "                   ":screen, $a0, "                   ":screen, $a0
-    .data "                   ":screen, $a0, "                   ":screen, $a0
-    .data "                   ":screen, $a0, "                   ":screen, $a0
-    .data "                   ":screen, $a0, "                   ":screen, $a0
-    .data "                   ":screen, $a0, "                   ":screen, $a0
-    .data "                   ":screen, $a0, "                   ":screen, $a0
-    .data "                   ":screen, $a0, "                   ":screen, $a0
-    .data "                   ":screen, $a0, "                   ":screen, $a0
-    .data "                   ":screen, $a0, "                   ":screen, $a0
-    .data "KMMMMMMMMMMMMMMMMML":screen_lowercase, $a0, "KMMMMMMMMMMMMMMMMML":screen_lowercase, $a0
-    .data "                                        ":screen_inverted
-    .data "    user port:                          ":screen_inverted
-    .data $a0, $a0, $a0, "I                               J":screen_lowercase, $a0, $a0, $a0, $a0
-    .data $a0, $a0, $a0, "                                 ":screen_lowercase, $a0, $a0, $a0, $a0
-    .data $a0, $a0, $a0, "           AHB           AHB     ":screen_lowercase, $a0, $a0, $a0, $a0
-    .data $a0, $a0, $a0, "           EfF           EfF     ":screen_lowercase, $a0, $a0, $a0, $a0
-    .data $a0, $a0, $a0, "           CGD           CGD     ":screen_lowercase, $a0, $a0, $a0, $a0
-    .data $a0, $a0, $a0, "                                 ":screen_lowercase, $a0, $a0, $a0, $a0
-    .data $a0, $a0, $a0, "KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMML":screen_lowercase, $a0, $a0, $a0, $a0
-    .data "                                        ":screen_inverted
-    .data "       f1/f2: view   c=-f1: help        ":screen_inverted
-    .data "     f3/f4: port 1   f5/f6: port 2      ":screen_inverted
-    .data "            f7/f8: user port            ":screen_inverted
-}
-
-help_screen {
-    .data "                                        ":screen_inverted
-    .data "I                                     J":screen_lowercase, $a0
-    .repeat 18 {
-        .data "                                       ":screen, $a0
-    }
-    .data "KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMML":screen_lowercase, $a0
-    .data "                                        ":screen_inverted
-    .data "        c=-f1: return to program        ":screen_inverted
-    .data "f3/space: next page   f4: previous page ":screen_inverted
-    .data "                                        ":screen_inverted
-}
-
-eight_player_legend {
-    .data "       f1/f2: view   c=-f1: help        ":screen_inverted
-    .data "   f3/f4: adapter type   f5/f6: page    ":screen_inverted
-    .data "                                        ":screen_inverted
-}
-
 .section code
 
 .public display_main_screen {
@@ -82,7 +33,7 @@ eight_player_legend {
     lda #MODE_MAIN
     sta mode
 
-    memcpy screen, main_screen, 1000
+    rl_expand screen, main_screen
     rl_expand color_ram, main_color
     ldy #0
     jsr copy_port_screen
@@ -125,9 +76,10 @@ eight_player_legend {
     dex
     bpl :-
 
-    memcpy screen, help_screen, 1000
+    rl_expand screen, big_window_screen
+    store_word source_ptr, eight_player_legend
+    jsr rl_expand
     rl_expand color_ram, help_color
-    memcpy screen + 40 * 22, eight_player_legend, 120
     jsr copy_eight_player_type_name
     rts
 }
@@ -149,7 +101,9 @@ eight_player_legend {
     and #$f0
     sta VIC_SPRITE_X_MSB
 
-    memcpy screen, help_screen, 1000
+    rl_expand screen, big_window_screen
+    store_word source_ptr, help_legend
+    jsr rl_expand
     rl_expand color_ram, help_color
     ldx #0
     stx current_help_page

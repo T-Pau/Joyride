@@ -1,4 +1,4 @@
-;  help-screen.s -- Text for help screens.
+;  help-screens.txt -- Text for help screens.
 ;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.

@@ -12,6 +12,7 @@ sources :=
     ../Toolkit/xlr8/6502/utility.s
     ../Toolkit/xlr8/commodore/irq.s
     start.s
+    big-window-screen.s
     button.s
     cbm_ext.s
     charset.s
@@ -36,8 +37,10 @@ sources :=
     extra-screen.s
     extra-screens.s
     eight-player.s
+    eight-player-legend.s
     f-keys.s
     help.s
+    help-legend.s
     help-screen.s
     help-screens.s
     hex.s
@@ -53,6 +56,7 @@ sources :=
     keys-4x4.s
     keys-cx85.s
     logo.s
+    main-screen.s
     main-loop.s
     memcpy.s
     mouse-amiga.s
@@ -128,6 +132,10 @@ build scroll-wheel.bin: gfx-convert-screen-buttons scroll-wheel.png | charset.bi
 build eight-player.bin: gfx-convert-screen-buttons eight-player.png | charset.bin
 build extra-screens.s: convert-characters extra-screens.yaml
 build extra-screen.s: convert-screens extra-screen.txt
+build main-screen.s: convert-screens main-screen.txt
+build big-window-screen.s: convert-screens big-window-screen.txt
+build help-legend.s: convert-screens help-legend.txt
+build eight-player-legend.s: convert-screens eight-player-legend.txt
 build help-screens.s: convert-screens help-screens.txt
     flags = -DVERSION=$VERSION
 
