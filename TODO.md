@@ -1,8 +1,7 @@
 ## Before Release
 
+- Wrap around mouse cursor modulo 64.
 - Fix graphics glitches when switching to/from extra.
-- Make key bindings more consistent.
-- Warn that connecting CX-85 could damage CIA.
 
 ## Hardware Support
 
@@ -18,4 +17,5 @@
 
 ## Cleanup
 
+- Replace memcpy and copyrect with rl_expand.
 - Merge temporary variables that can't overlap in usage.

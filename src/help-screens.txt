@@ -52,15 +52,19 @@ This is Joyride ${VERSION}. The newest version and further information can be fo
 To test the keyboard, use the companion program Anykey:
   https://github.com/T-Pau/Anykey
 ---
-Joyride
+Views
 
-The top windows display the devices connected to the controller ports, the bottom window displays the device connected to the user port.
+There are three views:
 
-You can use the function keys to select the correct controller type or to display raw data.
+- controller and user ports
+- multi adapters 
+- special controllers
 
-Adapters that support more than two controllers don't fit in the main screen. F7 switches to a layout that supports four controllers per page.
+Use F1/F2 to switch between views.
 
-For digital inputs, the button or direction is inverted when pressed. Analog inputs are displayed as numbers and by positioning a cursor.
+Use Run/Stop to exit Joyride.
+
+For binary inputs, the button or direction is inverted when pressed. Analog or positional inputs are displayed as numbers and by positioning a cursor.
 ---
 Supported Devices
 
@@ -90,7 +94,7 @@ User Port, One Joystick:
 
 Multi Adapters:
 - SuperPAD 64
-- Ninja SNED Pad
+- Ninja SNES Pad
 - Luigi Pantarotto's Spaceballs
 - Inception
 - MultiJoy
@@ -99,7 +103,7 @@ Multi Adapters:
 ---
 Supported Devices
 
-Extra:
+Special:
 - NEOS Mouse
 - Amiga Mouse
 - Atari ST Mouse
@@ -109,6 +113,12 @@ Extra:
 - Cardco Cardkey 1
 - Rushware Keypad
 - Coplin Keypad
+---
+Controller and User Ports
+
+The top windows display the devices connected to the controller ports, the bottom window displays the device connected to the user port.
+
+Use the function keys to select the correct controller type or to display raw data.
 ---
 Joystick
 
@@ -210,7 +220,7 @@ Note: Support for this adapter has not been tested with real hardware.
 ---
 PETSCII Robots Adapter
 
-This adapter is included with the game Attack of the PETSCII Robots and allows connecting one SuperNES controller or mouse to the userport.
+This adapter is included with the game Attack of the PETSCII Robots and allows connecting one SuperNES controller or mouse to the user port.
 
 The controller has these inputs:
 - d-pad
@@ -224,9 +234,11 @@ Multi Adapters
 
 These adapters support 4 to 16 input devices. The type of devices depends on the adapter.
 
-They connect to the user port, controller port, or both.
+They connect to the user port, controller ports, or both.
 
-Four controllers are displayed per page, from left to right, top to bottom. Use F3/F4 to switch pages.
+Four controllers are displayed per page, from left to right, top to bottom. 
+
+Use F3/F4 to switch adapters and F5/F6 to switch pages.
 ---
 SuperPAD 64 / Ninja SNES Pad
 
@@ -288,11 +300,15 @@ It connects to the user port through an adapter cable.
 
 Note: Support for this adapter has not been tested.
 ---
-Extra
+Special Controllers
 
-These devices don't fit in the regular controller port window or block parts of the keyboard and are therefore collected in the extra view.
+These devices don't fit in the regular controller port window or block parts of the keyboard and are therefore collected in a separate view.
 
 While they work in both controller ports, Joyride only supports them in port 1.
+
+Use F3/F4 to switch controller type. 
+
+For keypads, previously pressed keys are displayed in a lighter gray to help detect dead keys. To reset the state of all keys, press F5. 
 ---
 NEOS Mouse
 
@@ -317,16 +333,20 @@ The right mouse button can't be read on a Commodore 64.
 Atari CX-22 Trackball
 
 This trackball displays x/y and one button.
+
+Note: Support for this trackball has not been tested with real hardware.
 ---
 Atari CX-21 / CX-50 Keypad
 
-This keypad contians 12 keys.
+This keypad contains 12 keys.
 ---
 Atari CX-85 Keypad
 
 This keypad contains 17 keys.
 
 Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+
+Warning: Connecting this keypad directly may damage the Commodore 64. Using protective diodes is advised.
 ---
 Cardco Cardkey 1
 

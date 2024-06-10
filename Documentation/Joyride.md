@@ -6,18 +6,25 @@ Joyride currently does not work on NTSC machines.
 
 To test the keyboard, use the companion program [Anykey](https://github.com/T-Pau/Anykey).
 
-The top left window displays the device connected to controller port 1, the top right window controller port 2. The bottom window displays the device connected to the user port.
-
-You can use the function keys to select the correct controller type or to display raw data.
-
-Adapters that support more than two controllers don't fit in the main screen. `F7` switches to a layout that supports four controllers per page.
-
-For digital inputs, the button or direction is inverted when pressed. Analog inputs are displayed as numbers and by positioning a cursor.
-
 
 ## Loading the Program
 
 Load the program from the disc image with `LOAD"*",8,1`. On C128 and MEGA65, switch to 64 mode before loading.
+
+
+## Views
+
+There are three views:
+
+- controller and user ports
+- multi adapters 
+- special controllers
+
+Use `F1`/`F2` to switch between views, `C=-F1` to view the included help pages.
+
+Use `Run/Stop` to exit Joyride.
+
+For binary inputs, the button or direction is inverted when pressed. Analog or positional inputs are displayed as numbers and by positioning a cursor.
 
 
 ## Supported Devices
@@ -46,14 +53,14 @@ User Port, One Joystick:
 
 Multi Adapters:
 - SuperPAD 64
-- Ninja SNED Pad
+- Ninja SNES Pad
 - Luigi Pantarotto's Spaceballs
 - Inception
 - MultiJoy
 - Wheel of Joy
 - Wheel of Joy Mini
 
-Extra:
+Special:
 - NEOS Mouse
 - Amiga Mouse
 - Atari ST Mouse
@@ -65,7 +72,11 @@ Extra:
 - Coplin Keypad
 
 
-## Controller Port
+## Controller Ports
+
+The top windows display the devices connected to the controller ports.
+
+Use the function keys to select the correct controller type or to display raw data.
 
 The C64 has two controller ports. These support five digital lines that can be used as input or output, and two potentiometers that give values from 0 to 255.
 
@@ -156,6 +167,10 @@ For port 1, it also displays the light pen coordinates.
 
 ## User Port 
 
+The bottom window displays the device connected to the user port.
+
+Use F7/F8 to select the correct device.
+
 The C64 has a user port that allows it to interface with various hardware attachments.
 
 
@@ -213,7 +228,7 @@ Note: Support for this adapter has not been tested with real hardware.
 
 ![](images/PETSCII-Robots.png)
 
-This adapter is included with the game Attack of the PETSCII Robots and allows connecting one SuperNES controller or mouse to the userport.
+This adapter is included with the game Attack of the PETSCII Robots and allows connecting one SuperNES controller or mouse to the user port.
 
 The controller has these inputs:
 - d-pad
@@ -310,11 +325,15 @@ It connects to the user port through an adapter cable.
 Note: Support for this adapter has not been tested. 
 
 
-## Extra
+## Special Controllers
 
-These devices don't fit in the regular controller port window or block parts of the keyboard and are therefore collected in the extra view.
+These devices don't fit in the regular controller port window or block parts of the keyboard and are therefore collected in a separate view.
 
 While they work in both controller ports, Joyride only supports them in port 1.
+
+Use `F3`/`F4` to switch controller type. 
+
+For keypads, previously pressed keys are displayed in a lighter gray to help detect dead keys. To reset the state of all keys, press `F5`.
 
 
 ### NEOS Mouse
@@ -358,7 +377,7 @@ This trackball displays x/y and one button.
 
 ![](images/Atari-CX21.png)
 
-This keypad contians 12 keys.
+This keypad contains 12 keys.
 
 
 ### Atari CX-85 Keypad
@@ -368,6 +387,8 @@ This keypad contians 12 keys.
 This keypad contains 17 keys.
 
 Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+
+**Warning**: Connecting this keypad directly may damage the Commodore 64. Using protective diodes is advised.
 
 
 ### Cardco Cardkey 1
