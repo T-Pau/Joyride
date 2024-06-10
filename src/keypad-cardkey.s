@@ -28,17 +28,23 @@
 .section code
 
 read_cardkey {
-    jsr extra_read_pots
-    tya
-    and #$80
+:   lda #$ff
+    sta CIA1_DDRA
+    sta CIA1_PRA
+    lda #$c0
+    sta CIA1_DDRB
+:   lda CIA1_PRB
+    cmp CIA1_PRB
+    bne :-
+    cmp CIA1_PRB
+    bne :-
+    eor #$ff
+    tay
+    and #$10
     bne :+
     lda #$ff
     bne end
-:   lda #$ff
-    sta CIA1_DDRA
-    sta CIA1_DDRB
-    sta CIA1_PRA
-    lda CIA1_PRB
+:   tya
     and #$0f
     tax
     lda cardkey_keycodes,x
@@ -49,25 +55,24 @@ end:
 
 .section data
 
-; 0  14  Enter
-; 1  12  .
-; 2   3  *
-; 3   7  / 
-; 4  11  -
-; 5  15  +
-; 6   2  9
-; 7   1  8
-; 8   0  7
-; 9   6  6
-; a   5  5
-; b   4  4
-; c  10  3
-; d   9  2
-; e   8  1
-; f  13  0
-
+; 0 13  0
+; 1  8  1
+; 2  9  2
+; 3 10  3
+; 4  4  4
+; 5  5  5
+; 6  6  6
+; 7  0  7
+; 8  1  8
+; 9  2  9
+; a 15  +
+; b 11  -
+; c  7  /
+; d  3  *
+; e 12  .
+; f 14  Enter
 
 cardkey_keycodes {
-    .data 14, 12,  3,  7,  11, 15,  2,  1
-    .data  0,  6,  5,  4,  10,  9,  8, 13
+    .data 13,  8,  9, 10,  4,  5,  6,  0
+    .data  1,  2, 15, 11,  7,  3, 12, 14
 }
