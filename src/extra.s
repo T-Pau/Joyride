@@ -64,13 +64,8 @@ display_extra_screen {
     lda #MODE_EXTRA
     sta mode
     set_f_key_command_table extra_f_key_commands
-    store_word source_ptr, extra_screen
-    store_word destination_ptr, screen
-    jsr rl_expand
-    store_word source_ptr, extra_colors
-    store_word destination_ptr, color_ram
-    jsr rl_expand
-
+    rl_expand screen, extra_screen
+    rl_expand color_ram, extra_colors
     set_irq_table extra_irq_table
 
     ; TODO: setup sprites properly

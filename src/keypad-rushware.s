@@ -41,8 +41,15 @@ read_rushware {
 :   txa
     and #$0f
     tax
-    lda cardkey_keycodes,x
+    lda rushware_keycodes,x
 end:    
     sta new_key_index
     rts
+}
+
+.section data
+
+rushware_keycodes {
+    .data 14, 12,  3,  7,  11, 15,  2,  1
+    .data  0,  6,  5,  4,  10,  9,  8, 13
 }
