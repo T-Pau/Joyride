@@ -75,16 +75,6 @@ userport_name_strings {
     .data "PETSCII Robots      ":screen_inverted
 }
 
-userport_view {
-    .repeat i, USER_NUM_VIEWS {
-        .data userport_view_data + i * 31 * 5
-    }
-}
-
-userport_view_data {
-    .binary_file "userport-screens.bin"
-}
-
 .section code
 
 userport_update_view = copy_userport_view
@@ -146,9 +136,7 @@ loop:
     lda userport_view + 1,x
     sta ptr1 + 1
     store_word ptr2, USERPORT_VIEW_START
-    ldx #31
-    ldy #5
-    jmp copyrect
+    jmp rl_expand
 }
 
 .public handle_userport {

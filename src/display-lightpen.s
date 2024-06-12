@@ -26,7 +26,7 @@
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 lightpen_buttons_offset = 12
-lightpen_x_offset = 40 * 2 + 2
+lightpen_x_offset = 40 * 3 - 3
 lightpen_y_offset = 40
 
 lightpen_sprite_x_offset = 24 + 8
@@ -79,9 +79,7 @@ set_bottom_sprite:
     lda lightpen_button_rects + 1,y
     sta ptr1 + 1
     add_word ptr2, lightpen_buttons_offset
-    ldx #5
-    ldy #3
-    jsr copyrect
+    jsr rl_expand
 
     add_word ptr2, lightpen_x_offset
     ldy #0
@@ -149,17 +147,4 @@ show_cursor:
     jsr set_sprite
 
     rts
-}
-
-
-.section data
-
-lightpen_button_rects {
-    .repeat i, 8 {
-        .data lightpen_buttons_data + i * 15
-    }
-}
-
-lightpen_buttons_data {
-    .binary_file "lightpen-buttons.bin"
 }

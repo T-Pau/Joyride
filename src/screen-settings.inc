@@ -32,7 +32,7 @@ map $2190 $9f
 map $20-$3f $a0
 
 map $25a0 $20
-.if MAIN_CHARSET
+.if 0
 map $25e5 $4b
 map $25e4 $4c
 map $25e3 $4a

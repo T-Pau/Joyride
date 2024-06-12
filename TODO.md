@@ -17,5 +17,4 @@
 
 ## Cleanup
 
-- Replace memcpy and copyrect with rl_expand.
 - Merge temporary variables that can't overlap in usage.

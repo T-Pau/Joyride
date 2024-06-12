@@ -1,0 +1,63 @@
+screen_width: 40
+charset:
+    width: 8
+    height: 8
+    count: 256
+    name: charset_data
+    rl_encode: true
+images:
+    -
+        type: charset
+        file: charset.png
+    -
+        type: image
+        file: port-screens.png
+        inverted: if-different
+        slice-y: 9
+        include-count: false
+        name: port_screens
+    -
+        type: image
+        file: userport-screens.png
+        inverted: if-different
+        slice-y: 5
+        include-count: false
+        name: userport_view
+    -
+        type: image
+        file: eight-player.png
+        inverted: if-different
+        slice-y: 6
+        include-count: false
+        name: eight_player_view
+    -
+        type: image
+        file: dpad.png
+        slice-y: 16
+        include-count: false
+        trim: both
+        name: dpad_rects
+    -
+        type: image
+        file: lightpen-buttons.png
+        slice-y: 4
+        include-count: false
+        name: lightpen_button_rects
+    -
+        type: image
+        file: mouse-buttons.png
+        slice-y: 8
+        include-count: false
+        name: mouse_button_rects
+    -
+        type: image
+        file: scroll-wheel.png
+        slice-y: 4
+        include-count: false
+        name: mouse_wheel_rects
+    -
+        type: image
+        file: xb_overlap.png
+        include-count: false
+        name: xb_overlap
+        rl-encode: false

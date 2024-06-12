@@ -15,11 +15,9 @@ sources :=
     big-window-screen.s
     button.s
     cbm_ext.s
-    charset.s
     color.s
     colors.s
     commands.s
-    copyrect.s
     display-joystick.s
     display-key.s
     display-key-vicii-ted.s
@@ -38,6 +36,7 @@ sources :=
     extra-screens.s
     eight-player.s
     eight-player-legend.s
+    graphics.s
     f-keys.s
     help.s
     help-legend.s
@@ -58,7 +57,6 @@ sources :=
     logo.s
     main-screen.s
     main-loop.s
-    memcpy.s
     mouse-amiga.s
     mouse-cx22.s
     mouse-neos.s
@@ -77,7 +75,6 @@ sources :=
     state.s
     superpad.s
     userport.s
-    utility.s
     wheel-of-joy.s
 
 rule basic
@@ -89,12 +86,6 @@ rule gfx-convert-charset
 rule gfx-convert-sprites
     command = gfx-convert sprites $in $out
 
-rule gfx-convert-screen
-    command = gfx-convert -b 255 -d $build_directory screen {{charset.bin}} "" $in
-
-rule gfx-convert-screen-buttons
-    command = gfx-convert -b 255 -d $build_directory screen {{charset.bin}} "" $in && {{./fixup-buttons}} $out
-
 rule vice-ll
   command = awk '{print "al "$$2" ."$$4}' $in > $out
 
@@ -104,33 +95,14 @@ build joyride.d64: create-disk filelist | joyride.prg
 build joyride.d81: create-disk filelist | joyride.prg
     flags = -I$source_directory
 
-build joyride.prg | joyride.prg.sym: link $sources | $built_dependencies
+build joyride.prg | joyride.prg.sym: link $sources
     target = {{joyride-c64.target}}
     libs = mega65.lib cbm.lib
 
 build joyride.prg.ll: vice-ll joyride.prg.sym
 
-built_dependencies :=
-    charset.bin
-    dpad.bin
-    eight-player.bin
-    lightpen-buttons.bin
-    mouse-buttons.bin
-    port-screens.bin
-    scroll-wheel.bin
-    sprites.bin
-    userport-screens.bin
-
-build charset.bin: gfx-convert-charset charset.png
-build sprites.bin: gfx-convert-sprites sprites.png
-build dpad.bin: gfx-convert-screen dpad.png | charset.bin
-build lightpen-buttons.bin: gfx-convert-screen lightpen-buttons.png | charset.bin
-build mouse-buttons.bin: gfx-convert-screen-buttons mouse-buttons.png | charset.bin
-build port-screens.bin: gfx-convert-screen-buttons port-screens.png | charset.bin
-build userport-screens.bin: gfx-convert-screen-buttons userport-screens.png | charset.bin
-build scroll-wheel.bin: gfx-convert-screen-buttons scroll-wheel.png | charset.bin
-build eight-player.bin: gfx-convert-screen-buttons eight-player.png | charset.bin
 build extra-screens.s: convert-characters extra-screens.yaml
+build graphics.s: convert-characters graphics.yaml
 build extra-screen.s: convert-screens extra-screen.txt
 build main-screen.s: convert-screens main-screen.txt
 build big-window-screen.s: convert-screens big-window-screen.txt
@@ -138,7 +110,9 @@ build help-legend.s: convert-screens help-legend.txt
 build eight-player-legend.s: convert-screens eight-player-legend.txt
 build help-screens.s: convert-screens help-screens.txt
     flags = -DVERSION=$VERSION
-
+build sprites.s: convert-sprites sprites.png
+    name = sprite_data
+    flags = -r
 build keys-3x4.s: key-table keys-3x4.key
 build keys-4x4.s: key-table keys-4x4.key
 build keys-cx85.s: key-table keys-cx85.key

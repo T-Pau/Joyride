@@ -27,13 +27,14 @@
 
 .section data
 
+
 .public main_color {
     rl_encode 2 * 40, $c
     .repeat 9 {
         rl_encode 19, $b
-        .data $c
+        rl_literal $c
         rl_encode 19, $b
-        .data $c
+        rl_literal $c
     }
     rl_encode 4 * 40 + 4, $c
     rl_encode 30, $b
@@ -49,7 +50,7 @@
     rl_encode 2 * 40, $c
     .repeat 18 {
         rl_encode 39, $b
-        .data $c
+        rl_literal $c
     }
     rl_encode 5 * 40, $c
     rl_end

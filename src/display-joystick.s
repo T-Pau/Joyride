@@ -32,11 +32,11 @@ joystick_tmp .reserve 1
 .section data
 
 joy_positions {
-    .data screen + 4 * 40 + 2
-    .data screen + 4 * 40 + 22
-    .data screen + 15 * 40 + 8
-    .data screen + 15 * 40 + 22
-    .data screen + 15 * 40 + 15
+    .data screen + 4 * 40 + 3
+    .data screen + 4 * 40 + 23
+    .data screen + 15 * 40 + 9
+    .data screen + 15 * 40 + 23
+    .data screen + 15 * 40 + 16
 }
 
 .section code
@@ -60,7 +60,7 @@ joy_positions {
     clc
     ldx joystick_tmp
     lda joy_positions,x
-    adc #46
+    adc #45
     sta ptr2
     lda joy_positions + 1,x
     adc #0

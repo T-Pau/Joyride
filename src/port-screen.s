@@ -137,9 +137,7 @@ loop:
     sta ptr1
     lda port_screens + 1,x
     sta ptr1 + 1
-    ldx #17
-    ldy #9
-    jsr copyrect
+    jsr rl_expand
 
     ldy port
     beq next
@@ -147,9 +145,9 @@ loop:
     cmp #CONTROLLER_VIEW_RAW
     bne next
 
-    subtract_word ptr2, 40
+    subtract_word ptr2, 17
     ldy #16
-    lda #$20
+    lda #' '
 :   sta (ptr2),y
     dey
     bpl :-
@@ -206,14 +204,4 @@ port_default_screens {
     .data VIEW_DYNAMIC
     .data VIEW_DYNAMIC
     .data CONTROLLER_VIEW_RAW
-}
-
-port_screens {
-    .repeat i, CONTROLLER_NUM_VIEWS {
-        .data port_screen_data + 17 * 9 * i
-    }
-}
-
-port_screen_data {
-    .binary_file "port-screens.bin"
 }

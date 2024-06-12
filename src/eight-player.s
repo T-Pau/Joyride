@@ -137,9 +137,7 @@ view_loop:
     sta ptr2
     lda view_start + 1,y
     sta ptr2 + 1
-    ldx #18
-    ldy #9
-    jsr copyrect
+    jsr rl_expand
 same_view:
     ldx eight_player_index
     inx
@@ -361,14 +359,4 @@ eight_player_page_name_data {
     .data "  a-d":screen_inverted
     .data "  e-h":screen_inverted
     .data "  raw":screen_inverted
-}
-
-eight_player_view {
-    .repeat i, EIGHT_PLYAER_NUM_VIEWS {
-        .data eight_player_view_data + i * 18 * 9
-    }
-}
-
-eight_player_view_data {
-    .binary_file "eight-player.bin"
 }

@@ -26,8 +26,8 @@
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 mouse_buttons_offset = 10
-mouse_wheel_offset = 2
-mouse_position_offset = 40 + 6 ; negative
+mouse_wheel_offset = 40 - 5
+mouse_position_offset = 9 ; negative
 
 mouse_sprite_x_offset = 2
 mouse_sprite_y_offset = 50 + 18
@@ -53,9 +53,7 @@ mouse_tmp .reserve 1
     lda mouse_button_rects + 1,y
     sta ptr1 + 1
     add_word ptr2, mouse_buttons_offset
-    ldx #7
-    ldy #3
-    jsr copyrect
+    jsr rl_expand
 
     add_word ptr2, mouse_wheel_offset
     lda port_digital
@@ -66,9 +64,7 @@ mouse_tmp .reserve 1
     sta ptr1
     lda mouse_wheel_rects + 1,y
     sta ptr1 + 1
-    ldx #3
-    ldy #4
-    jsr copyrect
+    jsr rl_expand
 
     subtract_word ptr2, mouse_position_offset
     lda port_pot1
@@ -114,26 +110,4 @@ mouse_tmp .reserve 1
     jsr set_sprite
 
     rts
-}
-
-.section data
-
-mouse_button_rects {
-    .repeat i, 8 {
-        .data mouse_buttons_data + i * 21
-    }
-}
-
-mouse_wheel_rects {
-    .repeat i, 8 {
-        .data mouse_wheel_data + i * 12
-    }
-}
-
-mouse_buttons_data {
-    .binary_file "mouse-buttons.bin"
-}
-
-mouse_wheel_data {
-    .binary_file "scroll-wheel.bin"
 }

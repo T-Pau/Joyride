@@ -54,8 +54,8 @@ both:
     lda #COLOR_FRAME
     sta VIC_BORDER_COLOR
 
-    memcpy charset, charset_data, $800
-    memcpy sprites, sprite_data, (64 * 8)
+    rl_expand charset, charset_data
+    rl_expand sprites, sprite_data
     rl_expand charset_extra, charset_extra_data
 
     jsr init_state

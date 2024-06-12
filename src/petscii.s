@@ -27,8 +27,8 @@
 
 PETSCII_OFFSET_X = 15
 PETSCII_OFFSET_R = 5
-PETSCII_OFFSET_DPAD = 18 ; negative
-PETSCII_OFFSET_Y = 40 * 4 - 11 ; negative
+PETSCII_OFFSET_DPAD = 17 ; negative
+PETSCII_OFFSET_Y = 40 * 4 - 12 ; negative
 PETSCII_OFFSET_A = 4
 PETSCII_OFFSET_B = 40 * 1 - 2
 PETSCII_OFFSET_SELECT = 40 - 7
@@ -240,7 +240,3 @@ display:
 }
 
 .section data
-
-xb_overlap {
-    .data $fd, $fe, $ff, $f5
-}
