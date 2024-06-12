@@ -48,7 +48,7 @@ name extra_screen
 
 
 
-       f1/f2: view    c=-f1: help
+              f1/f2: view
          f3/f4: controller type
             f5: reset keypad
-
+         c=-f1: help  r/s: exit

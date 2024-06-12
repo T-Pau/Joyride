@@ -31,6 +31,6 @@ name eight_player_legend
 .include "screen-settings.inc"
 lines 3
 ---
-       f1/f2: view   c=-f1: help        
-   f3/f4: adapter type   f5/f6: page    
-                                        
+             f1/f2: view   
+   f3/f4: adapter type   f5/f6: page
+        c=-f1: help  r/s: exit

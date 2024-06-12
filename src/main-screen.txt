@@ -52,6 +52,6 @@ name main_screen
    ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
    ◥▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀◤
 
-       f1/f2: view   c=-f1: help        
-     f3/f4: port 1   f5/f6: port 2      
-            f7/f8: user port            
+      f1/f2: view  f3/f4: port 1
+    f5/f6: port 2  f7/f8: user port
+        c=-f1: help  r/s: exit

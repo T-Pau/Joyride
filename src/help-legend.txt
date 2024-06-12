@@ -31,6 +31,6 @@ name help_legend
 .include "screen-settings.inc"
 lines 3
 ---
-        c=-f1: return to program        
-f3/space: next page   f4: previous page 
-                                        
+f3/space: next page   f4: previous page
+        c=-f1: return to program
+             run/stop: exit
