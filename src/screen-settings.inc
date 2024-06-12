@@ -32,19 +32,11 @@ map $2190 $9f
 map $20-$3f $a0
 
 map $25a0 $20
-.if 0
-map $25e5 $4b
-map $25e4 $4c
-map $25e3 $4a
-map $2580 $4d
-map $25e2 $49
-.else
 map $25e5 $42
 map $25e4 $43
 map $25e3 $41
 map $2580 $44
 map $25e2 $40
-.endif
 
 line_length 40
 lines 25
