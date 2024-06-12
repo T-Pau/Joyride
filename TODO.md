@@ -1,6 +1,5 @@
 ## Before Release
 
-- Wrap around mouse cursor modulo 64.
 - Fix graphics glitches when switching to/from extra.
 
 ## Hardware Support

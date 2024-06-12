@@ -1,9 +1,15 @@
 # Version 1.8 (Unreleased)
 
-- Add support for NEOS, Amiga, and Atari ST mice.
+- Add support for NEOS mouse.
+- Add support for Amiga mouse.
+- Add support for Atari ST mouse.
 - Add support for Atari CX-22 trackball.
-- Add support for Atari CX-21, CX-50, and CX-85 keypads.
-- Add support for Cardco Cardkey 1, Rushware, and Colin keypads.
+- Add support for Atari CX-21 / CX-50 keypad.
+- Add support for Atari CX-85 keypad.
+- Add support for Cardco Cardkey 1 keypad.
+- Add support for Rushware keypad.
+- Add support for Colin keypads.
+- Adapt function key usage to accommodate new special view.
 
 
 # Version 1.7 (2024-05-30)

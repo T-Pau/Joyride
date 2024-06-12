@@ -29,7 +29,7 @@ SUPERPAD_CONTROLELR_OFFSET = 40 + 1
 SUPERPAD_MOUSE_OFFSET = 40 + 11
 
 SUPERPAD_MOUSE_R_OFFSET = 3
-SUPERPAD_MOUSE_X_OFFSET = 40 * 5 - 1
+SUPERPAD_MOUSE_X_OFFSET = 40 * 5
 SUPERPAD_MOUSE_Y_OFFSET = 40
 
 SUPERPAD_RAW_OFFSET_1 = 40 * 2 + 2
@@ -262,17 +262,13 @@ minus_x:
     lda snes_x,y
     sec
     sbc tmp
-    bcs :+
-    lda #$00
-:   sta snes_x,y
+    sta snes_x,y
 compute_y:
     lda snes_buttons2,y
     bmi minus_y
     clc
     adc snes_y,y
-    bcc :+
-    lda #$ff
-:   sta snes_y,y
+    sta snes_y,y
     jmp mouse_display
 minus_y:
     and #$7f
@@ -296,14 +292,16 @@ mouse_display:
     add_word ptr2, SUPERPAD_MOUSE_X_OFFSET
     ldy superpad_index
     lda snes_x,y
+    and #$3f
     ldy #0
-    ldx #1
+    ldx #0
     jsr pot_number
     add_word ptr2, SUPERPAD_MOUSE_Y_OFFSET
     ldy superpad_index
     lda snes_y,y
+    and #$3f
     ldy #0
-    ldx #1
+    ldx #0
     jsr pot_number
 
     ldy superpad_index
@@ -314,8 +312,7 @@ mouse_display:
     lda sprite_x_offset + 1,x
     sta sprite_x + 1
     lda snes_x,y
-    lsr
-    lsr
+    and #$3f
     clc
     adc sprite_x_offset,x
     sta sprite_x
@@ -323,8 +320,7 @@ mouse_display:
     inc sprite_x + 1
 :
     lda snes_y,y
-    lsr
-    lsr
+    and #$3f
     clc
     adc sprite_y_offset,x
     sta sprite_y

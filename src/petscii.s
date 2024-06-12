@@ -35,11 +35,11 @@ PETSCII_OFFSET_SELECT = 40 - 7
 PETSCII_OFFSET_START = 3
 
 PETSCII_MOUSE_L_OFFSET = 16
-PETSCII_MOUSE_R_OFFSET = 4
+PETSCII_MOUSE_R_OFFSET = 3
 PETSCII_MOUSE_X_OFFSET = 40 * 3 - 1
 PETSCII_MOUSE_Y_OFFSET = 40
 
-PETSCII_MOUSE_SPRITE_X_OFFSET = 130
+PETSCII_MOUSE_SPRITE_X_OFFSET = 138
 PETSCII_MOUSE_SPRITE_Y_OFFSET = 172
 
 .section reserved
@@ -205,16 +205,12 @@ display:
     lda #sprite_cross
     sta lower_sprite_ptr
     lda snes_x
-    lsr
-    lsr
-    lsr
+    and #$1f
     clc
     adc #PETSCII_MOUSE_SPRITE_X_OFFSET
     sta lower_sprite_x
     lda snes_y
-    lsr
-    lsr
-    lsr
+    and #$1f
     clc
     adc #PETSCII_MOUSE_SPRITE_Y_OFFSET
     sta lower_sprite_y
@@ -229,13 +225,15 @@ display:
     jsr small_button
     add_word ptr2, PETSCII_MOUSE_X_OFFSET
     lda snes_x
+    and #$1f
     ldy #0
-    ldx #1
+    ldx #0
     jsr pot_number
     add_word ptr2, PETSCII_MOUSE_Y_OFFSET
     lda snes_y
+    and #$1f
     ldy #0
-    ldx #1
+    ldx #0
     jmp pot_number
 }
 

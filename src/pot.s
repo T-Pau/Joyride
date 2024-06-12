@@ -60,6 +60,10 @@ digits_one {
 
 .section code
 
+; Display 9-bit number in decimal.
+; Arguments:
+;   A/Y: number
+;   X: if 0, only display 2 digits
 .public pot_number {
     sty bit9
     ldy #0
