@@ -121,8 +121,10 @@ bottom_no_change:
 
     lda command
     bne end_port1
+    begin_screen_update
     ldx #0
     jsr display_port
+    end_screen_update
 end_port1:
     lda VIC_RASTER
     bmi end_port1
@@ -170,8 +172,10 @@ end_pot:
 
     lda command
     bne end_port2
+    begin_screen_update
     ldx #1
     jsr display_port
+    end_screen_update
 end_port2:
     rts
 }

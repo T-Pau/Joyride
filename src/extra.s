@@ -229,9 +229,11 @@ handle_extra {
     jsr display_logo
     lda command
     bne end
+    begin_screen_update
 extra_bottom_jsr_instruction:
 .private extra_bottom_jsr = extra_bottom_jsr_instruction + 1
     jsr $0000
+    end_screen_update
 end:
     jmp handle_keyboard
 }

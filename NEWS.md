@@ -1,5 +1,6 @@
 # Version 1.8 (Unreleased)
 
+- Native version for Commodore 128.
 - Add support for NEOS mouse.
 - Add support for Amiga mouse.
 - Add support for Atari ST mouse.

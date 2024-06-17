@@ -3,7 +3,8 @@ VERSION = 1.7a
 distfile := Joyride-$VERSION.zip
 
 built_dist_files :=
-    src/joyride.prg
+    src/joyride-c64.prg
+    src/joyride-c128.prg
     src/joyride.d64
     src/joyride.d81
 

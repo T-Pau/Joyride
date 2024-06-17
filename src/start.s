@@ -27,7 +27,25 @@
 
 .section code
 
+.pre_if .defined(C128)
+.macro begin_screen_update {
+    lda #MMU_CONFIGURATION_HIGH(MMU_CONFIGURATION_RAM) | MMU_CONFIGURATION_MID(MMU_CONFIGURATION_RAM) | MMU_CONFIGURATION_LOW_RAM
+    sta MMU_CONFIGURATION
+}
+.macro end_screen_update {
+    lda #MMU_CONFIGURATION_MID(MMU_CONFIGURATION_RAM) | MMU_CONFIGURATION_LOW_RAM
+    sta MMU_CONFIGURATION
+}
+.pre_else
+.macro begin_screen_update {
+}
+.macro end_screen_update {
+}
+.pre_end
+
 .public start {
+    sei
+.pre_if .defined(C64)    
     ; disable BASIC ROM
     lda #$36
     sta $01
@@ -47,6 +65,10 @@
     lda #$ff
     bne both
 not_m65:
+.pre_else_if .defined(C128)
+    lda #MMU_CONFIGURATION_MID(MMU_CONFIGURATION_RAM) | MMU_CONFIGURATION_LOW_RAM
+    sta MMU_CONFIGURATION
+.pre_end
     lda #0
 both:
     sta machine_type
@@ -116,7 +138,6 @@ both:
 
     jmp main_loop
 }
-
 
 .section reserved
 

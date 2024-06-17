@@ -2,9 +2,7 @@
 
 ![Screenshot](screenshot.png)
 
-This program monitors the controllers connected to your Commodore 64 and displays relevant information depending on their types. You can use the function keys to select the correct type or to display raw data.
-
-Adapters that support more than two controllers don't fit in the main screen. `F7` switches to a layout that supports four controllers per page.
+This program monitors the controllers connected to your Commodore 64 / 128 and displays relevant information depending on their types. You can use the function keys to select the correct type or to display raw data.
 
 For digital inputs, the button or direction is inverted when pressed. Analog inputs are displayed as numbers and by positioning a cursor.
 

@@ -7,7 +7,7 @@ rule key-table
     command = {{../scripts/key-table}} -M $depfile $in $out
     depfile = $out.d
 
-sources :=
+sources_common :=
     ../Toolkit/xlr8/6502/rl-expand.s
     ../Toolkit/xlr8/6502/utility.s
     ../Toolkit/xlr8/commodore/irq.s
@@ -32,14 +32,11 @@ sources :=
     dpad.s
     exit.s
     extra.s
-    extra-screen.s
     extra-screens.s
     eight-player.s
-    eight-player-legend.s
     graphics.s
     f-keys.s
     help.s
-    help-legend.s
     help-screen.s
     help-screens.s
     hex.s
@@ -55,7 +52,6 @@ sources :=
     keys-4x4.s
     keys-cx85.s
     logo.s
-    main-screen.s
     main-loop.s
     mouse-amiga.s
     mouse-cx22.s
@@ -77,37 +73,63 @@ sources :=
     userport.s
     wheel-of-joy.s
 
+sources_c64 :=
+    $sources_common
+    eight-player-legend-c64.s
+    extra-screen-c64.s
+    help-legend-c64.s
+    main-screen-c64.s
+
+sources_c128 :=
+    $sources_common
+    eight-player-legend-c128.s
+    extra-screen-c128.s
+    help-legend-c128.s
+    main-screen-c128.s
+
 rule basic
     command = $petcat -w$dialect -l $address -o $out $in
-
-rule gfx-convert-charset
-    command = gfx-convert -b 255 charset $in $out
-
-rule gfx-convert-sprites
-    command = gfx-convert sprites $in $out
 
 rule vice-ll
   command = awk '{print "al "$$2" ."$$4}' $in > $out
 
-build joyride.d64: create-disk filelist | joyride.prg
-    flags = -I$source_directory
+build joyride.d64: create-disk filelist | joyride-c64.prg joyride-c128.prg
+    flags = -I$source_directory -I$build_directory
 
-build joyride.d81: create-disk filelist | joyride.prg
-    flags = -I$source_directory
+build joyride.d81: create-disk filelist | joyride-c64.prg joyride-c128.prg
+    flags = -I$source_directory -I$build_directory
 
-build joyride.prg | joyride.prg.sym: link $sources
+build joyride-c64.prg | joyride-c64.prg.sym: link $sources_c64
     target = {{joyride-c64.target}}
     libs = mega65.lib cbm.lib
 
-build joyride.prg.ll: vice-ll joyride.prg.sym
+build joyride-c128.prg | joyride-c128.prg.sym: link $sources_c128
+    target = {{joyride-c128.target}}
+    libs = c128.lib cbm.lib
 
+build joyride-c64.prg.ll: vice-ll joyride-c64.prg.sym
+
+build joyride-c128.prg.ll: vice-ll joyride-c128.prg.sym
+
+build eight-player-legend-c64.s: convert-screens eight-player-legend.txt
+    flags = -DC64
+build eight-player-legend-c128.s: convert-screens eight-player-legend.txt
+    flags = -DC128
+build extra-screen-c64.s: convert-screens extra-screen.txt
+    flags = -DC64
+build extra-screen-c128.s: convert-screens extra-screen.txt
+    flags = -DC128
 build extra-screens.s: convert-characters extra-screens.yaml
 build graphics.s: convert-characters graphics.yaml
-build extra-screen.s: convert-screens extra-screen.txt
-build main-screen.s: convert-screens main-screen.txt
+build main-screen-c64.s: convert-screens main-screen.txt
+    flags = -DC64
+build main-screen-c128.s: convert-screens main-screen.txt
+    flags = -DC128
 build big-window-screen.s: convert-screens big-window-screen.txt
-build help-legend.s: convert-screens help-legend.txt
-build eight-player-legend.s: convert-screens eight-player-legend.txt
+build help-legend-c64.s: convert-screens help-legend.txt
+    flags = -DC64
+build help-legend-c128.s: convert-screens help-legend.txt
+    flags = -DC128
 build help-screens.s: convert-screens help-screens.txt
     flags = -DVERSION=$VERSION
 build sprites.s: convert-sprites sprites.png

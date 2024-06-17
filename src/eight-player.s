@@ -208,8 +208,11 @@ same_view:
     sta top_jmp + 1
     lda top_handler + 1,x
     sta top_jmp + 2
+    begin_screen_update
 top_jmp:
-    jmp $0000
+    jsr $0000
+    end_screen_update
+    rts
 }
 
 .public eight_player_bottom {
@@ -222,8 +225,10 @@ top_jmp:
     sta bottom_jmp + 1
     lda bottom_handler + 1,x
     sta bottom_jmp + 2
+    begin_screen_update
 bottom_jmp:
     jsr $0000
+    end_screen_update
 
     jmp handle_keyboard
 }

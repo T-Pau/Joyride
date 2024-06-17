@@ -151,8 +151,11 @@ loop:
     sta jump + 1
     lda read_routines + 1,y
     sta jump + 2
+    begin_screen_update
 jump:
-    jmp $0000
+    jsr $0000
+    end_screen_update
+    rts
 }
 
 display_userport_joysticks {

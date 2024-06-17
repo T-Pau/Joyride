@@ -33,4 +33,8 @@ lines 3
 ---
              f1/f2: view   
    f3/f4: adapter type   f5/f6: page
+.if C64
         c=-f1: help  r/s: exit
+.else
+         help: help  r/s: exit
+.endif
