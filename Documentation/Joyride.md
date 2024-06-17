@@ -30,17 +30,17 @@ For binary inputs, the button or direction is inverted when pressed. Analog or p
 ## Supported Devices
 
 Controller Port:
-- Joystick
-- Mouse
-- Paddle
-- KoalaPad
-- Light Pen (only in port 1)
-- Protovision Protopad
-- Trap Them Controller
+- [Joystick](https://www.c64-wiki.com/wiki/Joystick)
+- [Mouse](https://www.c64-wiki.com/wiki/Mouse_1351)
+- [Paddle](https://www.c64-wiki.com/wiki/Paddle)
+- [Koalapad](https://en.wikipedia.org/wiki/KoalaPad)
+- [Light Pen](https://www.c64-wiki.com/wiki/Light_pen) (only in port 1)
+- [Protovision Protopad](https://www.protovision.games/shop/protopad/protopad.php)
+- [Trap Them Controller](https://www.polyplay.xyz/Trap-Them-Controller-Commodore-64)
 
 User Port, Two Joysticks:
-- Protovision / Classic Game Adapter
-- Digital Excess / Hitmen
+- [Protovision / Classic Game Adapter](https://www.protovision.games/hardw/4_player.php)
+- [Digital Excess / Hitmen](https://hitmen.c02.at/files/hardware/4player/4player.txt)
 - Kingsoft
 - Starbyte Tie Break Adapter
 - PET Dual Joystick
@@ -49,18 +49,18 @@ User Port, One Joystick:
 - PET Space Invaders+
 - VIC-20 OEM
 - C64DTV Hummer
-- PETSCII Robots Adapter
+- [PETSCII Robots Adapter](https://texelec.com/product/snes-adapter-commodore/)
 
 Multi Adapters:
-- SuperPAD 64
+- [SuperPAD 64](https://www.polyplay.xyz/SuperPad64-8-Spieler-Interface-Commodore-64)
 - Ninja SNES Pad
 - Luigi Pantarotto's Spaceballs
-- Inception
+- [Inception](http://www.c64.cz/index.php?static=inception)
 - MultiJoy
-- Wheel of Joy
-- Wheel of Joy Mini
+- [Wheel of Joy](https://github.com/SukkoPera/WheelOfJoy)
+- [Wheel of Joy Mini](https://github.com/SukkoPera/WheelOfJoyMini)
 
-Special:
+Extra:
 - NEOS Mouse
 - Amiga Mouse
 - Atari ST Mouse
@@ -69,7 +69,7 @@ Special:
 - Atari CX-85 Keypad
 - Cardco Cardkey 1
 - Rushware Keypad
-- Coplin Keypad
+- [Coplin Keypad](http://oldcomputer.info/hacks/numpad64/index.htm)
 
 
 ## Controller Ports
