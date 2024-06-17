@@ -29,7 +29,7 @@ User Port, Two Joysticks:
 - [Protovision / Classic Game Adapter](https://www.protovision.games/hardw/4_player.php)
 - [Digital Excess / Hitmen](https://hitmen.c02.at/files/hardware/4player/4player.txt)
 - [Kingsoft](https://www.synnes.org/c64/c64_joy_adapter_schematics.html)
-- Starbyte Tie Break Adapter
+- [Starbyte Tie Break Adapter](https://hitmen.c02.at/files/hardware/4player/starbyte_adapter.txt)
 - PET Dual Joystick
 
 User Port, One Joystick:
@@ -40,7 +40,7 @@ User Port, One Joystick:
 
 Multi Adapters:
 - [SuperPAD 64](https://www.polyplay.xyz/SuperPad64-8-Spieler-Interface-Commodore-64)
-- Ninja SNES Pad
+- [Ninja SNES Pad](https://hitmen.c02.at/files/hardware/4player/ninja_snes_adapter.txt)
 - [Luigi Pantarotto's Spaceballs](https://www.synnes.org/c64/c64_joy_adapter_schematics.html)
 - [Inception](http://www.c64.cz/index.php?static=inception)
 - [MultiJoy](http://www.multijoy.net)
