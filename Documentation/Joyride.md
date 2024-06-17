@@ -41,7 +41,7 @@ Controller Port:
 User Port, Two Joysticks:
 - [Protovision / Classic Game Adapter](https://www.protovision.games/hardw/4_player.php)
 - [Digital Excess / Hitmen](https://hitmen.c02.at/files/hardware/4player/4player.txt)
-- Kingsoft
+- [Kingsoft](https://www.synnes.org/c64/c64_joy_adapter_schematics.html)
 - Starbyte Tie Break Adapter
 - PET Dual Joystick
 
@@ -54,9 +54,9 @@ User Port, One Joystick:
 Multi Adapters:
 - [SuperPAD 64](https://www.polyplay.xyz/SuperPad64-8-Spieler-Interface-Commodore-64)
 - Ninja SNES Pad
-- Luigi Pantarotto's Spaceballs
+- [Luigi Pantarotto's Spaceballs](https://www.synnes.org/c64/c64_joy_adapter_schematics.html)
 - [Inception](http://www.c64.cz/index.php?static=inception)
-- MultiJoy
+- [MultiJoy](http://www.multijoy.net)
 - [Wheel of Joy](https://github.com/SukkoPera/WheelOfJoy)
 - [Wheel of Joy Mini](https://github.com/SukkoPera/WheelOfJoyMini)
 
@@ -65,10 +65,10 @@ Extra:
 - Amiga Mouse
 - Atari ST Mouse
 - Atari CX-22 Trackball
-- Atari CX-21 / CX-50 Keypad
-- Atari CX-85 Keypad
+- [Atari CX-21 / CX-50 Keypad](https://github.com/tebl/A2600-Keyboard)
+- [Atari CX-85 Keypad](https://www.atariwiki.org/wiki/Wiki.jsp?page=AtariCX85)
 - Cardco Cardkey 1
-- Rushware Keypad
+- [Rushware Keypad](https://www.c64-wiki.com/wiki/Rushware_keypad)
 - [Coplin Keypad](http://oldcomputer.info/hacks/numpad64/index.htm)
 
 
