@@ -361,8 +361,6 @@ Rushware Keypad
 This keypad contains 16 keys.
 
 Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
-
-Note: Support for this keypad has not been tested with real hardware.
 ---
 Coplin Keypad
 

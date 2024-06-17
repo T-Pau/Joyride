@@ -1,6 +1,7 @@
 ## Before Release
 
 - Fix graphics glitches when switching to/from extra.
+- Fix exit on C128.
 
 ## Hardware Support
 
