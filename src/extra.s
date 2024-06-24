@@ -136,7 +136,8 @@ setup_extra_type {
     sta new_key_index
     ldx #MAX_NUM_KEYS - 1
     lda #0
-:   sta new_key_state,x
+:   sta key_state,x
+    sta new_key_state,x
     dex
     bpl :-
     ldx extra_type
@@ -430,7 +431,7 @@ extra_bottom_handler {
     .data display_single_key
     .data display_single_key
     .data display_single_key
-    .data display_single_key
+    .data display_coplin
 }
 
 extra_sampler {

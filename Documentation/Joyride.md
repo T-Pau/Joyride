@@ -9,7 +9,11 @@ To test the keyboard, use the companion program [Anykey](https://github.com/T-Pa
 
 ## Loading the Program
 
-Load the program from the disc image with `LOAD"*",8,1`. On C128 and MEGA65, switch to 64 mode before loading.
+Load the program from disc with `LOAD"*",8` and start it with `RUN`.
+
+On C128, the program loads automatically if the disk is in the drive when turning the computer on.
+
+On MEGA65, switch to 64 mode before loading.
 
 
 ## Views
@@ -194,7 +198,7 @@ This adapter from TFW8b is designed for the PET, but also works on the C64.
 
 It supports two joysticks with four directional switches and one button each.
 
-Due to technical limitations, up and down cannot be read while fire is pressed.
+Due to technical limitations, up and down can't be read while fire is pressed.
 
 ### PET Space Invaders+
 
@@ -386,7 +390,7 @@ This keypad contains 12 keys.
 
 This keypad contains 17 keys.
 
-Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+Due to technical limitations, multiple simultaneous key presses can't be read and might register as a different key.
 
 **Warning**: Connecting this keypad directly may damage the Commodore 64. Using protective diodes is advised.
 
@@ -398,7 +402,7 @@ Due to technical limitations, multiple simultaneous key presses cannot be read a
 
 This keypad contains 16 keys.
 
-Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+Due to technical limitations, multiple simultaneous key presses can't be read and might register as a different key.
 
 Note: Support for this keypad has not been tested with real hardware.
 
@@ -409,7 +413,7 @@ Note: Support for this keypad has not been tested with real hardware.
 
 This keypad contains 16 keys.
 
-Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+Due to technical limitations, multiple simultaneous key presses can't be read and might register as a different key.
 
 
 ### Coplin Keypad
@@ -418,6 +422,6 @@ Due to technical limitations, multiple simultaneous key presses cannot be read a
 
 This keypad contains 12 keys.
 
-Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+Due to technical limitations, multiple simultaneous presses of keys other than `Enter` can't be read and might register as a different key.
 
 Note: Support for this keypad has not been tested with real hardware.

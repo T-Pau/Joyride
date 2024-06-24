@@ -194,7 +194,7 @@ This adapter from TFW8b is designed for the PET, but also works on the C64.
 
 It supports two joysticks with four directional switches and one button each.
 
-Due to technical limitations, up and down cannot be read while fire is pressed.
+Due to technical limitations, up and down can't be read while fire is pressed.
 ---
 PET Space Invaders+
 
@@ -344,7 +344,7 @@ Atari CX-85 Keypad
 
 This keypad contains 17 keys.
 
-Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+Due to technical limitations, multiple simultaneous key presses can't be read and might register as a different key.
 
 Warning: Connecting this keypad directly may damage the Commodore 64. Using protective diodes is advised.
 ---
@@ -352,7 +352,7 @@ Cardco Cardkey 1
 
 This keypad contains 16 keys.
 
-Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+Due to technical limitations, multiple simultaneous key presses can't be read and might register as a different key.
 
 Note: Support for this keypad has not been tested with real hardware.
 ---
@@ -360,12 +360,12 @@ Rushware Keypad
 
 This keypad contains 16 keys.
 
-Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+Due to technical limitations, multiple simultaneous key presses can't be read and might register as a different key.
 ---
 Coplin Keypad
 
 This keypad contains 12 keys.
 
-Due to technical limitations, multiple simultaneous key presses cannot be read and might register as a different key.
+Due to technical limitations, multiple simultaneous presses of keys other than Enter can't be read and might register as a different key.
 
 Note: Support for this keypad has not been tested with real hardware.
