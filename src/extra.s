@@ -31,12 +31,13 @@ EXTRA_NEOS = 0
 EXTRA_AMIGA = 1
 EXTRA_ST = 2
 EXTRA_CX_22 = 3
-EXTRA_CX21 = 4
-EXTRA_CX85 = 5
-EXTRA_CARDKEY = 6
-EXTRA_RUSHWARE = 7
-EXTRA_COPLIN = 8
-EXTRA_NUM_TYPES = 9
+EXTRA_CX_22_JOYSTICK = 4
+EXTRA_CX21 = 5
+EXTRA_CX85 = 6
+EXTRA_CARDKEY = 7
+EXTRA_RUSHWARE = 8
+EXTRA_COPLIN = 9
+EXTRA_NUM_TYPES = 10
 
 EXTRA_VIEW_MOUSE = 0
 EXTRA_VIEW_TRACKBALL = 1
@@ -368,6 +369,7 @@ extra_type_name_data {
     .data "amgiga mouse      ":screen_inverted
     .data "atari st mouse    ":screen_inverted
     .data "atari cx22        ":screen_inverted
+    .data "atari cx22 joy    ":screen_inverted
     .data "atari cx21/cx50   ":screen_inverted
     .data "atari cx85        ":screen_inverted
     .data "cardco cardkey 1  ":screen_inverted
@@ -390,6 +392,7 @@ extra_default_view {
     .data EXTRA_VIEW_MOUSE
     .data EXTRA_VIEW_MOUSE
     .data EXTRA_VIEW_TRACKBALL
+    .data EXTRA_VIEW_TRACKBALL
     .data EXTRA_VIEW_CX21
     .data EXTRA_VIEW_CX85
     .data EXTRA_VIEW_CARDKEY
@@ -401,6 +404,7 @@ extra_default_color {
     .data EXTRA_COLOR_NEOS
     .data EXTRA_COLOR_ST
     .data EXTRA_COLOR_ST
+    .data EXTRA_COLOR_NEOS
     .data EXTRA_COLOR_NEOS
     .data EXTRA_COLOR_KEYPAD
     .data EXTRA_COLOR_KEYPAD
@@ -415,6 +419,7 @@ extra_top_handler {
     .data read_st
     .data read_st
     .data read_st
+    .data read_st
     .data read_cx21
     .data read_cx85
     .data read_cardkey
@@ -426,7 +431,8 @@ extra_bottom_handler {
     .data display_neos
     .data display_neos
     .data display_neos
-    .data display_neos
+    .data display_cx22
+    .data display_cx22
     .data display_keyboard
     .data display_single_key
     .data display_single_key
@@ -439,6 +445,7 @@ extra_sampler {
     .data sample_amiga
     .data sample_st
     .data sample_cx22
+    .data sample_cx22_joystick
     .data sample_none
     .data sample_none
     .data sample_none

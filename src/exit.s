@@ -25,12 +25,15 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+.pre_if .defined(C64)
 .pin kernal_irq $02a7 ; Otherwise it would be below BASIC ROM.
+.pre_else
+.pin kernal_irq $04e8
+.pre_end
 
 .section code
 
 exit {
-    ;rts ; TODO: currently not working
     sei
     ; restore timer configuration
     lda timer_1a
@@ -46,8 +49,14 @@ exit {
     lda timer_2a_control
     sta CIA2_TIMER_A_CONTROL
 
-    lda #$37
-    sta $01
+    .if .defined(C128) {
+        lda #0
+        sta MMU_CONFIGURATION
+    }
+    .else {
+        lda #$37
+        sta $01
+    }
     jsr restore_irq
     set_vic_bank $0000
     set_vic_text $0400, $1000

@@ -92,7 +92,10 @@ display_neos {
     store_word destination_ptr, EXTRA_VIEW_START + NEOS_R_OFFSET
     lda neos_button_r
     jsr small_button
+    jmp display_extra_mouse
+}
 
+display_extra_mouse {
     store_word destination_ptr, EXTRA_VIEW_START + NEOS_X_OFFSET
     lda neos_position
     ldx #1

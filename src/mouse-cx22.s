@@ -25,6 +25,8 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+CX22_F_OFFSET = 40 + 12
+
 .section code
 
 sample_cx22 {
@@ -62,6 +64,39 @@ sample_cx22 {
     rts
 }
 
+sample_cx22_joystick {
+    lda CIA1_PRB
+    tax
+    eor cx22_joystick_last
+    stx cx22_joystick_last
+    tax
+
+    and #$01
+    beq :+
+    inc neos_position + 1
+:   txa
+    and #$02
+    beq :+
+    dec neos_position + 1
+:   txa
+    and #$04
+    beq :+
+    dec neos_position
+:   txa
+    and #$08
+    beq :+
+    inc neos_position
+:   rts    
+}
+
+display_cx22 {
+    store_word destination_ptr, EXTRA_VIEW_START + CX22_F_OFFSET
+    lda neos_button_l
+    jsr small_button
+    jmp display_extra_mouse
+}
+
+
 .section data
 
 cx22_diff {
@@ -71,3 +106,7 @@ cx22_diff {
     .data  $ff, $00, $00, $00 ; 10
     .data  $00, $01, $00, $00 ; 11
 }
+
+.section reserved
+
+cx22_joystick_last .reserve 1
