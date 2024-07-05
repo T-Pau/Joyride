@@ -130,7 +130,7 @@ not_commodore:
     tya
     bpl not_runstop
     ldy #KEY_STOP
-    bne got_key 
+    jmp got_key 
 not_runstop:
     ldx f_key_num_commands
     cpx #KEY_LEFT_ARROW
@@ -139,7 +139,7 @@ not_runstop:
     and #SET_BIT(4)
     beq :+
     ldy #KEY_SPACE
-    bne got_key
+    jmp got_key
 :   tya
     and #SET_BIT(1)
     beq :+
@@ -194,6 +194,24 @@ got_function_key:
     beq got_key
     iny
 
+no_c64_key:
+    lda #$ff
+    sta CIA1_PRA
+    sta CIA1_PRB
+    lda #$00
+    sta CIA1_DDRA
+    sta CIA1_DDRB
+    lda #$fe
+    sta VIC_C128_KEYBOARD
+    lda CIA1_PRB
+    ldx #$ff
+    stx VIC_C128_KEYBOARD
+    ora f_key_mask
+    eor #$ff
+    and #$01
+    beq no_key
+    ldy #KEY_C_F1 ; TODO: KEY_HELP
+
 got_key:
     lda #$00
     sta CIA1_DDRA
@@ -207,24 +225,6 @@ got_key:
     and CIA1_PRA
     cmp #$ff
     beq end
-
-no_c64_key:
-    lda #$ff
-    sta CIA1_PRA
-    sta CIA1_PRB
-    lda #$00
-    sta CIA1_DDRA
-    sta CIA1_DDRB
-    lda #$fe
-    sta VIC_C128_KEYBOARD
-    lda CIA1_PRB
-    ldx #$ff
-    stx VIC_C128_KEYBOARD
-    eor #$ff
-    and #$01
-    beq end
-    ldy #KEY_C_F1 ; TODO: KEY_HELP
-    bne end
 
 no_key:
     ldy #0
