@@ -11,6 +11,7 @@ sources_common :=
     ../Toolkit/xlr8/6502/rl-expand.s
     ../Toolkit/xlr8/6502/utility.s
     ../Toolkit/xlr8/commodore/irq.s
+    ../Toolkit/xlr8/generic/rl-encode.s
     start.s
     big-window-screen.s
     button.s

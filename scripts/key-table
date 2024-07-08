@@ -118,8 +118,6 @@ with open(input_file_name) as fin:
         else:
             raise "unknown command '" + words[0] + "'"
 
-print(f"name={name}")
-
 fout = output.get_file()
 
 num_keys = len(keys_address)
