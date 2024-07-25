@@ -193,6 +193,7 @@ got_function_key:
 :   tax
     beq got_key
     iny
+    bne got_key
 
 no_c64_key:
     lda #$ff
