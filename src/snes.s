@@ -27,8 +27,8 @@
 
 SNES_OFFSET_X = 9
 SNES_OFFSET_R = 4
-SNES_OFFSET_DPAD = 40 - 12
-SNES_OFFSET_Y = 40 * 3 - 3 ; negative
+SNES_OFFSET_DPAD = 40 - 11
+SNES_OFFSET_Y = 40 * 3 - 2 ; negative
 SNES_OFFSET_A = 4
 SNES_OFFSET_B = 40 * 2- 2
 SNES_OFFSET_SELECT = 40 * 2 - 5
@@ -112,15 +112,5 @@ compact .reserve 1
     add_word ptr2, SNES_OFFSET_START
     lda buttons
     and #$10
-    jsr tiny_button
-
-    lda compact
-    beq end
-    subtract_word ptr2, SNES_OFFSET_L_FIX
-    ldy #0
-    lda #$ec
-    sta (ptr2),y
-
-end:
-    rts
+    jmp tiny_button
 }

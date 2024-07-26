@@ -25,10 +25,11 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+PETSCII_OFFSET_L = 5
 PETSCII_OFFSET_X = 15
 PETSCII_OFFSET_R = 5
 PETSCII_OFFSET_DPAD = 17 ; negative
-PETSCII_OFFSET_Y = 40 * 4 - 12 ; negative
+PETSCII_OFFSET_Y = 40 * 3 - 7 ; negative
 PETSCII_OFFSET_A = 4
 PETSCII_OFFSET_B = 40 * 1 - 2
 PETSCII_OFFSET_SELECT = 40 - 7
@@ -99,7 +100,7 @@ pad:
     ;                         R, L, X, A
 
     ; L
-    store_word ptr2, USERPORT_VIEW_START + 5
+    store_word ptr2, USERPORT_VIEW_START + PETSCII_OFFSET_L
     lda petscii_data + 1
     and #$20
     jsr tiny_button

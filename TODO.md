@@ -1,6 +1,5 @@
 ## Before Release
 
-- Graphics/position wrong for SNES controller on Controller port.
 - Reading POTs not working on MEGA65 R6.
 - Fix graphics glitches when switching to/from extra.
 - Fix exit on C128.
