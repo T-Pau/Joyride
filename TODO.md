@@ -1,6 +1,6 @@
 ## Before Release
 
-- Reading POTs not working on MEGA65 R6.
+- Fix Atari CX-22 joystick mode (y axis inverted, increment while direction pressed).
 - Fix graphics glitches when switching to/from extra.
 - Fix exit on C128.
 - Test Coplin keypad.
