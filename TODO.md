@@ -14,6 +14,7 @@
 
 ## Other
 
+- When run on MEGA65, read HELP key.
 - Fix on NTSC.
 - Fix for 8BitDo SNES Adapter.
 - Add labels to multi adapter pages.

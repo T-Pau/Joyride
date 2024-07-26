@@ -144,7 +144,7 @@ not_runstop:
     and #SET_BIT(1)
     beq :+
     ldy #KEY_LEFT_ARROW
-    bne got_key
+    jmp got_key
 
 :   lda #CLEAR_BIT(5)
     sta CIA1_PRA
@@ -196,6 +196,8 @@ got_function_key:
     bne got_key
 
 no_c64_key:
+    lda machine_type
+    bmi no_key
     lda #$ff
     sta CIA1_PRA
     sta CIA1_PRB
