@@ -27,11 +27,11 @@
 
 .include "features.inc"
 
-EXTRA_NEOS = 0
-EXTRA_AMIGA = 1
-EXTRA_ST = 2
-EXTRA_CX_22 = 3
-EXTRA_CX_22_JOYSTICK = 4
+EXTRA_JOYSTICK_MOSUE = 0
+EXTRA_NEOS = 1
+EXTRA_AMIGA = 2
+EXTRA_ST = 3
+EXTRA_CX22 = 4
 EXTRA_CX21 = 5
 EXTRA_CX85 = 6
 EXTRA_CARDKEY = 7
@@ -365,11 +365,11 @@ extra_color {
 
 extra_type_name_data {
     ;      123456789012345678
+    .data "joystick mouse    ":screen_inverted
     .data "neos mouse        ":screen_inverted
     .data "amgiga mouse      ":screen_inverted
     .data "atari st mouse    ":screen_inverted
     .data "atari cx22        ":screen_inverted
-    .data "atari cx22 joy    ":screen_inverted
     .data "atari cx21/cx50   ":screen_inverted
     .data "atari cx85        ":screen_inverted
     .data "cardco cardkey 1  ":screen_inverted
@@ -388,10 +388,10 @@ extra_view_sprite {
 }
 
 extra_default_view {
-    .data EXTRA_VIEW_MOUSE
-    .data EXTRA_VIEW_MOUSE
-    .data EXTRA_VIEW_MOUSE
     .data EXTRA_VIEW_TRACKBALL
+    .data EXTRA_VIEW_MOUSE
+    .data EXTRA_VIEW_MOUSE
+    .data EXTRA_VIEW_MOUSE
     .data EXTRA_VIEW_TRACKBALL
     .data EXTRA_VIEW_CX21
     .data EXTRA_VIEW_CX85
@@ -402,9 +402,9 @@ extra_default_view {
 
 extra_default_color {
     .data EXTRA_COLOR_NEOS
-    .data EXTRA_COLOR_ST
-    .data EXTRA_COLOR_ST
     .data EXTRA_COLOR_NEOS
+    .data EXTRA_COLOR_ST
+    .data EXTRA_COLOR_ST
     .data EXTRA_COLOR_NEOS
     .data EXTRA_COLOR_KEYPAD
     .data EXTRA_COLOR_KEYPAD
@@ -415,8 +415,8 @@ extra_default_color {
 }
 
 extra_top_handler {
-    .data read_neos
     .data read_st
+    .data read_neos
     .data read_st
     .data read_st
     .data read_st
@@ -428,10 +428,10 @@ extra_top_handler {
 }
 
 extra_bottom_handler {
-    .data display_neos
-    .data display_neos
-    .data display_neos
     .data display_cx22
+    .data display_neos
+    .data display_neos
+    .data display_neos
     .data display_cx22
     .data display_keyboard
     .data display_single_key
@@ -441,11 +441,11 @@ extra_bottom_handler {
 }
 
 extra_sampler {
+    .data sample_cx22_joystick
     .data sample_none
     .data sample_amiga
     .data sample_st
     .data sample_cx22
-    .data sample_cx22_joystick
     .data sample_none
     .data sample_none
     .data sample_none
@@ -458,6 +458,7 @@ extra_keys {
     .data 0:2
     .data 0:2
     .data 0:2
+    .data 0:2
     .data keys_3x4_keys
     .data keys_cx85_keys
     .data keys_4x4_keys
@@ -466,6 +467,7 @@ extra_keys {
 }
 
 extra_num_keys {
+    .data 0
     .data 0
     .data 0
     .data 0

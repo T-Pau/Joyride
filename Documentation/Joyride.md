@@ -65,6 +65,7 @@ Multi Adapters:
 - [Wheel of Joy Mini](https://github.com/SukkoPera/WheelOfJoyMini)
 
 Extra:
+- Joystick Mouse
 - NEOS Mouse
 - Amiga Mouse
 - Atari ST Mouse
@@ -340,10 +341,16 @@ Use `F3`/`F4` to switch controller type.
 For keypads, previously pressed keys are displayed in a lighter gray to help detect dead keys. To reset the state of all keys, press `F5`.
 
 
+### Joystick Mouse
+
+![](images/Trackball.png)
+
+Some mice support joystick mode, in which the directions are pressed proportional to their movement speed.
+
+
 ### NEOS Mouse
 
 ![](images/NEOS-Mouse.png)
-
 
 This mouse give the position in x and y modulo 256 and supports two buttons.
 
@@ -375,6 +382,10 @@ The right mouse button can't be read on a Commodore 64.
 ![](images/Trackball.png)
 
 This trackball displays x/y and one button.
+
+Some versions of this behave like a joystick mouse and should be tested with that view.
+
+Note: Support for this trackball has not been tested with real hardware.
 
 
 ### Atari CX-21 / CX-50 Keypad
