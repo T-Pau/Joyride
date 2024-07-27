@@ -65,10 +65,11 @@ sample_cx22 {
 }
 
 sample_cx22_joystick {
+:   lda VIC_RASTER
+    cmp VIC_RASTER
+    bne :-
     lda CIA1_PRB
-    tax
-    eor cx22_joystick_last
-    stx cx22_joystick_last
+    eor #$0f
     tax
 
     and #$01
@@ -81,11 +82,11 @@ sample_cx22_joystick {
 :   txa
     and #$04
     beq :+
-    dec neos_position
+    inc neos_position
 :   txa
     and #$08
     beq :+
-    inc neos_position
+    dec neos_position
 :   rts    
 }
 
@@ -109,4 +110,3 @@ cx22_diff {
 
 .section reserved
 
-cx22_joystick_last .reserve 1
