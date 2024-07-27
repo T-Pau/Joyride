@@ -1,4 +1,4 @@
-;  mouse-cx22.s -- Support for Atari CX-22 trackball.
+;  mouse-joystick.s -- Support for Joystick Mouse.
 ;  Copyright (C) Dieter Baron
 ;
 ;  This file is part of Joyride, a controller test program for C64.
@@ -25,62 +25,73 @@
 ;  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ;  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-CX22_F_OFFSET = 40 + 12
+MOUSE_JOYSTICK_STEP = $8
+
+.macro mouse_joystick_step_up axis {
+    clc
+    lda mouse_joystick_fraction + axis
+    adc #MOUSE_JOYSTICK_STEP
+    sta mouse_joystick_fraction + axis
+    bcc :+
+    inc neos_position + axis
+:
+}
+
+.macro mouse_joystick_step_down axis {
+    sec
+    lda mouse_joystick_fraction + axis
+    sbc #MOUSE_JOYSTICK_STEP
+    sta mouse_joystick_fraction + axis
+    bcs :+
+    dec neos_position + axis
+:
+}
 
 .section code
 
-sample_cx22 {
+read_mouse_joystick {
+    lda #$ff
+    sta CIA1_PRB
+    lda #0
+    sta CIA1_DDRB
+    jsr extra_read_pots
+    and #$80
+    eor #$80
+    sta neos_button_r
     lda CIA1_PRB
-    tax
-
-    and #$03
-    ora neos_diff
-    tay
-    lda cx22_diff,y
-    clc
-    adc neos_position
-    sta neos_position
-
-    txa
-    lsr
-    lsr
-    and #$03
-    ora neos_diff + 1
-    tay
-    lda cx22_diff,y
-    clc
-    adc neos_position + 1
-    sta neos_position + 1
-
-    txa
-    and #$03
-    asl
-    asl
-    sta neos_diff
-    txa 
-    and #$0c
-    sta neos_diff + 1
-    
+    eor #$ff
+    and #$10
+    sta neos_button_l
     rts
 }
 
-display_cx22 {
-    store_word destination_ptr, EXTRA_VIEW_START + CX22_F_OFFSET
-    lda neos_button_l
-    jsr small_button
-    jmp display_extra_mouse
+sample_mouse_joystick {
+    lda VIC_RASTER
+:   cmp VIC_RASTER
+    beq :-
+    lda CIA1_PRB
+    eor #$0f
+    tax
+
+    and #$01
+    beq :+
+    mouse_joystick_step_down 1
+:   txa
+    and #$02
+    beq :+
+    mouse_joystick_step_up 1
+:   txa
+    and #$04
+    beq :+
+    mouse_joystick_step_down 0
+:   txa
+    and #$08
+    beq :+
+    mouse_joystick_step_up 0
+:   rts    
 }
 
-
-.section data
-
-cx22_diff {
-    ;      %00, %01, %10, %11
-    .data  $00, $00, $ff, $00 ; 00
-    .data  $00, $00, $00, $01 ; 01
-    .data  $ff, $00, $00, $00 ; 10
-    .data  $00, $01, $00, $00 ; 11
-}
 
 .section reserved
 
+mouse_joystick_fraction .reserve 2

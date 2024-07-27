@@ -56,6 +56,7 @@ sources_common :=
     main-loop.s
     mouse-amiga.s
     mouse-cx22.s
+    mouse-joystick.s
     mouse-neos.s
     mouse-st.s
     multijoy.s

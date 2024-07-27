@@ -345,7 +345,11 @@ For keypads, previously pressed keys are displayed in a lighter gray to help det
 
 ![](images/Trackball.png)
 
-Some mice support joystick mode, in which the directions are pressed proportional to their movement speed.
+Some mice support joystick mode, in which the directions are pressed for a duration proportional to their movement speed.
+
+To enable this mode on a 1351 mouse, press the right button while connecting it.
+
+This view displays x/y and two buttons, although some models only have one button.
 
 
 ### NEOS Mouse

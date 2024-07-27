@@ -201,7 +201,7 @@ end:
 extra_content {
     jsr content_background
     lda #VIC_VIDEO_ADDRESS(screen, charset_extra)
-    ldy #top + 3 * 8
+    ldy #top + 3 * 8 + 1
 :   cpy VIC_RASTER
     bne :-
 :   dey
@@ -388,7 +388,7 @@ extra_view_sprite {
 }
 
 extra_default_view {
-    .data EXTRA_VIEW_TRACKBALL
+    .data EXTRA_VIEW_MOUSE
     .data EXTRA_VIEW_MOUSE
     .data EXTRA_VIEW_MOUSE
     .data EXTRA_VIEW_MOUSE
@@ -415,7 +415,7 @@ extra_default_color {
 }
 
 extra_top_handler {
-    .data read_st
+    .data read_mouse_joystick
     .data read_neos
     .data read_st
     .data read_st
@@ -428,7 +428,7 @@ extra_top_handler {
 }
 
 extra_bottom_handler {
-    .data display_cx22
+    .data display_neos
     .data display_neos
     .data display_neos
     .data display_neos
@@ -441,7 +441,7 @@ extra_bottom_handler {
 }
 
 extra_sampler {
-    .data sample_cx22_joystick
+    .data sample_mouse_joystick
     .data sample_none
     .data sample_amiga
     .data sample_st

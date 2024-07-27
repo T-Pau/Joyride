@@ -46,6 +46,7 @@ Multi Adapters:
 - [Wheel of Joy Mini](https://github.com/SukkoPera/WheelOfJoyMini)
 
 Extra:
+- Joystick Mouse
 - NEOS Mouse
 - Amiga Mouse
 - Atari ST Mouse
