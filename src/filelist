@@ -1,4 +1,5 @@
 joyride,tp
+c128-boot autoboot.c128
 joyride.prg > joyride
 joyride-c64.prg > joyride c64
 joyride-c128.prg > joyride c128
