@@ -1,0 +1,8 @@
+joyride,tp
+c128-boot autoboot.c128
+joyride.prg > joyride .8.
+bpoke 18 1 12 $a0
+bpoke 18 1 13 $2c
+bpoke 18 1 15 $3a
+joyride-c64.prg > joyride c64
+joyride-c128.prg > joyride c128

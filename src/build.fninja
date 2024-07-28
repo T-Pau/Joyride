@@ -95,10 +95,10 @@ rule basic
 rule vice-ll
   command = awk '{print "al "$$2" ."$$4}' $in > $out
 
-build joyride.d64: create-disk filelist | joyride.prg joyride-c64.prg joyride-c128.prg autoboot.c128
+build joyride.d64: create-disk filelist-d64 | joyride.prg joyride-c64.prg joyride-c128.prg autoboot.c128
     flags = -I$source_directory -I$build_directory
 
-build joyride.d81: create-disk filelist | joyride.prg joyride-c64.prg joyride-c128.prg autoboot.c128
+build joyride.d81: create-disk filelist-d81 | joyride.prg joyride-c64.prg joyride-c128.prg autoboot.c128
     flags = -I$source_directory -I$build_directory
 
 build joyride.prg: basic joyride.bas
