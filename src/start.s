@@ -82,6 +82,7 @@ both:
 
     jsr init_state
     jsr display_main_screen
+    cli
 
     set_vic_bank $c000
     set_vic_text screen, charset
@@ -135,7 +136,7 @@ both:
     sta CIA2_TIMER_A_CONTROL
     lda #%01010001
     sta CIA1_TIMER_A_CONTROL
-
+    
     jmp main_loop
 }
 
