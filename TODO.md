@@ -1,22 +1,21 @@
 ## Before Release
 
-- Fix
+- Disable Exit.
 - Fix graphics glitches when switching to/from extra.
-- Fix exit on C128.
-- Test Coplin keypad.
-- Add C128 boot sector.
+
 
 ## Hardware Support
 
 - Microflyte Joystick
+- Measure autofire frequency.
 
 
 ## Other
 
+- Fix exit on C128.
 - When run on MEGA65, read HELP key.
 - Fix on NTSC.
 - Fix for 8BitDo SNES Adapter.
-- Add labels to multi adapter pages.
 
 
 ## Cleanup
