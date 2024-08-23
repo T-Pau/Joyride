@@ -51,9 +51,16 @@ inception_length .reserve 1
     beq :+
     dex
 :
+    txa
+    eor #$01
+    tay
+    lda #$00
+    sta CIA1_DDRA,y
+    lda #$ff
+    sta CIA1_PRA,y
+
     store_word ptr1, snes_buttons
     lda #OPCODE_JOYSTICKS
-;    lda #OPCODE_IDENTIFY
     ldy #16
     jsr inception_read
     rts
