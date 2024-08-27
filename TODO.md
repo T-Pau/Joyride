@@ -1,6 +1,5 @@
 ## Before Release
 
-- Disable Exit.
 - Fix graphics glitches when switching to/from extra.
 
 

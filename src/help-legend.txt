@@ -37,4 +37,6 @@ f3/space: next page   f4: previous page
 .else
         help: return to program
 .endif
+.if ENABLE_EXIT
              run/stop: exit
+.endif

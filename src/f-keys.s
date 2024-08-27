@@ -127,11 +127,13 @@ not_commodore:
     stx shift
 
     ; get other keys
+.pre_if .false  ; disable Run/Stop exit for now
     tya
     bpl not_runstop
     ldy #KEY_STOP
     jmp got_key 
 not_runstop:
+.pre_end
     ldx f_key_num_commands
     cpx #KEY_LEFT_ARROW
     bcc read_function
