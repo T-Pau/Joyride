@@ -1,11 +1,4 @@
-*.o
 .DS_Store
-*.prg
-Joyride-*.zip
-src/sym
-/src/.deps
-/src/joyride.d64
-/src/joyride.d81
 /build
 */__pycache__/*
 *.afphoto~lock~
