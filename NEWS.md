@@ -1,4 +1,4 @@
-# Version 1.8 (Unreleased)
+# Version 1.8 (2024-08-31)
 
 - Native version for Commodore 128.
 - Add support for Joystick mouse.

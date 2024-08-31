@@ -1,8 +1,3 @@
-## Before Release
-
-- Fix graphics glitches when switching to/from extra.
-
-
 ## Hardware Support
 
 - Microflyte Joystick
@@ -11,6 +6,7 @@
 
 ## Other
 
+- Fix graphics glitches when switching to/from extra.
 - Fix exit on C128.
 - When run on MEGA65, read HELP key.
 - Fix on NTSC.
