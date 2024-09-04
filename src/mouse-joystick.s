@@ -50,10 +50,6 @@ MOUSE_JOYSTICK_STEP = $8
 .section code
 
 read_mouse_joystick {
-    lda #$ff
-    sta CIA1_PRB
-    lda #0
-    sta CIA1_DDRB
     jsr extra_read_pots
     and #$80
     eor #$80

@@ -209,6 +209,7 @@ same_view:
     lda top_handler + 1,x
     sta top_jmp + 2
     begin_screen_update
+    deselect_keyboard $ff, $ff
 top_jmp:
     jsr $0000
     end_screen_update
@@ -226,6 +227,7 @@ top_jmp:
     lda bottom_handler + 1,x
     sta bottom_jmp + 2
     begin_screen_update
+    deselect_keyboard $ff, $ff
 bottom_jmp:
     jsr $0000
     end_screen_update

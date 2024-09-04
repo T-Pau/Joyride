@@ -43,6 +43,40 @@ pen_y_new .reserve 1
 
 .section code
 
+.macro deselect_keyboard direction_a, direction_b {
+    lda #direction_a
+    ldx #direction_b
+    jsr deselect_keyboard
+}
+
+; Deselect keyboard to allow reading joysticks.
+; Arguments:
+;   A: direction for port a
+;   X: direction for port b
+deselect_keyboard {
+    sta CIA1_DDRA
+    stx CIA1_DDRB
+    lda #$ff
+    sta CIA1_PRA
+    sta CIA1_PRB
+    .if .defined(C64) || .defined(MEGA65) {
+        .if .defined(C64) {
+            lda machine_type
+            bpl not_mega65
+        }
+        lda $d607
+        ora #$02
+        sta $d607
+        lda $d608
+        ora #$02
+        sta $d608
+        .if .defined(C64) {
+        not_mega65:
+        }
+    }
+    rts
+}
+
 .public handle_top {
     lda #0
     ldx VIC_LIGHT_PEN_X
@@ -88,13 +122,10 @@ sid:
     sta port_pot2
 
 end_pot:
-    ; read digital input
-    lda #$00
-    sta CIA1_DDRA
-    sta CIA1_DDRB
-    lda #$ff
-    sta CIA1_PRA
-    eor CIA1_PRB
+    ; read digital input port 1
+    deselect_keyboard $ff, $00
+    lda CIA1_PRB
+    eor #$ff
     sta port_digital
 
     ; handle lightpen
@@ -150,12 +181,9 @@ sid:
 
 end_pot:
     ; read control port 2
-    lda #$00
-    sta CIA1_DDRA
-    sta CIA1_DDRB
-    lda #$ff
-    sta CIA1_PRB
-    eor CIA1_PRA
+    deselect_keyboard $00, $ff
+    lda CIA1_PRA
+    eor #$ff
     sta port_digital
 
     ; select POTs from port 1

@@ -79,12 +79,7 @@ f_key_num_commands .reserve 1
 ;   Y: number of key pressed, 0 for none pressed
 .public read_keys {
     ; check for joystick interference
-    lda #$00
-    sta CIA1_DDRA
-    sta CIA1_DDRB
-    lda #$ff
-    sta CIA1_PRA
-    sta CIA1_PRB
+    deselect_keyboard $00, $00
     lda CIA1_PRB
     eor #$ff
     sta f_key_mask
@@ -218,13 +213,7 @@ no_c64_key:
     ldy #KEY_C_F1 ; TODO: KEY_HELP
 
 got_key:
-    lda #$00
-    sta CIA1_DDRA
-    sta CIA1_DDRB
-    lda #$ff
-    sta CIA1_PRA
-    sta CIA1_PRB
-
+    deselect_keyboard $00, $00
     lda CIA1_PRB
     ora f_key_mask
     and CIA1_PRA

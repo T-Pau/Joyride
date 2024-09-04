@@ -28,9 +28,6 @@
 .section code
 
 read_cardkey {
-:   lda #$ff
-    sta CIA1_DDRA
-    sta CIA1_PRA
     lda #$c0
     sta CIA1_DDRB
 :   lda CIA1_PRB

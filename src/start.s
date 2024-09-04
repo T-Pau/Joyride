@@ -103,9 +103,7 @@ both:
 
     jsr setup_logo
 
-    lda #$ff
-    sta CIA1_DDRA
-    sta CIA1_DDRB
+    deselect_keyboard $00, $00
 
     jsr init_irq
 

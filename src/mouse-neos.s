@@ -36,10 +36,6 @@ NEOS_SPRITE_Y_OFFSET = 88
 .section code
 
 read_neos {
-    lda #$ff
-    sta CIA1_PRB
-    lda #0
-    sta CIA1_DDRB
     jsr extra_read_pots
     and #$80
     sta neos_button_r

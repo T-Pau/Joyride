@@ -34,11 +34,7 @@ read_cx85 {
     bne :+
     lda #$ff
     bne end
-:   lda #$ff
-    sta CIA1_DDRA
-    sta CIA1_DDRB
-    sta CIA1_PRA
-    lda CIA1_PRB
+:   lda CIA1_PRB
     and #$1f
     tax
     lda cx85_keycodes,x

@@ -211,6 +211,7 @@ extra_content {
 
     lda command
     bne end
+    deselect_keyboard $ff, $00
 extra_top_jsr_instruction:
 .private extra_top_jsr = extra_top_jsr_instruction + 1
     jsr $0000
@@ -232,6 +233,7 @@ handle_extra {
     lda command
     bne end
     begin_screen_update
+    deselect_keyboard $ff, $00
 extra_bottom_jsr_instruction:
 .private extra_bottom_jsr = extra_bottom_jsr_instruction + 1
     jsr $0000
