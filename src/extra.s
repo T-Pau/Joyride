@@ -369,7 +369,7 @@ extra_type_name_data {
     ;      123456789012345678
     .data "joystick mouse    ":screen_inverted
     .data "neos mouse        ":screen_inverted
-    .data "amgiga mouse      ":screen_inverted
+    .data "amiga mouse       ":screen_inverted
     .data "atari st mouse    ":screen_inverted
     .data "atari cx22        ":screen_inverted
     .data "atari cx21/cx50   ":screen_inverted
